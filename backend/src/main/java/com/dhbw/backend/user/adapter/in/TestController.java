@@ -1,4 +1,4 @@
-package com.dhbw.backend.adapter.user.in;
+package com.dhbw.backend.user.adapter.in;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -1,0 +1,2 @@
+Hier werden Domain Models definiert. Mapper werden im package mapper definiert.
+Die record welche zum Mappen benötigt werden, liegen im package commands

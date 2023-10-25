@@ -1,2 +1,0 @@
-Hier Outputs implementiert. Beispielsweise das Repo, welches auf die MongoDB zugreift. Oder auch ansprache der Wetter API.
-Die Interfaces hierfür werden allerdings in application/port/out definiert

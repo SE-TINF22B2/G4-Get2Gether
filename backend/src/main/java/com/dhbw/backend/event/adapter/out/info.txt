@@ -1,0 +1,2 @@
+Hier werden Outputs implementiert. Beispielsweise das Repo, welches auf die MongoDB zugreift. Oder auch ansprache der Wetter API.
+Die Interfaces hierfür werden allerdings in application ordner der Domäne definiert
