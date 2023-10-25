@@ -1,0 +1,3 @@
+Hier werden Interfaces definiert, welche für eine Kommunikation von innen nach außen benötigt werden.
+Dazu gehört zum Beispiel ein Interface für ein MongoDB Repository oder ein Interface für die Klasse,
+welche die Wetter APi aufruft.
