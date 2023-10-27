@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {SocialAuthService, SocialUser} from "@abacritt/angularx-social-login";
 import {Router} from "@angular/router";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,7 @@ export class AppComponent {
   user?: SocialUser;
   loggedIn: boolean = false;
 
-  constructor(private authService: SocialAuthService, private router: Router) { }
+  constructor(private http: HttpClient ,private authService: SocialAuthService, private router: Router) { }
 
   ngOnInit() {
     this.authService.authState.subscribe((user) => {
@@ -20,6 +21,13 @@ export class AppComponent {
       this.loggedIn = (user != null);
       this.router.navigateByUrl("/dashboard")
       console.log(this.user)
+      this.onclick();
     });
+  }
+
+  onclick(){
+    this.http.post("http://localhost:8080/login", { token: this.user?.idToken}, {withCredentials: true}).subscribe(result =>{
+      console.log(result);
+    })
   }
 }
