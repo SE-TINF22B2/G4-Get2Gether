@@ -13,12 +13,17 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.session.SessionAuthenticationException;
+import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
+import org.springframework.security.web.savedrequest.NullRequestCache;
+import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -35,6 +40,8 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        RequestCache nullRequestCache = new NullRequestCache();
+
         http
                 .csrf()
                 .disable()
@@ -43,11 +50,12 @@ public class SecurityConfig {
                                     .requestMatchers("/login").permitAll()
                                     .requestMatchers("/**").authenticated();
                         }
-                        ).sessionManagement(sess ->  {
-                            sess.sessionAuthenticationFailureHandler((request, response, exception) -> response.setStatus(HttpServletResponse.SC_UNAUTHORIZED));
-                            sess.sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
-
-                })
+                        )
+                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.NEVER)
+                //Required for not giving out a session when authethication fails
+                ).requestCache((cache) -> cache
+                        .requestCache(nullRequestCache)
+                )
 //                .securityContext((securityContext) -> securityContext
 //                        .requireExplicitSave(true)
 //                )
