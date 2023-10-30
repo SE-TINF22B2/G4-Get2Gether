@@ -1,4 +1,4 @@
-package com.dhbw.backend;
+package com.dhbw.get2gether.backend;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;

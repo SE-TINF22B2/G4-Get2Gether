@@ -1,4 +1,4 @@
-package com.dhbw.backend;
+package com.dhbw.get2gether.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

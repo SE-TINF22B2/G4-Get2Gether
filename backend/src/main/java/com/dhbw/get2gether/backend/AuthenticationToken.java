@@ -1,10 +1,7 @@
-package com.dhbw.backend;
+package com.dhbw.get2gether.backend;
 
-import com.dhbw.backend.user.model.Token;
+import com.dhbw.get2gether.backend.user.model.Token;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
-
-import java.util.Collection;
 
 public class AuthenticationToken extends AbstractAuthenticationToken {
     private final Token token;

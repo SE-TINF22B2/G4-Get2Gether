@@ -1,4 +1,4 @@
-package com.dhbw.backend.event.adapter.in;
+package com.dhbw.get2gether.backend.event.adapter.in;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

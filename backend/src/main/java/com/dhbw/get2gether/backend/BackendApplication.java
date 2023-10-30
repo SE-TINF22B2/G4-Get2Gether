@@ -1,4 +1,4 @@
-package com.dhbw.backend;
+package com.dhbw.get2gether.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
