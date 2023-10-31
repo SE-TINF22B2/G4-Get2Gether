@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# run spotlessApply if there are staged files in the backend directory
+if [[ $(git diff --staged --name-only "./backend") ]]; then
+  cd ./backend
+
+  # store staged files to make sure changes are committed only for these files
+  stagedFiles=$(git diff --staged --name-only)
+
+  echo "Running spotlessApply to format code..."
+  ./gradlew spotlessApply
+
+  if ![ "$?" = 0 ]; then
+    echo "spotlessApply found violations it could not fix. Aborting commit..."
+    exit 1
+  fi
+
+  # add staged file changes to git
+  for file in $stagedFiles; do
+    if test -f "$file"; then
+      git add $file
+    fi
+  done
+fi
