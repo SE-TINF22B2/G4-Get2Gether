@@ -8,7 +8,7 @@ Egal ob Party, Geburtstagsfeier oder Urlaub - dank der zahlreichen Funktionen vo
 
 ## Widgets
 Mit den verschiedenen Widgets kannst du die Funktionalität für dein Event flexibel erweitern und
-dir dein persönliches Dashboard zusammenstellen.
+dir ein persönliches Dashboard zusammenstellen.
 
 Die folgenden Widgets stehen derzeit zur Verfügung:
 - Einkaufsliste
@@ -19,11 +19,11 @@ Die folgenden Widgets stehen derzeit zur Verfügung:
 - Wetter
 
 ## Weitere Informationen
-- ↪ [#️⃣ Dokumentation](https://github.com/SE-TINF22B2/G4-Get2Gether/discussions/categories/documentation)
-- ↪ [📑 Guidelines](https://github.com/SE-TINF22B2/G4-Get2Gether/discussions/categories/guideline)
-- ↪ [📔 Wiki](https://github.com/SE-TINF22B2/G4-Get2Gether/discussions/categories/wiki)
-- ↪ [💬 Statusreports](https://github.com/SE-TINF22B2/G4-Get2Gether/discussions/categories/statusreports)
-- ↪ [💻 Entwicklungsboard](https://github.com/orgs/SE-TINF22B2/projects/9)
+- ➥ [#️⃣ Dokumentation](https://github.com/SE-TINF22B2/G4-Get2Gether/discussions/categories/documentation)
+- ➥ [📑 Guidelines](https://github.com/SE-TINF22B2/G4-Get2Gether/discussions/categories/guideline)
+- ➥ [📔 Wiki](https://github.com/SE-TINF22B2/G4-Get2Gether/discussions/categories/wiki)
+- ➥ [💬 Statusreports](https://github.com/SE-TINF22B2/G4-Get2Gether/discussions/categories/statusreports)
+- ➥ [💻 Entwicklungsboard](https://github.com/orgs/SE-TINF22B2/projects/9)
 
 ## Entwicklung
 Alles rund um die Entwicklung von Get2Gether.
@@ -34,7 +34,7 @@ Alles rund um die Entwicklung von Get2Gether.
 - 🅰️ [frontend](./frontend) : Angular Frontend
 
 ### Getting Started
-Empfehlung des Hauses: Das Projekt kann direkt als Monorepo in Intellij importiert werden.
+_Empfehlung des Hauses:_ Das Projekt kann direkt als Monorepo in Intellij importiert werden.
 Intellij sollte dann alle gradle Module und Run Configurations automatisch importieren.
 
 #### Frontend
