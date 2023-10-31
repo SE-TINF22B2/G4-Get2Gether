@@ -1,33 +1,29 @@
-import { Component } from '@angular/core';
-import {SocialAuthService, SocialUser} from "@abacritt/angularx-social-login";
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
+import {AppStateService} from "../services/app-state";
+import {LoginService} from "../services/loginService";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'frontend';
-  user?: SocialUser;
-  loggedIn: boolean = false;
 
-  constructor(private http: HttpClient ,private authService: SocialAuthService, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private appState: AppStateService, private loginService: LoginService) {
+  }
 
   ngOnInit() {
-    this.authService.authState.subscribe((user) => {
-      this.user = user;
-      this.loggedIn = (user != null);
-      this.router.navigateByUrl("/dashboard")
-      console.log(this.user)
-      this.onclick();
+    this.loginService.getUserData().subscribe({
+      next: user => {
+        console.log(user)
+        this.appState.user.next(user);
+      }, error: () => {
+        this.router.navigateByUrl("/login");
+      }
     });
   }
 
-  onclick(){
-    this.http.post("http://localhost:8080/login", { token: this.user?.idToken}, {withCredentials: true}).subscribe(result =>{
-      console.log(result);
-    })
-  }
 }

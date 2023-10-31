@@ -10,8 +10,6 @@ export class DashboardComponent {
   constructor(private http: HttpClient) {
   }
 
-
-
   afterAuth(){
     this.http.get("http://localhost:8080/any", {withCredentials: true}).subscribe(result =>{
       console.log(result);
