@@ -1,0 +1,17 @@
+#!/bin/sh
+
+INPUT_FILE=$1
+# get commit-message from the temporary file
+COMMIT_MSG=`head -n1 $INPUT_FILE`
+
+REGEX="^[a-zA-Z]{2}-#[0-9]+:.+"
+
+# check commit-message format
+if ! [[ "$COMMIT_MSG" =~ $REGEX ]]; then
+  echo -e "ERROR: The commit-message format does not met the commit conventions:\n$COMMIT_MSG\n"
+  echo "Valid format examples:"
+  echo "FE-#12: Some changes"
+  echo "BE-#12: Some changes"
+  echo -e "\nSee the guidelines for more details: https://github.com/SE-TINF22B2/G4-Get2Gether/discussions/15"
+  exit 1
+fi
