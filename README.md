@@ -21,7 +21,7 @@ Die folgenden Widgets stehen derzeit zur Verfügung:
 ## Weitere Informationen
 - ➥ [#️⃣ Dokumentation](https://github.com/SE-TINF22B2/G4-Get2Gether/discussions/categories/documentation)
 - ➥ [📑 Guidelines](https://github.com/SE-TINF22B2/G4-Get2Gether/discussions/categories/guideline)
-- ➥ [📔 Wiki](https://github.com/SE-TINF22B2/G4-Get2Gether/discussions/categories/wiki)
+- ➥ [📔 Wiki](https://github.com/SE-TINF22B2/G4-Get2Gether/wiki)
 - ➥ [💬 Statusreports](https://github.com/SE-TINF22B2/G4-Get2Gether/discussions/categories/statusreports)
 - ➥ [💻 Entwicklungsboard](https://github.com/orgs/SE-TINF22B2/projects/9)
 
