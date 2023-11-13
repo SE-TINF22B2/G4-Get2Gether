@@ -19,11 +19,10 @@ Die folgenden Widgets stehen derzeit zur Verfügung:
 - Wetter
 
 ## Weitere Informationen
-- ➥ [#️⃣ Dokumentation](https://github.com/SE-TINF22B2/G4-Get2Gether/discussions/categories/documentation)
-- ➥ [📑 Guidelines](https://github.com/SE-TINF22B2/G4-Get2Gether/discussions/categories/guideline)
-- ➥ [📔 Wiki](https://github.com/SE-TINF22B2/G4-Get2Gether/wiki)
-- ➥ [💬 Statusreports](https://github.com/SE-TINF22B2/G4-Get2Gether/discussions/categories/statusreports)
-- ➥ [💻 Entwicklungsboard](https://github.com/orgs/SE-TINF22B2/projects/9)
+- ➥ [📑 Guidelines](https://github.com/SE-TINF22B2/G4-Get2Gether/discussions/categories/guideline) (Guiedlines die befolgt werden um ein einheitliches Arbeiten am projekt zu ermöglichen)
+- ➥ [📔 Wiki](https://github.com/SE-TINF22B2/G4-Get2Gether/wiki) (Genauere Informationen zum Projekt sind hier dokumentiert)
+- ➥ [💬 Statusreports](https://github.com/SE-TINF22B2/G4-Get2Gether/discussions/categories/statusreports) (Hier sind alle Statusreports hinterlegt)
+- ➥ [💻 Entwicklungsboard](https://github.com/orgs/SE-TINF22B2/projects/9) (Hier sind die aktuellen Aufgaben gruppiert nach deren Status)
 
 ## Entwicklung
 Alles rund um die Entwicklung von Get2Gether.
