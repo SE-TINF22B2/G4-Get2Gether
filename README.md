@@ -19,7 +19,7 @@ Die folgenden Widgets stehen derzeit zur Verfügung:
 - Wetter
 
 ## Weitere Informationen
-- ➥ [📑 Guidelines](https://github.com/SE-TINF22B2/G4-Get2Gether/discussions/categories/guideline) (Guiedlines die befolgt werden um ein einheitliches Arbeiten am projekt zu ermöglichen)
+- ➥ [📑 Guidelines](https://github.com/SE-TINF22B2/G4-Get2Gether/discussions/categories/guideline) (Guiedlines die befolgt werden um ein einheitliches Arbeiten am Projekt zu ermöglichen)
 - ➥ [📔 Wiki](https://github.com/SE-TINF22B2/G4-Get2Gether/wiki) (Genauere Informationen zum Projekt sind hier dokumentiert)
 - ➥ [💬 Statusreports](https://github.com/SE-TINF22B2/G4-Get2Gether/discussions/categories/statusreports) (Hier sind alle Statusreports hinterlegt)
 - ➥ [💻 Entwicklungsboard](https://github.com/orgs/SE-TINF22B2/projects/9) (Hier sind die aktuellen Aufgaben gruppiert nach deren Status)
