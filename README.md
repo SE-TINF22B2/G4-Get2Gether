@@ -19,33 +19,7 @@ Die folgenden Widgets stehen derzeit zur Verfügung:
 - Wetter
 
 ## Weitere Informationen
-- ➥ [📑 Guidelines](https://github.com/SE-TINF22B2/G4-Get2Gether/discussions/categories/guideline) (Guiedlines die befolgt werden um ein einheitliches Arbeiten am Projekt zu ermöglichen)
 - ➥ [📔 Wiki](https://github.com/SE-TINF22B2/G4-Get2Gether/wiki) (Genauere Informationen zum Projekt sind hier dokumentiert)
 - ➥ [💬 Statusreports](https://github.com/SE-TINF22B2/G4-Get2Gether/discussions/categories/statusreports) (Hier sind alle Statusreports hinterlegt)
+- ➥ [📑 Guidelines](https://github.com/SE-TINF22B2/G4-Get2Gether/discussions/categories/guideline) (Guiedlines die befolgt werden, um ein einheitliches Arbeiten am Projekt zu ermöglichen)
 - ➥ [💻 Entwicklungsboard](https://github.com/orgs/SE-TINF22B2/projects/9) (Hier sind die aktuellen Aufgaben gruppiert nach deren Status)
-
-## Entwicklung
-Alles rund um die Entwicklung von Get2Gether.
-
-### Repository Struktur
-- 🍃 [backend](./backend) : Java Spring Backend
-  - 🐋 [mongoDB.yml](./backend/mongoDB.yml) : Docker Compose Datei für lokale MongoDB
-- 🅰️ [frontend](./frontend) : Angular Frontend
-
-### Getting Started
-_Empfehlung des Hauses:_ Das Projekt kann direkt als Monorepo in Intellij importiert werden.
-Intellij sollte dann alle gradle Module und Run Configurations automatisch importieren.
-
-#### Frontend
-Das Angular Frontend kann direkt mit der entsprechenden IntelliJ Run Configuration oder mit dem Befehl `ng serve`
-im Ordner [frontend](./frontend) gestartet werden.
-Das Frontend ist dann unter [http://localhost:4200](http://localhost:4200) erreichbar.
-
-#### Backend
-Um das Backend ausführen zu können, muss eine Verbindung zur MongoDB hergestellt werden können.
-Dazu kann eine lokale MongoDB in Docker gestartet werden.
-Eine Docker Compose Datei mit vorkonfigurierter MongoDB kann in [/backend/mongoDB.yml](./backend/mongoDB.yml) gefunden werden.
-
-Das Spring Backend kann direkt mit der entsprechenden IntelliJ Run Configuration oder mit dem Ausführen der main-Methode
-in der Klasse [BackendApplication](./backend/src/main/java/com/dhbw/get2gether/backend/BackendApplication.java)
-gestartet werden.
