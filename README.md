@@ -8,7 +8,7 @@ Egal ob Party, Geburtstagsfeier oder Urlaub - dank der zahlreichen Funktionen vo
 
 ## Widgets
 Mit den verschiedenen Widgets kannst du die Funktionalität für dein Event flexibel erweitern und
-dir ein persönliches Dashboard zusammenstellen.
+dir ein persönliches Startseite zusammenstellen.
 
 Die folgenden Widgets stehen derzeit zur Verfügung:
 - Einkaufsliste
