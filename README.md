@@ -12,7 +12,9 @@ dir eine persönliche Startseite zusammenstellen.
 
 Die folgenden Widgets stehen derzeit zur Verfügung:
 - Einkaufsliste
-- Karte und Fahrgemeinschaft
+- Ausgabenverteilung
+- Karte
+- Fahrgemeinschaft
 - Bildergalerie
 - Abstimmungen
 - Kommentare
