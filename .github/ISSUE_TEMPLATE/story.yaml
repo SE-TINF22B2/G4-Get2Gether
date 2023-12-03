@@ -1,6 +1,5 @@
 name: Story Template
 description: Eine Story besteht aus mehreren Aufgaben.
-title: ""
 labels: ["Story"]
 projects: ["SE-TINF22B2/9"]
 body:
