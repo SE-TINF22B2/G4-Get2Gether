@@ -19,7 +19,7 @@ body:
   - type: textarea
     id: criteria
     attributes:
-      label: Kriterien für die Annahme
+      label: Kriterien für die Abnahme
       description: Definiere hier die Kriterien, die erfüllt werden müssen.
       value: |
         - Kriterium 1
