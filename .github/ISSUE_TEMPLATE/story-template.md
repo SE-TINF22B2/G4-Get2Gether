@@ -4,6 +4,7 @@ about: A story contains multiple sub-tasks.
 title: ''
 labels: Story
 assignees: ''
+projects: 'SE-TINF22B2/9'
 
 ---
 
