@@ -1,6 +1,5 @@
 package com.dhbw.get2gether.backend;
 
-import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -15,6 +14,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.List;
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
@@ -27,7 +28,7 @@ public class SecurityConfig {
                 .csrf(c -> c.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
                 .cors(h -> h.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(requests -> {
-                    requests.requestMatchers("/", "/error", "/webjars/**", "/oauth2/authorization/google")
+                    requests.requestMatchers("/", "/error", "/webjars/**", "/oauth2/authorization/google", "/landingpage")
                             .permitAll()
                             .requestMatchers("/**")
                             .authenticated();
