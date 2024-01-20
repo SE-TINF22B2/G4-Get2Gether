@@ -25,4 +25,12 @@ public class Event {
     private String creatorId;
     private List<String> participantIds;
     private List<Widget> widgets;
+
+    public void addParticipant(String participantId) {
+        participantIds.add(participantId);
+    }
+
+    public void removeParticipant(String participantId) {
+        participantIds.remove(participantId);
+    }
 }

@@ -1,4 +1,4 @@
-package com.dhbw.get2gether.backend.landingpage;
+package com.dhbw.get2gether.backend.helper;
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.annotation.CurrentSecurityContext;

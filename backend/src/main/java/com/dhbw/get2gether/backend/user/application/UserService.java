@@ -57,4 +57,8 @@ public class UserService {
         }
         return findUserByEmail(principal.getAttribute("email"));
     }
+
+    public User getUserByPrincipal(OAuth2User principal) {
+        return findUserFromPrincipal(principal).orElseThrow(() -> new IllegalArgumentException("User not found"));
+    }
 }
