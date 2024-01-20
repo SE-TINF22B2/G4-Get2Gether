@@ -25,10 +25,10 @@ public class SecurityConfig {
         //        RequestCache nullRequestCache = new NullRequestCache();
         http
                 // Needed for session management ( i think so )
-                .csrf(c -> c.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+                .csrf(c -> c.disable())
                 .cors(h -> h.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(requests -> {
-                    requests.requestMatchers("/", "/error", "/webjars/**", "/oauth2/authorization/google", "/landingpage")
+                    requests.requestMatchers("/**", "/error", "/webjars/**", "/oauth2/authorization/google", "/landingpage")
                             .permitAll()
                             .requestMatchers("/**")
                             .authenticated();

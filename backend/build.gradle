@@ -49,6 +49,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.mapstruct:mapstruct:1.5.3.Final'
 
     // Google Api Client
     implementation 'com.google.api-client:google-api-client:1.32.1'
@@ -56,6 +57,8 @@ dependencies {
     // Lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor  'org.mapstruct:mapstruct-processor:1.5.3.Final'
+    annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.1.0'
 
     // Testing
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
