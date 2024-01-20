@@ -11,7 +11,7 @@ export class DashboardComponent {
   }
 
   afterAuth(){
-    this.http.get("http://localhost:8080/any", {withCredentials: true}).subscribe(result =>{
+    this.http.get("http://localhost:8080/user", {withCredentials: true}).subscribe(result =>{
       console.log(result);
     })
   }
