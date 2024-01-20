@@ -5,6 +5,7 @@ import com.dhbw.get2gether.backend.user.model.UpdateUserCommand;
 import com.dhbw.get2gether.backend.user.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
@@ -12,6 +13,6 @@ public interface UserMapper {
     @Mapping(target = "id", ignore = true)
     User mapToUser(CreateUserCommand command);
 
-    User mapToUser(UpdateUserCommand command);
+    User updateUser(@MappingTarget User user, UpdateUserCommand command);
 
 }

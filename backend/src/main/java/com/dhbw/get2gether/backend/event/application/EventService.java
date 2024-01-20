@@ -4,6 +4,7 @@ import com.dhbw.get2gether.backend.event.adapter.out.EventRepository;
 import com.dhbw.get2gether.backend.event.application.mapper.EventMapper;
 import com.dhbw.get2gether.backend.event.model.Event;
 import com.dhbw.get2gether.backend.event.model.EventCreateCommand;
+import com.dhbw.get2gether.backend.event.model.EventUpdateCommand;
 import com.dhbw.get2gether.backend.user.application.UserService;
 import com.dhbw.get2gether.backend.user.model.User;
 import org.springframework.core.env.Environment;
@@ -58,6 +59,17 @@ public class EventService {
                 .orElse(List.of());
     }
 
+    public void deleteEventById(OAuth2User principal, String eventId) {
+        Event event = getEventIfUserIsParticipant(principal, eventId);
+        eventRepository.delete(event);
+    }
+
+    public Event updateEvent(OAuth2User principal, String eventId, EventUpdateCommand eventUpdateCommand) {
+        Event oldEvent = getEventIfUserIsParticipant(principal, eventId);
+        Event newEvent = eventMapper.updateEvent(oldEvent, eventUpdateCommand);
+        return eventRepository.save(newEvent);
+    }
+
     public Event addParticipantToEvent(OAuth2User principal, String invitationLink) {
         Optional<Event> event = eventRepository.findByInvitationLink(invitationLink);
         return event.map(presentEvent -> {
@@ -73,9 +85,10 @@ public class EventService {
         return eventRepository.findById(eventId).orElseThrow(() -> new IllegalArgumentException("Event not found"));
     }
 
-    public Event getEventIfUserIsParticipant(String userId, String eventId) {
+    public Event getEventIfUserIsParticipant(OAuth2User principal, String eventId) {
+        User user = userService.findUserFromPrincipal(principal).orElseThrow(() -> new IllegalArgumentException("User is not logged in"));
         Event event = getEventById(eventId);
-        if (event.getParticipantIds().contains(userId)) {
+        if (event.getParticipantIds().contains(user.getId())) {
             return event;
         } else {
             throw new IllegalArgumentException("User is not a participant of this event");
@@ -83,8 +96,7 @@ public class EventService {
     }
 
     public Event generateInvitationLink(OAuth2User principal, String eventId) {
-        User user = userService.getUserByPrincipal(principal);
-        Event event = getEventIfUserIsParticipant(user.getId(), eventId);
+        Event event = getEventIfUserIsParticipant(principal, eventId);
         event.setInvitationLink("invitation-" + UUID.randomUUID());
         return eventRepository.save(event);
     }

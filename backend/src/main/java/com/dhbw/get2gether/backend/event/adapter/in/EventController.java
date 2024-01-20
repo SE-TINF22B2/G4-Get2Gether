@@ -3,6 +3,7 @@ package com.dhbw.get2gether.backend.event.adapter.in;
 import com.dhbw.get2gether.backend.event.application.EventService;
 import com.dhbw.get2gether.backend.event.model.Event;
 import com.dhbw.get2gether.backend.event.model.EventCreateCommand;
+import com.dhbw.get2gether.backend.event.model.EventUpdateCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -34,5 +35,15 @@ public class EventController {
     @GetMapping("/{eventId}/generateInvitationLink")
     public Event generateInvitationLink(@AuthenticationPrincipal OAuth2User principal, @PathVariable String eventId) {
         return eventService.generateInvitationLink(principal, eventId);
+    }
+
+    @DeleteMapping("/{eventId}")
+    public void deleteEventById(@AuthenticationPrincipal OAuth2User principal, @PathVariable String eventId) {
+        eventService.deleteEventById(principal, eventId);
+    }
+
+    @PutMapping("/{eventId}")
+    public Event updateEvent(@AuthenticationPrincipal OAuth2User principal, @PathVariable String eventId, @RequestBody EventUpdateCommand eventUpdateCommand) {
+        return eventService.updateEvent(principal, eventId, eventUpdateCommand);
     }
 }

@@ -38,4 +38,15 @@ export class DashboardComponent {
       console.log(result);
     })
   }
+
+  updateEvent(){
+    this.http.put("http://localhost:8080/event/d1541053-cea8-4f31-8500-d5151d0853c8", {
+      "name": "Geiles Event 17",
+      "description": "Wird mega geil",
+      "location": "Elkes Kuechen",
+      "date": "1987-04-08T12:30:00"
+    },{withCredentials: true}).subscribe(result =>{
+      console.log(result);
+    })
+  }
 }

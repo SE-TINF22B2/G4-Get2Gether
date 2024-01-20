@@ -41,11 +41,10 @@ public class UserService {
         return userRepository.insert(user);
     }
 
-    public User updateUser(UpdateUserCommand command) {
-        if (!userRepository.existsById(command.getId()))
-            throw new IllegalArgumentException("User with ID '" + command.getId() + "' does not exist.");
-        User user = userMapper.mapToUser(command);
-        return userRepository.save(user);
+    public User updateUser(OAuth2User principal, UpdateUserCommand updateUserCommand) {
+        User oldUser = getUserByPrincipal(principal);
+        User newUser = userMapper.updateUser(oldUser, updateUserCommand);
+        return userRepository.save(newUser);
     }
 
     public Optional<User> findUserByEmail(String email) {

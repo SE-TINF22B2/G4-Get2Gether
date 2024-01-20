@@ -2,14 +2,10 @@ package com.dhbw.get2gether.backend.event.application.mapper;
 
 import com.dhbw.get2gether.backend.event.model.Event;
 import com.dhbw.get2gether.backend.event.model.EventCreateCommand;
-import com.dhbw.get2gether.backend.widget.model.Widget;
-import org.mapstruct.AfterMapping;
+import com.dhbw.get2gether.backend.event.model.EventUpdateCommand;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-
-import java.util.ArrayList;
-import java.util.UUID;
 
 @Mapper(componentModel = "spring")
 public interface EventMapper {
@@ -20,4 +16,6 @@ public interface EventMapper {
     @Mapping(target = "creatorId", ignore = true)
     @Mapping(target = "participantIds", ignore = true)
     Event toEvent(EventCreateCommand eventCreateCommand);
+
+    Event updateEvent(@MappingTarget Event event, EventUpdateCommand eventUpdateCommand);
 }

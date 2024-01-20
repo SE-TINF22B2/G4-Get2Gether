@@ -1,6 +1,5 @@
 package com.dhbw.get2gether.backend.user.application;
 
-import com.dhbw.get2gether.backend.user.adapter.out.UserRepository;
 import com.dhbw.get2gether.backend.user.model.CreateUserCommand;
 import com.dhbw.get2gether.backend.user.model.UpdateUserCommand;
 import com.dhbw.get2gether.backend.user.model.User;
@@ -33,14 +32,13 @@ public class OAuthUserService extends DefaultOAuth2UserService {
         String mail = oAuth2User.getAttribute("email");
         Optional<User> optionalUser = userService.findUserByEmail(mail);
         optionalUser.ifPresentOrElse(
-                user -> updateUser(createUpdateCommand(user, oAuth2User)),
+                user -> updateUser(oAuth2User, createUpdateCommand(user, oAuth2User)),
                 () -> createNewUser(oAuth2User)
         );
     }
 
     private UpdateUserCommand createUpdateCommand(User user, OAuth2User oAuth2User) {
         return UpdateUserCommand.builder()
-                .id(user.getId())
                 .firstName(oAuth2User.getAttribute("given_name"))
                 .lastName(oAuth2User.getAttribute("family_name"))
                 .email(oAuth2User.getAttribute("email"))
@@ -48,8 +46,8 @@ public class OAuthUserService extends DefaultOAuth2UserService {
                 .build();
     }
 
-    private void updateUser(UpdateUserCommand command) {
-        userService.updateUser(command);
+    private void updateUser(OAuth2User principal, UpdateUserCommand updateUserCommand) {
+        userService.updateUser(principal, updateUserCommand);
     }
 
     private void createNewUser(OAuth2User oAuth2User) {
