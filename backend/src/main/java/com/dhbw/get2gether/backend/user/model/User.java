@@ -1,4 +1,4 @@
-package com.dhbw.get2gether.backend.test;
+package com.dhbw.get2gether.backend.user.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
