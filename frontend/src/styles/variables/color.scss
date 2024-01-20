@@ -1,0 +1,20 @@
+:root {
+  --opacity: 100%;
+  --black-base: #121212;
+  --white-base: #fafafa;
+  --border-gray-base: #bbbbbb;
+  --background-gray-base: #f0f0f0;
+
+  --black: hsla(var(--black-base) / var(--opacity));
+  --white: hsla(var(--white-base) / var(--opacity));
+  --border-gray: hsla(var(--border-gray-base) / var(--opacity));
+  --background-gray: hsla(var(--background-gray-base) / var(--opacity));
+
+  //Akzentfarben (später individuell)
+  --primary-color-base: #264653;
+  --secondary-color-base: #E76F51;
+
+  --primary-color: hsla(var(--primary-color-base) / var(--opacity));
+  --secondary-color: hsla(var(--secondary-color-base) / var(--opacity));
+
+}

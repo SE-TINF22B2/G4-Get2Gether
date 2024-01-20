@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+@use "styles/variables/color";
+@use "styles/variables/size";
+@use "styles/variables/breakpoints";
+
+@font-face {
+  font-family: 'Mada';
+  src: url('assets/mada-font/Mada-VariableFont_wght.ttf');
+}
+
+html,
+body,
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: Mada, sans-serif;
+}
