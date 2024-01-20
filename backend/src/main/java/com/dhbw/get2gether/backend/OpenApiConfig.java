@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @OpenAPIDefinition(
-        info = @Info(title = "Driver Registration", version = "v1"),
+        info = @Info(title = "Get2Gether", version = "v1"),
         servers = {
                 @Server(url = "/", description = "self"),
                 @Server(url = "http://localhost:8080", description = "local")
