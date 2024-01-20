@@ -6,6 +6,7 @@ import com.dhbw.get2gether.backend.event.model.Event;
 import com.dhbw.get2gether.backend.event.model.EventCreateCommand;
 import com.dhbw.get2gether.backend.user.application.UserService;
 import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -35,6 +36,12 @@ public class EventService {
 
     public List<Event> getAllEvents() {
         return eventRepository.findAll();
+    }
+
+    public List<Event> getAllEventsFromUser(OAuth2User principal) {
+        return userService.findUserFromPrincipal(principal)
+                .map(user -> eventRepository.findAllByParticipantIdsContaining(user.getId()))
+                .orElse(List.of());
     }
 
 }

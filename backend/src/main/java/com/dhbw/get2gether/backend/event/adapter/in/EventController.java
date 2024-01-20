@@ -5,8 +5,10 @@ import com.dhbw.get2gether.backend.event.model.Event;
 import com.dhbw.get2gether.backend.event.model.EventCreateCommand;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,5 +27,10 @@ public class EventController {
     @GetMapping("/all")
     public List<Event> getAllEvents(){
         return eventService.getAllEvents();
+    }
+
+    @GetMapping("/own")
+    public List<Event> getOwnEvents(@AuthenticationPrincipal OAuth2User principal) {
+        return eventService.getAllEventsFromUser(principal);
     }
 }
