@@ -1,4 +1,4 @@
-package com.dhbw.get2gether.backend.user.model.mapper;
+package com.dhbw.get2gether.backend.user.application.mapper;
 
 import com.dhbw.get2gether.backend.user.model.CreateUserCommand;
 import com.dhbw.get2gether.backend.user.model.UpdateUserCommand;

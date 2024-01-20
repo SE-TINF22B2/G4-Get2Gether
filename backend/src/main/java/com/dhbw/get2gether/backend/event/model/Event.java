@@ -13,10 +13,11 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@Builder
+@Builder(toBuilder = true)
 public class Event {
     @Id
     private String id;
+    private LocalDateTime creationDate;
     private String name;
     private String description;
     private String location;

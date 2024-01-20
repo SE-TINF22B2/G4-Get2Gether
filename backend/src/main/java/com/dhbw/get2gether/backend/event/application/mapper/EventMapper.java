@@ -20,12 +20,4 @@ public interface EventMapper {
     @Mapping(target = "creatorId", ignore = true)
     @Mapping(target = "participantIds", ignore = true)
     Event toEvent(EventCreateCommand eventCreateCommand);
-
-    @AfterMapping
-    default void toEvent(@MappingTarget Event.EventBuilder builder) {
-        builder.id(UUID.randomUUID().toString());
-        builder.invitationLink("");
-        builder.widgets(new ArrayList<Widget>());
-        builder.participantIds(new ArrayList<String>());
-    }
 }

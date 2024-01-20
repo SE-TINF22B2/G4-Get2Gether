@@ -10,6 +10,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -34,7 +35,13 @@ public class EventService {
             OAuth2User principal, EventCreateCommand eventCreateCommand) {
         Optional<User> user = this.userService.findUserFromPrincipal(principal);
         return user.map(presentUser -> {
-            Event event = this.eventMapper.toEvent(eventCreateCommand);
+            Event event = this.eventMapper.toEvent(eventCreateCommand).toBuilder()
+                    .id(UUID.randomUUID().toString())
+                    .creationDate(LocalDateTime.now())
+                    .invitationLink("")
+                    .widgets(List.of())
+                    .participantIds(List.of())
+                    .build();
             event.setCreatorId(presentUser.getId());
             event.addParticipant(presentUser.getId());
             return eventRepository.save(event);

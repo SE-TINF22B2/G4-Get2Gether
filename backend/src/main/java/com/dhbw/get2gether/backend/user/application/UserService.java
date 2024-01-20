@@ -5,11 +5,12 @@ import com.dhbw.get2gether.backend.user.model.CreateUserCommand;
 import com.dhbw.get2gether.backend.user.model.UpdateUserCommand;
 import com.dhbw.get2gether.backend.user.model.User;
 import com.dhbw.get2gether.backend.user.adapter.out.UserRepository;
-import com.dhbw.get2gether.backend.user.model.mapper.UserMapper;
+import com.dhbw.get2gether.backend.user.application.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -35,6 +36,7 @@ public class UserService {
         User user = userMapper.mapToUser(command)
                 .toBuilder()
                 .id(UUID.randomUUID().toString())
+                .creationDate(LocalDateTime.now())
                 .build();
         return userRepository.insert(user);
     }
