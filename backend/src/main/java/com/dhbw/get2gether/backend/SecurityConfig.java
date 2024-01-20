@@ -27,7 +27,7 @@ public class SecurityConfig {
                 .csrf(c -> c.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
                 .cors(h -> h.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(requests -> {
-                    requests.requestMatchers("/", "/error", "/webjars/**", "/oauth2/authorization/google")
+                    requests.requestMatchers("/", "/error", "/webjars/**", "/oauth2/authorization/google", "/**")
                             .permitAll()
                             .requestMatchers("/**")
                             .authenticated();
