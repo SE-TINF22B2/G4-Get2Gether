@@ -7,6 +7,8 @@ import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import {AuthGuardService} from "./AuthGuardService";
 import {HttpClientModule} from "@angular/common/http";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {LayoutModule} from "@angular/cdk/layout";
 
 @NgModule({
   declarations: [

@@ -28,4 +28,22 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ---
 ## Repsonsive Design
-Für ein flexibles Frontend, nutzen wir den Breakpoint Observer von Angular CDK. Hiermit können bestimmte Fenstergrößen beobachtet werden und anhand dieser CSS-Klassen einer Komponenten  hinzugefügt oder weggenommen werden. Mehr Informationen zur Anwendung findest du [hier](https://www.digitalocean.com/community/tutorials/angular-breakpoints-angular-cdk).
+Um ein anpassungsfähiges Frontend zu erstellen, verwenden wir den Breakpoint Observer von Angular CDK. Damit können wir verschiedene Fenstergrößen überwachen und je nach Bedarf CSS-Klassen zu einer Komponente hinzufügen, entfernen oder die Komponente ausblenden. Mehr Informationen zur Anwendung findest du [hier](https://blog.angular-university.io/angular-responsive-design/).
+### Anwendungsbeispiel 
+`login.component.ts`:
+```typescript
+constructor(public breakpointObserver: BreakpointObserver) {}
+
+ngOnInit() {
+  this.breakpointObserver.observe(Breakpoints.HandsetPortrait)
+    .subscribe(result => {
+      this.isPhonePortrait = result.matches;
+    })
+}
+```
+`login.component.html`:
+```html
+<div class="login-centered" [ngClass]="{'is-phone-portrait': isPhonePortrait}">
+  <span>Willkommen bei Get2Gether!</span>
+```
+
