@@ -20,8 +20,8 @@ public class EventController {
     EventService eventService;
 
     @PostMapping("/create")
-    public void createEvent(@CurrentSecurityContext SecurityContext securityContext, @RequestBody EventCreateCommand eventCreateCommand) {
-        eventService.createEvent(securityContext, eventCreateCommand);
+    public void createEvent(@AuthenticationPrincipal OAuth2User principal, @RequestBody EventCreateCommand eventCreateCommand) {
+        eventService.createEvent(principal, eventCreateCommand);
     }
 
     @GetMapping("/all")
