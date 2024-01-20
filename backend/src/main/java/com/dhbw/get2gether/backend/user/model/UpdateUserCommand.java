@@ -1,8 +1,10 @@
 package com.dhbw.get2gether.backend.user.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
+@Builder
 @AllArgsConstructor
 @Getter
 public class UpdateUserCommand {

@@ -9,6 +9,7 @@ import com.dhbw.get2gether.backend.user.model.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Component
@@ -42,5 +43,9 @@ public class UserService {
             throw new IllegalArgumentException("User with ID '" + command.getId() + "' does not exist.");
         User user = userMapper.mapToUser(command);
         return userRepository.save(user);
+    }
+
+    public Optional<User> findUserByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }

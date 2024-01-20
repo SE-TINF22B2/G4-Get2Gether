@@ -1,5 +1,7 @@
 package com.dhbw.get2gether.backend;
 
+import com.dhbw.get2gether.backend.user.application.OAuthUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -20,6 +22,10 @@ import java.util.List;
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 public class SecurityConfig {
+
+    @Autowired
+    private OAuthUserService oAuthUserService;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         //        RequestCache nullRequestCache = new NullRequestCache();
@@ -35,7 +41,9 @@ public class SecurityConfig {
                 })
                 .exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .oauth2Login(httpSecurityOAuth2LoginConfigurer ->
-                        httpSecurityOAuth2LoginConfigurer.defaultSuccessUrl("http://localhost:4200/dashboard"));
+                        httpSecurityOAuth2LoginConfigurer.defaultSuccessUrl("http://localhost:4200/dashboard")
+                                .userInfoEndpoint(infoEndPoint -> infoEndPoint.userService(oAuthUserService))
+                );
         return http.build();
     }
 
