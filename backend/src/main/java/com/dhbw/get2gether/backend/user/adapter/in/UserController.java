@@ -1,5 +1,6 @@
 package com.dhbw.get2gether.backend.user.adapter.in;
 
+import com.dhbw.get2gether.backend.user.application.UserService;
 import com.dhbw.get2gether.backend.user.model.User;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -13,11 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserController {
 
-    private final UserService userService;
-
-    public UserController(@Autowired UserService userService) {
-        this.userService = userService;
-    }
+    @Autowired
+    UserService userService;
 
     @GetMapping("/")
     public String test() {
