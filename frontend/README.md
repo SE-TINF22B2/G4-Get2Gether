@@ -25,3 +25,7 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+---
+## Repsonsive Design
+Für ein flexibles Frontend, nutzen wir den Breakpoint Observer von Angular CDK. Hiermit können bestimmte Fenstergrößen beobachtet werden und anhand dieser CSS-Klassen einer Komponenten  hinzugefügt oder weggenommen werden. Mehr Informationen zur Anwendung findest du [hier](https://www.digitalocean.com/community/tutorials/angular-breakpoints-angular-cdk).
