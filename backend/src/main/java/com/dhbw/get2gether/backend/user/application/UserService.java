@@ -7,6 +7,7 @@ import com.dhbw.get2gether.backend.user.model.User;
 import com.dhbw.get2gether.backend.user.adapter.out.UserRepository;
 import com.dhbw.get2gether.backend.user.model.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -47,5 +48,13 @@ public class UserService {
 
     public Optional<User> findUserByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+
+    public Optional<User> findUserFromPrincipal(OAuth2User principal) {
+        if (principal == null) {
+            return Optional.empty();
+        }
+        return findUserByEmail(principal.getAttribute("email"));
     }
 }

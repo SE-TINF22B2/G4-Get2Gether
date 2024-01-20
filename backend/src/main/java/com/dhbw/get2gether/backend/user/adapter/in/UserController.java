@@ -30,9 +30,10 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public OAuth2User user(@AuthenticationPrincipal OAuth2User principal) {
-        return principal;
+    public User user(@AuthenticationPrincipal OAuth2User principal) {
+        return userService.findUserFromPrincipal(principal).orElse(null);
     }
+
     @GetMapping("/user/{id}")
     public User user(@PathVariable String id) {
         return userService.getUserById(id);
