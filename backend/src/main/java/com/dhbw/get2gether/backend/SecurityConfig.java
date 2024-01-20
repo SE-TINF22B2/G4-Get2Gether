@@ -34,7 +34,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(h -> h.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(requests -> {
-                    requests.requestMatchers("/**", "/error", "/webjars/**", "/oauth2/authorization/google", "/landingpage")
+                    requests.requestMatchers("/**", "/error", "/webjars/**", "/oauth2/authorization/google", "/landingpage", "/swagger-ui/**")
                             .permitAll()
                             .requestMatchers("/**")
                             .authenticated();
