@@ -9,6 +9,8 @@ import com.dhbw.get2gether.backend.user.model.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 public class UserService {
     private final UserRepository userRepository;
@@ -28,7 +30,10 @@ public class UserService {
     }
 
     public User createUser(CreateUserCommand command) {
-        User user = userMapper.mapToUser(command);
+        User user = userMapper.mapToUser(command)
+                .toBuilder()
+                .id(UUID.randomUUID().toString())
+                .build();
         return userRepository.insert(user);
     }
 
