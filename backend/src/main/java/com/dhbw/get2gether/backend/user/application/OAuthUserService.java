@@ -41,8 +41,8 @@ public class OAuthUserService extends DefaultOAuth2UserService {
     private UpdateUserCommand createUpdateCommand(User user, OAuth2User oAuth2User) {
         return UpdateUserCommand.builder()
                 .id(user.getId())
-                .firstName(oAuth2User.getAttribute("givenName"))
-                .lastName(oAuth2User.getAttribute("familyName"))
+                .firstName(oAuth2User.getAttribute("given_name"))
+                .lastName(oAuth2User.getAttribute("family_name"))
                 .email(oAuth2User.getAttribute("email"))
                 .profilePictureUrl(oAuth2User.getAttribute("picture"))
                 .build();
@@ -54,8 +54,8 @@ public class OAuthUserService extends DefaultOAuth2UserService {
 
     private void createNewUser(OAuth2User oAuth2User) {
         CreateUserCommand command = CreateUserCommand.builder()
-                .firstName(oAuth2User.getAttribute("givenName"))
-                .lastName(oAuth2User.getAttribute("familyName"))
+                .firstName(oAuth2User.getAttribute("given_name"))
+                .lastName(oAuth2User.getAttribute("family_name"))
                 .email(oAuth2User.getAttribute("email"))
                 .profilePictureUrl(oAuth2User.getAttribute("picture"))
                 .build();
