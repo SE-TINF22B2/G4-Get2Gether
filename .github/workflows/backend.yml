@@ -29,3 +29,12 @@ jobs:
       uses: gradle/gradle-build-action@v2
     - name: Execute Gradle test
       run: ./gradlew test
+  build_and_publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build and push the image
+        run: |
+          echo "${{ secrets.GH_PAT }}" | docker login ghcr.io -u USERNAME --password-stdin
+          docker build . --tag ghcr.io/flugschnitzel/get2gether:latest
+          docker push ghcr.io/flugschnitzel/get2gether:latest

@@ -7,11 +7,13 @@ import com.dhbw.get2gether.backend.event.model.EventCreateCommand;
 import com.dhbw.get2gether.backend.event.model.EventUpdateCommand;
 import com.dhbw.get2gether.backend.user.application.UserService;
 import com.dhbw.get2gether.backend.user.model.User;
+import com.dhbw.get2gether.backend.widget.model.Widget;
 import org.springframework.core.env.Environment;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -40,8 +42,8 @@ public class EventService {
                     .id(UUID.randomUUID().toString())
                     .creationDate(LocalDateTime.now())
                     .invitationLink("")
-                    .widgets(List.of())
-                    .participantIds(List.of())
+                    .widgets(new ArrayList<Widget>())
+                    .participantIds(new ArrayList<String>())
                     .build();
             event.setCreatorId(presentUser.getId());
             event.addParticipant(presentUser.getId());
