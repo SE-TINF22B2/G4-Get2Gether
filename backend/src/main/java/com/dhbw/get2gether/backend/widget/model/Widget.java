@@ -5,11 +5,12 @@ import lombok.Getter;
 
 @Getter
 public abstract class Widget {
-    private LocalDateTime creationDate;
 
+    private final LocalDateTime creationDate;
     private final WidgetType widgetType;
 
     protected Widget(WidgetType widgetType) {
         this.widgetType = widgetType;
+        this.creationDate = LocalDateTime.now();
     }
 }

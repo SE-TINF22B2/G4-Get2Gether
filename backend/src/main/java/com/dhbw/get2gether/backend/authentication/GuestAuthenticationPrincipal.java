@@ -13,7 +13,7 @@ import org.springframework.security.core.AuthenticatedPrincipal;
 public class GuestAuthenticationPrincipal implements AuthenticatedPrincipal {
 
     private final String id;
-    private final LocalDateTime creationTime;
+    private final LocalDateTime creationDate;
     private final Set<String> grantedEventIds = new HashSet<>();
 
     public Set<String> getGrantedEventIds() {

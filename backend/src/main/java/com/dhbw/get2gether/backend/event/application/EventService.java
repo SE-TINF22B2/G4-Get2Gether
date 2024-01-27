@@ -8,7 +8,6 @@ import com.dhbw.get2gether.backend.event.model.EventCreateCommand;
 import com.dhbw.get2gether.backend.event.model.EventUpdateCommand;
 import com.dhbw.get2gether.backend.user.application.UserService;
 import com.dhbw.get2gether.backend.user.model.User;
-import com.dhbw.get2gether.backend.widget.model.Widget;
 import org.springframework.core.env.Environment;
 import org.springframework.security.core.AuthenticatedPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -43,12 +42,12 @@ public class EventService {
                             .id(UUID.randomUUID().toString())
                             .creationDate(LocalDateTime.now())
                             .invitationLink("")
-                            .widgets(new ArrayList<Widget>())
-                            .participantIds(new ArrayList<String>())
+                            .widgets(new ArrayList<>())
+                            .participantIds(new ArrayList<>())
+                            .creatorId(presentUser.getId())
                             .build();
-                    event.setCreatorId(presentUser.getId());
                     event.addParticipant(presentUser.getId());
-                    return eventRepository.save(event);
+                    return eventRepository.insert(event);
                 })
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
     }

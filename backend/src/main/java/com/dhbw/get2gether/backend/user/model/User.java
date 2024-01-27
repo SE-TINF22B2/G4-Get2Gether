@@ -11,9 +11,9 @@ import org.springframework.data.annotation.Id;
 @Getter
 public class User {
     @Id
-    private String id;
+    private final String id;
 
-    private LocalDateTime creationDate;
+    private final LocalDateTime creationDate;
     private String firstName;
     private String lastName;
     private String email;

@@ -7,13 +7,14 @@ import com.dhbw.get2gether.backend.user.model.CreateUserCommand;
 import com.dhbw.get2gether.backend.user.model.Guest;
 import com.dhbw.get2gether.backend.user.model.UpdateUserCommand;
 import com.dhbw.get2gether.backend.user.model.User;
-import java.time.LocalDateTime;
-import java.util.Optional;
-import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticatedPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
+import java.util.UUID;
 
 @Component
 public class UserService {
@@ -55,7 +56,7 @@ public class UserService {
         if (principal instanceof OAuth2User) {
             return findUserByEmail(((OAuth2User) principal).getAttribute("email"));
         } else if (principal instanceof GuestAuthenticationPrincipal guestPrincipal) {
-            return Optional.of(new Guest(guestPrincipal.getId(), guestPrincipal.getCreationTime()));
+            return Optional.of(new Guest(guestPrincipal.getId(), guestPrincipal.getCreationDate()));
         }
         return Optional.empty();
     }
