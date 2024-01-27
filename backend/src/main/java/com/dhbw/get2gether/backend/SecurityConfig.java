@@ -3,12 +3,15 @@ package com.dhbw.get2gether.backend;
 import com.dhbw.get2gether.backend.authentication.GuestAuthenticationFilter;
 import com.dhbw.get2gether.backend.authentication.GuestAuthenticationProvider;
 import com.dhbw.get2gether.backend.user.application.OAuthUserService;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
+import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -22,6 +25,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -48,24 +53,42 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .cors(h -> h.configurationSource(corsConfigurationSource()))
                 .addFilterAfter(guestAuthenticationFilter, OAuth2LoginAuthenticationFilter.class)
-                .authorizeHttpRequests(requests -> {
-                    requests.requestMatchers(
-                                    "/error",
-                                    "/webjars/**",
-                                    "/oauth2/authorization/google",
-                                    "/landingpage",
-                                    "/swagger-ui",
-                                    "/swagger-ui/**",
-                                    "/v3/api-docs/**")
-                            .permitAll()
-                            .anyRequest()
-                            .authenticated();
-                })
+                .authorizeHttpRequests(requests -> requests
+                        //--- public endpoints
+                        .requestMatchers(
+                                "/error",
+                                "/webjars/**",
+                                "/oauth2/authorization/google",
+                                "/landingpage",
+                                "/swagger-ui",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**").permitAll()
+                        //--- must be authenticated (guest, user, admin, ...)
+                        .requestMatchers("/event/invitation/**", "user").authenticated()
+                        //--- must have GUEST_ROLE
+                        .requestMatchers("/event/**").hasRole("GUEST")
+                        //--- must have USER_ROLE
+                        .anyRequest().hasRole("USER"))
                 .exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .oauth2Login(httpSecurityOAuth2LoginConfigurer -> httpSecurityOAuth2LoginConfigurer
                         .defaultSuccessUrl("http://localhost:4200/dashboard", true)
                         .userInfoEndpoint(infoEndPoint -> infoEndPoint.userService(oAuthUserService)));
         return http.build();
+    }
+
+    @Bean
+    public RoleHierarchy roleHierarchy() {
+        RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
+        roleHierarchy.setHierarchy("ROLE_ADMIN > ROLE_USER\n" +
+                "ROLE_USER > ROLE_GUEST");
+        return roleHierarchy;
+    }
+
+    @Bean
+    public MethodSecurityExpressionHandler methodSecurityExpressionHandler(RoleHierarchy roleHierarchy) {
+        DefaultMethodSecurityExpressionHandler expressionHandler = new DefaultMethodSecurityExpressionHandler();
+        expressionHandler.setRoleHierarchy(roleHierarchy);
+        return expressionHandler;
     }
 
     CorsConfigurationSource corsConfigurationSource() {
