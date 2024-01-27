@@ -1,13 +1,12 @@
 package com.dhbw.get2gether.backend.authentication;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import org.springframework.security.core.AuthenticatedPrincipal;
-
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.springframework.security.core.AuthenticatedPrincipal;
 
 @Getter
 @AllArgsConstructor

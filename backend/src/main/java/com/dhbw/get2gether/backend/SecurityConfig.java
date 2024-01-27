@@ -3,6 +3,7 @@ package com.dhbw.get2gether.backend;
 import com.dhbw.get2gether.backend.authentication.GuestAuthenticationFilter;
 import com.dhbw.get2gether.backend.authentication.GuestAuthenticationProvider;
 import com.dhbw.get2gether.backend.user.application.OAuthUserService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,8 +22,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -46,8 +45,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, GuestAuthenticationFilter guestAuthenticationFilter)
             throws Exception {
-        http
-                .csrf(AbstractHttpConfigurer::disable)
+        http.csrf(AbstractHttpConfigurer::disable)
                 .cors(h -> h.configurationSource(corsConfigurationSource()))
                 .addFilterAfter(guestAuthenticationFilter, OAuth2LoginAuthenticationFilter.class)
                 .authorizeHttpRequests(requests -> {
@@ -86,8 +84,6 @@ public class SecurityConfig {
     @Bean
     public GuestAuthenticationFilter guestAuthenticationFilter(AuthenticationManager authenticationManager) {
         return new GuestAuthenticationFilter(
-                authenticationManager,
-                new AntPathRequestMatcher("/event/invitation/**", "GET")
-        );
+                authenticationManager, new AntPathRequestMatcher("/event/invitation/**", "GET"));
     }
 }

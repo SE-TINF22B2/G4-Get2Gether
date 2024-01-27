@@ -20,8 +20,7 @@ public class InvitationController {
     public void getInvitationLink(
             @AuthenticationPrincipal AuthenticatedPrincipal principal,
             HttpServletResponse httpServletResponse,
-            @PathVariable String invitationLink
-    ) {
+            @PathVariable String invitationLink) {
         httpServletResponse.setHeader("Location", eventService.getRouteFromInvitationLink(principal, invitationLink));
         httpServletResponse.setStatus(302);
     }

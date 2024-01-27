@@ -14,5 +14,4 @@ public interface UserMapper {
     User mapToUser(CreateUserCommand command);
 
     User updateUser(@MappingTarget User user, UpdateUserCommand command);
-
 }

@@ -3,14 +3,13 @@ package com.dhbw.get2gether.backend.user.application;
 import com.dhbw.get2gether.backend.user.model.CreateUserCommand;
 import com.dhbw.get2gether.backend.user.model.UpdateUserCommand;
 import com.dhbw.get2gether.backend.user.model.User;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class OAuthUserService extends DefaultOAuth2UserService {
@@ -32,9 +31,7 @@ public class OAuthUserService extends DefaultOAuth2UserService {
         String mail = oAuth2User.getAttribute("email");
         Optional<User> optionalUser = userService.findUserByEmail(mail);
         optionalUser.ifPresentOrElse(
-                user -> updateUser(oAuth2User, createUpdateCommand(user, oAuth2User)),
-                () -> createNewUser(oAuth2User)
-        );
+                user -> updateUser(oAuth2User, createUpdateCommand(user, oAuth2User)), () -> createNewUser(oAuth2User));
     }
 
     private UpdateUserCommand createUpdateCommand(User user, OAuth2User oAuth2User) {

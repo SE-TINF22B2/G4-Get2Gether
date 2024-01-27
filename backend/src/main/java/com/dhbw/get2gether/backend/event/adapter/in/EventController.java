@@ -4,11 +4,10 @@ import com.dhbw.get2gether.backend.event.application.EventService;
 import com.dhbw.get2gether.backend.event.model.Event;
 import com.dhbw.get2gether.backend.event.model.EventCreateCommand;
 import com.dhbw.get2gether.backend.event.model.EventUpdateCommand;
+import java.util.List;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/event")
@@ -21,12 +20,13 @@ public class EventController {
     }
 
     @PostMapping("/")
-    public Event createEvent(@AuthenticationPrincipal OAuth2User principal, @RequestBody EventCreateCommand eventCreateCommand) {
+    public Event createEvent(
+            @AuthenticationPrincipal OAuth2User principal, @RequestBody EventCreateCommand eventCreateCommand) {
         return eventService.createEvent(principal, eventCreateCommand);
     }
 
     @GetMapping("/all")
-    public List<Event> getAllEvents(){
+    public List<Event> getAllEvents() {
         return eventService.getAllEvents();
     }
 
@@ -46,7 +46,10 @@ public class EventController {
     }
 
     @PutMapping("/{eventId}")
-    public Event updateEvent(@AuthenticationPrincipal OAuth2User principal, @PathVariable String eventId, @RequestBody EventUpdateCommand eventUpdateCommand) {
+    public Event updateEvent(
+            @AuthenticationPrincipal OAuth2User principal,
+            @PathVariable String eventId,
+            @RequestBody EventUpdateCommand eventUpdateCommand) {
         return eventService.updateEvent(principal, eventId, eventUpdateCommand);
     }
 }

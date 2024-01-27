@@ -1,8 +1,7 @@
 package com.dhbw.get2gether.backend.user.model;
 
-import lombok.Getter;
-
 import java.time.LocalDateTime;
+import lombok.Getter;
 
 @Getter
 public class Guest extends User {

@@ -28,31 +28,29 @@ public class EventService {
     private final EventRepository eventRepository;
     private final UserService userService;
 
-    public EventService(EventMapper eventMapper, EventRepository eventRepository, UserService userService, Environment env) {
+    public EventService(
+            EventMapper eventMapper, EventRepository eventRepository, UserService userService, Environment env) {
         this.eventMapper = eventMapper;
         this.eventRepository = eventRepository;
         this.userService = userService;
         this.env = env;
     }
 
-
-    public Event createEvent(
-            OAuth2User principal,
-            EventCreateCommand eventCreateCommand
-    ) {
+    public Event createEvent(OAuth2User principal, EventCreateCommand eventCreateCommand) {
         Optional<User> user = this.userService.findUserFromPrincipal(principal);
         return user.map(presentUser -> {
-            Event event = this.eventMapper.toEvent(eventCreateCommand).toBuilder()
-                    .id(UUID.randomUUID().toString())
-                    .creationDate(LocalDateTime.now())
-                    .invitationLink("")
-                    .widgets(new ArrayList<Widget>())
-                    .participantIds(new ArrayList<String>())
-                    .build();
-            event.setCreatorId(presentUser.getId());
-            event.addParticipant(presentUser.getId());
-            return eventRepository.save(event);
-        }).orElseThrow(() -> new IllegalArgumentException("User not found"));
+                    Event event = this.eventMapper.toEvent(eventCreateCommand).toBuilder()
+                            .id(UUID.randomUUID().toString())
+                            .creationDate(LocalDateTime.now())
+                            .invitationLink("")
+                            .widgets(new ArrayList<Widget>())
+                            .participantIds(new ArrayList<String>())
+                            .build();
+                    event.setCreatorId(presentUser.getId());
+                    event.addParticipant(presentUser.getId());
+                    return eventRepository.save(event);
+                })
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
     }
 
     public List<Event> getAllEvents() {
@@ -60,7 +58,8 @@ public class EventService {
     }
 
     public List<Event> getAllEventsFromUser(OAuth2User principal) {
-        return userService.findUserFromPrincipal(principal)
+        return userService
+                .findUserFromPrincipal(principal)
                 .map(user -> eventRepository.findEventsByParticipantIdsContains(user.getId()))
                 .orElse(List.of());
     }
@@ -79,12 +78,14 @@ public class EventService {
     public Event addParticipantToEvent(OAuth2User principal, String invitationLink) {
         Optional<Event> event = eventRepository.findByInvitationLink(invitationLink);
         return event.map(presentEvent -> {
-            Optional<User> user = this.userService.findUserFromPrincipal(principal);
-            return user.map(presentUser -> {
-                presentEvent.addParticipant(presentUser.getId());
-                return eventRepository.save(presentEvent);
-            }).orElseThrow(() -> new IllegalArgumentException("User not found"));
-        }).orElseThrow(() -> new IllegalArgumentException("Event not found"));
+                    Optional<User> user = this.userService.findUserFromPrincipal(principal);
+                    return user.map(presentUser -> {
+                                presentEvent.addParticipant(presentUser.getId());
+                                return eventRepository.save(presentEvent);
+                            })
+                            .orElseThrow(() -> new IllegalArgumentException("User not found"));
+                })
+                .orElseThrow(() -> new IllegalArgumentException("Event not found"));
     }
 
     public Event getEventById(String eventId) {
@@ -92,7 +93,9 @@ public class EventService {
     }
 
     public Event getEventIfUserIsParticipant(OAuth2User principal, String eventId) {
-        User user = userService.findUserFromPrincipal(principal).orElseThrow(() -> new IllegalArgumentException("User is not logged in"));
+        User user = userService
+                .findUserFromPrincipal(principal)
+                .orElseThrow(() -> new IllegalArgumentException("User is not logged in"));
         Event event = getEventById(eventId);
         if (event.getParticipantIds().contains(user.getId())) {
             return event;

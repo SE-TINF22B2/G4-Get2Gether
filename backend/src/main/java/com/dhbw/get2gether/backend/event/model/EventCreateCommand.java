@@ -1,9 +1,9 @@
 package com.dhbw.get2gether.backend.event.model;
 
+import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
 @Builder
 @Getter
 public class EventCreateCommand {

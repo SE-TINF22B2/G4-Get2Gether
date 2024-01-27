@@ -13,18 +13,13 @@ import org.springframework.context.annotation.Configuration;
 @OpenAPIDefinition(
         info = @Info(title = "Get2Gether", version = "v1"),
         servers = {
-                @Server(url = "/", description = "self"),
-                @Server(url = "http://localhost:8080", description = "local")
+            @Server(url = "/", description = "self"),
+            @Server(url = "http://localhost:8080", description = "local")
         })
 @SecurityScheme(
         name = "oauth",
         type = SecuritySchemeType.OAUTH2,
         flows =
-        @OAuthFlows(
-                implicit =
-                @OAuthFlow(
-                        authorizationUrl =
-                                "http://localhost:8080/oauth2/authorization/google")))
+                @OAuthFlows(
+                        implicit = @OAuthFlow(authorizationUrl = "http://localhost:8080/oauth2/authorization/google")))
 public class OpenApiConfig {}
-
-

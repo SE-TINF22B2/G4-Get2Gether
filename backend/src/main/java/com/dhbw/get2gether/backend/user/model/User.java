@@ -1,11 +1,10 @@
 package com.dhbw.get2gether.backend.user.model;
 
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
-
-import java.time.LocalDateTime;
 
 @Builder(toBuilder = true)
 @AllArgsConstructor
@@ -13,6 +12,7 @@ import java.time.LocalDateTime;
 public class User {
     @Id
     private String id;
+
     private LocalDateTime creationDate;
     private String firstName;
     private String lastName;

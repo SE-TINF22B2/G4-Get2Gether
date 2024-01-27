@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class LandingPageController {
     @GetMapping("/landingpage")
     public String method(@CurrentSecurityContext SecurityContext context, HttpServletResponse httpServletResponse) {
-        if(!context.getAuthentication().getPrincipal().toString().equals("anonymousUser")){
+        if (!context.getAuthentication().getPrincipal().toString().equals("anonymousUser")) {
             httpServletResponse.setHeader("Location", "http://localhost:4200/dashboard");
             httpServletResponse.setStatus(302);
             return null;
