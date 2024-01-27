@@ -3,9 +3,6 @@ package com.dhbw.get2gether.backend;
 import com.dhbw.get2gether.backend.authentication.GuestAuthenticationFilter;
 import com.dhbw.get2gether.backend.authentication.GuestAuthenticationProvider;
 import com.dhbw.get2gether.backend.user.application.OAuthUserService;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,6 +29,10 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Configuration
 @EnableWebSecurity
@@ -68,10 +69,12 @@ public class SecurityConfig {
                                 "/swagger-ui",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**").permitAll()
+                        // --- must be administrator (ADMIN_ROLE)
+                        .requestMatchers("/event/all").hasRole("ADMIN")
                         // --- must be authenticated (guest, user, admin, ...)
-                        .requestMatchers("/event/invitation/**", "user").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/event/invitation/**", "user").authenticated()
                         // --- must have GUEST_ROLE
-                        .requestMatchers("/event/**").hasRole("GUEST")
+                        .requestMatchers(HttpMethod.GET, "/event/**").hasRole("GUEST")
                         // --- must have USER_ROLE
                         .anyRequest().hasRole("USER"))
                 .exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
