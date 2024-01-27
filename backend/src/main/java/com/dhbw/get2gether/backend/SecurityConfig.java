@@ -3,6 +3,9 @@ package com.dhbw.get2gether.backend;
 import com.dhbw.get2gether.backend.authentication.GuestAuthenticationFilter;
 import com.dhbw.get2gether.backend.authentication.GuestAuthenticationProvider;
 import com.dhbw.get2gether.backend.user.application.OAuthUserService;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,15 +21,17 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
+import org.springframework.security.oauth2.core.oidc.user.OidcUserAuthority;
+import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -54,7 +59,7 @@ public class SecurityConfig {
                 .cors(h -> h.configurationSource(corsConfigurationSource()))
                 .addFilterAfter(guestAuthenticationFilter, OAuth2LoginAuthenticationFilter.class)
                 .authorizeHttpRequests(requests -> requests
-                        //--- public endpoints
+                        // --- public endpoints
                         .requestMatchers(
                                 "/error",
                                 "/webjars/**",
@@ -63,16 +68,18 @@ public class SecurityConfig {
                                 "/swagger-ui",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**").permitAll()
-                        //--- must be authenticated (guest, user, admin, ...)
+                        // --- must be authenticated (guest, user, admin, ...)
                         .requestMatchers("/event/invitation/**", "user").authenticated()
-                        //--- must have GUEST_ROLE
+                        // --- must have GUEST_ROLE
                         .requestMatchers("/event/**").hasRole("GUEST")
-                        //--- must have USER_ROLE
+                        // --- must have USER_ROLE
                         .anyRequest().hasRole("USER"))
                 .exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .oauth2Login(httpSecurityOAuth2LoginConfigurer -> httpSecurityOAuth2LoginConfigurer
                         .defaultSuccessUrl("http://localhost:4200/dashboard", true)
-                        .userInfoEndpoint(infoEndPoint -> infoEndPoint.userService(oAuthUserService)));
+                        .userInfoEndpoint(infoEndPoint -> infoEndPoint
+                                .userAuthoritiesMapper(grantedAuthoritiesMapper())
+                                .userService(oAuthUserService)));
         return http.build();
     }
 
@@ -89,6 +96,25 @@ public class SecurityConfig {
         DefaultMethodSecurityExpressionHandler expressionHandler = new DefaultMethodSecurityExpressionHandler();
         expressionHandler.setRoleHierarchy(roleHierarchy);
         return expressionHandler;
+    }
+
+    private GrantedAuthoritiesMapper grantedAuthoritiesMapper() {
+        return (authorities) -> {
+            Set<GrantedAuthority> mappedAuthorities = new HashSet<>();
+            authorities.forEach(authority -> {
+                GrantedAuthority mappedAuthority;
+                if (authority instanceof OidcUserAuthority userAuthority) {
+                    mappedAuthority =
+                            new OidcUserAuthority("ROLE_USER", userAuthority.getIdToken(), userAuthority.getUserInfo());
+                } else if (authority instanceof OAuth2UserAuthority userAuthority) {
+                    mappedAuthority = new OAuth2UserAuthority("ROLE_USER", userAuthority.getAttributes());
+                } else {
+                    mappedAuthority = authority;
+                }
+                mappedAuthorities.add(mappedAuthority);
+            });
+            return mappedAuthorities;
+        };
     }
 
     CorsConfigurationSource corsConfigurationSource() {
