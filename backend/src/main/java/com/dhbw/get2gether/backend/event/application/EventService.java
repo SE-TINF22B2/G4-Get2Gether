@@ -1,5 +1,6 @@
 package com.dhbw.get2gether.backend.event.application;
 
+import com.dhbw.get2gether.backend.authentication.GuestAuthenticationPrincipal;
 import com.dhbw.get2gether.backend.event.adapter.out.EventRepository;
 import com.dhbw.get2gether.backend.event.application.mapper.EventMapper;
 import com.dhbw.get2gether.backend.event.model.Event;
@@ -9,6 +10,7 @@ import com.dhbw.get2gether.backend.user.application.UserService;
 import com.dhbw.get2gether.backend.user.model.User;
 import com.dhbw.get2gether.backend.widget.model.Widget;
 import org.springframework.core.env.Environment;
+import org.springframework.security.core.AuthenticatedPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +37,9 @@ public class EventService {
 
 
     public Event createEvent(
-            OAuth2User principal, EventCreateCommand eventCreateCommand) {
+            OAuth2User principal,
+            EventCreateCommand eventCreateCommand
+    ) {
         Optional<User> user = this.userService.findUserFromPrincipal(principal);
         return user.map(presentUser -> {
             Event event = this.eventMapper.toEvent(eventCreateCommand).toBuilder()
@@ -107,8 +111,12 @@ public class EventService {
         return eventRepository.findByInvitationLink(invitationLink);
     }
 
-    public String getRouteFromInvitationLink(String invitationLink) {
+    public String getRouteFromInvitationLink(AuthenticatedPrincipal principal, String invitationLink) {
         Optional<Event> event = getEventByInvitationLink(invitationLink);
-        return event.map(presentEvent -> env.getProperty("frontend.url") + "/event/" + presentEvent.getId()).orElse(env.getProperty("frontend.url") + "/dashboard");
+        if (event.isPresent() && principal instanceof GuestAuthenticationPrincipal guestPrincipal) {
+            guestPrincipal.grantAccessToEvent(event.get().getId());
+        }
+        return event.map(presentEvent -> env.getProperty("frontend.url") + "/event/" + presentEvent.getId())
+                .orElse(env.getProperty("frontend.url") + "/dashboard");
     }
 }

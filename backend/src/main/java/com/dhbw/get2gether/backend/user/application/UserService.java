@@ -1,12 +1,14 @@
 package com.dhbw.get2gether.backend.user.application;
 
-
-import com.dhbw.get2gether.backend.user.model.CreateUserCommand;
-import com.dhbw.get2gether.backend.user.model.UpdateUserCommand;
-import com.dhbw.get2gether.backend.user.model.User;
+import com.dhbw.get2gether.backend.authentication.GuestAuthenticationPrincipal;
 import com.dhbw.get2gether.backend.user.adapter.out.UserRepository;
 import com.dhbw.get2gether.backend.user.application.mapper.UserMapper;
+import com.dhbw.get2gether.backend.user.model.CreateUserCommand;
+import com.dhbw.get2gether.backend.user.model.Guest;
+import com.dhbw.get2gether.backend.user.model.UpdateUserCommand;
+import com.dhbw.get2gether.backend.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.AuthenticatedPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 
@@ -28,13 +30,12 @@ public class UserService {
         return userRepository.getById(id);
     }
 
-    public void deleteUserById(String id){
+    public void deleteUserById(String id) {
         userRepository.deleteById(id);
     }
 
     public User createUser(CreateUserCommand command) {
-        User user = userMapper.mapToUser(command)
-                .toBuilder()
+        User user = userMapper.mapToUser(command).toBuilder()
                 .id(UUID.randomUUID().toString())
                 .creationDate(LocalDateTime.now())
                 .build();
@@ -51,15 +52,16 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-
-    public Optional<User> findUserFromPrincipal(OAuth2User principal) {
-        if (principal == null) {
-            return Optional.empty();
+    public Optional<User> findUserFromPrincipal(AuthenticatedPrincipal principal) {
+        if (principal instanceof OAuth2User) {
+            return findUserByEmail(((OAuth2User) principal).getAttribute("email"));
+        } else if (principal instanceof GuestAuthenticationPrincipal guestPrincipal) {
+            return Optional.of(new Guest(guestPrincipal.getId(), guestPrincipal.getCreationTime()));
         }
-        return findUserByEmail(principal.getAttribute("email"));
+        return Optional.empty();
     }
 
-    public User getUserByPrincipal(OAuth2User principal) {
+    public User getUserByPrincipal(AuthenticatedPrincipal principal) {
         return findUserFromPrincipal(principal).orElseThrow(() -> new IllegalArgumentException("User not found"));
     }
 }
