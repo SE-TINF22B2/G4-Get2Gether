@@ -16,11 +16,6 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/")
-    public String test() {
-        return "Hello";
-    }
-
     @GetMapping("/error")
     public String error(HttpServletRequest request) {
         String message = (String) request.getSession().getAttribute("error.message");
@@ -36,10 +31,5 @@ public class UserController {
     @GetMapping("/user/{id}")
     public User user(@PathVariable String id) {
         return userService.getUserById(id);
-    }
-
-    @GetMapping("/test")
-    public String test(@AuthenticationPrincipal AuthenticatedPrincipal principal) {
-        return principal.toString();
     }
 }

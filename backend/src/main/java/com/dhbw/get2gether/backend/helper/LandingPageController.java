@@ -1,21 +1,29 @@
 package com.dhbw.get2gether.backend.helper;
 
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.core.context.SecurityContext;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 public class LandingPageController {
-    @GetMapping("/landingpage")
+
+    private final Environment env;
+
+    LandingPageController(Environment env) {
+        this.env = env;
+    }
+
+    @GetMapping("/")
     public String method(@CurrentSecurityContext SecurityContext context, HttpServletResponse httpServletResponse) {
         if (!context.getAuthentication().getPrincipal().toString().equals("anonymousUser")) {
-            httpServletResponse.setHeader("Location", "http://localhost:4200/dashboard");
-            httpServletResponse.setStatus(302);
+            httpServletResponse.setHeader("Location", this.env.getProperty("frontend.url") + "/dashboard");
+            httpServletResponse.setStatus(HttpServletResponse.SC_FOUND);
             return null;
         } else {
-            return "Willkommen auf der Landingpage";
+            return "index";
         }
     }
 }

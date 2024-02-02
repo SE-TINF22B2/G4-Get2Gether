@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <th:block th:insert="~{_header :: header}"></th:block>
+    <title>Get2Gether</title>
+</head>
+<body>
+    <div class="container center">
+        <h1>Willkommen auf Get2Gether!</h1>
+        <p>Hier kannst du ganz einfach dein nächstes Event planen.</p>
+
+        <a th:href="${@environment.getProperty('frontend.url')}" class="button">Jetzt loslegen</a>
+    </div>
+</body>
+</html>

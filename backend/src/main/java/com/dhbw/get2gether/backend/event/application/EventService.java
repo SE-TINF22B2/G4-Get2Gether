@@ -8,16 +8,15 @@ import com.dhbw.get2gether.backend.event.model.EventCreateCommand;
 import com.dhbw.get2gether.backend.event.model.EventUpdateCommand;
 import com.dhbw.get2gether.backend.user.application.UserService;
 import com.dhbw.get2gether.backend.user.model.User;
-import org.springframework.core.env.Environment;
-import org.springframework.security.core.AuthenticatedPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.stereotype.Component;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.core.env.Environment;
+import org.springframework.security.core.AuthenticatedPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.stereotype.Component;
 
 @Component
 public class EventService {
@@ -113,12 +112,11 @@ public class EventService {
         return eventRepository.findByInvitationLink(invitationLink);
     }
 
-    public String getRouteFromInvitationLink(AuthenticatedPrincipal principal, String invitationLink) {
+    public Optional<String> getRouteFromInvitationLink(AuthenticatedPrincipal principal, String invitationLink) {
         Optional<Event> event = getEventByInvitationLink(invitationLink);
         if (event.isPresent() && principal instanceof GuestAuthenticationPrincipal guestPrincipal) {
             guestPrincipal.grantAccessToEvent(event.get().getId());
         }
-        return event.map(presentEvent -> env.getProperty("frontend.url") + "/event/" + presentEvent.getId())
-                .orElse(env.getProperty("frontend.url") + "/dashboard");
+        return event.map(presentEvent -> env.getProperty("frontend.url") + "/event/" + presentEvent.getId());
     }
 }

@@ -62,6 +62,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(requests -> requests
                         // --- public endpoints
                         .requestMatchers(
+                                "/",
+                                "/index.html",
+                                "/css/**",
+                                "/js/**",
                                 "/error",
                                 "/webjars/**",
                                 "/oauth2/authorization/google",
@@ -69,13 +73,13 @@ public class SecurityConfig {
                                 "/swagger-ui",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**").permitAll()
-                        // --- must be administrator (ADMIN_ROLE)
+                        // --- must be administrator (ROLE_ADMIN)
                         .requestMatchers("/event/all").hasRole("ADMIN")
                         // --- must be authenticated (guest, user, admin, ...)
                         .requestMatchers(HttpMethod.GET, "/event/invitation/**", "user").authenticated()
-                        // --- must have GUEST_ROLE
+                        // --- must have ROLE_GUEST
                         .requestMatchers(HttpMethod.GET, "/event/**").hasRole("GUEST")
-                        // --- must have USER_ROLE
+                        // --- must have ROLE_USER
                         .anyRequest().hasRole("USER"))
                 .exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .oauth2Login(httpSecurityOAuth2LoginConfigurer -> httpSecurityOAuth2LoginConfigurer

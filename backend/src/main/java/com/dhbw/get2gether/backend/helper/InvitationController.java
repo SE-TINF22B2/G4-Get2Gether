@@ -2,13 +2,14 @@ package com.dhbw.get2gether.backend.helper;
 
 import com.dhbw.get2gether.backend.event.application.EventService;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.Optional;
 import org.springframework.security.core.AuthenticatedPrincipal;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 public class InvitationController {
     private final EventService eventService;
 
@@ -17,11 +18,18 @@ public class InvitationController {
     }
 
     @GetMapping("/event/invitation/{invitationLink}")
-    public void getInvitationLink(
+    public String getInvitationLink(
             @AuthenticationPrincipal AuthenticatedPrincipal principal,
             HttpServletResponse httpServletResponse,
             @PathVariable String invitationLink) {
-        httpServletResponse.setHeader("Location", eventService.getRouteFromInvitationLink(principal, invitationLink));
-        httpServletResponse.setStatus(302);
+        Optional<String> locationUrl = eventService.getRouteFromInvitationLink(principal, invitationLink);
+        if (locationUrl.isPresent()) {
+            httpServletResponse.setHeader("Location", locationUrl.get());
+            httpServletResponse.setStatus(HttpServletResponse.SC_FOUND);
+            return null;
+        } else {
+            httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return "invalid_invitation";
+        }
     }
 }
