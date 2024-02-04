@@ -1,0 +1,97 @@
+/* =================================
+ * Hero section
+ * =================================*/
+
+.hero {
+    background: linear-gradient(30deg, var(--primary) 0%, var(--primary) 50%, #ffffff 100%);
+    color: #ffffff;
+}
+
+.hero .content {
+    height: 500px;
+    justify-content: center;
+    text-align: center;
+    gap: 20px;
+}
+
+.wave {
+    fill: var(--background);
+}
+
+
+/* =================================
+ * Features section
+ * =================================*/
+
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: space-evenly;
+    padding: 40px;
+    margin-bottom: 100px;
+}
+
+.feature {
+    flex-grow: 1;
+    flex-basis: 0;
+    min-width: 300px;
+}
+
+.feature h3 {
+    color: var(--primary);
+}
+
+
+/* =================================
+ * Widgets section
+ * =================================*/
+
+.widgets {
+    margin-bottom: 50px;
+    /*background: linear-gradient(0deg, var(--secondary), var(--background) 70%);*/
+    padding: 20px;
+}
+
+.widgets h3 {
+    color: var(--primary);
+}
+
+.widget-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 40px;
+    margin: 60px 0;
+}
+
+.widget-list .widget {
+    flex-basis: 400px;
+    background-color: var(--background);
+    border-radius: 10px;
+    padding: 20px;
+    transition: all 200ms ease-out;
+}
+
+.widget-list .widget:hover {
+    box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
+}
+
+.widget-list .widget h4 {
+    color: var(--secondary);
+    margin-top: 10px;
+}
+
+
+/* =================================
+ * Signup section
+ * =================================*/
+.signup {
+    background: linear-gradient(90deg, var(--background) 0%, rgba(var(--secondary-rgb), 0.8) 50%, var(--background) 100%);
+    padding: 80px 20px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 100px;
+}

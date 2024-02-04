@@ -3,13 +3,97 @@
 <head>
     <th:block th:insert="~{_header :: header}"></th:block>
     <title>Get2Gether</title>
+    <link rel="stylesheet" href="/css/landing.css">
 </head>
 <body>
-    <div class="container center">
+<div class="hero flex center">
+    <div class="content flex center">
         <h1>Willkommen auf Get2Gether!</h1>
         <p>Hier kannst du ganz einfach dein nächstes Event planen.</p>
 
-        <a th:href="${@environment.getProperty('frontend.url')}" class="button">Jetzt loslegen</a>
+        <a th:href="${@environment.getProperty('frontend.url')}" class="button secondary">Jetzt loslegen</a>
     </div>
+
+    <svg viewBox="0 0 960 150" width="100%" xmlns="http://www.w3.org/2000/svg">
+        <path class="wave"
+              d="M0 64L22.8 63C45.7 62 91.3 60 137 66.2C182.7 72.3 228.3 86.7 274 84.3C319.7 82 365.3 63 411.2 55.5C457 48 503 52 548.8 59.5C594.7 67 640.3 78 686 86.5C731.7 95 777.3 101 823 92.2C868.7 83.3 914.3 59.7 937.2 47.8L960 36L960 151L937.2 151C914.3 151 868.7 151 823 151C777.3 151 731.7 151 686 151C640.3 151 594.7 151 548.8 151C503 151 457 151 411.2 151C365.3 151 319.7 151 274 151C228.3 151 182.7 151 137 151C91.3 151 45.7 151 22.8 151L0 151Z"
+              stroke-linecap="round" stroke-linejoin="miter"></path>
+    </svg>
+</div>
+
+<div class="features max-width">
+    <div class="feature">
+        <h3>Gemeinsam Events planen</h3>
+        <p>Plane zusammen mit deinen Freunden events.</p>
+    </div>
+
+    <div class="feature">
+        <h3>Den Überblick behalten</h3>
+        <p>Siehe welche Events als Nächstes anstehen und behalte den Überblick wo, wann und mit wem deine Events stattfinden.</p>
+    </div>
+
+    <div class="feature">
+        <h3>Völlig kostenlos</h3>
+        <p>Get2Gether ist kostenlos nutzbar! Spare dir das Geld für deine Events.</p>
+    </div>
+</div>
+
+<div class="widgets">
+    <div class="content max-width">
+        <h3>Flexibilität mit Widgets</h3>
+        <p>Erweiter deine Eventplanung mit zahlreichen Widgets.</p>
+
+        <div class="widget-list">
+            <div class="widget">
+                <h4>Karte</h4>
+                <p>Markiere die Eventlocation und andere spannende Orte auf der Karte, sodass jeder weiß, wo die Action stattfindet.</p>
+            </div>
+
+            <div class="widget">
+                <h4>Einkaufsliste</h4>
+                <p>Habt ihr alles benötigte gekauft? Erstelle eine Einkaufsliste und plane, wer was kauft.</p>
+            </div>
+
+            <div class="widget">
+                <h4>Ausgabenverteilung</h4>
+                <p>Liste auf, wer etwas für wem gezahlt hat. Mit der Ausgabenverteilung ist die Abrechnung nach dem Event kinderleicht!</p>
+            </div>
+
+            <div class="widget">
+                <h4>Fahrgemeinschaft</h4>
+                <p>Damit jeder auch zur Eventlocation hinkommt, kannst du ganz einfach Fahrer und Mitfahrer einteilen.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="signup max-width">
+    <div class="content">
+        <h3>Jetzt kostenlos anmelden!</h3>
+        <a th:href="${@environment.getProperty('frontend.url')}" class="button">Anmelden</a>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-content max-width">
+        <div class="about">
+            <h4>Über Uns</h4>
+            <p>
+                Get2Gether ist aus dem Softwareengineering Projekt an der DHBW Karlsruhe entstanden.
+            </p>
+            <p>
+                Diese Webseite wurde mit ganz viel <span class="heart">&hearts;</span> erstellt.
+            </p>
+        </div>
+        <div class="links">
+            <h4>Links</h4>
+            <ul>
+                <li><a href="https://github.com/SE-TINF22B2/G4-Get2Gether">GitHub</a></li>
+                <li><a href="https://github.com/SE-TINF22B2/G4-Get2Gether/wiki">Wiki</a></li>
+            </ul>
+        </div>
+        <p class="copy">&copy; 2024 Get2Gether</p>
+    </div>
+</footer>
 </body>
 </html>

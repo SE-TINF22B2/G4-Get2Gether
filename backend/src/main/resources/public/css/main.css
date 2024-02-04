@@ -1,23 +1,132 @@
+/* =================================
+ * Color and Variable Configuration
+ * =================================*/
+
+:root {
+    --background: #ffffff;
+    --background-darker: #f6f6f6;
+    --foreground: #000000;
+    --foreground-muted: #363636;
+    --primary: #1E90FF;
+    --secondary-rgb: 127, 45, 250;
+    --secondary: rgb(var(--secondary-rgb));
+
+    --max-width: 1600px
+}
+
+@media screen and (prefers-color-scheme: dark) {
+    :root {
+        --background: #1b1b1d;
+        --background-darker: #18181a;
+        --foreground: #ffffff;
+        --foreground-muted: #cecece;
+    }
+}
+
+
+/* =================================
+ * Basic Stuff
+ * =================================*/
+
 html,
 body {
     padding: 0;
     margin: 0;
     font-family: sans-serif;
+    font-size: 1.2rem;
+    background-color: var(--background);
+    color: var(--foreground);
 }
 
-.container.center {
+a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+
+/* =================================
+ * Layouts
+ * =================================*/
+
+.max-width {
+    max-width: var(--max-width);
+    margin: 0 auto;
+}
+
+.flex {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 20px;
 }
+
+.flex.center {
+    align-items: center;
+}
+
+
+/* =================================
+ * Components
+ * =================================*/
 
 .button {
     text-decoration: none;
     color: white;
-    background: dodgerblue;
+    background: var(--primary);
     border: none;
     outline: none;
     border-radius: 20px;
     padding: 5px 10px;
+}
+
+.button.secondary {
+    background: var(--secondary);
+}
+
+
+footer {
+    background-color: var(--background-darker);
+}
+
+.footer-content {
+    font-size: 0.8em;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+}
+
+.footer-content > * {
+    flex-basis: 0;
+    min-width: 200px;
+}
+
+footer .about {
+    flex-grow: 1;
+}
+
+footer .about p {
+    color: var(--foreground-muted);
+    max-width: 500px;
+}
+
+footer .heart {
+    color: red;
+}
+
+footer ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+footer ul li {
+    margin: 10px 0;
+}
+
+footer .copy {
+    flex-grow: 1;
+    min-width: 100%;
+    text-align: center;
+    color: var(--foreground-muted);
 }
