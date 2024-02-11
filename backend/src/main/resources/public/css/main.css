@@ -87,6 +87,7 @@ a {
 
 footer {
     background-color: var(--background-darker);
+    display: flex;
 }
 
 .footer-content {

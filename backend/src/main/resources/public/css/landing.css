@@ -33,7 +33,7 @@
 
 .hero .content h1 {
     margin: 0;
-    line-height: 1;
+    line-height: 1.2;
 }
 
 .hero .content p {
@@ -204,4 +204,8 @@
     display: flex;
     justify-content: center;
     margin-bottom: 100px;
+}
+
+.signup .content {
+    max-width: 500px;
 }
