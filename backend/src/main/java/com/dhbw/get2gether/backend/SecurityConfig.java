@@ -66,6 +66,7 @@ public class SecurityConfig {
                                 "/index.html",
                                 "/css/**",
                                 "/js/**",
+                                "/images/**",
                                 "/error",
                                 "/webjars/**",
                                 "/oauth2/authorization/google",

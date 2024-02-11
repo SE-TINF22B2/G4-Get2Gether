@@ -2,22 +2,133 @@
  * Hero section
  * =================================*/
 
-.hero {
+.hero-wrapper {
     background: linear-gradient(30deg, var(--primary) 0%, var(--primary) 50%, #ffffff 100%);
     color: #ffffff;
 }
 
+.hero .header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 0;
+}
+
+.hero .header .title {
+    font-weight: 600;
+    font-size: 1.4rem;
+}
+
+.hero .content-wrapper {
+    width: 100%;
+}
+
 .hero .content {
+    max-width: 600px;
     height: 500px;
     justify-content: center;
-    text-align: center;
+    align-items: start;
     gap: 20px;
+}
+
+.hero .content h1 {
+    margin: 0;
+    line-height: 1;
+}
+
+.hero .content p {
+    margin: 10px 0;
 }
 
 .wave {
     fill: var(--background);
 }
 
+
+/* =================================
+ * Steps section
+ * =================================*/
+
+.steps {
+    margin-bottom: 50px;
+}
+
+.steps .content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    gap: 40px;
+}
+
+.steps img {
+    width: 300px;
+    flex-basis: 30%;
+    flex-shrink: 1;
+}
+
+.step-container {
+    flex-grow: 1;
+    position: relative;
+    margin-left: 5px;
+    max-width: 500px;
+}
+
+.step-container .path {
+    position: absolute;
+    width: 4px;
+    height: calc(100% - 100px);
+    margin-top: 50px;
+    border-radius: 2px;
+    background-color: var(--foreground);
+    left: calc(50px / 2 - 2px);
+    z-index: 1;
+}
+
+.step {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 5px 0;
+    min-height: 130px;
+    z-index: 10;
+    left: 0;
+    transition: all 200ms ease-out;
+    --icon-size: 32px;
+    --icon-color: var(--foreground);
+    --details-height: 0;
+}
+
+.step:hover, .step:active {
+    font-size: 1.2em;
+    --icon-size: 42px;
+    --icon-color: var(--secondary);
+    --details-height: 80px;
+    color: var(--secondary);
+    left: -5px;
+}
+
+.step svg {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    flex-shrink: 0;
+    fill: var(--icon-color);
+    background-color: var(--background);
+    border: 4px solid var(--icon-color);
+    border-radius: 50%;
+    padding: 5px;
+    transition: all 200ms ease-out;
+}
+
+.step .details {
+    overflow: hidden;
+    height: var(--details-height);
+    font-size: 0.95rem;
+    margin: 0;
+    color: var(--foreground);
+    transition: all 200ms ease-out;
+}
 
 /* =================================
  * Features section
@@ -27,9 +138,8 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    gap: 20px;
+    gap: 30px;
     justify-content: space-evenly;
-    padding: 40px;
     margin-bottom: 100px;
 }
 
@@ -49,9 +159,9 @@
  * =================================*/
 
 .widgets {
-    margin-bottom: 50px;
+    padding: 40px 0;
+    background-color: var(--background-darker);
     /*background: linear-gradient(0deg, var(--secondary), var(--background) 70%);*/
-    padding: 20px;
 }
 
 .widgets h3 {
@@ -63,7 +173,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 40px;
+    gap: 30px;
     margin: 60px 0;
 }
 
@@ -72,7 +182,7 @@
     background-color: var(--background);
     border-radius: 10px;
     padding: 20px;
-    transition: all 200ms ease-out;
+    transition: box-shadow 200ms ease-out;
 }
 
 .widget-list .widget:hover {
@@ -89,8 +199,8 @@
  * Signup section
  * =================================*/
 .signup {
-    background: linear-gradient(90deg, var(--background) 0%, rgba(var(--secondary-rgb), 0.8) 50%, var(--background) 100%);
-    padding: 80px 20px;
+    /*background: linear-gradient(90deg, var(--background) 0%, rgba(var(--secondary-rgb), 0.8) 50%, var(--background) 100%);*/
+    padding: 80px 0;
     display: flex;
     justify-content: center;
     margin-bottom: 100px;

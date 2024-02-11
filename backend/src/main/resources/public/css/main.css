@@ -11,7 +11,7 @@
     --secondary-rgb: 127, 45, 250;
     --secondary: rgb(var(--secondary-rgb));
 
-    --max-width: 1600px
+    --max-width: 1300px
 }
 
 @media screen and (prefers-color-scheme: dark) {
@@ -34,6 +34,7 @@ body {
     margin: 0;
     font-family: sans-serif;
     font-size: 1.2rem;
+    line-height: 1.5;
     background-color: var(--background);
     color: var(--foreground);
 }
@@ -50,7 +51,9 @@ a {
 
 .max-width {
     max-width: var(--max-width);
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%;
 }
 
 .flex {
