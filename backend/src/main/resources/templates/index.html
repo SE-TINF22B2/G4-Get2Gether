@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <th:block th:insert="~{_header :: header}"></th:block>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../public/css/main.css" th:href="/css/main.css">
     <title>Get2Gether</title>
     <link rel="stylesheet" href="../public/css/landing.css" th:href="@{/css/landing.css}">
 </head>
@@ -16,7 +18,7 @@
         <div class="content-wrapper">
             <div class="content flex">
                 <h1>Unvergessliche Events planen.</h1>
-                <p>Mit Get2Gether war die Planung von Events noch nie einfacher!</p>
+                <p>Mit Get2Gether war die Planung von Events noch nie so einfach!</p>
 
                 <a href="#" th:href="${@environment.getProperty('frontend.url')}" class="button secondary">Jetzt loslegen</a>
             </div>
@@ -128,7 +130,7 @@
 
             <div class="widget">
                 <h4>Fahrgemeinschaft</h4>
-                <p>Organisiert Fahrgemeinschaften mit Fahrer und Mitfahrer. So muss keiner zum Event laufen!.</p>
+                <p>Organisiert Fahrgemeinschaften mit Fahrer und Mitfahrer. So muss keiner zum Event laufen!</p>
             </div>
         </div>
     </div>

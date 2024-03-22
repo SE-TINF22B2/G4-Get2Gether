@@ -11,6 +11,8 @@
     --secondary-rgb: 127, 45, 250;
     --secondary: rgb(var(--secondary-rgb));
 
+    --shadow-daynight: rgba(0, 0, 0, 0.2);
+
     --max-width: 1300px
 }
 
@@ -20,6 +22,8 @@
         --background-darker: #18181a;
         --foreground: #ffffff;
         --foreground-muted: #cecece;
+
+        --shadow-daynight: rgba(166, 166, 166, 0.2);
     }
 }
 

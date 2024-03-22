@@ -85,6 +85,17 @@
     z-index: 1;
 }
 
+/* colored path overlay */
+.step-container .path::after {
+    content: '';
+    position: relative;
+    display: block;
+    height: 0;
+    background-color: var(--secondary);
+    transition: all 200ms ease-out;
+    border-radius: 5px;
+}
+
 .step {
     position: relative;
     display: flex;
@@ -107,6 +118,26 @@
     --details-height: 80px;
     color: var(--secondary);
     left: -5px;
+}
+
+/* color path when hovering over 2. step */
+.step-container .path:has(~ :is(.step:hover, .step:active):nth-of-type(3))::after {
+    height: 33%;
+}
+
+/* color path when hovering over 3. step */
+.step-container .path:has(~ :is(.step:hover, .step:active):nth-of-type(4))::after {
+    height: 66%;
+}
+
+/* color path when hovering over 4. step */
+.step-container .path:has(~ :is(.step:hover, .step:active):nth-of-type(5))::after {
+    height: 100%;
+}
+
+/* color previous icons when hovering over step */
+.step:has(~ :is(.step:hover, .step:active)) {
+    --icon-color: var(--secondary);
 }
 
 .step svg {
@@ -140,7 +171,8 @@
     flex-direction: row;
     gap: 30px;
     justify-content: space-evenly;
-    margin: 80px 0;
+    margin-top: 80px;
+    margin-bottom: 80px;
 }
 
 .feature {
@@ -188,7 +220,7 @@
 }
 
 .widget-list .widget:hover {
-    box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 5px 2px var(--shadow-daynight);
 }
 
 .widget-list .widget h4 {
@@ -205,7 +237,8 @@
     padding: 80px 0;
     display: flex;
     justify-content: center;
-    margin: 80px 0;
+    margin-top: 80px;
+    margin-bottom: 80px;
     position: relative;
     z-index: 0;
 }
