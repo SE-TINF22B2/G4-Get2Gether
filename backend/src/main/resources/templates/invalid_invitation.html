@@ -5,9 +5,25 @@
     <title>Ungültiger Einladungslink</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../public/css/main.css" th:href="@{/css/main.css}">
+
+    <style>
+        .wrapper {
+            text-align: center;
+        }
+        img {
+            margin: 75px auto;
+            display: block;
+            max-width: 500px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Der Einladungslink ist ungültig</h1>
-    <p>Der Einladungslink existiert nicht oder wurde gelöscht.</p>
+    <div class="max-width wrapper">
+        <h2>Der Einladungslink ist ungültig</h2>
+        <p>Der Einladungslink existiert nicht oder wurde gelöscht.</p>
+
+        <img src="../public/images/image_not_found.svg" th:src="@{/images/image_not_found.svg}" width="60%">
+        <a href="/" class="button">Zurück zur Startseite</a>
+    </div>
 </body>
 </html>

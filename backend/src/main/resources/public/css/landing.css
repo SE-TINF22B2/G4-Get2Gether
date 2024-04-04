@@ -193,11 +193,6 @@
 .widgets {
     padding: 40px 0;
     background-color: var(--background-darker);
-    /*background: linear-gradient(0deg, var(--secondary), var(--background) 70%);*/
-}
-
-.widgets h3 {
-    /*color: var(--primary);*/
 }
 
 .widget-list {
@@ -233,7 +228,6 @@
  * Signup section
  * =================================*/
 .signup {
-    /*background: linear-gradient(90deg, var(--background) 0%, rgba(var(--secondary-rgb), 0.8) 50%, var(--background) 100%);*/
     padding: 80px 0;
     display: flex;
     justify-content: center;

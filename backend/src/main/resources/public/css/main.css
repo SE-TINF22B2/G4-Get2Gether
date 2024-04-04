@@ -8,8 +8,8 @@
     --foreground: #000000;
     --foreground-muted: #363636;
     --primary: #1E90FF;
-    --secondary-rgb: 127, 45, 250;
-    --secondary: rgb(var(--secondary-rgb));
+    --secondary-rgb: ;
+    --secondary: #7F2DFA;
 
     --shadow-daynight: rgba(0, 0, 0, 0.2);
 
