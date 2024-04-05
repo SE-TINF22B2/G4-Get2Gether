@@ -108,12 +108,12 @@ public class EventService {
         return eventRepository.save(event);
     }
 
-    public Optional<Event> getEventByInvitationLink(String invitationLink) {
+    public Optional<Event> findEventByInvitationLink(String invitationLink) {
         return eventRepository.findByInvitationLink(invitationLink);
     }
 
-    public Optional<String> getRouteFromInvitationLink(AuthenticatedPrincipal principal, String invitationLink) {
-        Optional<Event> event = getEventByInvitationLink(invitationLink);
+    public Optional<String> findRouteFromInvitationLink(AuthenticatedPrincipal principal, String invitationLink) {
+        Optional<Event> event = findEventByInvitationLink(invitationLink);
         if (event.isPresent() && principal instanceof GuestAuthenticationPrincipal guestPrincipal) {
             guestPrincipal.grantAccessToEvent(event.get().getId());
         }

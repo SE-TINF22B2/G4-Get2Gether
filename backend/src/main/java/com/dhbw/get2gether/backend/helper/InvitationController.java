@@ -22,7 +22,7 @@ public class InvitationController {
             @AuthenticationPrincipal AuthenticatedPrincipal principal,
             HttpServletResponse httpServletResponse,
             @PathVariable String invitationLink) {
-        Optional<String> locationUrl = eventService.getRouteFromInvitationLink(principal, invitationLink);
+        Optional<String> locationUrl = eventService.findRouteFromInvitationLink(principal, invitationLink);
         if (locationUrl.isPresent()) {
             httpServletResponse.setHeader("Location", locationUrl.get());
             httpServletResponse.setStatus(HttpServletResponse.SC_FOUND);
