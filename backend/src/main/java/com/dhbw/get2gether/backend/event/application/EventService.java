@@ -6,17 +6,19 @@ import com.dhbw.get2gether.backend.event.application.mapper.EventMapper;
 import com.dhbw.get2gether.backend.event.model.Event;
 import com.dhbw.get2gether.backend.event.model.EventCreateCommand;
 import com.dhbw.get2gether.backend.event.model.EventUpdateCommand;
+import com.dhbw.get2gether.backend.exceptions.AuthorizationException;
 import com.dhbw.get2gether.backend.user.application.UserService;
 import com.dhbw.get2gether.backend.user.model.User;
+import org.springframework.core.env.Environment;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.AuthenticatedPrincipal;
+import org.springframework.stereotype.Component;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import org.springframework.core.env.Environment;
-import org.springframework.security.core.AuthenticatedPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.stereotype.Component;
 
 @Component
 public class EventService {
@@ -34,7 +36,8 @@ public class EventService {
         this.env = env;
     }
 
-    public Event createEvent(OAuth2User principal, EventCreateCommand eventCreateCommand) {
+    @PreAuthorize("hasRole('USER')")
+    public Event createEvent(AuthenticatedPrincipal principal, EventCreateCommand eventCreateCommand) {
         Optional<User> user = this.userService.findUserFromPrincipal(principal);
         return user.map(presentUser -> {
                     Event event = this.eventMapper.toEvent(eventCreateCommand).toBuilder()
@@ -51,29 +54,37 @@ public class EventService {
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     public List<Event> getAllEvents() {
         return eventRepository.findAll();
     }
 
-    public List<Event> getAllEventsFromUser(OAuth2User principal) {
+    @PreAuthorize("hasRole('USER')")
+    public List<Event> getAllEventsFromUser(AuthenticatedPrincipal principal) {
         return userService
                 .findUserFromPrincipal(principal)
                 .map(user -> eventRepository.findEventsByParticipantIdsContains(user.getId()))
                 .orElse(List.of());
     }
 
-    public void deleteEventById(OAuth2User principal, String eventId) {
+    @PreAuthorize("hasRole('USER')")
+    public void deleteEventById(AuthenticatedPrincipal principal, String eventId) {
         Event event = getEventIfUserIsParticipant(principal, eventId);
+        User user = userService
+                .findUserFromPrincipal(principal)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+        if (!event.getCreatorId().equals(user.getId()))
+            throw new AuthorizationException("Event can only be deleted by its creator.");
         eventRepository.delete(event);
     }
 
-    public Event updateEvent(OAuth2User principal, String eventId, EventUpdateCommand eventUpdateCommand) {
+    public Event updateEvent(AuthenticatedPrincipal principal, String eventId, EventUpdateCommand eventUpdateCommand) {
         Event oldEvent = getEventIfUserIsParticipant(principal, eventId);
         Event newEvent = eventMapper.updateEvent(oldEvent, eventUpdateCommand);
         return eventRepository.save(newEvent);
     }
 
-    public Event addParticipantToEvent(OAuth2User principal, String invitationLink) {
+    public Event addParticipantToEvent(AuthenticatedPrincipal principal, String invitationLink) {
         Optional<Event> event = eventRepository.findByInvitationLink(invitationLink);
         return event.map(presentEvent -> {
                     Optional<User> user = this.userService.findUserFromPrincipal(principal);
@@ -90,7 +101,7 @@ public class EventService {
         return eventRepository.findById(eventId).orElseThrow(() -> new IllegalArgumentException("Event not found"));
     }
 
-    public Event getEventIfUserIsParticipant(OAuth2User principal, String eventId) {
+    public Event getEventIfUserIsParticipant(AuthenticatedPrincipal principal, String eventId) {
         User user = userService
                 .findUserFromPrincipal(principal)
                 .orElseThrow(() -> new IllegalArgumentException("User is not logged in"));
@@ -102,7 +113,7 @@ public class EventService {
         }
     }
 
-    public Event generateInvitationLink(OAuth2User principal, String eventId) {
+    public Event generateInvitationLink(AuthenticatedPrincipal principal, String eventId) {
         Event event = getEventIfUserIsParticipant(principal, eventId);
         event.setInvitationLink("invitation-" + UUID.randomUUID());
         return eventRepository.save(event);
