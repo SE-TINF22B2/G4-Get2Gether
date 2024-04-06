@@ -1,6 +1,7 @@
 package com.dhbw.get2gether.backend.user.application;
 
 import com.dhbw.get2gether.backend.authentication.GuestAuthenticationPrincipal;
+import com.dhbw.get2gether.backend.exceptions.EntityNotFoundException;
 import com.dhbw.get2gether.backend.user.adapter.out.UserRepository;
 import com.dhbw.get2gether.backend.user.application.mapper.UserMapper;
 import com.dhbw.get2gether.backend.user.model.CreateUserCommand;
@@ -11,11 +12,13 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.AuthenticatedPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
@@ -25,32 +28,17 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
+    @PostAuthorize("@userAuthorizationService.isAuthorized(principal, returnObject) OR hasRole('ADMIN')")
     public User getUserById(String id) {
         return userRepository.getById(id);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteUserById(String id) {
         userRepository.deleteById(id);
     }
 
-    public User createUser(CreateUserCommand command) {
-        User user = userMapper.mapToUser(command).toBuilder()
-                .id(UUID.randomUUID().toString())
-                .creationDate(LocalDateTime.now())
-                .build();
-        return userRepository.insert(user);
-    }
-
-    public User updateUser(OAuth2User principal, UpdateUserCommand updateUserCommand) {
-        User oldUser = getUserByPrincipal(principal);
-        User newUser = userMapper.updateUser(oldUser, updateUserCommand);
-        return userRepository.save(newUser);
-    }
-
-    public Optional<User> findUserByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
-
+    @PreAuthorize("hasRole('GUEST')")
     public Optional<User> findUserFromPrincipal(AuthenticatedPrincipal principal) {
         if (principal instanceof OAuth2User) {
             return findUserByEmail(((OAuth2User) principal).getAttribute("email"));
@@ -60,7 +48,26 @@ public class UserService {
         return Optional.empty();
     }
 
+    @PreAuthorize("hasRole('GUEST')")
     public User getUserByPrincipal(AuthenticatedPrincipal principal) {
-        return findUserFromPrincipal(principal).orElseThrow(() -> new IllegalArgumentException("User not found"));
+        return findUserFromPrincipal(principal).orElseThrow(() -> new EntityNotFoundException("User not found"));
+    }
+
+    protected User createUser(CreateUserCommand command) {
+        User user = userMapper.mapToUser(command).toBuilder()
+                .id(UUID.randomUUID().toString())
+                .creationDate(LocalDateTime.now())
+                .build();
+        return userRepository.insert(user);
+    }
+
+    protected User updateUser(OAuth2User principal, UpdateUserCommand updateUserCommand) {
+        User oldUser = getUserByPrincipal(principal);
+        User newUser = userMapper.updateUser(oldUser, updateUserCommand);
+        return userRepository.save(newUser);
+    }
+
+    protected Optional<User> findUserByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }

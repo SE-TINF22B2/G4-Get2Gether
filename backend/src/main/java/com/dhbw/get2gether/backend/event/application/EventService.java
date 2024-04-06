@@ -9,19 +9,18 @@ import com.dhbw.get2gether.backend.event.model.EventUpdateCommand;
 import com.dhbw.get2gether.backend.exceptions.EntityNotFoundException;
 import com.dhbw.get2gether.backend.user.application.UserService;
 import com.dhbw.get2gether.backend.user.model.User;
-import org.springframework.core.env.Environment;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.AuthenticatedPrincipal;
-import org.springframework.stereotype.Component;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.core.env.Environment;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.AuthenticatedPrincipal;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class EventService {
     private final Environment env;
 
