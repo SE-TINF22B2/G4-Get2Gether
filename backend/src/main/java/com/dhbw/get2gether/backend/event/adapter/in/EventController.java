@@ -5,6 +5,7 @@ import com.dhbw.get2gether.backend.event.model.Event;
 import com.dhbw.get2gether.backend.event.model.EventCreateCommand;
 import com.dhbw.get2gether.backend.event.model.EventUpdateCommand;
 import java.util.List;
+import org.springframework.security.core.AuthenticatedPrincipal;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +34,12 @@ public class EventController {
     @GetMapping("/own")
     public List<Event> getOwnEvents(@AuthenticationPrincipal OAuth2User principal) {
         return eventService.getAllEventsFromUser(principal);
+    }
+
+    @GetMapping("/{eventId}")
+    public Event getSingleEvent(
+            @AuthenticationPrincipal AuthenticatedPrincipal principal, @PathVariable String eventId) {
+        return eventService.getSingleEvent(principal, eventId);
     }
 
     @GetMapping("/{eventId}/generateInvitationLink")

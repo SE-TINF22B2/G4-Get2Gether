@@ -6,10 +6,11 @@ import com.dhbw.get2gether.backend.event.application.mapper.EventMapper;
 import com.dhbw.get2gether.backend.event.model.Event;
 import com.dhbw.get2gether.backend.event.model.EventCreateCommand;
 import com.dhbw.get2gether.backend.event.model.EventUpdateCommand;
-import com.dhbw.get2gether.backend.exceptions.AuthorizationException;
+import com.dhbw.get2gether.backend.exceptions.EntityNotFoundException;
 import com.dhbw.get2gether.backend.user.application.UserService;
 import com.dhbw.get2gether.backend.user.model.User;
 import org.springframework.core.env.Environment;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.AuthenticatedPrincipal;
 import org.springframework.stereotype.Component;
@@ -51,7 +52,7 @@ public class EventService {
                     event.addParticipant(presentUser.getId());
                     return eventRepository.insert(event);
                 })
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -67,23 +68,35 @@ public class EventService {
                 .orElse(List.of());
     }
 
+    @PreAuthorize("hasRole('GUEST')")
+    public Event getSingleEvent(AuthenticatedPrincipal principal, String eventId) {
+        if (principal instanceof GuestAuthenticationPrincipal guestPrincipal) {
+            if (!guestPrincipal.getGrantedEventIds().contains(eventId))
+                throw new AccessDeniedException("Guest is not granted permission for this event");
+            return getEventById(eventId);
+        }
+        return getEventIfUserIsParticipant(principal, eventId);
+    }
+
     @PreAuthorize("hasRole('USER')")
     public void deleteEventById(AuthenticatedPrincipal principal, String eventId) {
         Event event = getEventIfUserIsParticipant(principal, eventId);
         User user = userService
                 .findUserFromPrincipal(principal)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
         if (!event.getCreatorId().equals(user.getId()))
-            throw new AuthorizationException("Event can only be deleted by its creator.");
+            throw new AccessDeniedException("Event can only be deleted by its creator.");
         eventRepository.delete(event);
     }
 
+    @PreAuthorize("hasRole('USER')")
     public Event updateEvent(AuthenticatedPrincipal principal, String eventId, EventUpdateCommand eventUpdateCommand) {
         Event oldEvent = getEventIfUserIsParticipant(principal, eventId);
         Event newEvent = eventMapper.updateEvent(oldEvent, eventUpdateCommand);
         return eventRepository.save(newEvent);
     }
 
+    @PreAuthorize("hasRole('USER')")
     public Event addParticipantToEvent(AuthenticatedPrincipal principal, String invitationLink) {
         Optional<Event> event = eventRepository.findByInvitationLink(invitationLink);
         return event.map(presentEvent -> {
@@ -92,42 +105,44 @@ public class EventService {
                                 presentEvent.addParticipant(presentUser.getId());
                                 return eventRepository.save(presentEvent);
                             })
-                            .orElseThrow(() -> new IllegalArgumentException("User not found"));
+                            .orElseThrow(() -> new EntityNotFoundException("User not found"));
                 })
-                .orElseThrow(() -> new IllegalArgumentException("Event not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Event not found"));
     }
 
-    public Event getEventById(String eventId) {
-        return eventRepository.findById(eventId).orElseThrow(() -> new IllegalArgumentException("Event not found"));
-    }
-
-    public Event getEventIfUserIsParticipant(AuthenticatedPrincipal principal, String eventId) {
-        User user = userService
-                .findUserFromPrincipal(principal)
-                .orElseThrow(() -> new IllegalArgumentException("User is not logged in"));
-        Event event = getEventById(eventId);
-        if (event.getParticipantIds().contains(user.getId())) {
-            return event;
-        } else {
-            throw new IllegalArgumentException("User is not a participant of this event");
-        }
-    }
-
+    @PreAuthorize("hasRole('USER')")
     public Event generateInvitationLink(AuthenticatedPrincipal principal, String eventId) {
         Event event = getEventIfUserIsParticipant(principal, eventId);
         event.setInvitationLink("invitation-" + UUID.randomUUID());
         return eventRepository.save(event);
     }
 
-    public Optional<Event> findEventByInvitationLink(String invitationLink) {
-        return eventRepository.findByInvitationLink(invitationLink);
-    }
-
+    @PreAuthorize("hasRole('GUEST')")
     public Optional<String> findRouteFromInvitationLink(AuthenticatedPrincipal principal, String invitationLink) {
         Optional<Event> event = findEventByInvitationLink(invitationLink);
         if (event.isPresent() && principal instanceof GuestAuthenticationPrincipal guestPrincipal) {
             guestPrincipal.grantAccessToEvent(event.get().getId());
         }
         return event.map(presentEvent -> env.getProperty("frontend.url") + "/event/" + presentEvent.getId());
+    }
+
+    private Event getEventById(String eventId) {
+        return eventRepository.findById(eventId).orElseThrow(() -> new EntityNotFoundException("Event not found"));
+    }
+
+    private Event getEventIfUserIsParticipant(AuthenticatedPrincipal principal, String eventId) {
+        User user = userService
+                .findUserFromPrincipal(principal)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+        Event event = getEventById(eventId);
+        if (event.getParticipantIds().contains(user.getId())) {
+            return event;
+        } else {
+            throw new AccessDeniedException("User is not a participant of this event");
+        }
+    }
+
+    private Optional<Event> findEventByInvitationLink(String invitationLink) {
+        return eventRepository.findByInvitationLink(invitationLink);
     }
 }
