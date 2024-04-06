@@ -1,4 +1,9 @@
-<p>dashboard works!</p>
+<div *ngIf="userService.user | async; let user">
+  <img width="48" height="48" [ngSrc]="user.profilePictureUrl">
+  <p>Benutzer: {{ user.firstName }} {{ user.lastName }}</p>
+  <p>Ist Gast: {{ user.guest ? 'Ja' : 'Nein' }}</p>
+</div>
+
 <button (click)="afterAuth()">AfterAuth</button>
 <button (click)="createEvent()">CreateEvent</button>
 <button (click)="getOwn()">GetMyEvents</button>

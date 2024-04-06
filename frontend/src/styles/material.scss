@@ -1,0 +1,18 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$g2g-primary: mat.define-palette(mat.$teal-palette);
+$g2g-accent: mat.define-palette(mat.$orange-palette, A200, A100, A400);
+
+$g2g-warn: mat.define-palette(mat.$red-palette);
+
+$g2g-theme: mat.define-light-theme((
+  color: (
+    primary: $g2g-primary,
+    accent: $g2g-accent,
+    warn: $g2g-warn,
+  )
+));
+
+@include mat.all-component-themes($g2g-theme);

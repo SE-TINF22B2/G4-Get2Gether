@@ -1,27 +1,37 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
-import {HttpClient} from "@angular/common/http";
-import {AppStateService} from "../services/app-state";
-import {LoginService} from "../services/loginService";
+import {GuardsCheckEnd, GuardsCheckStart, NavigationCancel, Router} from "@angular/router";
+import {animate, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  animations: [
+    trigger("fadeInOut", [
+      transition(":enter", [
+        style({opacity: 0}),
+        animate("0.5s ease-in", style({opacity: 1}))
+      ]),
+      transition(":leave", [
+        style({opacity: 1}),
+        animate("0.5s ease-out", style({opacity: 0}))
+      ])
+    ])
+  ]
 })
 export class AppComponent implements OnInit {
-  title = 'frontend';
 
-  constructor(private http: HttpClient, private router: Router, private appState: AppStateService, private loginService: LoginService) {
+  isLoading = false;
+
+  constructor(private router: Router) {
   }
 
   ngOnInit() {
-    this.loginService.getUserData().subscribe({
-      next: user => {
-        console.log(user)
-        this.appState.user.next(user);
-      }, error: () => {
-        this.router.navigateByUrl("/login");
+    this.router.events.subscribe(event => {
+      if (event instanceof GuardsCheckStart) {
+        this.isLoading = true;
+      } else if (event instanceof GuardsCheckEnd || event instanceof NavigationCancel) {
+        this.isLoading = false;
       }
     });
   }

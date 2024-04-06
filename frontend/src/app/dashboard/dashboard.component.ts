@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -7,7 +8,7 @@ import {HttpClient} from "@angular/common/http";
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
-  constructor(private http: HttpClient) {
+  constructor(public userService: UserService, private http: HttpClient) {
   }
 
   afterAuth(){

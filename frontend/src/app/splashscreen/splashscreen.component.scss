@@ -1,0 +1,21 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 20px;
+
+  .progress-bar {
+    max-width: 250px;
+    border-radius: 10px;
+  }
+}

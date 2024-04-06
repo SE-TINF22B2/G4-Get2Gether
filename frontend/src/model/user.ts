@@ -1,4 +1,9 @@
-
 export type User = {
-  username: string,
+  id: string
+  creationDate: string
+  email: string
+  firstName: string
+  lastName: string
+  profilePictureUrl: string
+  guest: true | undefined
 }
