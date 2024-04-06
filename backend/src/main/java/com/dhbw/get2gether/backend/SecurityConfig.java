@@ -83,6 +83,7 @@ public class SecurityConfig {
                         // --- must have ROLE_USER
                         .anyRequest().hasRole("USER"))
                 .exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
+                .logout(logout -> logout.logoutSuccessUrl("/"))
                 .oauth2Login(httpSecurityOAuth2LoginConfigurer -> httpSecurityOAuth2LoginConfigurer
                         .defaultSuccessUrl("http://localhost:4200/dashboard", true)
                         .userInfoEndpoint(infoEndPoint -> infoEndPoint
