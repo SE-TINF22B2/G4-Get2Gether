@@ -11,6 +11,14 @@ import {LayoutModule} from "@angular/cdk/layout";
 import {UserService} from "../services/user.service";
 import {NgOptimizedImage} from "@angular/common";
 import {SplashscreenComponent} from "./splashscreen/splashscreen.component";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
+import {SideMenuComponent} from "./dashboard/side-menu/side-menu.component";
+import {DashboardContentComponent} from "./dashboard/dashboard-content/dashboard-content.component";
+import {MatDividerModule} from "@angular/material/divider";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 function initializeAppFactory(userService: UserService) {
   return () => {
@@ -23,6 +31,9 @@ function initializeAppFactory(userService: UserService) {
     AppComponent,
     LoginComponent,
     DashboardComponent,
+    SplashscreenComponent,
+    SideMenuComponent,
+    DashboardContentComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +42,12 @@ function initializeAppFactory(userService: UserService) {
     AppRoutingModule,
     HttpClientModule,
     NgOptimizedImage,
-    SplashscreenComponent
+    MatSidenavModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatProgressBarModule
   ],
   providers: [{
     provide: APP_INITIALIZER,

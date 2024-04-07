@@ -1,53 +1,21 @@
-import {Component} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {UserService} from "../../services/user.service";
+import {Component, OnInit} from '@angular/core';
+import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent {
-  constructor(public userService: UserService, private http: HttpClient) {
+export class DashboardComponent implements OnInit {
+
+  isMobileLayout = false;
+
+  constructor(private breakpointObserver: BreakpointObserver) {
   }
 
-  afterAuth(){
-    this.http.get("http://localhost:8080/user", {withCredentials: true}).subscribe(result =>{
-      console.log(result);
-    })
-  }
-
-  createEvent(){
-    this.http.post("http://localhost:8080/event/", {
-      "name": "Geiles Event7",
-      "description": "Wird mega",
-      "location": "Elkes Kueche",
-      "date": "1986-04-08T12:30:00"
-    },{withCredentials: true}).subscribe(result =>{
-      console.log(result);
-    })
-  }
-
-  getOwn(){
-    this.http.get("http://localhost:8080/event/own", {withCredentials: true}).subscribe(result =>{
-      console.log(result);
-    })
-  }
-
-  generateInvitationLink(){
-    this.http.get("http://localhost:8080/event/d1541053-cea8-4f31-8500-d5151d0853c8/generateInvitationLink", {withCredentials: true}).subscribe(result =>{
-      console.log(result);
-    })
-  }
-
-  updateEvent(){
-    this.http.put("http://localhost:8080/event/d1541053-cea8-4f31-8500-d5151d0853c8", {
-      "name": "Geiles Event 17",
-      "description": "Wird mega geil",
-      "location": "Elkes Kuechen",
-      "date": "1987-04-08T12:30:00"
-    },{withCredentials: true}).subscribe(result =>{
-      console.log(result);
-    })
+  ngOnInit() {
+    this.breakpointObserver.observe(Breakpoints.HandsetPortrait).subscribe(result => {
+      this.isMobileLayout = result.matches;
+    });
   }
 }

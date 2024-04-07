@@ -1,11 +1,26 @@
-<div *ngIf="userService.user | async; let user">
-  <img width="48" height="48" [ngSrc]="user.profilePictureUrl">
-  <p>Benutzer: {{ user.firstName }} {{ user.lastName }}</p>
-  <p>Ist Gast: {{ user.guest ? 'Ja' : 'Nein' }}</p>
-</div>
+<div class="wrapper" [class.is-mobile]="isMobileLayout">
+  <mat-toolbar *ngIf="isMobileLayout" class="toolbar">
+    <button mat-icon-button (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>Get2Gether</span>
+  </mat-toolbar>
+  <mat-sidenav-container
+    class="sidenav-container"
+    [style.margin-top.px]="isMobileLayout ? 56 : 0"
+  >
+    <mat-sidenav
+      #sidenav
+      [mode]="isMobileLayout ? 'over' : 'side'"
+      [fixedInViewport]="isMobileLayout"
+      fixedTopGap="56"
+      [opened]="!isMobileLayout"
+    >
+      <app-side-menu></app-side-menu>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <app-dashboard-content></app-dashboard-content>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 
-<button (click)="afterAuth()">AfterAuth</button>
-<button (click)="createEvent()">CreateEvent</button>
-<button (click)="getOwn()">GetMyEvents</button>
-<button (click)="generateInvitationLink()">GenerateInvitationLink</button>
-<button (click)="updateEvent()">UpdateEvent</button>
+</div>
