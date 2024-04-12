@@ -4,6 +4,7 @@ import com.dhbw.get2gether.backend.authentication.GuestAuthenticationFilter;
 import com.dhbw.get2gether.backend.authentication.GuestAuthenticationProvider;
 import com.dhbw.get2gether.backend.user.application.OAuthUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -54,8 +55,11 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, GuestAuthenticationFilter guestAuthenticationFilter)
-            throws Exception {
+    public SecurityFilterChain filterChain(
+            HttpSecurity http,
+            GuestAuthenticationFilter guestAuthenticationFilter,
+            @Value("${frontend.url}") String frontendUrl
+    ) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .cors(h -> h.configurationSource(corsConfigurationSource()))
                 .addFilterAfter(guestAuthenticationFilter, OAuth2LoginAuthenticationFilter.class)
@@ -70,6 +74,7 @@ public class SecurityConfig {
                                 "/error",
                                 "/webjars/**",
                                 "/oauth2/authorization/google",
+                                "/login",
                                 "/landingpage",
                                 "/swagger-ui",
                                 "/swagger-ui/**",
@@ -85,7 +90,7 @@ public class SecurityConfig {
                 .exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .logout(logout -> logout.logoutSuccessUrl("/"))
                 .oauth2Login(httpSecurityOAuth2LoginConfigurer -> httpSecurityOAuth2LoginConfigurer
-                        .defaultSuccessUrl("http://localhost:4200/dashboard", true)
+                        .defaultSuccessUrl(frontendUrl + "/dashboard", true)
                         .userInfoEndpoint(infoEndPoint -> infoEndPoint
                                 .userAuthoritiesMapper(grantedAuthoritiesMapper())
                                 .userService(oAuthUserService)));
