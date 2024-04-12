@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
+import {environment} from "../../environment/environment";
 
 @Component({
   selector: 'app-login',
@@ -19,6 +20,6 @@ export class LoginComponent implements OnInit{
   }
 
   onClickLogin(){
-    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+    window.location.href = environment.googleOAuthLocation;
   }
 }
