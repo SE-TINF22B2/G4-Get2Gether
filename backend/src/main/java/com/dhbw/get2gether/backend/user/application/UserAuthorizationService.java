@@ -1,10 +1,11 @@
 package com.dhbw.get2gether.backend.user.application;
 
 import com.dhbw.get2gether.backend.user.model.User;
-import java.util.Objects;
 import org.springframework.security.core.AuthenticatedPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 @Service
 public class UserAuthorizationService {
@@ -18,7 +19,7 @@ public class UserAuthorizationService {
      * target user objects email, {@code false} otherwise.
      */
     public boolean isAuthorized(AuthenticatedPrincipal principal, User targetUserObject) {
-        if (principal instanceof OAuth2User oAuth2User)
+        if (principal instanceof OAuth2User oAuth2User && targetUserObject != null)
             return Objects.equals(oAuth2User.getAttribute("email"), targetUserObject.getEmail());
         return false;
     }
