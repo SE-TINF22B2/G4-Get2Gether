@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
@@ -25,7 +24,7 @@ import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationF
 import org.springframework.security.oauth2.core.oidc.user.OidcUserAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -71,6 +70,7 @@ public class SecurityConfig {
                                 "/css/**",
                                 "/js/**",
                                 "/images/**",
+                                "/font/**",
                                 "/error",
                                 "/webjars/**",
                                 "/oauth2/authorization/google",
@@ -87,7 +87,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/event/**").hasRole("GUEST")
                         // --- must have ROLE_USER
                         .anyRequest().hasRole("USER"))
-                .exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
+                .exceptionHandling(e -> e.authenticationEntryPoint(new Http403ForbiddenEntryPoint()))
                 .logout(logout -> logout.logoutSuccessUrl("/"))
                 .oauth2Login(httpSecurityOAuth2LoginConfigurer -> httpSecurityOAuth2LoginConfigurer
                         .defaultSuccessUrl(frontendUrl + "/dashboard", true)

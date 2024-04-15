@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ein Fehler ist aufgetreten | Get2Gether</title>
+    <link rel="stylesheet" href="../public/css/main.css" th:href="@{/css/main.css}">
+    <style>
+        .status {
+            font-size: 3em;
+            font-weight: 200;
+            margin-bottom: 0;
+        }
+        .error {
+            margin-top: 0;
+            font-size: 2em;
+            font-weight: 500;
+        }
+        img {
+            margin: 75px auto;
+            display: block;
+            max-width: 500px;
+        }
+        p {
+            color: var(--foreground-muted);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="max-width">
+    <h1 th:text="${status}" class="status">404</h1>
+    <h2 th:text="${error}" class="error">Not Found</h2>
+
+    <img src="../public/images/server_error.svg" th:src="@{/images/server_error.svg}" width="60%">
+
+    <p><strong>Oops</strong>, da ist wohl etwas schiefgelaufen!</p>
+    <p><a href="/" class="button">Zurück zur Startseite</a></p>
+</div>
+</body>
+</html>
