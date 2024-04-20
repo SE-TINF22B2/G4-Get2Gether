@@ -5,5 +5,6 @@
 export const environment = {
   production: false,
   api: "http://localhost:8080",
-  googleOAuthLocation: "http://localhost:8080/oauth2/authorization/google"
+  googleOAuthLocation: "http://localhost:8080/oauth2/authorization/google",
+  googleMapsApiKey: ""
 };

@@ -1,0 +1,41 @@
+<mat-drawer-container *ngIf="gmapsLoaded | async">
+  <mat-drawer
+    #drawer
+    position="end" [mode]="isSmallLayout ? 'over' : 'side'"
+    [opened]="!isSmallLayout">
+    <div class="location-drawer">
+      <div class="list-wrapper">
+        <mat-selection-list *ngIf="locations.length > 0" hideSingleSelectionIndicator role="list">
+          <mat-list-item *ngFor="let location of locations" (click)="focusLocation(location)" role="listitem">
+            <mat-icon matListItemIcon>location_on</mat-icon>
+            <span matListItemTitle>{{ location.name }}</span>
+            <span matListItemLine>{{ location.address }}</span>
+          </mat-list-item>
+        </mat-selection-list>
+        <p *ngIf="locations.length == 0">
+          Keine Standorte hinzugefügt.
+        </p>
+      </div>
+
+      <mat-form-field class="search-input">
+        <mat-label>Standort hinzufügen</mat-label>
+        <input #searchField matInput placeholder="Suche nach einem Ort..."/>
+      </mat-form-field>
+    </div>
+  </mat-drawer>
+
+  <mat-drawer-content>
+    <google-map
+      [center]="focussedLocation"
+      [zoom]="mapZoom"
+      [options]="mapOptions"
+      width="100%">
+      @for (position of mapsMarkerPositions; track position.lng + "," + position.lat) {
+        <map-marker [position]="position"></map-marker>
+      }
+    </google-map>
+    <button mat-icon-button class="drawer-toggle" (click)="drawer.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </mat-drawer-content>
+</mat-drawer-container>
