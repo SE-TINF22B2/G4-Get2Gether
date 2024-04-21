@@ -54,14 +54,6 @@ test {
         events "PASSED", "SKIPPED", "FAILED", "STANDARD_OUT", "STANDARD_ERROR"
     }
 }
-jacocoTestReport {
-    reports {
-        xml.enabled true
-        html.enabled enabled
-    }
-}
-
-check.dependsOn jacocoTestReport
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
