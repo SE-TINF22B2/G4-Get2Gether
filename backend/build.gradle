@@ -59,10 +59,7 @@ test {
 }
 jacocoTestReport {
     reports {
-        xml.required = false
-        csv.required = false
-        //html.enabled enabled
-        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+        xml.required = true
     }
 }
 jacocoTestReport {
