@@ -30,6 +30,10 @@ jobs:
       uses: gradle/gradle-build-action@v2
     - name: Execute Gradle test
       run: ./gradlew test
+    - name: Upload coverage reports to Codecov with GitHub Action
+      uses: codecov/codecov-action@v4.2.0
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   build_and_publish:
     runs-on: ubuntu-latest
