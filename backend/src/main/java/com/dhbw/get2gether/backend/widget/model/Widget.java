@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public abstract class Widget {
-    private final String id;
-    private final LocalDateTime creationDate;
-    private final WidgetType widgetType;
+    protected final String id;
+    protected final LocalDateTime creationDate;
+    protected final WidgetType widgetType;
 }
