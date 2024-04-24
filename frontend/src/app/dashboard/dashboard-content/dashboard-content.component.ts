@@ -54,4 +54,13 @@ export class DashboardContentComponent {
       console.log(result);
     })
   }
+  updateUserColor( colormode: string){
+    this.http.put("http://localhost:8080/user/self", {
+      "settings": {
+        "colorMode" : colormode
+      }
+    },{withCredentials: true}).subscribe(result =>{
+      console.log(result);
+    })
+  }
 }

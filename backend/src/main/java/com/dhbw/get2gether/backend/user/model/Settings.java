@@ -6,9 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Builder
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-public class UpdateUserCommand {
-    private Settings settings;
+public class Settings {
+    private ColorMode colorMode;
 }

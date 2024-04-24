@@ -1,14 +1,14 @@
 package com.dhbw.get2gether.backend.user.adapter.in;
 
 import com.dhbw.get2gether.backend.user.application.UserService;
+import com.dhbw.get2gether.backend.user.model.UpdateUserCommand;
 import com.dhbw.get2gether.backend.user.model.User;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticatedPrincipal;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserController {
@@ -34,5 +34,10 @@ public class UserController {
     @GetMapping("/user/{id}")
     public User user(@PathVariable String id) {
         return userService.getUserById(id);
+    }
+
+    @PutMapping("user/self")
+    public User updateUser(@AuthenticationPrincipal AuthenticatedPrincipal principal, @RequestBody UpdateUserCommand updateUserCommand){
+        return userService.updateUser(principal, updateUserCommand);
     }
 }

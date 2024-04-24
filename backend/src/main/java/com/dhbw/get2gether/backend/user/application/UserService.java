@@ -4,10 +4,8 @@ import com.dhbw.get2gether.backend.authentication.GuestAuthenticationPrincipal;
 import com.dhbw.get2gether.backend.exceptions.EntityNotFoundException;
 import com.dhbw.get2gether.backend.user.adapter.out.UserRepository;
 import com.dhbw.get2gether.backend.user.application.mapper.UserMapper;
-import com.dhbw.get2gether.backend.user.model.CreateUserCommand;
-import com.dhbw.get2gether.backend.user.model.Guest;
-import com.dhbw.get2gether.backend.user.model.UpdateUserCommand;
-import com.dhbw.get2gether.backend.user.model.User;
+import com.dhbw.get2gether.backend.user.model.*;
+
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
@@ -15,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.AuthenticatedPrincipal;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
@@ -57,13 +56,22 @@ public class UserService {
         User user = userMapper.mapToUser(command).toBuilder()
                 .id(UUID.randomUUID().toString())
                 .creationDate(LocalDateTime.now())
+                .settings(Settings.builder()
+                        .colorMode(ColorMode.LIGHT)
+                        .build())
                 .build();
         return userRepository.insert(user);
     }
 
-    protected User updateUser(OAuth2User principal, UpdateUserCommand updateUserCommand) {
+    protected User syncUser(OAuth2User principal, SyncUserCommand syncUserCommand) {
         User oldUser = getUserByPrincipal(principal);
-        User newUser = userMapper.updateUser(oldUser, updateUserCommand);
+        User newUser = userMapper.mapSyncCommandToUser(oldUser, syncUserCommand);
+        return userRepository.save(newUser);
+    }
+    @PreAuthorize("hasRole('USER')")
+    public User updateUser(AuthenticatedPrincipal principal, UpdateUserCommand updateUserCommand) {
+        User oldUser = getUserByPrincipal(principal);
+        User newUser = userMapper.mapSettingsCommandToUser(oldUser, updateUserCommand);
         return userRepository.save(newUser);
     }
 

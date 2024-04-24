@@ -9,7 +9,7 @@ public class Guest extends User {
     private final boolean isGuest = true;
 
     public Guest(String id, LocalDateTime creationDate) {
-        super(id, creationDate, "Guest", "", "", getProfilePictureUrl(id));
+        super(id, creationDate, "Guest", "", "", getProfilePictureUrl(id), new Settings(ColorMode.LIGHT));
     }
 
     private static String getProfilePictureUrl(String hash) {
