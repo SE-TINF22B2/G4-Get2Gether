@@ -18,6 +18,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.AuthenticatedPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -96,20 +97,6 @@ public class EventService {
     }
 
     @PreAuthorize("hasRole('USER')")
-    public Event addParticipantToEvent(AuthenticatedPrincipal principal, String invitationLink) {
-        Optional<Event> event = eventRepository.findByInvitationLink(invitationLink);
-        return event.map(presentEvent -> {
-                    Optional<User> user = this.userService.findUserFromPrincipal(principal);
-                    return user.map(presentUser -> {
-                                presentEvent.addParticipant(presentUser.getId());
-                                return eventRepository.save(presentEvent);
-                            })
-                            .orElseThrow(() -> new EntityNotFoundException("User not found"));
-                })
-                .orElseThrow(() -> new EntityNotFoundException("Event not found"));
-    }
-
-    @PreAuthorize("hasRole('USER')")
     public Event generateInvitationLink(AuthenticatedPrincipal principal, String eventId) {
         Event event = getEventIfUserIsParticipant(principal, eventId);
         event.setInvitationLink("invitation-" + UUID.randomUUID());
@@ -117,10 +104,13 @@ public class EventService {
     }
 
     @PreAuthorize("hasRole('GUEST')")
-    public Optional<String> findRouteFromInvitationLink(AuthenticatedPrincipal principal, String invitationLink) {
+    public Optional<String> openEventFromInvitationLink(AuthenticatedPrincipal principal, String invitationLink) {
         Optional<Event> event = findEventByInvitationLink(invitationLink);
         if (event.isPresent() && principal instanceof GuestAuthenticationPrincipal guestPrincipal) {
             guestPrincipal.grantAccessToEvent(event.get().getId());
+        } else if (event.isPresent() && principal instanceof OAuth2User) {
+            // add user as participant
+            event = event.map(e -> addUserToParticipantsIfNotParticipating(principal, e));
         }
         return event.map(presentEvent -> env.getProperty("frontend.url") + "/event/" + presentEvent.getId());
     }
@@ -143,5 +133,12 @@ public class EventService {
 
     private Optional<Event> findEventByInvitationLink(String invitationLink) {
         return eventRepository.findByInvitationLink(invitationLink);
+    }
+
+    private Event addUserToParticipantsIfNotParticipating(AuthenticatedPrincipal principal, Event event) {
+        User user = userService.getUserByPrincipal(principal);
+        if (event.getParticipantIds().contains(user.getId())) return event;
+        event.addParticipant(user.getId());
+        return eventRepository.save(event);
     }
 }

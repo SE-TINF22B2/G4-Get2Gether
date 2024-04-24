@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.access.AccessDeniedException;
@@ -314,45 +315,6 @@ class EventServiceTest extends AbstractIntegrationTest {
     }
 
     @Test
-    @WithMockGuestUser
-    void shouldNotAddParticipantIfUserIsGuest() {
-        // given
-        AuthenticatedPrincipal principal = (AuthenticatedPrincipal)
-                SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        // when
-        // then
-        assertThatThrownBy(() -> eventService.addParticipantToEvent(principal, "123"))
-                .isInstanceOf(AccessDeniedException.class);
-    }
-
-    @Test
-    @WithMockOAuth2User
-    void shouldAddParticipantIfIsUser() {
-        // given
-        AuthenticatedPrincipal principal = (AuthenticatedPrincipal)
-                SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = User.builder().id("test").build();
-        final String invitationLink = "123";
-        Event event = Event.builder()
-                .id("1")
-                .participantIds(new ArrayList<>())
-                .invitationLink(invitationLink)
-                .build();
-
-        when(userService.findUserFromPrincipal(any())).thenReturn(Optional.of(user));
-        when(eventRepository.findByInvitationLink(eq(invitationLink))).thenReturn(Optional.of(event));
-        when(eventRepository.save(any())).thenAnswer(args -> args.getArgument(0));
-
-        // when
-        Event updatedEvent = eventService.addParticipantToEvent(principal, invitationLink);
-
-        // then
-        assertThat(updatedEvent).isNotNull();
-        assertThat(updatedEvent.getParticipantIds()).containsExactly(user.getId());
-    }
-
-    @Test
     @WithMockOAuth2User
     void shouldNotGenerateInvitationLinkIfUserIsNotParticipant() {
         // given
@@ -399,7 +361,7 @@ class EventServiceTest extends AbstractIntegrationTest {
 
     @Test
     @WithMockGuestUser
-    void shouldFindRouteFromInvitationLinkIfUserIsGuest() {
+    void shouldOpenEventFromInvitationLinkIfUserIsGuest() {
         // given
         AuthenticatedPrincipal principal = (AuthenticatedPrincipal)
                 SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -409,11 +371,38 @@ class EventServiceTest extends AbstractIntegrationTest {
         when(eventRepository.findByInvitationLink(eq(invitationLink))).thenReturn(Optional.of(event));
 
         // when
-        Optional<String> route = eventService.findRouteFromInvitationLink(principal, invitationLink);
+        Optional<String> route = eventService.openEventFromInvitationLink(principal, invitationLink);
 
         // then
         assertThat(route).isPresent().asString().isNotBlank();
         assertThat(((GuestAuthenticationPrincipal) principal).getGrantedEventIds())
                 .containsExactly(event.getId());
+    }
+
+    @Test
+    @WithMockOAuth2User
+    void shouldOpenEventFromInvitationLinkIfIsUser() {
+        // given
+        AuthenticatedPrincipal principal = (AuthenticatedPrincipal)
+                SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = User.builder().id("test").build();
+        String invitationLink = "123";
+        Event event = Event.builder()
+                .id("1")
+                .invitationLink(invitationLink)
+                .participantIds(new ArrayList<>())
+                .build();
+
+        ArgumentCaptor<Event> eventCaptor = ArgumentCaptor.forClass(Event.class);
+        when(userService.getUserByPrincipal(any())).thenReturn(user);
+        when(eventRepository.findByInvitationLink(eq(invitationLink))).thenReturn(Optional.of(event));
+        when(eventRepository.save(eventCaptor.capture())).thenAnswer(args -> args.getArgument(0));
+
+        // when
+        Optional<String> route = eventService.openEventFromInvitationLink(principal, invitationLink);
+
+        // then
+        assertThat(route).isPresent().asString().isNotBlank();
+        assertThat(eventCaptor.getValue().getParticipantIds()).contains(user.getId());
     }
 }
