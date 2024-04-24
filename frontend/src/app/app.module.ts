@@ -19,7 +19,6 @@ import {SideMenuComponent} from "./dashboard/side-menu/side-menu.component";
 import {DashboardContentComponent} from "./dashboard/dashboard-content/dashboard-content.component";
 import {MatDividerModule} from "@angular/material/divider";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
-import { EventBannerComponent } from './dashboard/event-banner/event-banner.component';
 
 function initializeAppFactory(userService: UserService) {
   return () => {
@@ -34,8 +33,6 @@ function initializeAppFactory(userService: UserService) {
     DashboardComponent,
     SplashscreenComponent,
     SideMenuComponent,
-    DashboardContentComponent,
-    EventBannerComponent
   ],
   imports: [
     BrowserModule,
