@@ -106,13 +106,15 @@ public class EventService {
     @PreAuthorize("hasRole('GUEST')")
     public Optional<String> openEventFromInvitationLink(AuthenticatedPrincipal principal, String invitationLink) {
         Optional<Event> event = findEventByInvitationLink(invitationLink);
-        if (event.isPresent() && principal instanceof GuestAuthenticationPrincipal guestPrincipal) {
-            guestPrincipal.grantAccessToEvent(event.get().getId());
-        } else if (event.isPresent() && principal instanceof OAuth2User) {
-            // add user as participant
-            event = event.map(e -> addUserToParticipantsIfNotParticipating(principal, e));
-        }
-        return event.map(presentEvent -> env.getProperty("frontend.url") + "/event/" + presentEvent.getId());
+        return event.map(presentEvent -> {
+            if (principal instanceof GuestAuthenticationPrincipal guestPrincipal) {
+                guestPrincipal.grantAccessToEvent(presentEvent.getId());
+            } else if (principal instanceof OAuth2User) {
+                // add user as participant
+                addUserToParticipantsIfNotParticipating(principal, presentEvent);
+            }
+            return env.getProperty("frontend.url") + "/event/" + presentEvent.getId();
+        });
     }
 
     private Event getEventById(String eventId) {
