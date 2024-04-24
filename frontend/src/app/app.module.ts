@@ -33,6 +33,7 @@ function initializeAppFactory(userService: UserService) {
     DashboardComponent,
     SplashscreenComponent,
     SideMenuComponent,
+    DashboardContentComponent
   ],
   imports: [
     BrowserModule,
