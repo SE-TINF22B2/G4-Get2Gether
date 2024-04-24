@@ -3,6 +3,7 @@ package com.dhbw.get2gether.backend.event.application.mapper;
 import com.dhbw.get2gether.backend.event.model.Event;
 import com.dhbw.get2gether.backend.event.model.EventCreateCommand;
 import com.dhbw.get2gether.backend.event.model.EventUpdateCommand;
+import com.dhbw.get2gether.backend.event.model.EventWidgetUpdateCommand;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -18,4 +19,6 @@ public interface EventMapper {
     Event toEvent(EventCreateCommand eventCreateCommand);
 
     Event updateEvent(@MappingTarget Event event, EventUpdateCommand eventUpdateCommand);
+
+    Event updateEvent(@MappingTarget Event event, EventWidgetUpdateCommand eventWidgetUpdateCommand);
 }

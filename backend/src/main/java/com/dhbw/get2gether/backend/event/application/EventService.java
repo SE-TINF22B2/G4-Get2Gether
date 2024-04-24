@@ -6,20 +6,22 @@ import com.dhbw.get2gether.backend.event.application.mapper.EventMapper;
 import com.dhbw.get2gether.backend.event.model.Event;
 import com.dhbw.get2gether.backend.event.model.EventCreateCommand;
 import com.dhbw.get2gether.backend.event.model.EventUpdateCommand;
+import com.dhbw.get2gether.backend.event.model.EventWidgetUpdateCommand;
 import com.dhbw.get2gether.backend.exceptions.EntityNotFoundException;
 import com.dhbw.get2gether.backend.user.application.UserService;
 import com.dhbw.get2gether.backend.user.model.User;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 import org.springframework.core.env.Environment;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.AuthenticatedPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class EventService {
@@ -93,6 +95,13 @@ public class EventService {
     public Event updateEvent(AuthenticatedPrincipal principal, String eventId, EventUpdateCommand eventUpdateCommand) {
         Event oldEvent = getEventIfUserIsParticipant(principal, eventId);
         Event newEvent = eventMapper.updateEvent(oldEvent, eventUpdateCommand);
+        return eventRepository.save(newEvent);
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    public Event updateEventWidgets(AuthenticatedPrincipal principal, String eventId, EventWidgetUpdateCommand eventWidgetUpdateCommand) {
+        Event oldEvent = getEventIfUserIsParticipant(principal, eventId);
+        Event newEvent = eventMapper.updateEvent(oldEvent, eventWidgetUpdateCommand);
         return eventRepository.save(newEvent);
     }
 

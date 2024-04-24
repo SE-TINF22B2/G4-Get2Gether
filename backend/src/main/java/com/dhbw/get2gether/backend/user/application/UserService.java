@@ -5,17 +5,15 @@ import com.dhbw.get2gether.backend.exceptions.EntityNotFoundException;
 import com.dhbw.get2gether.backend.user.adapter.out.UserRepository;
 import com.dhbw.get2gether.backend.user.application.mapper.UserMapper;
 import com.dhbw.get2gether.backend.user.model.*;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.AuthenticatedPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.AuthenticatedPrincipal;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
@@ -52,6 +50,13 @@ public class UserService {
         return findUserFromPrincipal(principal).orElseThrow(() -> new EntityNotFoundException("User not found"));
     }
 
+    @PreAuthorize("hasRole('USER')")
+    public User updateUser(AuthenticatedPrincipal principal, UpdateUserCommand updateUserCommand) {
+        User oldUser = getUserByPrincipal(principal);
+        User newUser = userMapper.mapSettingsCommandToUser(oldUser, updateUserCommand);
+        return userRepository.save(newUser);
+    }
+
     protected User createUser(CreateUserCommand command) {
         User user = userMapper.mapToUser(command).toBuilder()
                 .id(UUID.randomUUID().toString())
@@ -66,12 +71,6 @@ public class UserService {
     protected User syncUser(OAuth2User principal, SyncUserCommand syncUserCommand) {
         User oldUser = getUserByPrincipal(principal);
         User newUser = userMapper.mapSyncCommandToUser(oldUser, syncUserCommand);
-        return userRepository.save(newUser);
-    }
-    @PreAuthorize("hasRole('USER')")
-    public User updateUser(AuthenticatedPrincipal principal, UpdateUserCommand updateUserCommand) {
-        User oldUser = getUserByPrincipal(principal);
-        User newUser = userMapper.mapSettingsCommandToUser(oldUser, updateUserCommand);
         return userRepository.save(newUser);
     }
 
