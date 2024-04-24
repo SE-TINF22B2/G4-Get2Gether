@@ -75,7 +75,6 @@ public class SecurityConfig {
                                 "/webjars/**",
                                 "/oauth2/authorization/google",
                                 "/login",
-                                "/landingpage",
                                 "/swagger-ui",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**").permitAll()

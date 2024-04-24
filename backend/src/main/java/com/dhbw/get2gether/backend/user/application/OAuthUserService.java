@@ -16,7 +16,7 @@ public class OAuthUserService extends DefaultOAuth2UserService {
 
     private final UserService userService;
 
-    public OAuthUserService(@Autowired UserService userService) {
+    OAuthUserService(UserService userService) {
         this.userService = userService;
     }
 

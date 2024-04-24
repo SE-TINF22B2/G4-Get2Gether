@@ -28,7 +28,7 @@ public class EventService {
     private final EventRepository eventRepository;
     private final UserService userService;
 
-    public EventService(
+    EventService(
             EventMapper eventMapper, EventRepository eventRepository, UserService userService, Environment env) {
         this.eventMapper = eventMapper;
         this.eventRepository = eventRepository;

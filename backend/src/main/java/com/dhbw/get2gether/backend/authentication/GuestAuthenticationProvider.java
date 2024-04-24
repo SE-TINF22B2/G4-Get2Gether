@@ -16,7 +16,6 @@ public class GuestAuthenticationProvider implements AuthenticationProvider {
             return null;
         }
         authentication.setAuthenticated(true);
-        log.debug("Authenticated: " + authentication);
         return authentication;
     }
 
