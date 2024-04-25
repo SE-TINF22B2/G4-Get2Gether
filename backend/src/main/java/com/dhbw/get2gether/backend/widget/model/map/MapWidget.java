@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Builder(toBuilder = true)
@@ -15,7 +16,8 @@ import java.util.List;
 public class MapWidget extends Widget {
     private final String id;
     private final LocalDateTime creationDate;
-    private List<Location> locations;
+    @Builder.Default
+    private List<Location> locations = new ArrayList<>();
 
     @Override
     public WidgetType getWidgetType() {

@@ -12,6 +12,7 @@ public interface MapWidgetMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "creationDate", ignore = true)
+    @Mapping(target = "locations", ignore = true)
     MapWidget mapToMapWidget(MapWidgetCreateCommand createCommand);
 
     @Mapping(target = "id", ignore = true)
