@@ -1,8 +1,9 @@
-import {Component, ElementRef, Inject, NgZone, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Inject, Input, NgZone, OnInit, Output, ViewChild} from '@angular/core';
 import {MAP_LOADED} from "../../app.module";
 import {Observable} from "rxjs";
-import {Location} from "../../../model/map";
+import {Location, LocationAddCommand, MapWidget} from "../../../model/map";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
+import {MapWidgetService} from "../../../services/widgets/map-widget.service";
 
 @Component({
   selector: 'app-maps-widget',
@@ -11,6 +12,15 @@ import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 })
 export class MapsWidgetComponent implements OnInit {
 
+  @Input()
+  eventId!: string;
+
+  @Input()
+  widget!: MapWidget;
+
+  @Output()
+  onWidgetUpdated = new EventEmitter<MapWidget>();
+
   mapOptions: google.maps.MapOptions = {
     fullscreenControl: false,
     streetViewControl: false
@@ -18,7 +28,6 @@ export class MapsWidgetComponent implements OnInit {
 
   private autocomplete: google.maps.places.Autocomplete | undefined;
 
-  locations: Location[] = [];
   focussedLocation: google.maps.LatLngLiteral = {
     lat: 49.02632,
     lng: 8.38544
@@ -28,10 +37,12 @@ export class MapsWidgetComponent implements OnInit {
   isSmallLayout = false;
 
   constructor(
+    private service: MapWidgetService,
     @Inject(MAP_LOADED) public gmapsLoaded: Observable<boolean>,
     private ngZone: NgZone,
     private breakpointObserver: BreakpointObserver
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.breakpointObserver.observe([Breakpoints.XSmall, Breakpoints.Small]).subscribe(result => {
@@ -41,7 +52,6 @@ export class MapsWidgetComponent implements OnInit {
 
   @ViewChild("searchField", {static: false})
   set searchField(inputField: ElementRef<HTMLInputElement>) {
-    console.log("field", inputField);
     if (!inputField) return;
 
     this.autocomplete = new google.maps.places.Autocomplete(inputField.nativeElement);
@@ -50,38 +60,43 @@ export class MapsWidgetComponent implements OnInit {
       if (!place || !place.place_id) return;
 
       this.ngZone.run(() => {
-        const existingLocation = this.locations.find(location => location.id === place.place_id);
-
-        let location: Location;
-        if (existingLocation) {
-          location = existingLocation;
-        } else {
-          location = {
-            id: place.place_id || "",
-            name: place.name || "",
-            address: place.formatted_address || "",
-            latitude: place.geometry?.location?.lat() || -1,
-            longitude: place.geometry?.location?.lng() || -1
-          };
-          this.locations.push(location);
-        }
-
+        this.addLocation({
+          placeId: place.place_id || "",
+          name: place.name || "",
+          address: place.formatted_address || "",
+          latitude: place.geometry?.location?.lat() || -1,
+          longitude: place.geometry?.location?.lng() || -1
+        });
         inputField.nativeElement.value = "";
-        this.focusLocation(location);
       });
     });
   }
 
-  focusLocation(location: Location) {
+  private addLocation(addCommand: LocationAddCommand) {
+    this.focusLocation(addCommand);
+
+    const existingLocation = this.widget.locations.find(location => location.placeId === addCommand.placeId);
+
+    if (!existingLocation) {
+      this.service.addLocation(this.eventId, this.widget.id, addCommand)
+        .subscribe(updatedWidget => this.onWidgetUpdated.emit(updatedWidget));
+    }
+  }
+
+  focusLocation(location: Omit<Location, "id">) {
     this.focussedLocation = this.locationToLatLngLiteral(location);
     this.mapZoom = 17;
   }
 
-  get mapsMarkerPositions(): google.maps.LatLngLiteral[] {
-    return this.locations.map(this.locationToLatLngLiteral);
+  get locations(): Location[] {
+    return this.widget.locations;
   }
 
-  private locationToLatLngLiteral(location: Location): google.maps.LatLngLiteral {
+  get mapsMarkerPositions(): google.maps.LatLngLiteral[] {
+    return this.widget.locations.map(this.locationToLatLngLiteral);
+  }
+
+  private locationToLatLngLiteral(location: Omit<Location, "id">): google.maps.LatLngLiteral {
     return {
       lng: location.longitude,
       lat: location.latitude,

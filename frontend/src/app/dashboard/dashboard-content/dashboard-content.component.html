@@ -19,7 +19,11 @@
   <button (click)="removeShoppingListEntry()">RemoveItem</button>
   <button (click)="checkShoppingListEntry()">CheckEntry</button>
 
-  <app-maps-widget></app-maps-widget>
+  <app-maps-widget
+    [eventId]="'d2602bdb-9ab4-4c75-8820-62548a4fe3a5'"
+    [widget]="mapWidget"
+    (onWidgetUpdated)="mapWidget = $event">
+  </app-maps-widget>
   <!-- TODO: remove above -->
 
   <!-- TODO: add new component here for event banner -->
