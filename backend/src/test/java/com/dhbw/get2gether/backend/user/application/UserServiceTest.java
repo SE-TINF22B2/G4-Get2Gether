@@ -7,8 +7,8 @@ import static org.mockito.Mockito.*;
 
 import com.dhbw.get2gether.backend.AbstractIntegrationTest;
 import com.dhbw.get2gether.backend.user.adapter.out.UserRepository;
-import com.dhbw.get2gether.backend.user.model.Guest;
-import com.dhbw.get2gether.backend.user.model.User;
+import com.dhbw.get2gether.backend.user.application.mapper.UserMapper;
+import com.dhbw.get2gether.backend.user.model.*;
 import com.dhbw.get2gether.backend.utils.WithMockGuestUser;
 import com.dhbw.get2gether.backend.utils.WithMockOAuth2User;
 import java.util.Optional;
@@ -131,5 +131,25 @@ class UserServiceTest extends AbstractIntegrationTest {
 
         // then
         assertThat(user).get().isInstanceOf(Guest.class);
+    }
+
+    @Test
+    @WithMockOAuth2User
+    void shouldChangeUserSettings() {
+        // given
+        AuthenticatedPrincipal principal = (AuthenticatedPrincipal)
+                SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UpdateUserCommand updateUserCommand = UpdateUserCommand.builder().settings(Settings.builder().colorMode(ColorMode.DARK).build()).build();
+        User givenUser = User.builder().id("test").email("test@example.com").build();
+
+        when(userRepository.findByEmail(eq(givenUser.getEmail()))).thenReturn(Optional.of(givenUser));
+        when(userRepository.save(UserMapper.MAPPER.mapSettingsCommandToUser(givenUser, updateUserCommand))).thenReturn(givenUser);
+
+        // when
+        User updatedUser = userService.updateUser(principal, updateUserCommand);
+
+        // then
+        verify(userRepository).save(givenUser);
+        assertThat(updatedUser.getSettings().getColorMode()).isEqualTo(ColorMode.DARK);
     }
 }

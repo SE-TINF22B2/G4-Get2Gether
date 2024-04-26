@@ -7,9 +7,11 @@ import com.dhbw.get2gether.backend.user.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
+    UserMapper MAPPER = Mappers.getMapper(UserMapper.class);
 
     @Mapping(target = "id", ignore = true)
     User mapToUser(CreateUserCommand command);
