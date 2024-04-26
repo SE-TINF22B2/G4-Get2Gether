@@ -34,14 +34,13 @@ export class MapsWidgetComponent implements OnInit {
 
   mapOptions: google.maps.MapOptions = {
     fullscreenControl: false,
-    streetViewControl: false
-  }
-
-  focussedLocation: google.maps.LatLngLiteral = {
-    lat: 49.02632,
-    lng: 8.38544
+    streetViewControl: false,
+    zoom: 12,
+    center: {
+      lat: 49.02632,
+      lng: 8.38544
+    }
   };
-  mapZoom = 12;
 
   isSmallLayout = false;
 
@@ -80,8 +79,11 @@ export class MapsWidgetComponent implements OnInit {
   }
 
   focusLocation(location: Omit<Location, "id">) {
-    this.focussedLocation = this.locationToLatLngLiteral(location);
-    this.mapZoom = 17;
+    this.mapOptions = {
+      ...this.mapOptions,
+      zoom: 17,
+      center: this.locationToLatLngLiteral(location)
+    };
   }
 
   onDeleteClicked(event: Event, location: Location) {
