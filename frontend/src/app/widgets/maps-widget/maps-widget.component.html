@@ -12,8 +12,10 @@
               <span matListItemTitle>{{ location.name }}</span>
               <span matListItemLine>{{ location.address }}</span>
               <span matListItemMeta class="delete-location">
-              <button mat-icon-button (click)="onDeleteClicked($event, location)"><mat-icon>delete</mat-icon></button>
-            </span>
+                <button mat-icon-button (click)="onDeleteClicked($event, location)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </span>
             </mat-list-item>
           }
         </mat-selection-list>
