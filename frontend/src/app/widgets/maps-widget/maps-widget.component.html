@@ -4,6 +4,10 @@
     position="end" [mode]="isSmallLayout ? 'over' : 'side'"
     [opened]="!isSmallLayout">
     <div class="location-drawer">
+      <button mat-stroked-button (click)="openAddLocationDialog()">
+        <mat-icon>add</mat-icon>
+        Ort hinzufügen
+      </button>
       <div class="list-wrapper">
         <mat-selection-list *ngIf="locations.length > 0" hideSingleSelectionIndicator role="list">
           @for (location of locations; track location.id) {
@@ -20,14 +24,9 @@
           }
         </mat-selection-list>
         <p *ngIf="locations.length == 0">
-          Keine Standorte hinzugefügt.
+          Keine Orte hinzugefügt.
         </p>
       </div>
-
-      <mat-form-field class="search-input">
-        <mat-label>Standort hinzufügen</mat-label>
-        <input #searchField matInput placeholder="Suche nach einem Ort..."/>
-      </mat-form-field>
     </div>
   </mat-drawer>
 

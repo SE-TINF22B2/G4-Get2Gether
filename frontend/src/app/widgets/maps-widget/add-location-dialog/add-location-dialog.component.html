@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>Ort hinzufügen</h2>
+
+<mat-dialog-content>
+  <mat-form-field class="search-input">
+    <mat-label>Suche nach einem Ort</mat-label>
+    <input #searchField matInput/>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Abbrechen</button>
+  <button
+    #addButton
+    mat-flat-button
+    color="primary"
+    [disabled]="isSelectedLocationInvalid"
+    (click)="closeDialog()"
+  >
+    Hinzufügen
+  </button>
+</mat-dialog-actions>

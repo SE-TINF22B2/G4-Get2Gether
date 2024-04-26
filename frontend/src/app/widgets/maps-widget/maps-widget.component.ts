@@ -1,10 +1,12 @@
-import {Component, ElementRef, EventEmitter, Inject, Input, NgZone, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
 import {MAP_LOADED} from "../../app.module";
 import {Observable} from "rxjs";
 import {Location, LocationAddCommand, MapWidget} from "../../../model/map";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {MapWidgetService} from "../../../services/widgets/map-widget.service";
 import {animate, style, transition, trigger} from "@angular/animations";
+import {AddLocationDialogComponent} from "./add-location-dialog/add-location-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-maps-widget',
@@ -35,8 +37,6 @@ export class MapsWidgetComponent implements OnInit {
     streetViewControl: false
   }
 
-  private autocomplete: google.maps.places.Autocomplete | undefined;
-
   focussedLocation: google.maps.LatLngLiteral = {
     lat: 49.02632,
     lng: 8.38544
@@ -47,8 +47,8 @@ export class MapsWidgetComponent implements OnInit {
 
   constructor(
     private service: MapWidgetService,
+    private dialog: MatDialog,
     @Inject(MAP_LOADED) public gmapsLoaded: Observable<boolean>,
-    private ngZone: NgZone,
     private breakpointObserver: BreakpointObserver
   ) {
   }
@@ -59,25 +59,12 @@ export class MapsWidgetComponent implements OnInit {
     });
   }
 
-  @ViewChild("searchField", {static: false})
-  set searchField(inputField: ElementRef<HTMLInputElement>) {
-    if (!inputField) return;
-
-    this.autocomplete = new google.maps.places.Autocomplete(inputField.nativeElement);
-    this.autocomplete.addListener("place_changed", () => {
-      const place = this.autocomplete?.getPlace();
-      if (!place || !place.place_id) return;
-
-      this.ngZone.run(() => {
-        this.addLocation({
-          placeId: place.place_id || "",
-          name: place.name || "",
-          address: place.formatted_address || "",
-          latitude: place.geometry?.location?.lat() || -1,
-          longitude: place.geometry?.location?.lng() || -1
-        });
-        inputField.nativeElement.value = "";
-      });
+  openAddLocationDialog() {
+    const dialogRef = this.dialog.open(AddLocationDialogComponent, {width: "400px"});
+    dialogRef.afterClosed().subscribe(addCommand => {
+      if (addCommand) {
+        this.addLocation(addCommand);
+      }
     });
   }
 

@@ -26,6 +26,8 @@ import {catchError, map, Observable, of, shareReplay} from "rxjs";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatListModule} from "@angular/material/list";
+import {AddLocationDialogComponent} from './widgets/maps-widget/add-location-dialog/add-location-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
 import { ProfileMenuComponent } from './dashboard/side-menu/profile-menu/profile-menu.component';
 
 function initializeAppFactory(userService: UserService) {
@@ -56,6 +58,7 @@ function loadMapApi(httpClient: HttpClient) {
     SideMenuComponent,
     DashboardContentComponent,
     MapsWidgetComponent,
+    AddLocationDialogComponent,
     ProfileMenuComponent
   ],
   imports: [
@@ -75,6 +78,7 @@ function loadMapApi(httpClient: HttpClient) {
     MatFormFieldModule,
     MatInputModule,
     MatListModule,
+    MatDialogModule,
     GoogleMap,
     MapMarker
   ],
