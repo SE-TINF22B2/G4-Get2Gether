@@ -6,11 +6,16 @@
     <div class="location-drawer">
       <div class="list-wrapper">
         <mat-selection-list *ngIf="locations.length > 0" hideSingleSelectionIndicator role="list">
-          <mat-list-item *ngFor="let location of locations" (click)="focusLocation(location)" role="listitem">
-            <mat-icon matListItemIcon>location_on</mat-icon>
-            <span matListItemTitle>{{ location.name }}</span>
-            <span matListItemLine>{{ location.address }}</span>
-          </mat-list-item>
+          @for (location of locations; track location.id) {
+            <mat-list-item (click)="focusLocation(location)" role="listitem" @slideOut>
+              <mat-icon matListItemIcon>location_on</mat-icon>
+              <span matListItemTitle>{{ location.name }}</span>
+              <span matListItemLine>{{ location.address }}</span>
+              <span matListItemMeta class="delete-location">
+              <button mat-icon-button (click)="onDeleteClicked($event, location)"><mat-icon>delete</mat-icon></button>
+            </span>
+            </mat-list-item>
+          }
         </mat-selection-list>
         <p *ngIf="locations.length == 0">
           Keine Standorte hinzugefügt.

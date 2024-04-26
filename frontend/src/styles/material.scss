@@ -16,3 +16,7 @@ $g2g-theme: mat.define-light-theme((
 ));
 
 @include mat.all-component-themes($g2g-theme);
+
+:root {
+  --error-color: #{mat.get-theme-color($g2g-theme, warn)};
+}

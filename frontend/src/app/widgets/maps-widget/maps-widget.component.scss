@@ -8,6 +8,19 @@
     flex-grow: 1;
     overflow: auto;
     max-width: 300px;
+
+    .delete-location {
+      align-self: center;
+
+      button {
+        transition: all 300ms;
+
+        &:hover {
+          color: var(--error-color);
+          --mat-icon-button-state-layer-color: var(--error-color);
+        }
+      }
+    }
   }
 
   .search-input {

@@ -4,11 +4,20 @@ import {Observable} from "rxjs";
 import {Location, LocationAddCommand, MapWidget} from "../../../model/map";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {MapWidgetService} from "../../../services/widgets/map-widget.service";
+import {animate, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: 'app-maps-widget',
   templateUrl: './maps-widget.component.html',
-  styleUrl: './maps-widget.component.scss'
+  styleUrl: './maps-widget.component.scss',
+  animations: [
+    trigger("slideOut", [
+      transition(":leave", [
+        style({opacity: 1, transform: "translateX(0%)"}),
+        animate("0.3s ease-out", style({opacity: 0, transform: "translateX(100%)"}))
+      ])
+    ])
+  ]
 })
 export class MapsWidgetComponent implements OnInit {
 
@@ -86,6 +95,12 @@ export class MapsWidgetComponent implements OnInit {
   focusLocation(location: Omit<Location, "id">) {
     this.focussedLocation = this.locationToLatLngLiteral(location);
     this.mapZoom = 17;
+  }
+
+  onDeleteClicked(event: Event, location: Location) {
+    event.stopPropagation();
+    this.service.deleteLocation(this.eventId, this.widget.id, location.id)
+      .subscribe(updatedWidget => this.onWidgetUpdated.emit(updatedWidget));
   }
 
   get locations(): Location[] {
