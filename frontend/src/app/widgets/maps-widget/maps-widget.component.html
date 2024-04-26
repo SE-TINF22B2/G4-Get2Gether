@@ -40,7 +40,7 @@
       }
     </google-map>
     <button mat-icon-button class="drawer-toggle" (click)="drawer.toggle()">
-      <mat-icon>menu</mat-icon>
+      <mat-icon>{{ drawer.opened ? 'chevron_right' : 'chevron_left' }}</mat-icon>
     </button>
   </mat-drawer-content>
 </mat-drawer-container>
