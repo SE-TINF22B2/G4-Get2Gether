@@ -45,7 +45,7 @@ public class MapWidgetService extends AbstractWidgetService {
                 .id(UUID.randomUUID().toString())
                 .build();
 
-        widget.getLocations().add(location);
+        widget.addLocation(location);
         return updateAndGetWidget(principal, event, widget);
     }
 
@@ -56,8 +56,8 @@ public class MapWidgetService extends AbstractWidgetService {
         Location location = widget.getLocations().stream()
                 .filter(l -> Objects.equals(l.getId(), locationId)).findFirst()
                 .orElseThrow(() -> new EntityNotFoundException("Location not found"));
-        if (!widget.getLocations().remove(location)) {
-            throw new IllegalStateException("Failed to remove location from event.");
+        if (!widget.removeLocation(location)) {
+            throw new IllegalStateException("Failed to remove location from map widget");
         }
         return updateAndGetWidget(principal, event, widget);
     }

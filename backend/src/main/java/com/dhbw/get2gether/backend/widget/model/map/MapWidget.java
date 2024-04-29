@@ -23,4 +23,12 @@ public class MapWidget extends Widget {
     public WidgetType getWidgetType() {
         return WidgetType.MAP;
     }
+
+    public void addLocation(Location location) {
+        locations.add(location);
+    }
+
+    public boolean removeLocation(Location location) {
+        return locations.remove(location);
+    }
 }
