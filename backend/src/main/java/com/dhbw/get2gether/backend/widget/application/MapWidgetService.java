@@ -45,6 +45,7 @@ public class MapWidgetService extends AbstractWidgetService {
                 .id(UUID.randomUUID().toString())
                 .build();
 
+        //todo Wird der check hier benötigt nach dem eben eine UUID generiert wurde?
         if (widget.getLocations().stream().anyMatch(l -> Objects.equals(l.getId(), location.getId()))) {
             throw new IllegalStateException("Location with id " + location.getId() + " already exists");
         }
