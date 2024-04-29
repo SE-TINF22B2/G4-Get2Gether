@@ -39,7 +39,7 @@ public class MapWidgetController {
     }
 
     @DeleteMapping("/{widgetId}/locations/{locationId}")
-    public MapWidget addLocation(
+    public MapWidget removeLocation(
             @AuthenticationPrincipal OAuth2User principal,
             @PathVariable String eventId,
             @PathVariable String widgetId,
