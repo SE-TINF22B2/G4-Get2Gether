@@ -14,7 +14,6 @@ import org.springframework.security.core.AuthenticatedPrincipal;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -36,7 +35,6 @@ public class ShoppingListWidgetService extends AbstractWidgetService {
         ShoppingListWidget widget = mapper.mapToShoppingListWidget(createCommand).toBuilder()
                 .id(UUID.randomUUID().toString())
                 .creationDate(LocalDateTime.now())
-                .entries(List.of())
                 .build();
         return addWidget(principal, event, widget);
     }
@@ -64,7 +62,7 @@ public class ShoppingListWidgetService extends AbstractWidgetService {
                 .filter(l -> Objects.equals(l.getId(), entryId)).findFirst()
                 .orElseThrow(() -> new EntityNotFoundException("Entry not found"));
         if (!widget.removeEntry(entry)) {
-            throw new IllegalStateException("Failed to remove entry from event.");
+            throw new IllegalStateException("Failed to remove entry from shopping list widget");
         }
         return updateAndGetWidget(principal, event, widget);
     }

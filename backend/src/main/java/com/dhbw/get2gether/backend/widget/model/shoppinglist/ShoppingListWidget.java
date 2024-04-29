@@ -16,6 +16,7 @@ import java.util.List;
 public class ShoppingListWidget extends Widget {
     private final String id;
     private final LocalDateTime creationDate;
+    @Builder.Default
     private List<Entry> entries = new ArrayList<>();
 
     @Override
