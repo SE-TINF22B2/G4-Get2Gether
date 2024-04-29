@@ -18,6 +18,11 @@
   flex: 1;
 }
 
+.sidenav-container-element {
+  border-radius: 0 var(--size-12) var(--size-12) 0;
+  box-shadow: 1px 1px var(--border-gray);
+}
+
 .is-mobile .sidenav-container {
   flex: 1 0 auto;
 }
