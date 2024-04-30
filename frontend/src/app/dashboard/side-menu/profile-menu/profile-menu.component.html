@@ -1,1 +1,40 @@
-<img width="20" height="20" ngSrc="./assets/profile.svg">
+<div class="profile-container">
+  <div *ngIf="userService.user | async; let user">
+    <img
+      [matMenuTriggerFor]="menu"
+      matTooltip="{{ user.firstName }} {{ user.lastName }}"
+      class="profilIcon"
+      width="30"
+      height="30"
+      [ngSrc]="user.profilePictureUrl">
+    <mat-menu class="profile-menu" #menu="matMenu">
+      <button class="setting-button" mat-menu-item>
+        <mat-icon class="profile-settingIcon" svgIcon="setting" aria-hidden="false"></mat-icon>
+        Einstellungen
+      </button>
+      <button class="setting-button" mat-menu-item>
+        <mat-icon class="profile-settingIcon" svgIcon="logout" aria-hidden="false"></mat-icon>
+        Logout
+      </button>
+    </mat-menu>
+  </div>
+  <ng-template #elseBlock>
+    <img
+      [matMenuTriggerFor]="menu"
+      matTooltip="Gast"
+      class="profilIcon"
+      width="30"
+      height="30"
+      ngSrc="./assets/profile.svg">
+<!--    TODO: Defaulticon implementieren-->
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon class="profile-settingIcon" svgIcon="logout" aria-hidden="false"></mat-icon>
+        Login
+      </button>
+    </mat-menu>
+  </ng-template>
+
+  <img width="20" height="20" ngSrc="./assets/profile.svg">
+</div>
+<mat-divider></mat-divider>

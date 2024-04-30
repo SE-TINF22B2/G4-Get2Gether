@@ -1,0 +1,26 @@
+.profile-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: max-content;
+  flex-basis: auto;
+
+}
+
+.profilIcon {
+  border-radius: var(--size-20);
+}
+
+.profile-settingIcon {
+  width: var(--size-20);
+  height: var(--size-20);
+}
+
+.setting-button {
+  border: none;
+  display: flex;
+  flex-direction: row;
+  white-space: normal;
+  align-items: center;
+  text-align: center;
+}

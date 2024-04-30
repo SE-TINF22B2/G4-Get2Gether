@@ -29,6 +29,8 @@ import {MatListModule} from "@angular/material/list";
 import {AddLocationDialogComponent} from './widgets/maps-widget/add-location-dialog/add-location-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import { ProfileMenuComponent } from './dashboard/side-menu/profile-menu/profile-menu.component';
+import {MatTooltip, TooltipComponent} from "@angular/material/tooltip";
+import {MatMenu, MatMenuTrigger} from "@angular/material/menu";
 import {DefaultEventPageComponent} from "./eventpage/default-event-page/default-event-page.component";
 import { SpecificEventPageComponent } from './eventpage/specific-event-page/specific-event-page.component';
 import { EventListComponent } from './dashboard/side-menu/event-list/event-list.component';
@@ -89,6 +91,10 @@ function loadMapApi(httpClient: HttpClient) {
     MatButtonModule,
     MatDividerModule,
     MatProgressBarModule,
+    TooltipComponent,
+    MatMenu,
+    MatMenuTrigger,
+    MatTooltip,
     MatFormFieldModule,
     MatInputModule,
     MatListModule,
