@@ -6,6 +6,9 @@
     <p>Ist Gast: {{ user.guest ? 'Ja' : 'Nein' }}</p>
   </div>
 
+  <app-default-event-page></app-default-event-page>
+
+
   <button (click)="afterAuth()">AfterAuth</button>
   <button (click)="createEvent()">CreateEvent</button>
   <button (click)="getOwn()">GetMyEvents</button>
