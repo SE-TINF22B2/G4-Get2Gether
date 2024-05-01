@@ -1,0 +1,24 @@
+
+#noEventPictureDiv{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  object-fit: cover;
+}
+#noEventTextDiv{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+#addEventPicture{
+  position: relative;
+  top: 3px;
+}
+#noEventPicture{
+  max-width:100%;
+  height:auto;
+  width: auto;
+}
+
+
