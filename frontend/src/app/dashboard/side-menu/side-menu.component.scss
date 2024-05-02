@@ -1,3 +1,7 @@
 .container {
-  padding: var(--size-20);
+  padding: var(--size-12);
+
+  mat-divider {
+    margin: var(--size-12) 0;
+  }
 }

@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {UserService} from "../../../services/user.service";
 import {HttpClient} from "@angular/common/http";
-import {MapWidget} from "../../../model/map";
+import {MapWidget} from "../../../model/map-widget";
 import {WidgetType} from "../../../model/common-widget";
 
 @Component({

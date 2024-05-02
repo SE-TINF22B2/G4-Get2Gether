@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
 import {MAP_LOADED} from "../../app.module";
 import {Observable} from "rxjs";
-import {Location, LocationAddCommand, MapWidget} from "../../../model/map";
+import {Location, LocationAddCommand, MapWidget} from "../../../model/map-widget";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {MapWidgetService} from "../../../services/widgets/map-widget.service";
 import {animate, style, transition, trigger} from "@angular/animations";

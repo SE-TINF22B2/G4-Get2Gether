@@ -1,0 +1,31 @@
+<!-- Active Events -->
+<mat-expansion-panel class="mat-elevation-z0" expanded>
+  <mat-expansion-panel-header>
+    <mat-panel-title>Deine Events</mat-panel-title>
+  </mat-expansion-panel-header>
+  <ul class="event-list">
+    @for (event of activeEvents; track event.id) {
+      <li>
+        <app-event-list-item [event]="event"></app-event-list-item>
+      </li>
+    } @empty {
+      <li>Keine aktiven Events vorhanden</li>
+    }
+  </ul>
+</mat-expansion-panel>
+
+<!-- Archived Events -->
+<mat-expansion-panel class="mat-elevation-z0">
+  <mat-expansion-panel-header>
+    <mat-panel-title>Archiv</mat-panel-title>
+  </mat-expansion-panel-header>
+  <ul class="event-list">
+    @for (event of archivedEvents; track event.id) {
+      <li>
+        <app-event-list-item [event]="event"></app-event-list-item>
+      </li>
+    } @empty {
+      <li>Keine archivierten Events vorhanden</li>
+    }
+  </ul>
+</mat-expansion-panel>
