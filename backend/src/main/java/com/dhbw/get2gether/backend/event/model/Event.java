@@ -23,6 +23,7 @@ public class Event {
     private String description;
     private String location;
     private LocalDateTime date;
+    private LocalDateTime endDate;
     private String invitationLink;
     private final String creatorId;
     private final List<String> participantIds;

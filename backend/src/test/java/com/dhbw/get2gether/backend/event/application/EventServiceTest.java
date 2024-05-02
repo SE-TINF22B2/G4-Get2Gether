@@ -1,25 +1,16 @@
 package com.dhbw.get2gether.backend.event.application;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import com.dhbw.get2gether.backend.AbstractIntegrationTest;
 import com.dhbw.get2gether.backend.authentication.GuestAuthenticationPrincipal;
 import com.dhbw.get2gether.backend.event.adapter.out.EventRepository;
 import com.dhbw.get2gether.backend.event.model.Event;
 import com.dhbw.get2gether.backend.event.model.EventCreateCommand;
+import com.dhbw.get2gether.backend.event.model.EventOverviewDto;
 import com.dhbw.get2gether.backend.event.model.EventUpdateCommand;
 import com.dhbw.get2gether.backend.user.application.UserService;
 import com.dhbw.get2gether.backend.user.model.User;
 import com.dhbw.get2gether.backend.utils.WithMockGuestUser;
 import com.dhbw.get2gether.backend.utils.WithMockOAuth2User;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +18,17 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticatedPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class EventServiceTest extends AbstractIntegrationTest {
 
@@ -113,14 +115,14 @@ class EventServiceTest extends AbstractIntegrationTest {
         Event event = Event.builder().id("test").build();
 
         when(userService.findUserFromPrincipal(any())).thenReturn(Optional.of(user));
-        when(eventRepository.findEventsByParticipantIdsContains(eq(user.getId())))
+        when(eventRepository.findEventsByParticipantIdsContainsOrderByDate(eq(user.getId())))
                 .thenReturn(Collections.singletonList(event));
 
         // when
-        List<Event> events = eventService.getAllEventsFromUser(principal);
+        List<EventOverviewDto> events = eventService.getAllEventsFromUser(principal);
 
         // then
-        verify(eventRepository).findEventsByParticipantIdsContains(eq(user.getId()));
+        verify(eventRepository).findEventsByParticipantIdsContainsOrderByDate(eq(user.getId()));
         assertThat(events).hasSize(1);
     }
 

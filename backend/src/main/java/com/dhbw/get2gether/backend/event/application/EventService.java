@@ -3,10 +3,7 @@ package com.dhbw.get2gether.backend.event.application;
 import com.dhbw.get2gether.backend.authentication.GuestAuthenticationPrincipal;
 import com.dhbw.get2gether.backend.event.adapter.out.EventRepository;
 import com.dhbw.get2gether.backend.event.application.mapper.EventMapper;
-import com.dhbw.get2gether.backend.event.model.Event;
-import com.dhbw.get2gether.backend.event.model.EventCreateCommand;
-import com.dhbw.get2gether.backend.event.model.EventUpdateCommand;
-import com.dhbw.get2gether.backend.event.model.EventWidgetUpdateCommand;
+import com.dhbw.get2gether.backend.event.model.*;
 import com.dhbw.get2gether.backend.exceptions.EntityNotFoundException;
 import com.dhbw.get2gether.backend.user.application.UserService;
 import com.dhbw.get2gether.backend.user.model.User;
@@ -63,11 +60,12 @@ public class EventService {
     }
 
     @PreAuthorize("hasRole('USER')")
-    public List<Event> getAllEventsFromUser(AuthenticatedPrincipal principal) {
-        return userService
+    public List<EventOverviewDto> getAllEventsFromUser(AuthenticatedPrincipal principal) {
+        List<Event> userEvents = userService
                 .findUserFromPrincipal(principal)
-                .map(user -> eventRepository.findEventsByParticipantIdsContains(user.getId()))
+                .map(user -> eventRepository.findEventsByParticipantIdsContainsOrderByDate(user.getId()))
                 .orElse(List.of());
+        return userEvents.stream().map(eventMapper::toEventOverviewDto).toList();
     }
 
     @PreAuthorize("hasRole('GUEST')")
