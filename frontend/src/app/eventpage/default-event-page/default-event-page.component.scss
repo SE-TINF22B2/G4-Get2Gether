@@ -1,24 +1,29 @@
-
-#noEventPictureDiv{
+.no-event-picture-div {
   display: flex;
   align-items: center;
   justify-content: center;
   object-fit: cover;
 }
-#noEventTextDiv{
+
+.no-event-text-div {
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
 }
-#addEventPicture{
+
+.add-event-picture {
   position: relative;
   top: 3px;
 }
-#noEventPicture{
-  max-width:100%;
-  height:auto;
+
+.no-event-picture {
+  max-width: 100%;
+  height: auto;
   width: auto;
 }
 
-
+.plus-icon {
+  color: var(--secondary-color);
+  transform: translateY(25%);
+}

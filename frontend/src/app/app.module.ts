@@ -13,7 +13,7 @@ import {NgOptimizedImage} from "@angular/common";
 import {SplashscreenComponent} from "./splashscreen/splashscreen.component";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatToolbarModule} from "@angular/material/toolbar";
-import {MatIconModule} from "@angular/material/icon";
+import {MAT_ICON_DEFAULT_OPTIONS, MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {SideMenuComponent} from "./dashboard/side-menu/side-menu.component";
 import {DashboardContentComponent} from "./dashboard/dashboard-content/dashboard-content.component";
@@ -97,6 +97,12 @@ function loadMapApi(httpClient: HttpClient) {
       provide: MAP_LOADED,
       useFactory: loadMapApi,
       deps: [HttpClient]
+    },
+    {
+      provide: MAT_ICON_DEFAULT_OPTIONS,
+      useValue: {
+        fontSet: "material-icons-round"
+      }
     }
   ],
   bootstrap: [AppComponent]

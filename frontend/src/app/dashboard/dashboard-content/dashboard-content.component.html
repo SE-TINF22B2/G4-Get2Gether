@@ -1,33 +1,35 @@
 <div class="container">
   <!-- TODO: for debugging only, remove later -->
-  <div *ngIf="userService.user | async; let user">
-    <img width="48" height="48" [ngSrc]="user.profilePictureUrl">
-    <p>Benutzer: {{ user.firstName }} {{ user.lastName }}</p>
-    <p>Ist Gast: {{ user.guest ? 'Ja' : 'Nein' }}</p>
-  </div>
+  <details>
+    <summary style="color: red;">Debug Menu</summary>
+    <div *ngIf="userService.user | async; let user">
+      <img width="48" height="48" [ngSrc]="user.profilePictureUrl">
+      <p>Benutzer: {{ user.firstName }} {{ user.lastName }}</p>
+      <p>Ist Gast: {{ user.guest ? 'Ja' : 'Nein' }}</p>
+    </div>
+
+    <button (click)="afterAuth()">AfterAuth</button>
+    <button (click)="createEvent()">CreateEvent</button>
+    <button (click)="getOwn()">GetMyEvents</button>
+    <button (click)="generateInvitationLink()">GenerateInvitationLink</button>
+    <button (click)="updateEvent()">UpdateEvent</button>
+    <button (click)="updateUserColor('LIGHT')">Lightmode</button>
+    <button (click)="updateUserColor('DARK')">Darkmode</button>
+    <button (click)="updateUserColor('MODERN')">Modernmode</button>
+    <button (click)="createShoppingListWidget()">CreateShoppingListWidget</button>
+    <button (click)="addShoppingListEntry()">AddItem</button>
+    <button (click)="removeShoppingListEntry()">RemoveItem</button>
+    <button (click)="checkShoppingListEntry()">CheckEntry</button>
+
+    <app-maps-widget
+      [eventId]="'d2602bdb-9ab4-4c75-8820-62548a4fe3a5'"
+      [widget]="mapWidget"
+      (onWidgetUpdated)="mapWidget = $event">
+    </app-maps-widget>
+  </details>
+  <!-- TODO: remove above -->
 
   <app-default-event-page></app-default-event-page>
-
-
-  <button (click)="afterAuth()">AfterAuth</button>
-  <button (click)="createEvent()">CreateEvent</button>
-  <button (click)="getOwn()">GetMyEvents</button>
-  <button (click)="generateInvitationLink()">GenerateInvitationLink</button>
-  <button (click)="updateEvent()">UpdateEvent</button>
-  <button (click)="updateUserColor('LIGHT')">Lightmode</button>
-  <button (click)="updateUserColor('DARK')">Darkmode</button>
-  <button (click)="updateUserColor('MODERN')">Modernmode</button>
-  <button (click)="createShoppingListWidget()">CreateShoppingListWidget</button>
-  <button (click)="addShoppingListEntry()">AddItem</button>
-  <button (click)="removeShoppingListEntry()">RemoveItem</button>
-  <button (click)="checkShoppingListEntry()">CheckEntry</button>
-
-  <app-maps-widget
-    [eventId]="'d2602bdb-9ab4-4c75-8820-62548a4fe3a5'"
-    [widget]="mapWidget"
-    (onWidgetUpdated)="mapWidget = $event">
-  </app-maps-widget>
-  <!-- TODO: remove above -->
 
   <!-- TODO: add new component here for event banner -->
 
