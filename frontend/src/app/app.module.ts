@@ -30,6 +30,7 @@ import {AddLocationDialogComponent} from './widgets/maps-widget/add-location-dia
 import {MatDialogModule} from "@angular/material/dialog";
 import { ProfileMenuComponent } from './dashboard/side-menu/profile-menu/profile-menu.component';
 import {DefaultEventPageComponent} from "./eventpage/default-event-page/default-event-page.component";
+import { SpecificEventPageComponent } from './eventpage/specific-event-page/specific-event-page.component';
 
 function initializeAppFactory(userService: UserService) {
   return () => {
@@ -62,6 +63,7 @@ function loadMapApi(httpClient: HttpClient) {
     AddLocationDialogComponent,
     ProfileMenuComponent,
     DefaultEventPageComponent,
+    SpecificEventPageComponent,
   ],
   imports: [
     BrowserModule,
