@@ -29,6 +29,7 @@ import {MatListModule} from "@angular/material/list";
 import {AddLocationDialogComponent} from './widgets/maps-widget/add-location-dialog/add-location-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import { ProfileMenuComponent } from './dashboard/side-menu/profile-menu/profile-menu.component';
+import {DefaultEventPageComponent} from "./eventpage/default-event-page/default-event-page.component";
 
 function initializeAppFactory(userService: UserService) {
   return () => {
@@ -59,7 +60,8 @@ function loadMapApi(httpClient: HttpClient) {
     DashboardContentComponent,
     MapsWidgetComponent,
     AddLocationDialogComponent,
-    ProfileMenuComponent
+    ProfileMenuComponent,
+    DefaultEventPageComponent,
   ],
   imports: [
     BrowserModule,
