@@ -1,38 +1,34 @@
-<div class="profile-container">
-  <div *ngIf="userService.user | async; let user; else elseBlock">
+<div *ngIf="userService.user | async; let user" class="profile-container">
+  <div>
     <img
       [matMenuTriggerFor]="menu"
-      matTooltip="{{ user.firstName }} {{ user.lastName }}"
-      class="profilIcon"
+      [matTooltip]="getUsername(user)"
+      class="profile-icon"
       width="30"
       height="30"
-      [ngSrc]="user.profilePictureUrl">
-    <mat-menu class="profile-menu" #menu="matMenu">
-      <button class="setting-button" mat-menu-item>
-        <span class="material-icons">settings</span>
-        Einstellungen
-      </button>
-      <button class="setting-button" mat-menu-item>
-        <span class="material-icons">logout</span>
-        Logout
-      </button>
+      [ngSrc]="user.profilePictureUrl"
+      alt="Profilbild">
+
+    <mat-menu #menu="matMenu">
+      @if (user.guest) {
+        <button mat-menu-item>
+          <mat-icon>login</mat-icon>
+          Login
+        </button>
+      } @else {
+        <button mat-menu-item>
+          <mat-icon>settings</mat-icon>
+          Einstellungen
+        </button>
+        <button mat-menu-item>
+          <mat-icon>logout</mat-icon>
+          Logout
+        </button>
+      }
     </mat-menu>
   </div>
-  <ng-template #elseBlock>
-    <span
-      [matMenuTriggerFor]="menu"
-      matTooltip="Gast"
-      class="material-icons">
-        account_circle
-    </span>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item>
-        <span class="material-icons">login</span>
-        Login
-      </button>
-    </mat-menu>
-  </ng-template>
 
-  <span class="material-icons event-add-button">add</span>
+  <button mat-icon-button color="accent" matTooltip="Event erstellen" [disabled]="user.guest">
+    <mat-icon class="event-add-button">add</mat-icon>
+  </button>
 </div>
-<mat-divider></mat-divider>

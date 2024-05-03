@@ -28,18 +28,19 @@ import {MatInputModule} from "@angular/material/input";
 import {MatListModule} from "@angular/material/list";
 import {AddLocationDialogComponent} from './widgets/maps-widget/add-location-dialog/add-location-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
-import { ProfileMenuComponent } from './dashboard/side-menu/profile-menu/profile-menu.component';
-import {MatTooltip, TooltipComponent} from "@angular/material/tooltip";
-import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
+import {ProfileMenuComponent} from './dashboard/side-menu/profile-menu/profile-menu.component';
+import {MatTooltipModule, TooltipComponent} from "@angular/material/tooltip";
+import {MatMenuModule} from "@angular/material/menu";
 import {DefaultEventPageComponent} from "./eventpage/default-event-page/default-event-page.component";
-import { SpecificEventPageComponent } from './eventpage/specific-event-page/specific-event-page.component';
-import { EventListComponent } from './dashboard/side-menu/event-list/event-list.component';
+import {SpecificEventPageComponent} from './eventpage/specific-event-page/specific-event-page.component';
+import {EventListComponent} from './dashboard/side-menu/event-list/event-list.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import { EventListItemComponent } from './dashboard/side-menu/event-list/event-list-item/event-list-item.component';
+import {EventListItemComponent} from './dashboard/side-menu/event-list/event-list-item/event-list-item.component';
 import {MatCardModule} from "@angular/material/card";
 import {MatExpansionModule} from "@angular/material/expansion";
 
 import localeDe from "@angular/common/locales/de";
+
 registerLocaleData(localeDe);
 
 function initializeAppFactory(userService: UserService) {
@@ -92,9 +93,7 @@ function loadMapApi(httpClient: HttpClient) {
     MatDividerModule,
     MatProgressBarModule,
     TooltipComponent,
-    MatMenu,
-    MatMenuTrigger,
-    MatTooltip,
+    MatTooltipModule,
     MatFormFieldModule,
     MatInputModule,
     MatListModule,
@@ -104,7 +103,7 @@ function loadMapApi(httpClient: HttpClient) {
     MatProgressSpinnerModule,
     MatCardModule,
     MatExpansionModule,
-    MatMenuItem
+    MatMenuModule
   ],
   providers: [
     {
