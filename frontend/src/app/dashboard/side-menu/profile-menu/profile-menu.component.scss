@@ -2,25 +2,34 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: max-content;
-  flex-basis: auto;
-
+  justify-content: space-between;
 }
 
 .profilIcon {
   border-radius: var(--size-20);
 }
 
-.profile-settingIcon {
-  width: var(--size-20);
-  height: var(--size-20);
+.profile-menu{
+  font-size: var(--font-size-small);
 }
 
 .setting-button {
-  border: none;
   display: flex;
   flex-direction: row;
-  white-space: normal;
   align-items: center;
-  text-align: center;
+  background: none;
+  border: none;
+  width: 100%;
+  .material-icons{
+    margin-right: 5px;
+  }
+  &:hover {
+    cursor: pointer;
+    background-color: var(--background-gray);
+  }
+}
+
+.event-add-button {
+  font-size: var(--font-size-standard);
+  color: var(--secondary-color);
 }

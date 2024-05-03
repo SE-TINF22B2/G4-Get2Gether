@@ -30,7 +30,7 @@ import {AddLocationDialogComponent} from './widgets/maps-widget/add-location-dia
 import {MatDialogModule} from "@angular/material/dialog";
 import { ProfileMenuComponent } from './dashboard/side-menu/profile-menu/profile-menu.component';
 import {MatTooltip, TooltipComponent} from "@angular/material/tooltip";
-import {MatMenu, MatMenuTrigger} from "@angular/material/menu";
+import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
 import {DefaultEventPageComponent} from "./eventpage/default-event-page/default-event-page.component";
 import { SpecificEventPageComponent } from './eventpage/specific-event-page/specific-event-page.component';
 import { EventListComponent } from './dashboard/side-menu/event-list/event-list.component';
@@ -103,7 +103,8 @@ function loadMapApi(httpClient: HttpClient) {
     MapMarker,
     MatProgressSpinnerModule,
     MatCardModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatMenuItem
   ],
   providers: [
     {
