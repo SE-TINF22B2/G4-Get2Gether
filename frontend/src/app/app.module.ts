@@ -40,6 +40,7 @@ import {MatCardModule} from "@angular/material/card";
 import {MatExpansionModule} from "@angular/material/expansion";
 
 import localeDe from "@angular/common/locales/de";
+import { EventCreationComponent } from './eventcreation/event-creation.component';
 
 registerLocaleData(localeDe);
 
@@ -77,6 +78,7 @@ function loadMapApi(httpClient: HttpClient) {
     SpecificEventPageComponent,
     EventListComponent,
     EventListItemComponent,
+    EventCreationComponent,
   ],
   imports: [
     BrowserModule,
@@ -103,7 +105,8 @@ function loadMapApi(httpClient: HttpClient) {
     MatProgressSpinnerModule,
     MatCardModule,
     MatExpansionModule,
-    MatMenuModule
+    MatMenuModule,
+    MatDialogModule
   ],
   providers: [
     {

@@ -28,7 +28,7 @@
     </mat-menu>
   </div>
 
-  <button mat-icon-button color="accent" matTooltip="Event erstellen" [disabled]="user.guest">
+  <button mat-icon-button color="accent" matTooltip="Event erstellen" (click)="openDialog()" [disabled]="user.guest">
     <mat-icon class="event-add-button">add</mat-icon>
   </button>
 </div>

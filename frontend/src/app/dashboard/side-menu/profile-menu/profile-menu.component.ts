@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import {UserService} from "../../../../services/user.service";
 import {User} from "../../../../model/user";
+import {MatDialog} from "@angular/material/dialog";
+import {EventCreationComponent} from "../../../eventcreation/event-creation.component";
 
 @Component({
   selector: 'app-profile-menu',
@@ -11,6 +13,7 @@ export class ProfileMenuComponent {
 
   constructor(
     public userService: UserService,
+    public dialog: MatDialog
   ) {}
 
   getUsername(user: User): string {
@@ -19,4 +22,7 @@ export class ProfileMenuComponent {
     return [user.firstName, user.lastName].filter(x => x).join(" ");
   }
 
+  openDialog() {
+    this.dialog.open(EventCreationComponent);
+  }
 }
