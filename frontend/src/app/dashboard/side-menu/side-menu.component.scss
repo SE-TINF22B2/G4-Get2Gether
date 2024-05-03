@@ -1,7 +1,17 @@
 .container {
-  padding: var(--size-12);
+  padding: var(--size-24) 0;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
 
   mat-divider {
-    margin: var(--size-12) 0;
+    margin: var(--size-12) var(--size-24);
+  }
+
+  .event-list {
+    flex-grow: 1;
+    overflow: hidden;
   }
 }

@@ -1,4 +1,9 @@
-<mat-card appearance="outlined">
+<mat-card
+  appearance="outlined"
+  [routerLink]="'./' + event.id"
+  routerLinkActive="selected"
+  class="event-card"
+>
   <mat-card-header>
     <mat-card-title>{{ event.name }}</mat-card-title>
   </mat-card-header>

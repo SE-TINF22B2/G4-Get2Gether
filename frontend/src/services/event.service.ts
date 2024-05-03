@@ -1,10 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable, ReplaySubject} from "rxjs";
-import {User} from "../model/user";
+import {Observable} from "rxjs";
 import {environment} from "../environment/environment";
-import {EventOverview} from "../model/event";
-import {MapWidget} from "../model/map-widget";
+import {EventOverview, Event} from "../model/event";
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +14,10 @@ export class EventService {
 
   getOwnEvents(): Observable<EventOverview[]> {
     return this.http.get<EventOverview[]>(`${environment.api}/event/own`, {withCredentials: true});
+  }
+
+  getSingleEvent(id: string): Observable<Event> {
+    return this.http.get<Event>(`${environment.api}/event/${id}`, {withCredentials: true});
   }
 
 }

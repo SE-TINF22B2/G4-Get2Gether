@@ -1,0 +1,7 @@
+.event-card {
+  cursor: pointer;
+
+  &.selected {
+    --mdc-outlined-card-outline-color: var(--primary-color);
+  }
+}

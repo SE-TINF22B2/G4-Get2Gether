@@ -1,4 +1,5 @@
 .profile-container {
+  padding: 0 var(--size-24);
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -6,5 +7,5 @@
 }
 
 .profile-icon {
-  border-radius: var(--size-20);
+  border-radius: var(--size-24);
 }
