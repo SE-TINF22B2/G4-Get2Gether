@@ -42,6 +42,8 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import { EventCreationComponent } from './eventcreation/event-creation.component';
 import {EventpageComponent} from "./eventpage/eventpage.component";
 import {MatRippleModule} from "@angular/material/core";
+import { EventSearchComponent } from './dashboard/side-menu/event-search/event-search.component';
+import {FormsModule} from "@angular/forms";
 
 registerLocaleData(localeDe);
 
@@ -81,6 +83,7 @@ function loadMapApi(httpClient: HttpClient) {
     EventListComponent,
     EventListItemComponent,
     EventCreationComponent,
+    EventSearchComponent,
   ],
   imports: [
     BrowserModule,
@@ -108,7 +111,8 @@ function loadMapApi(httpClient: HttpClient) {
     MatCardModule,
     MatExpansionModule,
     MatMenuModule,
-    MatRippleModule
+    MatRippleModule,
+    FormsModule
   ],
   providers: [
     {

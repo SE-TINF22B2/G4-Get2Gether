@@ -11,6 +11,8 @@ export class SideMenuComponent implements OnInit {
 
   events: EventOverview[] = [];
 
+  private searchQuery = "";
+
   constructor(private eventService: EventService) {
   }
 
@@ -18,6 +20,16 @@ export class SideMenuComponent implements OnInit {
     this.eventService.getOwnEvents().subscribe({
       next: event => this.events = event
     });
+  }
+
+  onSearch(query: string) {
+    this.searchQuery = query;
+  }
+
+  get filteredEvents(): EventOverview[] {
+    if (!this.searchQuery.trim())
+      return this.events;
+    return this.events.filter(event => event.name.toLowerCase().includes(this.searchQuery.toLowerCase()));
   }
 
 }

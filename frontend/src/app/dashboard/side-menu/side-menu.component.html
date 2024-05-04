@@ -4,7 +4,7 @@
 
   <mat-divider></mat-divider>
 
-  <!-- TODO: add new component here for search bar -->
+  <app-event-search (onSearch)="onSearch($event)" class="event-search"></app-event-search>
 
-  <app-event-list [events]="events" class="event-list"></app-event-list>
+  <app-event-list [events]="filteredEvents" class="event-list"></app-event-list>
 </div>
