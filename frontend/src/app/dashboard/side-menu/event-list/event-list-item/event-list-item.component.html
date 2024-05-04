@@ -1,18 +1,21 @@
-<mat-card
-  appearance="outlined"
-  [routerLink]="'./' + event.id"
-  routerLinkActive="selected"
-  class="event-card"
->
-  <mat-card-header>
-    <mat-card-title>{{ event.name }}</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <p>
-      {{ event.date | date: "short" }}
-      <ng-container *ngIf="event.endDate">
-        - {{ event.endDate | date: "short" }}
-      </ng-container>
-    </p>
-  </mat-card-content>
-</mat-card>
+<div class="wrapper" #wrapper>
+  <mat-card
+    appearance="outlined"
+    [routerLink]="'./' + event.id"
+    routerLinkActive="selected"
+    class="event-card"
+  >
+    <div class="ripple-container" mat-ripple [matRippleTrigger]="wrapper"></div>
+    <mat-card-header>
+      <mat-card-title>{{ event.name }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        {{ event.date | date: "short" }}
+        <ng-container *ngIf="event.endDate">
+          - {{ event.endDate | date: "short" }}
+        </ng-container>
+      </p>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,16 +1,47 @@
+@use "sass:map";
+@use '@angular/material' as mat;
+
+/// Utility function for applying CSS variables from a given sass map.
+///
+/// @param {Map} $map
+//    Contains the variable names as keys with a color value.
+/// @param {String} $prefix
+//    The prefix for variable names, '--' by default.
+@mixin define-vars($map, $prefix: '--') {
+  @each $name, $value in $map {
+    #{$prefix + $name}: #{$value};
+  }
+}
+
+//--------------------------------------------------//
+//          Static Color Variables                  //
+//--------------------------------------------------//
+
 :root {
   --opacity: 100%;
   --black: #121212;
   --white: #fafafa;
-  --border-gray: #bbbbbb;
-  --background-gray: #f0f0f0;
+}
 
-  //Textfarben
-  --dark-font: #121212;
-  --light-font: #fafafa;
+//--------------------------------------------------//
+//           Dynamic Color Variables                //
+//--------------------------------------------------//
 
-
-  //Akzentfarben (später individuell)
-  --primary-color: #1E90FF;
-  --secondary-color: #7F2DFA;
+/// Apply CSS color variables extracted from the given Material theme.
+@mixin apply-color-variables($theme) {
+  // M3 color roles: https://material.angular.io/guide/material-3#reading-color-roles
+  @include define-vars((
+    "primary-color": mat.get-theme-color($theme, primary),
+    "secondary-color": mat.get-theme-color($theme, tertiary),
+    "error-color": mat.get-theme-color($theme, error),
+    "shadow-color": mat.get-theme-color($theme, shadow),
+    "background-color": mat.get-theme-color($theme, surface),
+    "background-dim-color": mat.get-theme-color($theme, surface-dim),
+    "background-primary-color": mat.get-theme-color($theme, primary-container),
+    "foreground-color": mat.get-theme-color($theme, on-surface),
+    "foreground-dim-color": mat.get-theme-color($theme, on-surface-variant),
+    "foreground-on-primary-color": mat.get-theme-color($theme, on-primary-container),
+    "border-color": mat.get-theme-color($theme, outline),
+    "border-dim-color": mat.get-theme-color($theme, outline-variant),
+  ));
 }

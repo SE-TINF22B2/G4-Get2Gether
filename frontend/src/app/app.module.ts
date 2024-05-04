@@ -1,4 +1,5 @@
 import {APP_INITIALIZER, InjectionToken, LOCALE_ID, NgModule} from '@angular/core';
+import localeDe from "@angular/common/locales/de";
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -38,10 +39,9 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {EventListItemComponent} from './dashboard/side-menu/event-list/event-list-item/event-list-item.component';
 import {MatCardModule} from "@angular/material/card";
 import {MatExpansionModule} from "@angular/material/expansion";
-
-import localeDe from "@angular/common/locales/de";
 import { EventCreationComponent } from './eventcreation/event-creation.component';
 import {EventpageComponent} from "./eventpage/eventpage.component";
+import {MatRippleModule} from "@angular/material/core";
 
 registerLocaleData(localeDe);
 
@@ -107,7 +107,8 @@ function loadMapApi(httpClient: HttpClient) {
     MatProgressSpinnerModule,
     MatCardModule,
     MatExpansionModule,
-    MatMenuModule
+    MatMenuModule,
+    MatRippleModule
   ],
   providers: [
     {

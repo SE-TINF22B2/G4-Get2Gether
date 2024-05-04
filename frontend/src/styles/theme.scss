@@ -1,0 +1,49 @@
+@use '@angular/material' as mat;
+@use '@angular/material-experimental' as matx;
+@use "./variables/color" as color-vars;
+
+@include mat.core();
+
+//--------------------------------------------------//
+//                Utilities                         //
+//--------------------------------------------------//
+
+@function define-theme($type: light, $primary, $tertiary) {
+  @return matx.define-theme((
+    color: (
+      theme-type: $type,
+      primary: $primary,
+      tertiary: $tertiary
+    )
+  ));
+}
+
+@mixin apply-theme($theme, $is-base: false) {
+  @if ($is-base) {
+    @include mat.all-component-themes($theme);
+  } @else {
+    // Only apply color styles without reapplying the same typography and density styles
+    @include mat.all-component-colors($theme);
+  }
+
+  @include matx.color-variants-back-compat($theme);
+  @include color-vars.apply-color-variables($theme);
+}
+
+
+//--------------------------------------------------//
+//                Theme Variants                    //
+//--------------------------------------------------//
+
+$light-default: define-theme(light, matx.$m3-azure-palette, matx.$m3-violet-palette);
+$dark-default: define-theme(dark, matx.$m3-azure-palette, matx.$m3-violet-palette);
+
+// apply default theme
+html {
+  @include apply-theme($light-default, true);
+}
+
+// apply other theme variants
+html[theme="dark"] {
+  @include apply-theme($dark-default);
+}
