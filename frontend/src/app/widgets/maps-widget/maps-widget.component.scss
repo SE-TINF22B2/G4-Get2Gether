@@ -1,13 +1,20 @@
+mat-drawer-container {
+  --mat-sidenav-container-width: 300px;
+}
+
 .location-drawer {
   padding: 10px;
   display: flex;
   flex-direction: column;
   height: 100%;
 
+  .location-drawer-close {
+    margin-bottom: 10px;
+  }
+
   .list-wrapper {
     flex-grow: 1;
     overflow: auto;
-    max-width: 300px;
 
     .delete-location {
       align-self: center;

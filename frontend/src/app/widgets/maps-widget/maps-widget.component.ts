@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {MAP_LOADED} from "../../app.module";
 import {Observable} from "rxjs";
 import {Location, LocationAddCommand, MapWidget} from "../../../model/map-widget";
@@ -7,6 +7,7 @@ import {MapWidgetService} from "../../../services/widgets/map-widget.service";
 import {animate, style, transition, trigger} from "@angular/animations";
 import {AddLocationDialogComponent} from "./add-location-dialog/add-location-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
+import {MatDrawer} from "@angular/material/sidenav";
 
 @Component({
   selector: 'app-maps-widget',
@@ -32,6 +33,9 @@ export class MapsWidgetComponent implements OnInit {
   @Output()
   onWidgetUpdated = new EventEmitter<MapWidget>();
 
+  @ViewChild("drawer")
+  private drawer!: MatDrawer;
+
   mapOptions: google.maps.MapOptions = {
     fullscreenControl: false,
     streetViewControl: false,
@@ -53,7 +57,7 @@ export class MapsWidgetComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.breakpointObserver.observe([Breakpoints.XSmall, Breakpoints.Small]).subscribe(result => {
+    this.breakpointObserver.observe([Breakpoints.XSmall, Breakpoints.Small, Breakpoints.Medium]).subscribe(result => {
       this.isSmallLayout = result.matches;
     });
   }
@@ -84,6 +88,10 @@ export class MapsWidgetComponent implements OnInit {
       zoom: 17,
       center: this.locationToLatLngLiteral(location)
     };
+
+    if (this.isSmallLayout) {
+      this.drawer.close();
+    }
   }
 
   onDeleteClicked(event: Event, location: Location) {
