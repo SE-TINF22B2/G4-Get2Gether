@@ -2,4 +2,13 @@
   width: 100%;
   --mat-form-field-container-vertical-padding: 12px;
   --mat-form-field-container-height: 48px;
+  --mdc-filled-text-field-container-shape: 24px;
+  --mdc-filled-text-field-active-indicator-color: transparent !important;
+  --mdc-filled-text-field-hover-active-indicator-color: transparent !important;
+  --mdc-filled-text-field-focus-active-indicator-color: transparent !important;
+
+  ::ng-deep .mdc-text-field--filled{
+    border-bottom-right-radius: var(--mdc-filled-text-field-container-shape);
+    border-bottom-left-radius: var(--mdc-filled-text-field-container-shape);
+  }
 }
