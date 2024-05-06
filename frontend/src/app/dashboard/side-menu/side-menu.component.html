@@ -1,13 +1,10 @@
 <div class="container">
 
-  <p>side-menu works!</p>
-
-  <!-- TODO: add new component here for header with user icon -->
   <app-profile-menu></app-profile-menu>
 
   <mat-divider></mat-divider>
 
-  <!-- TODO: add new component here for search bar -->
+  <app-event-search (onSearch)="onSearch($event)" class="event-search"></app-event-search>
 
-  <!-- TODO: add new component here for event list -->
+  <app-event-list [events]="filteredEvents" class="event-list"></app-event-list>
 </div>

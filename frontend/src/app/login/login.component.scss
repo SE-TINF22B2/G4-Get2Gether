@@ -1,6 +1,6 @@
 //Google login button
 
-.container{
+.container {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -8,9 +8,9 @@
 
   flex-direction: column;
   text-align: center;
-  color: var(--white);
+  color: var(--foreground-on-primary-color);
   font-size: var(--font-size-title);
-  background-color: var(--primary-color);
+  background-color: var(--background-primary-color);
 }
 
 

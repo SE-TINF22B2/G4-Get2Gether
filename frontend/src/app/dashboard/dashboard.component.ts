@@ -14,7 +14,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.breakpointObserver.observe(Breakpoints.HandsetPortrait).subscribe(result => {
+    this.breakpointObserver.observe([Breakpoints.XSmall, Breakpoints.Small]).subscribe(result => {
       this.isMobileLayout = result.matches;
     });
   }

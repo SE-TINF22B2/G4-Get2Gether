@@ -2,12 +2,24 @@
   <mat-drawer
     #drawer
     position="end" [mode]="isSmallLayout ? 'over' : 'side'"
+    [autoFocus]="false"
     [opened]="!isSmallLayout">
     <div class="location-drawer">
+
+      <button
+        *ngIf="isSmallLayout"
+        mat-icon-button
+        class="location-drawer-close"
+        (click)="drawer.close()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+
       <button mat-stroked-button (click)="openAddLocationDialog()">
         <mat-icon>add</mat-icon>
         Ort hinzufügen
       </button>
+
       <div class="list-wrapper">
         <mat-selection-list *ngIf="locations.length > 0" hideSingleSelectionIndicator role="list">
           @for (location of locations; track location.id) {
@@ -27,6 +39,7 @@
           Keine Orte hinzugefügt.
         </p>
       </div>
+
     </div>
   </mat-drawer>
 
@@ -38,6 +51,7 @@
         <map-marker [position]="position"></map-marker>
       }
     </google-map>
+
     <button mat-icon-button class="drawer-toggle" (click)="drawer.toggle()">
       <mat-icon>{{ drawer.opened ? 'chevron_right' : 'chevron_left' }}</mat-icon>
     </button>

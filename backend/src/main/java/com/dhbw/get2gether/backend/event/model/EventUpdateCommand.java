@@ -1,9 +1,10 @@
 package com.dhbw.get2gether.backend.event.model;
 
-import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+
+import java.time.LocalDateTime;
 
 @Builder
 @Getter
@@ -13,4 +14,5 @@ public class EventUpdateCommand {
     private String description;
     private String location;
     private LocalDateTime date;
+    private LocalDateTime endDate;
 }

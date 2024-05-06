@@ -1,1 +1,41 @@
-<img width="20" height="20" ngSrc="./assets/profile.svg">
+<div *ngIf="userService.user | async; let user" class="profile-container">
+  <div>
+    <img
+      [matMenuTriggerFor]="menu"
+      [matTooltip]="getUsername(user)"
+      class="profile-icon"
+      width="30"
+      height="30"
+      [ngSrc]="user.profilePictureUrl"
+      alt="Profilbild">
+
+    <mat-menu #menu="matMenu">
+      @if (user.guest) {
+        <button mat-menu-item>
+          <mat-icon>login</mat-icon>
+          Login
+        </button>
+      } @else {
+        <button mat-menu-item>
+          <mat-icon>settings</mat-icon>
+          Einstellungen
+        </button>
+        <button mat-menu-item>
+          <mat-icon>logout</mat-icon>
+          Logout
+        </button>
+      }
+    </mat-menu>
+  </div>
+
+  <button
+    mat-icon-button
+    color="accent"
+    matTooltip="Event erstellen"
+    class="event-add-button"
+    (click)="openDialog()"
+    [disabled]="user.guest"
+  >
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

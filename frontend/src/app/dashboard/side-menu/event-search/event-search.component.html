@@ -1,0 +1,10 @@
+<mat-form-field appearance="outline" subscriptSizing="dynamic" class="search-field">
+  <input matInput placeholder="Suchen" [(ngModel)]="value" (input)="onInputEvent($event)">
+  @if (value) {
+    <button matSuffix mat-icon-button (click)="onClear()">
+      <mat-icon>close</mat-icon>
+    </button>
+  } @else {
+    <mat-icon matSuffix>search</mat-icon>
+  }
+</mat-form-field>

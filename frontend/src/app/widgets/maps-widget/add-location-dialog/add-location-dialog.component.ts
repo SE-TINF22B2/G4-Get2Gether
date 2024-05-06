@@ -1,5 +1,5 @@
 import {Component, ElementRef, NgZone, ViewChild} from '@angular/core';
-import {LocationAddCommand} from "../../../../model/map";
+import {LocationAddCommand} from "../../../../model/map-widget";
 import {MatDialogRef} from "@angular/material/dialog";
 
 @Component({

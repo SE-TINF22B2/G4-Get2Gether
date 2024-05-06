@@ -1,4 +1,5 @@
-import {APP_INITIALIZER, InjectionToken, NgModule} from '@angular/core';
+import {APP_INITIALIZER, InjectionToken, LOCALE_ID, NgModule} from '@angular/core';
+import localeDe from "@angular/common/locales/de";
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -9,11 +10,11 @@ import {HttpClient, HttpClientJsonpModule, HttpClientModule} from "@angular/comm
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {LayoutModule} from "@angular/cdk/layout";
 import {UserService} from "../services/user.service";
-import {NgOptimizedImage} from "@angular/common";
+import {NgOptimizedImage, registerLocaleData} from "@angular/common";
 import {SplashscreenComponent} from "./splashscreen/splashscreen.component";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatToolbarModule} from "@angular/material/toolbar";
-import {MatIconModule} from "@angular/material/icon";
+import {MAT_ICON_DEFAULT_OPTIONS, MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {SideMenuComponent} from "./dashboard/side-menu/side-menu.component";
 import {DashboardContentComponent} from "./dashboard/dashboard-content/dashboard-content.component";
@@ -28,8 +29,23 @@ import {MatInputModule} from "@angular/material/input";
 import {MatListModule} from "@angular/material/list";
 import {AddLocationDialogComponent} from './widgets/maps-widget/add-location-dialog/add-location-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
-import { ProfileMenuComponent } from './dashboard/side-menu/profile-menu/profile-menu.component';
+import {ProfileMenuComponent} from './dashboard/side-menu/profile-menu/profile-menu.component';
+import {MatTooltipModule, TooltipComponent} from "@angular/material/tooltip";
+import {MatMenuModule} from "@angular/material/menu";
 import {DefaultEventPageComponent} from "./eventpage/default-event-page/default-event-page.component";
+import {SpecificEventPageComponent} from './eventpage/specific-event-page/specific-event-page.component';
+import {EventListComponent} from './dashboard/side-menu/event-list/event-list.component';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {EventListItemComponent} from './dashboard/side-menu/event-list/event-list-item/event-list-item.component';
+import {MatCardModule} from "@angular/material/card";
+import {MatExpansionModule} from "@angular/material/expansion";
+import { EventCreationComponent } from './eventcreation/event-creation.component';
+import {EventpageComponent} from "./eventpage/eventpage.component";
+import {MatRippleModule} from "@angular/material/core";
+import { EventSearchComponent } from './dashboard/side-menu/event-search/event-search.component';
+import {FormsModule} from "@angular/forms";
+
+registerLocaleData(localeDe);
 
 function initializeAppFactory(userService: UserService) {
   return () => {
@@ -61,7 +77,13 @@ function loadMapApi(httpClient: HttpClient) {
     MapsWidgetComponent,
     AddLocationDialogComponent,
     ProfileMenuComponent,
+    EventpageComponent,
     DefaultEventPageComponent,
+    SpecificEventPageComponent,
+    EventListComponent,
+    EventListItemComponent,
+    EventCreationComponent,
+    EventSearchComponent,
   ],
   imports: [
     BrowserModule,
@@ -77,12 +99,20 @@ function loadMapApi(httpClient: HttpClient) {
     MatButtonModule,
     MatDividerModule,
     MatProgressBarModule,
+    TooltipComponent,
+    MatTooltipModule,
     MatFormFieldModule,
     MatInputModule,
     MatListModule,
     MatDialogModule,
     GoogleMap,
-    MapMarker
+    MapMarker,
+    MatProgressSpinnerModule,
+    MatCardModule,
+    MatExpansionModule,
+    MatMenuModule,
+    MatRippleModule,
+    FormsModule
   ],
   providers: [
     {
@@ -95,6 +125,16 @@ function loadMapApi(httpClient: HttpClient) {
       provide: MAP_LOADED,
       useFactory: loadMapApi,
       deps: [HttpClient]
+    },
+    {
+      provide: LOCALE_ID,
+      useValue: "de-DE"
+    },
+    {
+      provide: MAT_ICON_DEFAULT_OPTIONS,
+      useValue: {
+        fontSet: "material-icons-round"
+      }
     }
   ],
   bootstrap: [AppComponent]
