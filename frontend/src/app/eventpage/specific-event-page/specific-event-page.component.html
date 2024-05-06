@@ -1,1 +1,33 @@
-<p>specific-event-page works!</p>
+<div class="event" xmlns:style="http://www.w3.org/1999/xhtml">
+  <mat-card>
+    <mat-card-header class="card-header">
+      <mat-card-title>Name des Events</mat-card-title>
+        <button mat-icon-button id="more-vert-button">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+    </mat-card-header>
+    <div id="details">
+      <p id="location">Standort</p>
+      <p id="datetime">Datum und Uhrzeit</p>
+    </div>
+    <mat-card-actions>
+      <button mat-button>Teilnehmer anzeigen</button>
+      <button mat-button>Freunde einladen</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+<br>
+<div class="expansion-panel">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Beschreibung
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="beschreibung">
+      <p>die Beschreibung</p>
+    </div>
+  </mat-expansion-panel>
+  <br>
+</div>
+
