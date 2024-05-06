@@ -15,8 +15,13 @@ public class Entry {
     private String amount;
     private String buyerId;
 
-    public void check(String buyerId) {
-        this.checked = true;
-        this.buyerId = buyerId;
+    public void check(String buyerId, EntryCheck entryCheck) {
+        if(entryCheck.isChecked()) {
+            this.checked = true;
+            this.buyerId = buyerId;
+        } else {
+            this.checked = false;
+            // BuyerID soll nicht gelöscht werden, wenn der Eintrag nicht mehr gecheckt ist, aber überschrieben werden können
+        }
     }
 }
