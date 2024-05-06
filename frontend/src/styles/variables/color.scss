@@ -32,7 +32,9 @@
   // M3 color roles: https://material.angular.io/guide/material-3#reading-color-roles
   @include define-vars((
     "primary-color": mat.get-theme-color($theme, primary),
+    "on-primary-color": mat.get-theme-color($theme, on-primary),
     "secondary-color": mat.get-theme-color($theme, tertiary),
+    "on-secondary-color": mat.get-theme-color($theme, on-tertiary),
     "error-color": mat.get-theme-color($theme, error),
     "shadow-color": mat.get-theme-color($theme, shadow),
     "background-color": mat.get-theme-color($theme, surface),
