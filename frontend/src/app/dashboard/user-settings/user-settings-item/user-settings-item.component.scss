@@ -1,0 +1,44 @@
+.settingscard {
+  cursor: pointer;
+  overflow: hidden;
+
+  &.selected {
+    --mdc-outlined-card-outline-color: var(--primary-color);
+  }
+
+  & > * {
+    z-index: 1;
+  }
+}
+
+.ripple-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+mat-card-content{
+  padding: 5% 0 5% 5%;
+}
+.cardcontent-container{
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-gap: 2%;
+    align-items: center;
+    //align-items: center;
+    //padding: 10% 0 10% 0;
+    .colorcard{
+      position: relative;
+      aspect-ratio: 1 / 1;
+      height: 70%;
+      padding: 0;
+      margin: 0;
+      //left: 35px;
+      //top: 159px;
+
+      border-radius: 12px;
+    }
+}
+

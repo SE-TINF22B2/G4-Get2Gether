@@ -1,0 +1,18 @@
+<div class="wrapper" #wrapper>
+  <mat-card
+    appearance="outlined"
+    routerLinkActive="selected"
+    (click)="switchColor()"
+    class="settingscard"
+  >
+    <div class="ripple-container" mat-ripple [matRippleTrigger]="wrapper"></div>
+
+    <mat-card-content>
+        <div class="cardcontent-container">
+           <p class="colorcard" id="colorcard"></p>
+            {{color}}
+        </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+

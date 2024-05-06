@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Einstellungen</h1>
+<h4 class="subTitle">Wähle ein Farbschema aus</h4>
+<mat-dialog-content>
+    <ul class="color-list">
+      @for (color of colors; track colors) {
+        <li>
+          <app-user-settings-item [color]="color.toString()"></app-user-settings-item>
+        </li>
+      }
+    </ul>
+</mat-dialog-content>
