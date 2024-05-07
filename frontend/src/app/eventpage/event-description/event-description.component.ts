@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {Event} from "../../../model/event";
 
 @Component({
   selector: 'app-event-description',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './event-description.component.scss'
 })
 export class EventDescriptionComponent {
-
+  @Input() eventData: Event | undefined ;
 }

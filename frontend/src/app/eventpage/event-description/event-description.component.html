@@ -1,10 +1,10 @@
+<div *ngIf="eventData">
 <mat-expansion-panel>
   <mat-expansion-panel-header class="exp-header">
-    <mat-panel-title>
-      Beschreibung
-    </mat-panel-title>
+    <mat-panel-title>Beschreibung</mat-panel-title>
   </mat-expansion-panel-header>
   <div class="beschreibung">
-    <p>die Beschreibung</p>
+    <p>{{ eventData.description }}</p>
   </div>
 </mat-expansion-panel>
+</div>
