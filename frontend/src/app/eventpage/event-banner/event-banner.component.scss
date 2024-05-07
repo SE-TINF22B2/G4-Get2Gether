@@ -3,6 +3,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+}
+mat-card-title{
+  font-size: var(--font-size-title);
 }
 #more-vert-button {
   margin-left: auto;
@@ -12,13 +16,16 @@
   justify-content: space-between;
   align-items: center;
   padding-left: 16px;
-  padding-right: 36px;
+  padding-right: 56px;
+  font-size: var(--font-size-standard);
 }
 #location {
   text-align: left;
 }
-#datetime {
-  text-align: right;
+.datetime-div {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 }
 //color
 mat-card{

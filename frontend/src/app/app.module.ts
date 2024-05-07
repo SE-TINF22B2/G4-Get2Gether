@@ -33,7 +33,6 @@ import {ProfileMenuComponent} from './dashboard/side-menu/profile-menu/profile-m
 import {MatTooltipModule, TooltipComponent} from "@angular/material/tooltip";
 import {MatMenuModule} from "@angular/material/menu";
 import {DefaultEventPageComponent} from "./eventpage/default-event-page/default-event-page.component";
-import {SpecificEventPageComponent} from './eventpage/specific-event-page/specific-event-page.component';
 import {EventListComponent} from './dashboard/side-menu/event-list/event-list.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {EventListItemComponent} from './dashboard/side-menu/event-list/event-list-item/event-list-item.component';
@@ -44,6 +43,8 @@ import {EventpageComponent} from "./eventpage/eventpage.component";
 import {MatRippleModule} from "@angular/material/core";
 import { EventSearchComponent } from './dashboard/side-menu/event-search/event-search.component';
 import {FormsModule} from "@angular/forms";
+import { EventBannerComponent } from './eventpage/event-banner/event-banner.component';
+import { EventDescriptionComponent } from './eventpage/event-description/event-description.component';
 
 registerLocaleData(localeDe);
 
@@ -79,11 +80,12 @@ function loadMapApi(httpClient: HttpClient) {
     ProfileMenuComponent,
     EventpageComponent,
     DefaultEventPageComponent,
-    SpecificEventPageComponent,
     EventListComponent,
     EventListItemComponent,
     EventCreationComponent,
     EventSearchComponent,
+    EventBannerComponent,
+    EventDescriptionComponent,
   ],
   imports: [
     BrowserModule,
