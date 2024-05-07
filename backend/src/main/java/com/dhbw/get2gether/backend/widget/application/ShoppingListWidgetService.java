@@ -5,10 +5,7 @@ import com.dhbw.get2gether.backend.event.model.Event;
 import com.dhbw.get2gether.backend.exceptions.EntityNotFoundException;
 import com.dhbw.get2gether.backend.user.application.UserService;
 import com.dhbw.get2gether.backend.widget.application.mapper.ShoppingListMapper;
-import com.dhbw.get2gether.backend.widget.model.shoppinglist.Entry;
-import com.dhbw.get2gether.backend.widget.model.shoppinglist.EntryAddCommand;
-import com.dhbw.get2gether.backend.widget.model.shoppinglist.ShoppingListCreateCommand;
-import com.dhbw.get2gether.backend.widget.model.shoppinglist.ShoppingListWidget;
+import com.dhbw.get2gether.backend.widget.model.shoppinglist.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.AuthenticatedPrincipal;
 import org.springframework.stereotype.Service;
@@ -68,13 +65,13 @@ public class ShoppingListWidgetService extends AbstractWidgetService {
     }
 
     @PreAuthorize("hasRole('USER')")
-    public ShoppingListWidget checkEntry(AuthenticatedPrincipal principal, String eventId, String widgetId, String entryId) {
+    public ShoppingListWidget checkEntry(AuthenticatedPrincipal principal, String eventId, String widgetId, String entryId, EntryCheckCommand checkCommand) {
         Event event = getEventById(principal, eventId);
         ShoppingListWidget widget = getWidgetFromEvent(event, widgetId);
         Entry entry = widget.getEntries().stream()
                 .filter(l -> Objects.equals(l.getId(), entryId)).findFirst()
                 .orElseThrow(() -> new EntityNotFoundException("Entry not found"));
-        entry.check(userService.getUserByPrincipal(principal).getId());
+        entry.check(userService.getUserByPrincipal(principal).getId(), mapper.mapEntryCheckCommandToEntryCheck(checkCommand));
         return updateAndGetWidget(principal, event, widget);
     }
 
