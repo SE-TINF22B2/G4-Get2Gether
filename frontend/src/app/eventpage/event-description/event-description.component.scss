@@ -1,3 +1,9 @@
+.container {
+  display: flex;
+  height: fit-content;
+  flex-direction: column;
+  text-align: center;
+}
 //color
 mat-expansion-panel{
   background-color: var(--background-primary-color);
