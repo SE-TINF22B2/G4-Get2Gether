@@ -5,6 +5,8 @@ mat-expansion-panel{
 }
 .mat-expansion-panel-header-title{
   color: var(--foreground-on-primary-color);
+  font-size: var(--font-size-subtitle);
+  line-height: calc(100% + 2px);
 }
 mat-expansion-panel-header svg{
   fill: var(--foreground-on-primary-color);

@@ -5,15 +5,17 @@
   /*
  FONT-SIZE
  */
-  --font-size-small: 26px;
-  --font-size-standard: 32px;
-  --font-size-subtitle: 36px;
-  --font-size-title: 80px;
+  --font-size-small: 12px;
+  --font-size-standard: 24px;
+  --font-size-subtitle: 28px;
+  --font-size-title: 38px;
+  --font-size-big-title: 80px;
 }
 
 .is-phone-portrait {
   --font-size-small: 14px;
-  --font-size-standard: 18px;
+  --font-size-standard: 16px;
   --font-size-subtitle: 22px;
-  --font-size-title: 46px;
+  --font-size-title: 28px;
+  --font-size-big-title: 46px;
 }
