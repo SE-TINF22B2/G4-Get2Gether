@@ -1,0 +1,30 @@
+//layout
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#more-vert-button {
+  margin-left: auto;
+}
+#details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 16px;
+  padding-right: 36px;
+}
+#location {
+  text-align: left;
+}
+#datetime {
+  text-align: right;
+}
+//color
+mat-card{
+  background-color: var(--background-primary-color);
+  color: var(--foreground-on-primary-color);
+}
+.icon-color{
+  color: var(--foreground-on-primary-color);
+}

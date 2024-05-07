@@ -1,0 +1,18 @@
+<div *ngIf="eventData">
+<mat-card>
+  <mat-card-header class="card-header">
+    <mat-card-title>{{ eventData.name }}</mat-card-title>
+    <button mat-icon-button>
+      <mat-icon class="icon-color">more_vert</mat-icon>
+    </button>
+  </mat-card-header>
+  <div id="details">
+    <p id="location">Standort</p>
+    <p id="datetime">Datum und Uhrzeit</p>
+  </div>
+  <mat-card-actions>
+    <button mat-button>Teilnehmer anzeigen</button>
+    <button mat-button>Freunde einladen</button>
+  </mat-card-actions>
+</mat-card>
+</div>
