@@ -7,14 +7,9 @@ import {MatDialogModule} from "@angular/material/dialog";
   styleUrl: './user-settings.component.scss'
 })
 export class UserSettingsComponent {
-  colors :string[] = ["dark", "light", "light-gy", "light-bg", "dark-ry", "dark-bv"];
+  darkColors :string[] = ["dark", "dark-ry", "dark-bv"];
+  lightColors:string[]=["light", "light-gy", "light-bg"]
 
-  get lightColors(){
-    return this.colors.filter(color=> color.startsWith('l'));
-  }
-  get darkColors(){
-    return this.colors.filter(color=> color.startsWith('d'));
-  }
 }
 
 
