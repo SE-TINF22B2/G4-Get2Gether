@@ -54,15 +54,15 @@ $dark-bv: define-theme(dark, matx.$m3-blue-palette, matx.$m3-violet-palette);
 
 //define primary colors for the theme preview
 :root{
-  --light-default-primary: #{mat.get-theme-color($light-default, primary)};
+  --light-primary: #{mat.get-theme-color($light-default, primary)};
   //--light-ä-primary: #{mat.get-theme-color($light-ä, primary)};
-  --light-gy-default-primary: #{mat.get-theme-color($light-gy, primary)};
+  --light-gy-primary: #{mat.get-theme-color($light-gy, primary)};
   --light-bg-primary: #{mat.get-theme-color($light-bg, primary)};
 
-  --dark-default-primary: #{mat.get-theme-color($dark-default, primary)};
+  --dark-primary: #{mat.get-theme-color($dark-default, primary)};
   //--dark-ü-primary: #{mat.get-theme-color($dark-ü, primary)};
-  --dark-ry-default-primary: #{mat.get-theme-color($dark-ry, primary)};
-  --dark-bv-default-primary: #{mat.get-theme-color($dark-bv, primary)};
+  --dark-ry-primary: #{mat.get-theme-color($dark-ry, primary)};
+  --dark-bv-primary: #{mat.get-theme-color($dark-bv, primary)};
 
 }
 // apply default theme
