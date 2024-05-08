@@ -5,13 +5,9 @@
       <mat-card-header class="card-header">
         <mat-card-title>{{ eventData.name }}</mat-card-title>
 
-        <img
-          [matMenuTriggerFor]="menu"
-          class="profile-icon"
-          width="30"
-          height="30"
-          ngSrc="assets/menuIcon.svg"
-          alt="Menu">
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon class="icon-color">more_vert</mat-icon>
+        </button>
 
         <mat-menu #menu="matMenu">
           <button mat-menu-item>
