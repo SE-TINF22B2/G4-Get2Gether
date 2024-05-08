@@ -1,11 +1,37 @@
-<div class="no-event-picture-div">
-  <img class="no-event-picture" width="540" height="480" ngSrc="./assets/noEventPicture.svg">
+<div class="event">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Name des Events</mat-card-title>
+      <div class="dreiPunkte">
+        <button mat-icon-button aria-label="dreiPunkte">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+      </div>
+    </mat-card-header>
+    <mat-card-actions>
+      <button mat-button>Standort</button>
+      <p>Datum und Uhrzeit</p>
+      <button mat-button>Teilnehmeranzeige</button>
+      <button mat-button>Freunde einladen</button>
+    </mat-card-actions>
+  </mat-card>
 </div>
-<div class="no-event-text-div">
-  <p>
-    Kein Event ausgewählt
-    <br>
-    <br>
-    Wähle links ein Event aus oder füge ein neues Event über das <mat-icon class="plus-icon">add</mat-icon> Icon hinzu
-  </p>
+<br>
+<div class="expesion-panel">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Beschreibung
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="beschreibung">
+      <p>die Beschreibung</p>
+    </div>
+  </mat-expansion-panel>
+  <br>
 </div>
+
+<div class="hinzufuegen">
+  <button type="button">Icon + Widget hinzufügen</button>
+</div>
+

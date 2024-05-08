@@ -1,23 +1,47 @@
 <div class="container" [ngClass]="{'is-phone-portrait': isPhonePortrait}">
   <div *ngIf="eventData">
-  <mat-card>
-    <mat-card-header class="card-header">
-      <mat-card-title>{{ eventData.name }}</mat-card-title>
-      <button mat-icon-button>
-        <mat-icon class="icon-color">more_vert</mat-icon>
-      </button>
-    </mat-card-header>
-    <div id="details">
-      <p id="location">{{eventData.location}}</p>
-      <div class="datetime-div">
-        <p id="date">{{ eventData.date | date:"dd.MM.yy" }}</p>
-        <p id="time">{{ eventData.date | date:"hh:mm'Uhr'" }}</p>
+
+    <mat-card>
+      <mat-card-header class="card-header">
+        <mat-card-title>{{ eventData.name }}</mat-card-title>
+
+        <img
+          [matMenuTriggerFor]="menu"
+          class="profile-icon"
+          width="30"
+          height="30"
+          ngSrc="assets/menuIcon.svg"
+          alt="Menu">
+
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>
+            <mat-icon>settings</mat-icon>
+            Menu #1
+          </button>
+          <button mat-menu-item>
+            <mat-icon>logout</mat-icon>
+            Menu #2
+          </button>
+        </mat-menu>
+      </mat-card-header>
+
+      <div id="details">
+        <div class="details-div">
+          <img class="markerIcon" src="assets/markerIcon.svg">
+          <p id="location">{{ eventData.location }}</p>
+        </div>
+        <div class="datetime-div">
+          <img class="kalenderuhrIcon" src="assets/kalenderuhrIcon.svg">
+          <p id="date">{{ eventData.date | date:"dd.MM.yy" }}</p>
+          <p id="time">{{ eventData.date | date:"hh:mm 'Uhr'" }}</p>
+        </div>
       </div>
-    </div>
-    <mat-card-actions>
-      <button mat-button>Teilnehmer anzeigen</button>
-      <button mat-button>Freunde einladen</button>
-    </mat-card-actions>
-  </mat-card>
+      <mat-card-actions>
+        <img class="benutzerIcon" src="assets/benutzerIcon.svg">
+        <button mat-button>Teilnehmer anzeigen</button>
+        <img class="linkIcon" src="assets/linkIcon.svg">
+        <button mat-button>Freunde einladen</button>
+      </mat-card-actions>
+    </mat-card>
   </div>
 </div>

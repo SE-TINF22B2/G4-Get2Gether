@@ -1,29 +1,11 @@
-.no-event-picture-div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  object-fit: cover;
-}
-
-.no-event-text-div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-.add-event-picture {
+.dreiPunkte {
   position: relative;
-  top: 3px;
+  left: 80%;
 }
-
-.no-event-picture {
-  max-width: 100%;
+.hinzufuegen {
   height: auto;
   width: auto;
-}
-
-.plus-icon {
-  color: var(--secondary-color);
-  transform: translateY(25%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

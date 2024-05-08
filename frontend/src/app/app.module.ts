@@ -43,8 +43,8 @@ import {EventpageComponent} from "./eventpage/eventpage.component";
 import {MatRippleModule} from "@angular/material/core";
 import { EventSearchComponent } from './dashboard/side-menu/event-search/event-search.component';
 import {FormsModule} from "@angular/forms";
-import { EventBannerComponent } from './eventpage/event-banner/event-banner.component';
-import { EventDescriptionComponent } from './eventpage/event-description/event-description.component';
+import {EventDescriptionComponent} from "./eventpage/event-description/event-description.component";
+import {EventBannerComponent} from "./eventpage/event-banner/event-banner.component";
 
 registerLocaleData(localeDe);
 
@@ -84,8 +84,8 @@ function loadMapApi(httpClient: HttpClient) {
     EventListItemComponent,
     EventCreationComponent,
     EventSearchComponent,
-    EventBannerComponent,
     EventDescriptionComponent,
+    EventBannerComponent,
   ],
   imports: [
     BrowserModule,
