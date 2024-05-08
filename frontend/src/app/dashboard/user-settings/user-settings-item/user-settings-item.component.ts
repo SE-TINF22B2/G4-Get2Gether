@@ -19,32 +19,14 @@ export class UserSettingsItemComponent {
   @Input()
   color!: string;
 
-  ngOnInit(){
-    console.log(this.color)
-    //set colorcard
-    if (document.getElementById(this.color)!=null) {
-      // @ts-ignore
-      let element: HTMLElement = document.getElementById(this.color)
-      if (this.color == "light") {
-        element.style.backgroundColor= mat.get'var(--light-default-primary)'
-        console.log("in light"+ element.getAttributeNames())
-      } else if (this.color == "dark") {
-        element.style.backgroundColor= 'var(--dark-default-primary)'
-        console.log("in dark")
-      } else {
-        element.style.backgroundColor= 'var(--error-color)'
-        console.log("in error")
-      }
-    }else{
-      console.log("no such element")
-    }
-  }
   //switch color on change
   switchColor() {
     document.documentElement.setAttribute("theme", this.color);
+    console.log("curr ColorMode: "+document.documentElement.getAttribute("theme"))
+    let colormode:string=this.color.replace("-","_").toUpperCase();
     this.http.put("http://localhost:8080/user/self", {
       "settings": {
-        "colorMode" : this.color
+        "colorMode" : colormode
       }
     },{withCredentials: true}).subscribe(result =>{
       console.log(result);

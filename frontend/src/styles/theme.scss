@@ -1,6 +1,7 @@
 @use '@angular/material' as mat;
 @use '@angular/material-experimental' as matx;
 @use "./variables/color" as color-vars;
+@use "@material/shape";
 
 @include mat.core();
 
@@ -36,14 +37,61 @@
 //--------------------------------------------------//
 
 $light-default: define-theme(light, matx.$m3-azure-palette, matx.$m3-violet-palette);
-$dark-default: define-theme(dark, matx.$m3-azure-palette, matx.$m3-violet-palette);
+$light-gy: define-theme(light, matx.$m3-green-palette, matx.$m3-yellow-palette);
+$light-bg: define-theme(light, matx.$m3-blue-palette, matx.$m3-green-palette);
 
+$dark-default: define-theme(dark, matx.$m3-azure-palette, matx.$m3-violet-palette);
+$dark-ry: define-theme(dark, matx.$m3-red-palette, matx.$m3-yellow-palette);
+$dark-bv: define-theme(dark, matx.$m3-blue-palette, matx.$m3-violet-palette);
+
+
+//$red-default: define-theme(red, matx.$m3-azure-palette, matx.$m3-violet-palette);
+//$yellow-default: define-theme(yellow, matx.$m3-azure-palette, matx.$m3-violet-palette);
+//$green-default: define-theme(green, matx.$m3-azure-palette, matx.$m3-violet-palette);
+//$blue-default: define-theme(blue, matx.$m3-azure-palette, matx.$m3-violet-palette);
+
+
+
+//define primary colors for the theme preview
+:root{
+  --light-default-primary: #{mat.get-theme-color($light-default, primary)};
+  //--light-ä-primary: #{mat.get-theme-color($light-ä, primary)};
+  --light-gy-default-primary: #{mat.get-theme-color($light-gy, primary)};
+  --light-bg-primary: #{mat.get-theme-color($light-bg, primary)};
+
+  --dark-default-primary: #{mat.get-theme-color($dark-default, primary)};
+  //--dark-ü-primary: #{mat.get-theme-color($dark-ü, primary)};
+  --dark-ry-default-primary: #{mat.get-theme-color($dark-ry, primary)};
+  --dark-bv-default-primary: #{mat.get-theme-color($dark-bv, primary)};
+
+}
 // apply default theme
 html {
   @include apply-theme($light-default, true);
 }
-
 // apply other theme variants
+
+////////////////////////////////////////////////
+//light
+//////////////////////////////////////////////
+
+
+html[theme="light-gy"] {
+   @include apply-theme($light-gy);
+}
+html[theme="light-bg"] {
+   @include apply-theme($light-bg);
+}
+
+////////////////////////////////////////////////
+//dark
+//////////////////////////////////////////////
 html[theme="dark"] {
-  @include apply-theme($dark-default);
+@include apply-theme($dark-default);
+}
+html[theme="dark-ry"] {
+  @include apply-theme($dark-ry);
+}
+html[theme="dark-bv"] {
+  @include apply-theme($dark-bv);
 }

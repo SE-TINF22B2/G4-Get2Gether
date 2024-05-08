@@ -10,7 +10,7 @@
 
     <mat-card-content>
         <div class="cardcontent-container">
-           <p class="colorcard"></p>
+           <p class="colorcard" [style.background]="'var(--'+color+'-default-primary)'"></p>
             {{color}}
         </div>
     </mat-card-content>

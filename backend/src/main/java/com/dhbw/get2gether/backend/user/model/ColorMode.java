@@ -3,7 +3,9 @@ package com.dhbw.get2gether.backend.user.model;
 public enum ColorMode {
     LIGHT,
     DARK,
-    MODERN
-
+    LIGHT_GY,
+    LIGHT_BG,
+    DARK_RY,
+    DARK_BV
 
 }
