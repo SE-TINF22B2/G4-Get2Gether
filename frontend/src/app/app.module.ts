@@ -84,8 +84,8 @@ function loadMapApi(httpClient: HttpClient) {
     EventListItemComponent,
     EventCreationComponent,
     EventSearchComponent,
-    EventBannerComponent,
     EventDescriptionComponent,
+    EventBannerComponent,
   ],
   imports: [
     BrowserModule,

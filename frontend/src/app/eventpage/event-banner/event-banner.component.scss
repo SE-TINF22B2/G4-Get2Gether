@@ -4,6 +4,7 @@
   flex-direction: column;
   text-align: center;
 }
+
 //layout
 .card-header {
   display: flex;
@@ -11,12 +12,15 @@
   align-items: center;
 
 }
-mat-card-title{
+
+mat-card-title {
   font-size: var(--font-size-title);
 }
+
 #more-vert-button {
   margin-left: auto;
 }
+
 #details {
   display: flex;
   justify-content: space-between;
@@ -25,19 +29,32 @@ mat-card-title{
   padding-right: 40px;
   font-size: var(--font-size-standard);
 }
+
 #location {
   text-align: left;
 }
+
+.details-div {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+
 .datetime-div {
   display: flex;
   flex-direction: row;
   gap: 10px;
+  align-items: center;
 }
+
 //color
-mat-card{
+mat-card {
   background-color: var(--background-primary-color);
   color: var(--foreground-on-primary-color);
 }
-.icon-color{
+
+.icon-color, .material-symbols-outlined {
   color: var(--foreground-on-primary-color);
 }
+
