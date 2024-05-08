@@ -3,6 +3,7 @@ package com.dhbw.get2gether.backend.widget.adapter.in;
 import com.dhbw.get2gether.backend.event.model.Event;
 import com.dhbw.get2gether.backend.widget.application.ShoppingListWidgetService;
 import com.dhbw.get2gether.backend.widget.model.shoppinglist.EntryAddCommand;
+import com.dhbw.get2gether.backend.widget.model.shoppinglist.EntryCheckCommand;
 import com.dhbw.get2gether.backend.widget.model.shoppinglist.ShoppingListCreateCommand;
 import com.dhbw.get2gether.backend.widget.model.shoppinglist.ShoppingListWidget;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -53,9 +54,10 @@ public class ShoppingListWidgetController {
             @AuthenticationPrincipal OAuth2User principal,
             @PathVariable String eventId,
             @PathVariable String widgetId,
-            @PathVariable String entryId
-    ) {
-        return service.checkEntry(principal, eventId, widgetId, entryId);
+            @PathVariable String entryId,
+            @RequestBody EntryCheckCommand checkCommand
+            ) {
+        return service.checkEntry(principal, eventId, widgetId, entryId, checkCommand);
     }
 
 }
