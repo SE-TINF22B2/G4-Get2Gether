@@ -1,17 +1,25 @@
-<ul class="widgets-bar">
-  @for (widget of eventData.widgets; track widget.id) {
-    <li>
-      <app-widget-label
-        [widget]="widget"
-        [isSelected]="scrolledWidgetId === widget.id"
-        (onClick)="scrollToWidget(widget.id)"
-      ></app-widget-label>
-    </li>
-  }
-</ul>
+<div class="widgets-bar" #widgetBar>
+  <app-widgets-bar
+    [widgets]="eventData.widgets"
+    [selected]="scrolledWidgetId"
+    (onClick)="scrollToWidget($event)"
+  ></app-widgets-bar>
+
+  <button mat-icon-button matTooltip="Widget hinzufügen">
+    <mat-icon>widgets</mat-icon>
+  </button>
+</div>
 
 <div class="widgets">
   @for (widget of eventData.widgets; track widget.id) {
-    <app-widget-container [widget]="widget" [id]="widget.id"></app-widget-container>
+    <app-widget-container
+      [widget]="widget"
+      [eventData]="eventData"
+      (onWidgetUpdated)="onWidgetUpdated($event)"
+    ></app-widget-container>
+    <br>
+  } @empty {
+    <!--  TODO: add default widget component here and delete below element  -->
+    <p>Noch keine Widgets hinzugefügt</p>
   }
 </div>

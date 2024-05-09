@@ -1,8 +1,19 @@
-import {Component, Input, NgZone, OnDestroy, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  NgZone,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren
+} from '@angular/core';
 import {Event} from "../../../model/event";
 import {CdkScrollable, ScrollDispatcher} from "@angular/cdk/overlay";
 import {Subscription} from "rxjs";
 import {WidgetContainerComponent} from "./widget-container/widget-container.component";
+import {BaseWidget} from "../../../model/common-widget";
 
 @Component({
   selector: 'app-widgets-section',
@@ -17,6 +28,9 @@ export class WidgetsSectionComponent implements OnInit, OnDestroy {
   @ViewChildren(WidgetContainerComponent)
   widgetContainers!: QueryList<WidgetContainerComponent>;
 
+  @ViewChild("widgetBar")
+  widgetBar!: ElementRef<HTMLElement>;
+
   scrolledWidgetId: string | undefined;
 
   private scrollSubscription!: Subscription;
@@ -28,19 +42,29 @@ export class WidgetsSectionComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if (this.eventData.widgets.length > 0) {
-      this.scrolledWidgetId = this.eventData.widgets[0].id;
-    }
-
     this.scrollSubscription = this.scroll.scrolled().subscribe(data => {
       if (data instanceof CdkScrollable) {
         this.onScroll(data);
       }
     });
+
+    // select first widget as default selected
+    if (this.eventData.widgets.length > 0) {
+      this.scrolledWidgetId = this.eventData.widgets[0].id;
+    }
   }
 
   ngOnDestroy() {
     this.scrollSubscription.unsubscribe();
+  }
+
+  onWidgetUpdated(widget: BaseWidget) {
+    const index = this.eventData.widgets.findIndex(w => w.id === widget.id);
+    if (index === -1) {
+      console.log("ERROR: Cannot update widget: Widget not found.", widget);
+      return;
+    }
+    this.eventData.widgets[index] = widget;
   }
 
   scrollToWidget(widgetId: string) {
@@ -53,7 +77,7 @@ export class WidgetsSectionComponent implements OnInit, OnDestroy {
 
   private onScroll(data: CdkScrollable) {
     const scrollTop = data.measureScrollOffset("top");
-    const topOffset = 50;
+    const topOffset = this.widgetBar.nativeElement.getBoundingClientRect().bottom + 10;
 
     let scrolledWidgetId: string | undefined;
 

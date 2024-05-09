@@ -38,17 +38,18 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {EventListItemComponent} from './dashboard/side-menu/event-list/event-list-item/event-list-item.component';
 import {MatCardModule} from "@angular/material/card";
 import {MatExpansionModule} from "@angular/material/expansion";
-import { EventCreationComponent } from './eventcreation/event-creation.component';
+import {EventCreationComponent} from './eventcreation/event-creation.component';
 import {EventpageComponent} from "./eventpage/eventpage.component";
 import {MatRippleModule} from "@angular/material/core";
-import { EventSearchComponent } from './dashboard/side-menu/event-search/event-search.component';
+import {EventSearchComponent} from './dashboard/side-menu/event-search/event-search.component';
 import {FormsModule} from "@angular/forms";
-import { EventBannerComponent } from './eventpage/event-banner/event-banner.component';
-import { EventDescriptionComponent } from './eventpage/event-description/event-description.component';
-import { WidgetsSectionComponent } from './eventpage/widgets-section/widgets-section.component';
-import { WidgetContainerComponent } from './eventpage/widgets-section/widget-container/widget-container.component';
-import { WidgetLabelComponent } from './eventpage/widgets-section/widget-label/widget-label.component';
+import {EventBannerComponent} from './eventpage/event-banner/event-banner.component';
+import {EventDescriptionComponent} from './eventpage/event-description/event-description.component';
+import {WidgetsSectionComponent} from './eventpage/widgets-section/widgets-section.component';
+import {WidgetContainerComponent} from './eventpage/widgets-section/widget-container/widget-container.component';
 import {ScrollingModule} from "@angular/cdk/scrolling";
+import {WidgetsBarComponent} from './eventpage/widgets-section/widgets-bar/widgets-bar.component';
+import {MatTabsModule} from "@angular/material/tabs";
 
 registerLocaleData(localeDe);
 
@@ -92,7 +93,7 @@ function loadMapApi(httpClient: HttpClient) {
     EventBannerComponent,
     WidgetsSectionComponent,
     WidgetContainerComponent,
-    WidgetLabelComponent,
+    WidgetsBarComponent,
   ],
   imports: [
     BrowserModule,
@@ -122,7 +123,8 @@ function loadMapApi(httpClient: HttpClient) {
     MatMenuModule,
     MatRippleModule,
     FormsModule,
-    ScrollingModule
+    ScrollingModule,
+    MatTabsModule
   ],
   providers: [
     {

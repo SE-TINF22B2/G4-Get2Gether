@@ -1,0 +1,19 @@
+<nav
+  class="nav-bar"
+  mat-tab-nav-bar
+  [tabPanel]="tabPanel"
+  color="accent"
+  disablePagination
+  fitInkBarToContent
+>
+  @for (widget of widgets; track widget.id) {
+    <a
+      mat-tab-link
+      [active]="selected === widget.id"
+      (click)="onClick.emit(widget.id)"
+    >
+      {{ getWidgetName(widget.widgetType) }}
+    </a>
+  }
+</nav>
+<mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>

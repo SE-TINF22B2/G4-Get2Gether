@@ -28,3 +28,13 @@
 .is-mobile .sidenav-container {
   flex: 1 0 auto;
 }
+
+.is-mobile {
+  mat-sidenav-container, mat-sidenav-content {
+    overflow: clip; // fixes sticky positioning in mobile layout
+  }
+
+  &.wrapper {
+    overflow: auto;
+  }
+}

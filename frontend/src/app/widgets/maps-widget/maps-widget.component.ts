@@ -8,6 +8,7 @@ import {animate, style, transition, trigger} from "@angular/animations";
 import {AddLocationDialogComponent} from "./add-location-dialog/add-location-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {MatDrawer} from "@angular/material/sidenav";
+import {BaseWidget} from "../../../model/common-widget";
 
 @Component({
   selector: 'app-maps-widget',
@@ -27,7 +28,7 @@ export class MapsWidgetComponent implements OnInit {
   @Input()
   eventId!: string;
 
-  @Input()
+  @Input({transform: (value: BaseWidget): MapWidget => value as MapWidget})
   widget!: MapWidget;
 
   @Output()

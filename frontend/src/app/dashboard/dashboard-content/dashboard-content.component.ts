@@ -1,8 +1,6 @@
 import {Component} from '@angular/core';
 import {UserService} from "../../../services/user.service";
 import {HttpClient} from "@angular/common/http";
-import {MapWidget} from "../../../model/map-widget";
-import {WidgetType} from "../../../model/common-widget";
 
 @Component({
   selector: 'app-dashboard-content',
@@ -19,22 +17,6 @@ export class DashboardContentComponent {
     private http: HttpClient
   ) {
   }
-
-  mapWidget: MapWidget = {
-    id: "ef135e78-6f17-41d8-b7f8-0708c50f438e",
-    creationDate: "2024-04-25T15:20:22.153",
-    locations: [
-      {
-        id: "6473fd21-e75a-44d5-ba09-35172507ac3f",
-        placeId: "ChIJ15FBwAYHl0cRwn_nSiwjXWI",
-        name: "DHBW Karlsruhe",
-        address: "Erzbergerstraße 121, 76133 Karlsruhe, Deutschland",
-        latitude: 49.02632,
-        longitude: 8.385440000000001
-      }
-    ],
-    widgetType: WidgetType.MAP
-  };
 
   afterAuth(){
     this.http.get("http://localhost:8080/user", {withCredentials: true}).subscribe(result =>{

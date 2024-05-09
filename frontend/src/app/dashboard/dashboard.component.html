@@ -1,4 +1,4 @@
-<div class="wrapper" [class.is-mobile]="isMobileLayout">
+<div class="wrapper" [class.is-mobile]="isMobileLayout" cdkScrollable>
   <mat-toolbar *ngIf="isMobileLayout" class="toolbar">
     <button mat-icon-button (click)="sidenav.toggle()">
       <mat-icon>menu</mat-icon>
