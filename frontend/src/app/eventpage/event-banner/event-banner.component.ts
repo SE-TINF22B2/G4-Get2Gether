@@ -8,17 +8,18 @@ import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
   templateUrl: './event-banner.component.html',
   styleUrl: './event-banner.component.scss'
 })
-export class EventBannerComponent implements OnInit{
+export class EventBannerComponent implements OnInit {
   @Input() eventData: Event | undefined;
 
   isPhonePortrait = false;
 
-  constructor(public breakpointObserver: BreakpointObserver) {}
+  constructor(private breakpointObserver: BreakpointObserver) {
+  }
 
   ngOnInit() {
     this.breakpointObserver.observe(Breakpoints.HandsetPortrait)
       .subscribe(result => {
         this.isPhonePortrait = result.matches;
-      })
+      });
   }
 }

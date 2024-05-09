@@ -1,37 +1,44 @@
-.container {
-  display: flex;
-  height: fit-content;
-  flex-direction: column;
-  text-align: center;
-}
-
-//layout
 .card-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
 
+  .event-name {
+    margin-top: 48px;
+  }
 }
 
-mat-card-title {
-  font-size: var(--font-size-title);
+.is-phone-portrait .event-name {
+  margin-top: 24px;
 }
 
-#more-vert-button {
-  margin-left: auto;
+mat-card {
+  --mat-card-title-text-size: var(--font-size-display-small);
+  background-color: var(--background-primary-color);
+  color: var(--foreground-on-primary-color);
 }
 
-#details {
+mat-card-actions {
+  flex-wrap: wrap;
+}
+
+.details {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-left: 16px;
-  padding-right: 40px;
+  flex-wrap: wrap;
+  gap: var(--size-12);
+  padding-right: 24px;
   font-size: var(--font-size-standard);
-}
+  margin-top: 16px;
+  margin-bottom: var(--size-12);
 
-#location {
-  text-align: left;
+  p {
+    margin: 0;
+  }
+
+  mat-icon {
+    flex-shrink: 0;
+  }
 }
 
 .details-div {
@@ -41,20 +48,17 @@ mat-card-title {
   align-items: center;
 }
 
-.datetime-div {
+.datetime-container {
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  gap: var(--size-12);
   align-items: center;
-}
 
-//color
-mat-card {
-  background-color: var(--background-primary-color);
-  color: var(--foreground-on-primary-color);
-}
+  .date-separator {
+    margin: 0 4px;
+  }
 
-.icon-color, .material-symbols-outlined {
-  color: var(--foreground-on-primary-color);
+  .end-date {
+    white-space: nowrap;
+  }
 }
-

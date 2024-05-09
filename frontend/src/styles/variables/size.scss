@@ -1,21 +1,39 @@
+@use '@angular/material' as mat;
+@import "../utilities";
+
+//--------------------------------------------------//
+//          Static Size Variables                   //
+//--------------------------------------------------//
+
 :root {
   --size-12: 12px;
   --size-24: 24px;
-
-  /*
- FONT-SIZE
- */
-  --font-size-small: 12px;
-  --font-size-standard: 24px;
-  --font-size-subtitle: 28px;
-  --font-size-title: 38px;
-  --font-size-big-title: 80px;
 }
 
-.is-phone-portrait {
-  --font-size-small: 14px;
-  --font-size-standard: 16px;
-  --font-size-subtitle: 22px;
-  --font-size-title: 28px;
-  --font-size-big-title: 46px;
+//--------------------------------------------------//
+//           Dynamic Size Variables                 //
+//--------------------------------------------------//
+
+/// Apply CSS size variables extracted from the given Material theme.
+@mixin apply-size-variables($theme) {
+  // M3 typography values: https://material.angular.io/guide/material-3#reading-typescale-properties
+  @include define-vars((
+    "font-size-small": mat.get-theme-typography($theme, body-small, font-size),
+    "font-size-standard": mat.get-theme-typography($theme, body-large, font-size),
+    "font-weight-standard": mat.get-theme-typography($theme, body-large, font-weight),
+    "font-size-subtitle": mat.get-theme-typography($theme, title-medium, font-size),
+    "font-weight-subtitle": mat.get-theme-typography($theme, title-medium, font-weight),
+    "font-size-title": mat.get-theme-typography($theme, title-large, font-size),
+    "font-weight-title": mat.get-theme-typography($theme, title-large, font-weight),
+    "font-size-display-small": mat.get-theme-typography($theme, display-small, font-size),
+    "font-size-display-large": mat.get-theme-typography($theme, display-small, font-size),
+    "font-weight-display": mat.get-theme-typography($theme, display-large, font-weight),
+  ));
+
+  .is-phone-portrait {
+    @include define-vars((
+      "font-size-display-small": mat.get-theme-typography($theme, headline-medium, font-size),
+      "font-size-display-large": mat.get-theme-typography($theme, display-medium, font-size),
+    ));
+  }
 }

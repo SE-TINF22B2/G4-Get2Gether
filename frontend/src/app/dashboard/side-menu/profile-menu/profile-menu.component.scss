@@ -1,5 +1,6 @@
 .profile-container {
   padding: 0 var(--size-24);
+  padding-right: calc(var(--size-24) - 8px);
   display: flex;
   flex-direction: row;
   align-items: center;
