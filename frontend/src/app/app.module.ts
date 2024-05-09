@@ -45,6 +45,10 @@ import { EventSearchComponent } from './dashboard/side-menu/event-search/event-s
 import {FormsModule} from "@angular/forms";
 import { EventBannerComponent } from './eventpage/event-banner/event-banner.component';
 import { EventDescriptionComponent } from './eventpage/event-description/event-description.component';
+import { WidgetsSectionComponent } from './eventpage/widgets-section/widgets-section.component';
+import { WidgetContainerComponent } from './eventpage/widgets-section/widget-container/widget-container.component';
+import { WidgetLabelComponent } from './eventpage/widgets-section/widget-label/widget-label.component';
+import {ScrollingModule} from "@angular/cdk/scrolling";
 
 registerLocaleData(localeDe);
 
@@ -86,6 +90,9 @@ function loadMapApi(httpClient: HttpClient) {
     EventSearchComponent,
     EventDescriptionComponent,
     EventBannerComponent,
+    WidgetsSectionComponent,
+    WidgetContainerComponent,
+    WidgetLabelComponent,
   ],
   imports: [
     BrowserModule,
@@ -114,7 +121,8 @@ function loadMapApi(httpClient: HttpClient) {
     MatExpansionModule,
     MatMenuModule,
     MatRippleModule,
-    FormsModule
+    FormsModule,
+    ScrollingModule
   ],
   providers: [
     {

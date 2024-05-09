@@ -9,7 +9,8 @@ import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
   styleUrl: './event-banner.component.scss'
 })
 export class EventBannerComponent implements OnInit {
-  @Input() eventData: Event | undefined;
+  @Input()
+  eventData!: Event;
 
   isPhonePortrait = false;
 

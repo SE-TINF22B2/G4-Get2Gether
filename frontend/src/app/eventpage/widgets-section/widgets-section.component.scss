@@ -1,0 +1,14 @@
+.widgets-bar {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  gap: var(--size-12);
+  position: sticky;
+  top: 0;
+  background-color: var(--background-color);
+}
+
+app-widget-container {
+  scroll-margin-top: 50px;
+}

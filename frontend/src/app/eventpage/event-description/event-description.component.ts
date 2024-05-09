@@ -8,7 +8,8 @@ import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
   styleUrl: './event-description.component.scss'
 })
 export class EventDescriptionComponent implements OnInit {
-  @Input() eventData: Event | undefined;
+  @Input()
+  eventData!: Event;
 
   isPhonePortrait = false;
 

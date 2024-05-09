@@ -1,0 +1,17 @@
+<ul class="widgets-bar">
+  @for (widget of eventData.widgets; track widget.id) {
+    <li>
+      <app-widget-label
+        [widget]="widget"
+        [isSelected]="scrolledWidgetId === widget.id"
+        (onClick)="scrollToWidget(widget.id)"
+      ></app-widget-label>
+    </li>
+  }
+</ul>
+
+<div class="widgets">
+  @for (widget of eventData.widgets; track widget.id) {
+    <app-widget-container [widget]="widget" [id]="widget.id"></app-widget-container>
+  }
+</div>
