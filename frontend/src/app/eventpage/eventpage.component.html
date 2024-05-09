@@ -1,13 +1,9 @@
-<p>eventpage works!</p>
-
 <div *ngIf="eventData">
-  <!-- TODO: remove below, just for testing -->
-  <p>{{ eventData.name }}</p>
+  <app-event-banner [eventData]="eventData"></app-event-banner>
 
-  <!-- TODO: add new component here for event banner -->
+  <br>
 
-  <!-- TODO: add new component here for event description -->
+  <app-event-description [eventData]="eventData"></app-event-description>
 
   <!-- TODO: add new component here for widget section -->
 </div>
-

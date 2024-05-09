@@ -1,0 +1,13 @@
+mat-expansion-panel {
+  --mat-expansion-container-background-color: var(--background-primary-color);
+  --mat-expansion-container-text-color: var(--foreground-on-primary-color);
+  --mat-expansion-header-text-color: var(--foreground-on-primary-color);
+  --mat-expansion-header-indicator-color: var(--foreground-on-primary-color);
+  --mat-expansion-header-text-size: var(--font-size-subtitle);
+  --mat-expansion-header-text-line-height: calc(100% + 2px);
+}
+
+.description p {
+  margin: 0;
+  font-size: var(--font-size-standard);
+}

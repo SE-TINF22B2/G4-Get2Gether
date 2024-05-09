@@ -1,6 +1,7 @@
 @use '@angular/material' as mat;
 @use '@angular/material-experimental' as matx;
 @use "./variables/color" as color-vars;
+@use "./variables/size" as size-vars;
 
 @include mat.core();
 
@@ -14,6 +15,9 @@
       theme-type: $type,
       primary: $primary,
       tertiary: $tertiary
+    ),
+    typography: (
+      plain-family: (Mada, Roboto, sans-serif)
     )
   ));
 }
@@ -21,6 +25,7 @@
 @mixin apply-theme($theme, $is-base: false) {
   @if ($is-base) {
     @include mat.all-component-themes($theme);
+    @include size-vars.apply-size-variables($theme);
   } @else {
     // Only apply color styles without reapplying the same typography and density styles
     @include mat.all-component-colors($theme);
