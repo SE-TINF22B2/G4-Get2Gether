@@ -1,12 +1,11 @@
 import {
   Component,
-  ElementRef,
+  EventEmitter,
   Input,
   NgZone,
   OnDestroy,
-  OnInit,
+  OnInit, Output,
   QueryList,
-  ViewChild,
   ViewChildren
 } from '@angular/core';
 import {Event} from "../../../model/event";
@@ -25,14 +24,13 @@ export class WidgetsSectionComponent implements OnInit, OnDestroy {
   @Input()
   eventData!: Event;
 
+  @Output()
+  onWidgetUpdated = new EventEmitter<BaseWidget>();
+
   @ViewChildren(WidgetContainerComponent)
   widgetContainers!: QueryList<WidgetContainerComponent>;
 
-  @ViewChild("widgetBar")
-  widgetBar!: ElementRef<HTMLElement>;
-
-  scrolledWidgetId: string | undefined;
-
+  private scrolledWidgetId: string | undefined;
   private scrollSubscription!: Subscription;
 
   constructor(
@@ -58,15 +56,6 @@ export class WidgetsSectionComponent implements OnInit, OnDestroy {
     this.scrollSubscription.unsubscribe();
   }
 
-  onWidgetUpdated(widget: BaseWidget) {
-    const index = this.eventData.widgets.findIndex(w => w.id === widget.id);
-    if (index === -1) {
-      console.log("ERROR: Cannot update widget: Widget not found.", widget);
-      return;
-    }
-    this.eventData.widgets[index] = widget;
-  }
-
   scrollToWidget(widgetId: string) {
     const widgetContainer = this.widgetContainers.find(container => container.widget.id === widgetId);
 
@@ -75,9 +64,18 @@ export class WidgetsSectionComponent implements OnInit, OnDestroy {
     }
   }
 
+  get selectedWidgetId(): string | undefined {
+    if (this.scrolledWidgetId && this.eventData.widgets.some(w => w.id === this.scrolledWidgetId))
+      return this.scrolledWidgetId;
+    if (this.eventData.widgets.length > 0)
+      return this.eventData.widgets[0].id;
+    return undefined;
+  }
+
   private onScroll(data: CdkScrollable) {
     const scrollTop = data.measureScrollOffset("top");
-    const topOffset = this.widgetBar.nativeElement.getBoundingClientRect().bottom + 10;
+    // trigger when widget is scrolled to the first third of the page height
+    const topOffset = window.innerHeight / 3;
 
     let scrolledWidgetId: string | undefined;
 

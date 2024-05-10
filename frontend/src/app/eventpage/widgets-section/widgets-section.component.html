@@ -1,7 +1,7 @@
-<div class="widgets-bar" #widgetBar>
+<div class="widgets-bar" *ngIf="eventData.widgets.length > 0">
   <app-widgets-bar
     [widgets]="eventData.widgets"
-    [selected]="scrolledWidgetId"
+    [selected]="selectedWidgetId"
     (onClick)="scrollToWidget($event)"
   ></app-widgets-bar>
 
@@ -15,11 +15,17 @@
     <app-widget-container
       [widget]="widget"
       [eventData]="eventData"
-      (onWidgetUpdated)="onWidgetUpdated($event)"
+      (onWidgetUpdated)="onWidgetUpdated.emit($event)"
     ></app-widget-container>
     <br>
   } @empty {
-    <!--  TODO: add default widget component here and delete below element  -->
-    <p>Noch keine Widgets hinzugefügt</p>
+    <div class="no-widgets-container">
+      <img class="no-widgets-picture" width="300" height="250" ngSrc="./assets/noWidgets.svg" alt="">
+      <h4>Noch keine Widgets vorhanden</h4>
+      <button mat-stroked-button>
+        <mat-icon>widgets</mat-icon>
+        Widget hinzufügen
+      </button>
+    </div>
   }
 </div>

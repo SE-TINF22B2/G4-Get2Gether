@@ -24,3 +24,15 @@ app-widget-container {
     scroll-margin-top: calc(var(--mat-toolbar-mobile-height) + 50px);
   }
 }
+
+.no-widgets-container {
+  display: grid;
+  place-items: center;
+  text-align: center;
+  gap: 4px;
+  margin-top: var(--size-24);
+
+  .no-widgets-picture {
+    max-width: 100%;
+  }
+}
