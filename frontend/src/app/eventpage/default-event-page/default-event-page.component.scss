@@ -3,6 +3,7 @@
   display: grid;
   place-content: center;
   min-height: 100%;
+  gap: var(--size-12);
 }
 
 .no-event-picture-div {
@@ -13,9 +14,6 @@
 }
 
 .no-event-text-div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   text-align: center;
 }
 
