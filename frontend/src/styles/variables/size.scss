@@ -26,7 +26,7 @@
     "font-size-title": mat.get-theme-typography($theme, title-large, font-size),
     "font-weight-title": mat.get-theme-typography($theme, title-large, font-weight),
     "font-size-display-small": mat.get-theme-typography($theme, display-small, font-size),
-    "font-size-display-large": mat.get-theme-typography($theme, display-small, font-size),
+    "font-size-display-large": mat.get-theme-typography($theme, display-large, font-size),
     "font-weight-display": mat.get-theme-typography($theme, display-large, font-weight),
   ));
 
