@@ -1,0 +1,8 @@
+<h2 class="participants-title">Teilnehmer</h2>
+  @if (owner){
+    <app-participant-card [user]="owner" [isOwner]="true"></app-participant-card>
+  }
+
+@for (participant of allParticipantsExceptOwer(); track participant.id) {
+  <app-participant-card [user]="participant"></app-participant-card>
+}

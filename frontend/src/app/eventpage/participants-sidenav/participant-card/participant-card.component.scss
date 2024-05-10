@@ -1,0 +1,22 @@
+.profile-icon {
+  border-radius: var(--size-24);
+}
+
+.participant-container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  margin-bottom: 10px;
+}
+
+.participant-name{
+  margin-left: 10px;
+  font-size: var(--font-size-standard);
+  font-weight: 600;
+  line-height: 16px;
+}
+
+.owner-hint{
+  font-size: var(--font-size-small);
+}

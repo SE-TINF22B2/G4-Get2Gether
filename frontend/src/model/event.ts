@@ -13,6 +13,13 @@ export type Event = EventOverview & {
   location: string;
   invitationLink: string | undefined;
   creatorId: string;
-  participantIds: string[]; // TODO: may be replaced be array of simple user objects
+  participants: SimpleUser[];
   widgets: BaseWidget[];
+}
+
+export type SimpleUser = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  profilePictureUrl: string;
 }

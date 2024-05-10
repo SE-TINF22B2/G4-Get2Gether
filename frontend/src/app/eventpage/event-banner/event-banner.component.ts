@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Event} from "../../../model/event";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 
@@ -11,6 +11,9 @@ import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 export class EventBannerComponent implements OnInit {
   @Input()
   eventData!: Event;
+
+  @Output() showParticipantsClicked: EventEmitter<any> = new EventEmitter();
+
 
   isPhonePortrait = false;
 

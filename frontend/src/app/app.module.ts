@@ -50,6 +50,8 @@ import {WidgetContainerComponent} from './eventpage/widgets-section/widget-conta
 import {ScrollingModule} from "@angular/cdk/scrolling";
 import {WidgetsBarComponent} from './eventpage/widgets-section/widgets-bar/widgets-bar.component';
 import {MatTabsModule} from "@angular/material/tabs";
+import { ParticipantsSidenavComponent } from './eventpage/participants-sidenav/participants-sidenav.component';
+import { ParticipantCardComponent } from './eventpage/participants-sidenav/participant-card/participant-card.component';
 
 registerLocaleData(localeDe);
 
@@ -94,6 +96,8 @@ function loadMapApi(httpClient: HttpClient) {
     WidgetsSectionComponent,
     WidgetContainerComponent,
     WidgetsBarComponent,
+    ParticipantsSidenavComponent,
+    ParticipantCardComponent,
   ],
   imports: [
     BrowserModule,
