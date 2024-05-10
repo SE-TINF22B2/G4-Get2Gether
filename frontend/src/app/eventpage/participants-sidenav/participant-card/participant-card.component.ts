@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {SimpleUser} from "../../../../model/event";
+import {SimpleUser} from "../../../../model/user";
 
 @Component({
   selector: 'app-participant-card',

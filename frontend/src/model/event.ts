@@ -1,4 +1,5 @@
 import {BaseWidget} from "./common-widget";
+import {SimpleUser} from "./user";
 
 export type EventOverview = {
   id: string;
@@ -15,11 +16,4 @@ export type Event = EventOverview & {
   creatorId: string;
   participants: SimpleUser[];
   widgets: BaseWidget[];
-}
-
-export type SimpleUser = {
-  id: string;
-  firstName: string;
-  lastName: string;
-  profilePictureUrl: string;
 }
