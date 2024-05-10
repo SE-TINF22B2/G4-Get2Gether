@@ -1,10 +1,7 @@
 package com.dhbw.get2gether.backend.event.adapter.in;
 
 import com.dhbw.get2gether.backend.event.application.EventService;
-import com.dhbw.get2gether.backend.event.model.Event;
-import com.dhbw.get2gether.backend.event.model.EventCreateCommand;
-import com.dhbw.get2gether.backend.event.model.EventOverviewDto;
-import com.dhbw.get2gether.backend.event.model.EventUpdateCommand;
+import com.dhbw.get2gether.backend.event.model.*;
 import org.springframework.security.core.AuthenticatedPrincipal;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -39,9 +36,9 @@ public class EventController {
     }
 
     @GetMapping("/{eventId}")
-    public Event getSingleEvent(
+    public EventDetailDto getSingleEvent(
             @AuthenticationPrincipal AuthenticatedPrincipal principal, @PathVariable String eventId) {
-        return eventService.getSingleEvent(principal, eventId);
+        return eventService.getSingleEventDto(principal, eventId);
     }
 
     @GetMapping("/{eventId}/generateInvitationLink")
