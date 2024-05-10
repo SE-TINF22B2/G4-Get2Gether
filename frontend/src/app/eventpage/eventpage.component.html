@@ -1,6 +1,6 @@
 <div *ngIf="eventData">
   <mat-drawer-container class="example-container" autosize>
-    <mat-drawer-content>
+    <mat-drawer-content class="content">
       <app-event-banner (showParticipantsClicked)="drawer.toggle()" [eventData]="eventData"></app-event-banner>
       <br>
       <app-event-description [eventData]="eventData"></app-event-description>
