@@ -1,0 +1,20 @@
+.mat-dialog-container {
+  height: 100%;
+  width: 100%
+}
+
+.widget-div{
+  display: grid;
+  grid-template-columns: 200px 200px;
+  //grid-row: auto auto;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+}
+.widget-card{
+  border-radius: 12px;
+}
+.widget-card:hover{
+  background-color: var(--background-primary-color);
+}
+
+

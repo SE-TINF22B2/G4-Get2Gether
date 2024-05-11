@@ -1,0 +1,37 @@
+<h1 mat-dialog-title>Widget hinzufügen</h1>
+<mat-dialog-content>
+  <div class="widget-div">
+    <button mat-button class="widget-card" id="shopping-list-card" (click)="openShoppingListWidget()" disabled="true">
+      <mat-icon class="material-icons-outlined">
+        shopping_cart
+      </mat-icon>
+      <div class="widget-description">
+        <h3>Einkaufsliste</h3>
+        <p>Erstellt eure Einkaufsliste zusammen</p>
+      </div>
+    </button>
+    <button mat-button class="widget-card" id="expenses-card" (click)="openExpensesWidget()">
+      <mat-icon class="material-icons-outlined">
+        paid
+      </mat-icon>
+        <h3>Ausgaben</h3>
+        <p>Habt eure Ausgaben auf einem Blick</p>
+    </button>
+    <div class="widget-card" id="carpool-card" (click)="openCarpoolWidget()">
+      <mat-icon class="material-icons-outlined">
+        time_to_leave
+      </mat-icon>
+      <h3>Fahrgemeinschaft</h3>
+      <p>Plant eure Fahrgemeinschaften zusammen</p>
+    </div>
+    <div class="widget-card" id="map-card" (click)="openMapWidget()">
+      <mat-icon class="material-icons-outlined">location_on</mat-icon>
+      <h3>Karte</h3>
+      <p>Markiert eure Standorte auf der Karte</p>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-divider></mat-divider>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Abbrechen</button>
+</mat-dialog-actions>
