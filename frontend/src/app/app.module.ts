@@ -99,7 +99,7 @@ function loadMapApi(httpClient: HttpClient) {
     WidgetsBarComponent,
     ParticipantsSidenavComponent,
     ParticipantCardComponent,
-    AddWidgetComponent,
+    AddWidgetDialogComponent,
   ],
   imports: [
     BrowserModule,
