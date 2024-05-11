@@ -13,6 +13,8 @@ import {CdkScrollable, ScrollDispatcher} from "@angular/cdk/overlay";
 import {Subscription} from "rxjs";
 import {WidgetContainerComponent} from "./widget-container/widget-container.component";
 import {BaseWidget} from "../../../model/common-widget";
+import {AddWidgetDialogComponent} from "./add-widget-dialog/add-widget-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-widgets-section',
@@ -35,7 +37,8 @@ export class WidgetsSectionComponent implements OnInit, OnDestroy {
 
   constructor(
     private scroll: ScrollDispatcher,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    public dialog: MatDialog
   ) {
   }
 
@@ -99,4 +102,7 @@ export class WidgetsSectionComponent implements OnInit, OnDestroy {
     });
   }
 
+  openDialog() {
+    this.dialog.open(AddWidgetDialogComponent);
+  }
 }

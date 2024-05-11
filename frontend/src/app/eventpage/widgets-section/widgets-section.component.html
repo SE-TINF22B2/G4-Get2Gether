@@ -22,7 +22,7 @@
     <div class="no-widgets-container">
       <img class="no-widgets-picture" width="300" height="250" ngSrc="./assets/noWidgets.svg" alt="">
       <h4>Keine Widgets vorhanden</h4>
-      <button mat-stroked-button>
+      <button mat-stroked-button (click)="openDialog()">
         <mat-icon>widgets</mat-icon>
         Widget hinzufügen
       </button>
