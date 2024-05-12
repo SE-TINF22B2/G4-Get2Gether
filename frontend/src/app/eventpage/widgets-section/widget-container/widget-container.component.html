@@ -6,6 +6,12 @@
       (onWidgetUpdated)="onWidgetUpdated.emit($event)"
     ></app-maps-widget>
   }
+  @case (WidgetType.SHOPPING_LIST) {
+    <app-einkaufsliste-widget
+      [widget]="widget"
+      [eventId]="eventData.id"
+    ></app-einkaufsliste-widget>
+  }
 
   <!-- TODO: add other widget components here -->
 
