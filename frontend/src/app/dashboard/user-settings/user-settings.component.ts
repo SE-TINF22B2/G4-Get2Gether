@@ -7,8 +7,8 @@ import {MatDialogModule} from "@angular/material/dialog";
   styleUrl: './user-settings.component.scss'
 })
 export class UserSettingsComponent {
-  darkColors :string[] = ["dark", "dark-ry", "dark-bv"];
-  lightColors:string[]=["light", "light-gy", "light-bg"]
+  lightColors:string[]=["light", "water", "sunset", "grassland"]
+  darkColors :string[] = ["dark", "developer","autumn"];
 
 }
 

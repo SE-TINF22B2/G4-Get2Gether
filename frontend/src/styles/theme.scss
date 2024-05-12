@@ -41,32 +41,26 @@
 //--------------------------------------------------//
 
 $light-default: define-theme(light, matx.$m3-azure-palette, matx.$m3-violet-palette);
-$light-gy: define-theme(light, matx.$m3-green-palette, matx.$m3-yellow-palette);
-$light-bg: define-theme(light, matx.$m3-blue-palette, matx.$m3-green-palette);
+$water: define-theme(light, matx.$m3-blue-palette, matx.$m3-azure-palette);
+$grassland: define-theme(light, matx.$m3-green-palette, matx.$m3-yellow-palette);
+$sunset: define-theme(light, matx.$m3-orange-palette, matx.$m3-rose-palette);
 
 $dark-default: define-theme(dark, matx.$m3-azure-palette, matx.$m3-violet-palette);
-$dark-ry: define-theme(dark, matx.$m3-red-palette, matx.$m3-yellow-palette);
-$dark-bv: define-theme(dark, matx.$m3-blue-palette, matx.$m3-violet-palette);
-
-
-//$red-default: define-theme(red, matx.$m3-azure-palette, matx.$m3-violet-palette);
-//$yellow-default: define-theme(yellow, matx.$m3-azure-palette, matx.$m3-violet-palette);
-//$green-default: define-theme(green, matx.$m3-azure-palette, matx.$m3-violet-palette);
-//$blue-default: define-theme(blue, matx.$m3-azure-palette, matx.$m3-violet-palette);
-
+$developer: define-theme(dark, matx.$m3-chartreuse-palette, matx.$m3-green-palette);
+$autumn: define-theme(dark, matx.$m3-yellow-palette, matx.$m3-orange-palette);
 
 
 //define primary colors for the theme preview
 :root{
+  //light defaults
   --light-primary: #{mat.get-theme-color($light-default, primary)};
-  //--light-ä-primary: #{mat.get-theme-color($light-ä, primary)};
-  --light-gy-primary: #{mat.get-theme-color($light-gy, primary)};
-  --light-bg-primary: #{mat.get-theme-color($light-bg, primary)};
-
+  --water-primary: #{mat.get-theme-color($water, primary)};
+  --grassland-primary: #{mat.get-theme-color($grassland, primary)};
+  --sunset-primary: #{mat.get-theme-color($sunset, primary)};
+  //dark defaults
   --dark-primary: #{mat.get-theme-color($dark-default, primary)};
-  //--dark-ü-primary: #{mat.get-theme-color($dark-ü, primary)};
-  --dark-ry-primary: #{mat.get-theme-color($dark-ry, primary)};
-  --dark-bv-primary: #{mat.get-theme-color($dark-bv, primary)};
+  --developer-primary: #{mat.get-theme-color($developer , primary)};
+  --autumn-primary: #{mat.get-theme-color($autumn, primary)};
 
 }
 // apply default theme
@@ -75,6 +69,31 @@ html {
 }
 
 // apply other theme variants
+
+////////////////////////////////////////////////
+//light
+//////////////////////////////////////////////
+
+
+html[theme="water"] {
+   @include apply-theme($water);
+}
+html[theme="grassland"] {
+   @include apply-theme($grassland);
+}
+html[theme="sunset"] {
+   @include apply-theme($sunset);
+}
+
+////////////////////////////////////////////////
+//dark
+//////////////////////////////////////////////
 html[theme="dark"] {
   @include apply-theme($dark-default);
+}
+html[theme="developer"] {
+  @include apply-theme($developer);
+}
+html[theme="autumn"] {
+  @include apply-theme($autumn);
 }
