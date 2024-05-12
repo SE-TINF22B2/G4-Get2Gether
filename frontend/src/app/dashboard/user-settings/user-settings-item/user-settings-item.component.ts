@@ -1,9 +1,5 @@
-import {Component, Input, ViewChild} from '@angular/core';
-import {EventOverview} from "../../../../model/event";
-import {User} from "../../../../model/user";
-import {HttpClient} from "@angular/common/http";
-import {UserService} from "../../../../services/user.service";
-import {iconButton} from "material-components-web/index";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {ColorMode} from "../../../../model/user";
 
 @Component({
   selector: 'app-user-settings-item',
@@ -11,25 +7,14 @@ import {iconButton} from "material-components-web/index";
   styleUrl: './user-settings-item.component.scss'
 })
 export class UserSettingsItemComponent {
-  constructor(
-    public userService: UserService,
-    private http: HttpClient
-  ) {}
 
   @Input()
-  color!: string;
+  colorMode!: ColorMode;
 
-  //switch color on change
-  switchColor() {
-    document.documentElement.setAttribute("theme", this.color);
-    console.log("curr ColorMode: "+document.documentElement.getAttribute("theme"))
-    let colormode:string=this.color.replace("-","_").toUpperCase();
-    this.http.put("http://localhost:8080/user/self", {
-      "settings": {
-        "colorMode" : colormode
-      }
-    },{withCredentials: true}).subscribe(result =>{
-      console.log(result);
-    })
-  }
+  @Input()
+  isSelected = false;
+
+  @Output()
+  onSelect = new EventEmitter();
+
 }

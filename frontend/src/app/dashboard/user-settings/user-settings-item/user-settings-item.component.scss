@@ -1,6 +1,7 @@
-.settingscard {
+.settings-card {
   cursor: pointer;
   overflow: hidden;
+  --mdc-outlined-card-outline-color: transparent;
 
   &.selected {
     --mdc-outlined-card-outline-color: var(--primary-color);
@@ -19,24 +20,26 @@
   height: 100%;
   z-index: 0;
 }
-mat-card-content{
-  padding: 5% 0 5% 5%;
-}
-.cardcontent-container{
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-    grid-gap: 2%;
-    align-items: center;
-    //align-items: center;
-    //padding: 10% 0 10% 0;
-    .colorcard{
-      position: relative;
-      aspect-ratio: 1 / 1;
-      height: 70%;
-      padding: 0;
-      margin: 0;
 
-      border-radius: 12px;
-    }
+mat-card-content {
+  padding: 8px !important;
+}
+
+.cardcontent-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: var(--size-12);
+  align-items: center;
+  font-weight: var(--font-weight-subtitle);
+
+  .colorcard {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    height: 50px;
+    padding: 0;
+    margin: 0;
+    border-radius: 12px;
+  }
 }
 

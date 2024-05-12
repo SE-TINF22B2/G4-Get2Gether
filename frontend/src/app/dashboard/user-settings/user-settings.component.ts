@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import {MatDialogModule} from "@angular/material/dialog";
+import {Component} from '@angular/core';
+import {UserService} from "../../../services/user.service";
+import {ColorMode} from "../../../model/user";
 
 @Component({
   selector: 'app-user-settings',
@@ -7,9 +8,19 @@ import {MatDialogModule} from "@angular/material/dialog";
   styleUrl: './user-settings.component.scss'
 })
 export class UserSettingsComponent {
-  lightColors:string[]=["light", "water", "sunset", "grassland"]
-  darkColors :string[] = ["dark", "developer","autumn"];
+  lightColors = [ColorMode.LIGHT, ColorMode.WATER, ColorMode.SUNSET, ColorMode.GRASSLAND];
+  darkColors = [ColorMode.DARK, ColorMode.DEVELOPER, ColorMode.AUTUMN];
 
+  isLoading = false;
+
+  constructor(public userService: UserService) {
+  }
+
+  selectColorMode(colorMode: ColorMode) {
+    this.isLoading = true;
+    this.userService.applyThemeAttribute(colorMode);
+    this.userService.updateTheme(colorMode).subscribe(() => {
+      this.isLoading = false;
+    });
+  }
 }
-
-

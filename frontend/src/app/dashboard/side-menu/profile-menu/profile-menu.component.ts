@@ -23,11 +23,13 @@ export class ProfileMenuComponent {
     return [user.firstName, user.lastName].filter(x => x).join(" ");
   }
 
-  openDialog() {
+  openCreateEventDialog() {
     this.dialog.open(EventCreationComponent);
   }
 
   openUserSettings(){
-    this.dialog.open(UserSettingsComponent);
+    this.dialog.open(UserSettingsComponent, {
+      width: "600px"
+    });
   }
 }

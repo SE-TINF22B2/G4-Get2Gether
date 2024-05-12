@@ -7,6 +7,7 @@
       width="30"
       height="30"
       [ngSrc]="user.profilePictureUrl"
+      referrerpolicy="no-referrer"
       alt="Profilbild">
 
     <mat-menu #menu="matMenu">
@@ -33,7 +34,7 @@
     color="accent"
     matTooltip="Event erstellen"
     class="event-add-button"
-    (click)="openDialog()"
+    (click)="openCreateEventDialog()"
     [disabled]="user.guest"
   >
     <mat-icon>add</mat-icon>

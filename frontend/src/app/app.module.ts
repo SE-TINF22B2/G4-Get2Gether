@@ -43,8 +43,8 @@ import {EventpageComponent} from "./eventpage/eventpage.component";
 import {MatRippleModule} from "@angular/material/core";
 import {EventSearchComponent} from './dashboard/side-menu/event-search/event-search.component';
 import {FormsModule} from "@angular/forms";
-import { UserSettingsComponent } from './dashboard/user-settings/user-settings.component';
-import { UserSettingsItemComponent } from './dashboard/user-settings/user-settings-item/user-settings-item.component';
+import {UserSettingsComponent} from './dashboard/user-settings/user-settings.component';
+import {UserSettingsItemComponent} from './dashboard/user-settings/user-settings-item/user-settings-item.component';
 import {EventBannerComponent} from './eventpage/event-banner/event-banner.component';
 import {EventDescriptionComponent} from './eventpage/event-description/event-description.component';
 import {WidgetsSectionComponent} from './eventpage/widgets-section/widgets-section.component';
@@ -52,8 +52,8 @@ import {WidgetContainerComponent} from './eventpage/widgets-section/widget-conta
 import {ScrollingModule} from "@angular/cdk/scrolling";
 import {WidgetsBarComponent} from './eventpage/widgets-section/widgets-bar/widgets-bar.component';
 import {MatTabsModule} from "@angular/material/tabs";
-import { ParticipantsSidenavComponent } from './eventpage/participants-sidenav/participants-sidenav.component';
-import { ParticipantCardComponent } from './eventpage/participants-sidenav/participant-card/participant-card.component';
+import {ParticipantsSidenavComponent} from './eventpage/participants-sidenav/participants-sidenav.component';
+import {ParticipantCardComponent} from './eventpage/participants-sidenav/participant-card/participant-card.component';
 
 registerLocaleData(localeDe);
 

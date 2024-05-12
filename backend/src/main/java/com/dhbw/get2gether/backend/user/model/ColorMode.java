@@ -7,6 +7,5 @@ public enum ColorMode {
     GRASSLAND,
     SUNSET,
     DEVELOPER,
-    DARK_BV,
     AUTUMN
 }
