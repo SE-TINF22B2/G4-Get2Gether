@@ -1,0 +1,19 @@
+<div class="wrapper" #wrapper>
+  <mat-card
+    appearance="outlined"
+    (click)="onSelect.emit()"
+    (keyup.enter)="onSelect.emit()"
+    [class.selected]="isSelected"
+    tabindex="0"
+    class="settings-card"
+  >
+    <div class="ripple-container" mat-ripple [matRippleTrigger]="wrapper"></div>
+
+    <mat-card-content>
+      <div class="cardcontent-container">
+        <div class="colorcard" [style.background-color]="'var(--' + colorMode.toLowerCase() + '-primary-preview)'"></div>
+        {{ colorMode | titlecase }}
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
