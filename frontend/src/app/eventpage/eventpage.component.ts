@@ -3,6 +3,7 @@ import {EventService} from "../../services/event.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {Event} from "../../model/event";
+import {BaseWidget} from "../../model/common-widget";
 
 @Component({
   selector: 'app-eventpage',
@@ -35,6 +36,17 @@ export class EventpageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.routeSubscription.unsubscribe();
+  }
+
+  onWidgetUpdated(widget: BaseWidget) {
+    if (!this.eventData) return;
+
+    const index = this.eventData.widgets.findIndex(w => w.id === widget.id);
+    if (index === -1) {
+      console.log("ERROR: Cannot update widget: Widget not found.", widget);
+      return;
+    }
+    this.eventData.widgets[index] = widget;
   }
 
   private loadEventData(eventId: string) {

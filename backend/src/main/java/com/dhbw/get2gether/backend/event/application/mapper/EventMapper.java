@@ -1,9 +1,12 @@
 package com.dhbw.get2gether.backend.event.application.mapper;
 
 import com.dhbw.get2gether.backend.event.model.*;
+import com.dhbw.get2gether.backend.user.model.SimpleUserDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface EventMapper {
@@ -32,4 +35,6 @@ public interface EventMapper {
     @Mapping(target = "invitationLink", ignore = true)
     @Mapping(target = "participantIds", ignore = true)
     Event updateEvent(@MappingTarget Event event, EventWidgetUpdateCommand eventWidgetUpdateCommand);
+
+    EventDetailDto toEventDetailDto(Event event, List<SimpleUserDto> participants);
 }

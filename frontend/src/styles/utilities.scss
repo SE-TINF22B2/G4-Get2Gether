@@ -1,0 +1,11 @@
+/// Utility function for applying CSS variables from a given sass map.
+///
+/// @param {Map} $map
+///    Contains the variable names as keys with a color value.
+/// @param {String} $prefix
+///    The prefix for variable names, '--' by default.
+@mixin define-vars($map, $prefix: '--') {
+  @each $name, $value in $map {
+    #{$prefix + $name}: #{$value};
+  }
+}

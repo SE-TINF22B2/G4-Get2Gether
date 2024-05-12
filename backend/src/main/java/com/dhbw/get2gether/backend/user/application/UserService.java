@@ -12,6 +12,8 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -55,6 +57,15 @@ public class UserService {
         User oldUser = getUserByPrincipal(principal);
         User newUser = userMapper.mapSettingsCommandToUser(oldUser, updateUserCommand);
         return userRepository.save(newUser);
+    }
+
+    @PreAuthorize("hasRole('GUEST')")
+    public List<SimpleUserDto> getSimpleUsersById(List<String> userIds) {
+        List<SimpleUserDto> simpleUserDtos = new ArrayList<>();
+        for(String userId : userIds) {
+            userRepository.findById(userId).ifPresent(user -> simpleUserDtos.add(userMapper.mapToSimpleUserDto(user)));
+        }
+        return simpleUserDtos;
     }
 
     protected User createUser(CreateUserCommand command) {

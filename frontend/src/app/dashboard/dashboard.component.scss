@@ -14,6 +14,8 @@
 .toolbar {
   position: fixed;
   z-index: 2;
+  --mat-toolbar-standard-height: var(--mat-toolbar-mobile-height);
+  gap: 5px;
 }
 
 .sidenav-container {
@@ -26,4 +28,14 @@
 
 .is-mobile .sidenav-container {
   flex: 1 0 auto;
+}
+
+.is-mobile {
+  mat-sidenav-container, mat-sidenav-content {
+    overflow: clip; // fixes sticky positioning in mobile layout
+  }
+
+  &.wrapper {
+    overflow: auto;
+  }
 }

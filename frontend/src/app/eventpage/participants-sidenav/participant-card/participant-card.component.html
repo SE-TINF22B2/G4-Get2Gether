@@ -1,0 +1,16 @@
+<div class="participant-container">
+  <img
+    class="profile-icon"
+    width="35"
+    height="35"
+    [ngSrc]="user.profilePictureUrl"
+    alt="Profilbild">
+
+  <span class="participant-name">
+    {{ user.firstName }} {{ user.lastName }}
+    @if (isOwner) {
+      <br>
+      <span class="owner-hint">(Ersteller)</span>
+    }
+  </span>
+</div>

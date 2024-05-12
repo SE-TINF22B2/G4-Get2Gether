@@ -1,7 +1,7 @@
 @use '@angular/material' as mat;
 @use '@angular/material-experimental' as matx;
 @use "./variables/color" as color-vars;
-@use "@material/shape";
+@use "./variables/size" as size-vars;
 
 @include mat.core();
 
@@ -15,6 +15,9 @@
       theme-type: $type,
       primary: $primary,
       tertiary: $tertiary
+    ),
+    typography: (
+      plain-family: (Mada, Roboto, sans-serif)
     )
   ));
 }
@@ -22,6 +25,7 @@
 @mixin apply-theme($theme, $is-base: false) {
   @if ($is-base) {
     @include mat.all-component-themes($theme);
+    @include size-vars.apply-size-variables($theme);
   } @else {
     // Only apply color styles without reapplying the same typography and density styles
     @include mat.all-component-colors($theme);
@@ -69,29 +73,8 @@ $dark-bv: define-theme(dark, matx.$m3-blue-palette, matx.$m3-violet-palette);
 html {
   @include apply-theme($light-default, true);
 }
+
 // apply other theme variants
-
-////////////////////////////////////////////////
-//light
-//////////////////////////////////////////////
-
-
-html[theme="light-gy"] {
-   @include apply-theme($light-gy);
-}
-html[theme="light-bg"] {
-   @include apply-theme($light-bg);
-}
-
-////////////////////////////////////////////////
-//dark
-//////////////////////////////////////////////
 html[theme="dark"] {
-@include apply-theme($dark-default);
-}
-html[theme="dark-ry"] {
-  @include apply-theme($dark-ry);
-}
-html[theme="dark-bv"] {
-  @include apply-theme($dark-bv);
+  @include apply-theme($dark-default);
 }

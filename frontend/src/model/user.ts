@@ -7,3 +7,10 @@ export type User = {
   profilePictureUrl: string
   guest: true | undefined
 }
+
+export type SimpleUser = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  profilePictureUrl: string;
+}

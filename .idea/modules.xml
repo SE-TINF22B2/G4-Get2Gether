@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/G4-Get2Gether.iml" filepath="$PROJECT_DIR$/.idea/G4-Get2Gether.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/G4-Get2Gether.backend.main.iml" filepath="$PROJECT_DIR$/.idea/modules/G4-Get2Gether.backend.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/backend.main.iml" filepath="$PROJECT_DIR$/.idea/modules/backend.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.dhbw.get2gether.backend.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.dhbw.get2gether.backend.main.iml" />
     </modules>
   </component>
 </project>

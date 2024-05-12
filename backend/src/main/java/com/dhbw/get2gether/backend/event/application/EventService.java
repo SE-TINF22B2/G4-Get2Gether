@@ -78,6 +78,12 @@ public class EventService {
         return getEventIfUserIsParticipant(principal, eventId);
     }
 
+    @PreAuthorize("hasRole('GUEST')")
+    public EventDetailDto getSingleEventDto(AuthenticatedPrincipal principal, String eventId) {
+        Event event = getSingleEvent(principal, eventId);
+        return eventMapper.toEventDetailDto(event, userService.getSimpleUsersById(event.getParticipantIds()));
+    }
+
     @PreAuthorize("hasRole('USER')")
     public void deleteEventById(AuthenticatedPrincipal principal, String eventId) {
         Event event = getEventIfUserIsParticipant(principal, eventId);

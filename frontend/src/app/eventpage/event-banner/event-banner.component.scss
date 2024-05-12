@@ -1,0 +1,64 @@
+.card-header {
+  display: flex;
+  justify-content: space-between;
+
+  .event-name {
+    margin-top: 48px;
+  }
+}
+
+.is-phone-portrait .event-name {
+  margin-top: 24px;
+}
+
+mat-card {
+  --mat-card-title-text-size: var(--font-size-display-small);
+  background-color: var(--background-primary-color);
+  color: var(--foreground-on-primary-color);
+}
+
+mat-card-actions {
+  flex-wrap: wrap;
+}
+
+.details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--size-12);
+  padding-right: 24px;
+  font-size: var(--font-size-standard);
+  margin-top: 16px;
+  margin-bottom: var(--size-12);
+
+  p {
+    margin: 0;
+  }
+
+  mat-icon {
+    flex-shrink: 0;
+  }
+}
+
+.details-div {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+
+.datetime-container {
+  display: flex;
+  flex-direction: row;
+  gap: var(--size-12);
+  align-items: center;
+
+  .date-separator {
+    margin: 0 4px;
+  }
+
+  .end-date {
+    white-space: nowrap;
+  }
+}

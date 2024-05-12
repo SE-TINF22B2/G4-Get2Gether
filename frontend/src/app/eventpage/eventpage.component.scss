@@ -1,0 +1,25 @@
+.container {
+  min-height: 100%;
+  display: grid;
+}
+
+.participants-sidenav {
+  padding: 0 20px 20px 20px;
+  position: fixed;
+}
+
+::ng-deep .is-mobile .participants-sidenav {
+  top: var(--mat-toolbar-mobile-height);
+}
+
+.mat-drawer {
+  width: 250px;
+}
+
+.content {
+  padding: 16px;
+}
+
+mat-drawer-container, mat-drawer-content {
+  overflow: clip; // fixes sticky positioning in mobile layout
+}

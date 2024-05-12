@@ -1,0 +1,38 @@
+.widgets-bar {
+  position: sticky;
+  z-index: 5;
+  top: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--size-12);
+  list-style: none;
+  background-color: var(--background-color);
+  padding-top: 5px;
+}
+
+app-widget-container {
+  scroll-margin-top: 50px;
+}
+
+::ng-deep .is-mobile {
+  .widgets-bar {
+    top: var(--mat-toolbar-mobile-height);
+  }
+
+  app-widget-container {
+    scroll-margin-top: calc(var(--mat-toolbar-mobile-height) + 50px);
+  }
+}
+
+.no-widgets-container {
+  display: grid;
+  place-items: center;
+  text-align: center;
+  gap: 4px;
+  margin-top: var(--size-24);
+
+  .no-widgets-picture {
+    max-width: 100%;
+  }
+}

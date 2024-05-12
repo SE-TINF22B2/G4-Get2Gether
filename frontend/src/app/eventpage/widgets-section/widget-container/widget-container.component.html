@@ -1,0 +1,17 @@
+@switch (widget.widgetType) {
+  @case (WidgetType.MAP) {
+    <app-maps-widget
+      [widget]="widget"
+      [eventId]="eventData.id"
+      (onWidgetUpdated)="onWidgetUpdated.emit($event)"
+    ></app-maps-widget>
+  }
+
+  <!-- TODO: add other widget components here -->
+
+  @default {
+    <div style="height: 600px; background: lightgray; color: red;">
+      <h4>Unbekanntes Widget: {{ widget.widgetType }}</h4>
+    </div>
+  }
+}
