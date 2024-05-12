@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {BaseWidget} from "../../../model/common-widget";
-import {MapWidget} from "../../../model/map-widget";
+import {Entry, EntryAddCommand, ShoppingWidget} from "../../../model/shoppinglist-widget";
 
 @Component({
   selector: 'app-einkaufsliste-widget',
@@ -11,7 +11,10 @@ export class EinkaufslisteWidgetComponent {
   @Input()
   eventId!: string;
 
-  @Input({transform: (value: BaseWidget): MapWidget => value as MapWidget})
-  widget!: MapWidget;
+  @Input({transform: (value: BaseWidget): ShoppingWidget => value as ShoppingWidget})
+  widget!: ShoppingWidget;
 
+  addAuftrag(addCommand:EntryAddCommand){
+    return null;
+  }
 }

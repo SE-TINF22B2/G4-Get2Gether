@@ -1,6 +1,8 @@
-import {Component, NgZone} from '@angular/core';
+import {Component, ElementRef, input, NgZone, ViewChild} from '@angular/core';
 import {MatDialogRef} from "@angular/material/dialog";
 import {LocationAddCommand} from "../../../../model/map-widget";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {EntryAddCommand} from "../../../../model/shoppinglist-widget";
 
 
 @Component({
@@ -9,10 +11,26 @@ import {LocationAddCommand} from "../../../../model/map-widget";
   styleUrl: './add-auftrag-dialog.component.scss'
 })
 export class AddAuftragDialogComponent {
-  constructor(private dialogRef: MatDialogRef<AddAuftragDialogComponent>) {
+  private description:string|undefined;
+  private amount:string|undefined;
+  constructor(private dialogRef: MatDialogRef<AddAuftragDialogComponent>, private _snackbar:MatSnackBar) {
   }
 
   closeDialog() {
-    this.dialogRef.close();
+    const addCommand: EntryAddCommand = {
+      description: "successfullyadded",
+      amount: "3"
+    };
+
+    this.dialogRef.close(addCommand);
+    this.showMessage("snack")
+
   }
+  showMessage(messageToshow:string, snackBarClass:string="successfull"){
+    this._snackbar.open(messageToshow, 'close!',{
+      duration: 5000,
+      panelClass:snackBarClass
+    })
+  }
+
 }
