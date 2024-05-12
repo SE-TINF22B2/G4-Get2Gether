@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DefaultPageComponent } from './default-page.component';
+import { DefaultShoppingPageComponent } from './default-shopping-page.component';
 
 describe('DefaultPageComponent', () => {
-  let component: DefaultPageComponent;
-  let fixture: ComponentFixture<DefaultPageComponent>;
+  let component: DefaultShoppingPageComponent;
+  let fixture: ComponentFixture<DefaultShoppingPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DefaultPageComponent]
+      declarations: [DefaultShoppingPageComponent]
     })
     .compileComponents();
-    
-    fixture = TestBed.createComponent(DefaultPageComponent);
+
+    fixture = TestBed.createComponent(DefaultShoppingPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

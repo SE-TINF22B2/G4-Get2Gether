@@ -53,7 +53,7 @@ import {MatTabsModule} from "@angular/material/tabs";
 import { ParticipantsSidenavComponent } from './eventpage/participants-sidenav/participants-sidenav.component';
 import { ParticipantCardComponent } from './eventpage/participants-sidenav/participant-card/participant-card.component';
 import { EinkaufslisteWidgetComponent } from './widgets/einkaufsliste-widget/einkaufsliste-widget.component';
-import { DefaultPageComponent } from './widgets/einkaufsliste-widget/default-shopping-page/default-page.component';
+import { DefaultShoppingPageComponent } from './widgets/einkaufsliste-widget/default-shopping-page/default-shopping-page.component';
 import { AddAuftragDialogComponent } from './widgets/einkaufsliste-widget/add-auftrag-dialog/add-auftrag-dialog.component';
 
 registerLocaleData(localeDe);
@@ -102,7 +102,7 @@ function loadMapApi(httpClient: HttpClient) {
     ParticipantsSidenavComponent,
     ParticipantCardComponent,
     EinkaufslisteWidgetComponent,
-    DefaultPageComponent,
+    DefaultShoppingPageComponent,
     AddAuftragDialogComponent,
   ],
   imports: [

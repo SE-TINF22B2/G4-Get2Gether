@@ -6,11 +6,11 @@ import {EinkaufslisteWidgetComponent} from "../einkaufsliste-widget.component";
 import {EntryAddCommand} from "../../../../model/shoppinglist-widget";
 
 @Component({
-  selector: 'app-default-page',
-  templateUrl: './default-page.component.html',
-  styleUrl: './default-page.component.scss'
+  selector: 'app-default-shopping-page',
+  templateUrl: './default-shopping-page.component.html',
+  styleUrl: './default-shopping-page.component.scss'
 })
-export class DefaultPageComponent {
+export class DefaultShoppingPageComponent {
   constructor(private dialog: MatDialog, private root:EinkaufslisteWidgetComponent) {
   }
   openAddShoppingDialog() {
