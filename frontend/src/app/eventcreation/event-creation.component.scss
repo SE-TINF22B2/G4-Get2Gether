@@ -1,0 +1,30 @@
+h1 {
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-title);
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+p {
+  font-size: var(--font-size-subtitle);
+  font-weight: var(--font-weight-subtitle);
+}
+
+.create-event-container {
+  display: grid;
+  grid: auto / 1fr 2fr;
+  gap: 12px;
+}
+
+.create-event-address-input {
+  display: flex;
+  flex-direction: column;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 12px;
+}

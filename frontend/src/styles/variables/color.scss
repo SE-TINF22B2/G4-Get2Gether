@@ -27,10 +27,10 @@
     "shadow-color": mat.get-theme-color($theme, shadow),
     "background-color": mat.get-theme-color($theme, surface),
     "background-dim-color": mat.get-theme-color($theme, surface-dim),
-    "background-primary-color": mat.get-theme-color($theme, primary-container),
+    "background-primary-color": mat.get-theme-color($theme, secondary-container),
     "foreground-color": mat.get-theme-color($theme, on-surface),
     "foreground-dim-color": mat.get-theme-color($theme, on-surface-variant),
-    "foreground-on-primary-color": mat.get-theme-color($theme, on-primary-container),
+    "foreground-on-primary-color": mat.get-theme-color($theme, on-secondary-container),
     "border-color": mat.get-theme-color($theme, outline),
     "border-dim-color": mat.get-theme-color($theme, outline-variant),
   ));

@@ -40,9 +40,11 @@ import {MatCardModule} from "@angular/material/card";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {EventCreationComponent} from './eventcreation/event-creation.component';
 import {EventpageComponent} from "./eventpage/eventpage.component";
-import {MatRippleModule} from "@angular/material/core";
+import {MatNativeDateModule, MatRippleModule, NativeDateAdapter, DateAdapter} from "@angular/material/core";
 import {EventSearchComponent} from './dashboard/side-menu/event-search/event-search.component';
-import {FormsModule} from "@angular/forms";
+import {UserSettingsComponent} from './dashboard/user-settings/user-settings.component';
+import {UserSettingsItemComponent} from './dashboard/user-settings/user-settings-item/user-settings-item.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {EventBannerComponent} from './eventpage/event-banner/event-banner.component';
 import {EventDescriptionComponent} from './eventpage/event-description/event-description.component';
 import {WidgetsSectionComponent} from './eventpage/widgets-section/widgets-section.component';
@@ -52,7 +54,6 @@ import {WidgetsBarComponent} from './eventpage/widgets-section/widgets-bar/widge
 import {MatTabsModule} from "@angular/material/tabs";
 import { ParticipantsSidenavComponent } from './eventpage/participants-sidenav/participants-sidenav.component';
 import { ParticipantCardComponent } from './eventpage/participants-sidenav/participant-card/participant-card.component';
-import { AddWidgetComponent } from './eventpage/widgets-section/add-widget/add-widget.component';
 
 registerLocaleData(localeDe);
 
@@ -92,6 +93,8 @@ function loadMapApi(httpClient: HttpClient) {
     EventListItemComponent,
     EventCreationComponent,
     EventSearchComponent,
+    UserSettingsComponent,
+    UserSettingsItemComponent,
     EventDescriptionComponent,
     EventBannerComponent,
     WidgetsSectionComponent,
@@ -153,7 +156,11 @@ function loadMapApi(httpClient: HttpClient) {
       useValue: {
         fontSet: "material-icons-round"
       }
-    }
+    },
+    {
+      provide: DateAdapter,
+      useClass: NativeDateAdapter
+    },
   ],
   bootstrap: [AppComponent]
 })
