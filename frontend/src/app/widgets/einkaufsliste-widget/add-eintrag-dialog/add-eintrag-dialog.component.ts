@@ -7,6 +7,9 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {EinkaufslisteWidgetService} from "../../../../services/widgets/einkaufsliste-widget.service";
 import {Router} from "@angular/router";
+import {UserService} from "../../../../services/user.service";
+import {User} from "../../../../model/user";
+import {ReplaySubject} from "rxjs";
 
 
 @Component({
@@ -15,10 +18,11 @@ import {Router} from "@angular/router";
   styleUrl: './add-eintrag-dialog.component.scss'
 })
 export class AddEintragDialogComponent implements OnInit{
-  private form!: FormGroup;
+  form!: FormGroup;
   @Input() eventId!: string;
   @Input() widgetId!: string;
   constructor(
+    public userService: UserService,
     private fb: FormBuilder,
     private service: EinkaufslisteWidgetService,
     private router: Router,
@@ -32,6 +36,9 @@ export class AddEintragDialogComponent implements OnInit{
       amount: [null]
     });
   }
+  getUsername(user:User): string {
+    return [user.firstName, user.lastName].filter(x => x).join(" ");
+  }
 
   closeDialog() {
     if(this.form.valid) {
@@ -41,20 +48,16 @@ export class AddEintragDialogComponent implements OnInit{
           /*this.router.navigate()
           response.entrys;
           this.dialogRef.close(response.entrys);*/
-
+          this.showMessage("Eintrag angelegt")
+          this.dialogRef.close();
         },
         error: error => {
           console.error('Error:', error);
+          this.showMessage("Fehler beim Anlegen", "error")
         }
       });
     }
-    /*const addCommand: EntryAddCommand = {
-      description: "successfullyadded",
-      amount: "3"
-    };*/
-
-    this.showMessage("snack")
-
+    //was passiert, wenn keine Eingabe
   }
   showMessage(messageToshow:string, snackBarClass:string="successfull"){
     this._snackbar.open(messageToshow, 'close!',{
@@ -62,5 +65,4 @@ export class AddEintragDialogComponent implements OnInit{
       panelClass:snackBarClass
     })
   }
-
 }

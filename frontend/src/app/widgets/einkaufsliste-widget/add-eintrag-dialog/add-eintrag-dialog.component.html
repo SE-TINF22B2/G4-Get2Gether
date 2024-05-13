@@ -1,31 +1,41 @@
-<h2 mat-dialog-title>Einkaufsauftrag hinzufügen</h2>
+<div *ngIf="userService.user | async; let user" class="profile-container">
+  <h2 mat-dialog-title>Einkaufsauftrag hinzufügen</h2>
 
-<mat-dialog-content>
-  <form [formGroup]="form">
-    <mat-form-field>
-      <mat-label>Beschreibung</mat-label>
-      <input matInput formControlName="description">
-    </mat-form-field>
+  <mat-dialog-content>
+    <form [formGroup]="form" class="create-eintrag-container">
+      <p>Beschreibung<sup>*</sup></p>
+      <mat-form-field>
+        <mat-label>Beschreibung</mat-label>
+        <input matInput formControlName="description">
+      </mat-form-field>
+      <p>Ersteller</p>
+      <mat-form-field>
+        <mat-label>Ersteller</mat-label>
+        <div><img
+          width="30"
+          height="30"
+          class="profile-icon"
+          [ngSrc]="user.profilePictureUrl"
+          alt="Profilbild">
+          {{getUsername(user)}}
+        </div>
+      </mat-form-field>
+      <p>Menge</p>
+      <mat-form-field >
+        <mat-label>Menge</mat-label>
+        <input matInput formControlName="amount"/>
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
 
-
-    <mat-form-field >
-    <mat-label #description>Auftrag</mat-label>
-    <input matInput/>
-    <mat-label>Ersteller</mat-label>
-    <input matInput/>
-    <mat-label #amount>Menge</mat-label>
-    <input matInput/>
-  </mat-form-field>
-  </form>
-</mat-dialog-content>
-
-<mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Abbrechen</button>
-  <button
-    mat-flat-button
-    color="primary"
-    (click)="closeDialog()"
-  >
-    Hinzufügen
-  </button>
-</mat-dialog-actions>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Abbrechen</button>
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="closeDialog()"
+    >
+      Hinzufügen
+    </button>
+  </mat-dialog-actions>
+</div>
