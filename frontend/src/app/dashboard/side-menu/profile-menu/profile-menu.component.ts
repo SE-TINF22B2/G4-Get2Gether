@@ -23,7 +23,7 @@ export class ProfileMenuComponent {
     return [user.firstName, user.lastName].filter(x => x).join(" ");
   }
 
-  openDialog() {
+  openCreateEventDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.panelClass = 'create-event-component';
     this.dialog.open(EventCreationComponent, dialogConfig);

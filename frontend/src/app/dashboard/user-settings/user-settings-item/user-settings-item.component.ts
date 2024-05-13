@@ -17,4 +17,23 @@ export class UserSettingsItemComponent {
   @Output()
   onSelect = new EventEmitter();
 
+  get themeName(): string {
+    switch (this.colorMode) {
+      case ColorMode.LIGHT:
+        return "Hell";
+      case ColorMode.DARK:
+        return "Dunkel";
+      case ColorMode.WATER:
+        return "Wasser";
+      case ColorMode.GRASSLAND:
+        return "Weide";
+      case ColorMode.SUNSET:
+        return "Sonnenuntergang";
+      case ColorMode.DEVELOPER:
+        return "Entwickler";
+      case ColorMode.AUTUMN:
+        return "Herbst";
+    }
+  }
+
 }
