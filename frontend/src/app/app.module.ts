@@ -56,7 +56,7 @@ import { ParticipantsSidenavComponent } from './eventpage/participants-sidenav/p
 import { ParticipantCardComponent } from './eventpage/participants-sidenav/participant-card/participant-card.component';
 import { EinkaufslisteWidgetComponent } from './widgets/einkaufsliste-widget/einkaufsliste-widget.component';
 import { DefaultShoppingPageComponent } from './widgets/einkaufsliste-widget/default-shopping-page/default-shopping-page.component';
-import { AddAuftragDialogComponent } from './widgets/einkaufsliste-widget/add-auftrag-dialog/add-auftrag-dialog.component';
+import { AddEintragDialogComponent } from './widgets/einkaufsliste-widget/add-eintrag-dialog/add-eintrag-dialog.component';
 import {
   MatDatepicker, MatDatepickerActions, MatDatepickerApply, MatDatepickerCancel,
   MatDatepickerToggle,
@@ -114,7 +114,7 @@ function loadMapApi(httpClient: HttpClient) {
     ParticipantCardComponent,
     EinkaufslisteWidgetComponent,
     DefaultShoppingPageComponent,
-    AddAuftragDialogComponent,
+    AddEintragDialogComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,7 @@
 import {BaseWidget} from "./common-widget";
 
 export type ShoppingWidget = BaseWidget & {
-  entrys: Entry[];
+  entries: Entry[];
 }
 
 export type Entry = {

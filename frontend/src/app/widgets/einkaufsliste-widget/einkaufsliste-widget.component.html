@@ -1,1 +1,18 @@
-<p>einkaufsliste-widget works!</p>
+
+<div *ngIf="entries > 0; else elseBlock">
+  <mat-card>
+    <button
+
+      (click)="addEintrag()">
+      <mat-icon>add</mat-icon>
+      <span>Eintrag erstellen</span>
+    </button>
+  </mat-card>
+</div>
+
+<ng-template #elseBlock>
+  <app-default-shopping-page [widget]="widget" [eventId]="eventId"></app-default-shopping-page>
+</ng-template>
+
+
+
