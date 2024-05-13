@@ -40,9 +40,11 @@ import {MatCardModule} from "@angular/material/card";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {EventCreationComponent} from './eventcreation/event-creation.component';
 import {EventpageComponent} from "./eventpage/eventpage.component";
-import {MatRippleModule} from "@angular/material/core";
+import {MatNativeDateModule, MatRippleModule, NativeDateAdapter, DateAdapter} from "@angular/material/core";
 import {EventSearchComponent} from './dashboard/side-menu/event-search/event-search.component';
-import {FormsModule} from "@angular/forms";
+import {UserSettingsComponent} from './dashboard/user-settings/user-settings.component';
+import {UserSettingsItemComponent} from './dashboard/user-settings/user-settings-item/user-settings-item.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {EventBannerComponent} from './eventpage/event-banner/event-banner.component';
 import {EventDescriptionComponent} from './eventpage/event-description/event-description.component';
 import {WidgetsSectionComponent} from './eventpage/widgets-section/widgets-section.component';
@@ -55,6 +57,13 @@ import { ParticipantCardComponent } from './eventpage/participants-sidenav/parti
 import { EinkaufslisteWidgetComponent } from './widgets/einkaufsliste-widget/einkaufsliste-widget.component';
 import { DefaultShoppingPageComponent } from './widgets/einkaufsliste-widget/default-shopping-page/default-shopping-page.component';
 import { AddAuftragDialogComponent } from './widgets/einkaufsliste-widget/add-auftrag-dialog/add-auftrag-dialog.component';
+import {
+  MatDatepicker, MatDatepickerActions, MatDatepickerApply, MatDatepickerCancel,
+  MatDatepickerToggle,
+  MatDateRangeInput, MatDateRangePicker,
+  MatEndDate,
+  MatStartDate
+} from "@angular/material/datepicker";
 
 registerLocaleData(localeDe);
 
@@ -94,6 +103,8 @@ function loadMapApi(httpClient: HttpClient) {
     EventListItemComponent,
     EventCreationComponent,
     EventSearchComponent,
+    UserSettingsComponent,
+    UserSettingsItemComponent,
     EventDescriptionComponent,
     EventBannerComponent,
     WidgetsSectionComponent,
@@ -134,7 +145,18 @@ function loadMapApi(httpClient: HttpClient) {
     MatRippleModule,
     FormsModule,
     ScrollingModule,
-    MatTabsModule
+    MatTabsModule,
+    MatDatepicker,
+    MatEndDate,
+    MatStartDate,
+    MatDateRangeInput,
+    MatDatepickerToggle,
+    MatDateRangePicker,
+    MatDatepickerActions,
+    MatDatepickerCancel,
+    MatDatepickerApply,
+    ReactiveFormsModule,
+    MatNativeDateModule
   ],
   providers: [
     {
@@ -157,7 +179,11 @@ function loadMapApi(httpClient: HttpClient) {
       useValue: {
         fontSet: "material-icons-round"
       }
-    }
+    },
+    {
+      provide: DateAdapter,
+      useClass: NativeDateAdapter
+    },
   ],
   bootstrap: [AppComponent]
 })

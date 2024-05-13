@@ -1,8 +1,9 @@
 import {Component} from '@angular/core';
 import {UserService} from "../../../../services/user.service";
 import {User} from "../../../../model/user";
-import {MatDialog} from "@angular/material/dialog";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {EventCreationComponent} from "../../../eventcreation/event-creation.component";
+import {UserSettingsComponent} from "../../user-settings/user-settings.component";
 
 @Component({
   selector: 'app-profile-menu',
@@ -23,6 +24,14 @@ export class ProfileMenuComponent {
   }
 
   openDialog() {
-    this.dialog.open(EventCreationComponent);
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.panelClass = 'create-event-component';
+    this.dialog.open(EventCreationComponent, dialogConfig);
+  }
+
+  openUserSettings(){
+    this.dialog.open(UserSettingsComponent, {
+      width: "600px"
+    });
   }
 }
