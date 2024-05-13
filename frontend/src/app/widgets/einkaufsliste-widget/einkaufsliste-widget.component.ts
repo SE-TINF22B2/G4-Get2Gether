@@ -1,6 +1,8 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {BaseWidget} from "../../../model/common-widget";
 import {Entry, EntryAddCommand, ShoppingWidget} from "../../../model/shoppinglist-widget";
+import {AddEintragDialogComponent} from "./add-eintrag-dialog/add-eintrag-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-einkaufsliste-widget',

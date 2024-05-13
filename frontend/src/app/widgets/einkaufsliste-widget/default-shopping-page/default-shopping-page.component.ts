@@ -20,14 +20,11 @@ export class DefaultShoppingPageComponent {
   constructor(private dialog: MatDialog, private root:EinkaufslisteWidgetComponent) {
   }
   openAddShoppingDialog() {
-    const dialogRef = this.dialog.open(AddAuftragDialogComponent, {width: "400px"});
-    dialogRef.afterClosed().subscribe(addCommand => {
-      if (addCommand) {
-        this.addAuftrag(addCommand);
+    const dialogRef = this.dialog.open(AddEintragDialogComponent, {width: "400px"});
+    dialogRef.afterClosed().subscribe(entries => {
+      if (entries) {
+        //load entries
       }
     });
-  }
-  addAuftrag(addCommand:EntryAddCommand){
-    this.root.addAuftrag(addCommand);
   }
 }
