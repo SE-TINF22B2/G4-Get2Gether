@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {UserService} from "../../../../services/user.service";
 import {User} from "../../../../model/user";
-import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {MatDialog} from "@angular/material/dialog";
 import {EventCreationComponent} from "../../../eventcreation/event-creation.component";
 import {UserSettingsComponent} from "../../user-settings/user-settings.component";
 import {environment} from "../../../../environment/environment";
@@ -35,7 +35,6 @@ export class ProfileMenuComponent {
   }
 
   logout() {
-    console.log(environment.api);
     window.open(environment.api+'/logout','_self');
   }
 }
