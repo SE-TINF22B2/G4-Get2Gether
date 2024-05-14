@@ -24,9 +24,7 @@ export class ProfileMenuComponent {
   }
 
   openCreateEventDialog() {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.panelClass = 'create-event-component';
-    this.dialog.open(EventCreationComponent, dialogConfig);
+    this.dialog.open(EventCreationComponent, {maxWidth: "800px"});
   }
 
   openUserSettings(){

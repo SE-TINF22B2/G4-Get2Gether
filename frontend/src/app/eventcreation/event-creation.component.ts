@@ -45,25 +45,36 @@ export class EventCreationComponent implements OnInit{
   }
 
   updateAddress() {
-    const street = this.form.get('street')?.value;
-    const plz = this.form.get('plz')?.value;
-    const city = this.form.get('stadt')?.value;
-    const fullAddress = `${street} ${plz} ${city}`;
+    const street = this.form.get('street')?.value || '';
+    const plz = this.form.get('plz')?.value || '';
+    const city = this.form.get('stadt')?.value || '';
 
+    if (!street && !plz && !city) {
+      return;
+    }
+
+    const fullAddress = `${street} ${plz} ${city}`;
     this.form.patchValue({
       location: fullAddress
     });
   }
 
   updateStartDate() {
-    const date: Date = this.form.get('date')?.value;
+    const dateValue = this.form.get('date')?.value;
     const time = this.form.get('time')?.value;
-    const [hours, minutes] = time.split(":");
-    date.setUTCHours(parseInt(hours, 10), parseInt(minutes, 10), 0, 0);
+
+    if (dateValue !== null && time !== null) {
+      const date: Date = new Date(dateValue);
+      const [hours, minutes] = time.split(":");
+      date.setHours(parseInt(hours, 10), parseInt(minutes, 10), 0, 0);
+      this.form.patchValue({
+        date: date
+      });
+    }
 
     this.form.patchValue({
-      date: date
-    })
+      date: dateValue
+    });
   }
 
 }

@@ -12,6 +12,10 @@ p {
   font-weight: var(--font-weight-subtitle);
 }
 
+.cdk-overlay-container {
+  padding: 25px;
+}
+
 .create-event-container {
   display: grid;
   grid: auto / 1fr 2fr;
