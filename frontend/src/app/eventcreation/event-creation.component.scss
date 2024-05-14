@@ -12,11 +12,22 @@ p {
   font-weight: var(--font-weight-subtitle);
 }
 
+.cdk-overlay-container {
+  padding: 25px;
+}
+
 .create-event-container {
   display: grid;
   grid: auto / 1fr 2fr;
   gap: 12px;
 }
+ @media (max-width: 600px) {
+   .create-event-container {
+     display: flex;
+     flex-direction: column;
+   }
+ }
+
 
 .create-event-address-input {
   display: flex;

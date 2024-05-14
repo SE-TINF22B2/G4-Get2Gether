@@ -17,3 +17,11 @@ export type Event = EventOverview & {
   participants: SimpleUser[];
   widgets: BaseWidget[];
 }
+
+export type CreateEventCommand = {
+  name: string;
+  description: string | undefined;
+  location: string | undefined;
+  date: string | undefined;
+  endDate: string | undefined;
+}
