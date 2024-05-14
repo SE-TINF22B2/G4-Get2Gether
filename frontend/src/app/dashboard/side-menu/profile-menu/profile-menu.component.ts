@@ -4,6 +4,7 @@ import {User} from "../../../../model/user";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {EventCreationComponent} from "../../../eventcreation/event-creation.component";
 import {UserSettingsComponent} from "../../user-settings/user-settings.component";
+import {environment} from "../../../../environment/environment";
 
 @Component({
   selector: 'app-profile-menu',
@@ -33,5 +34,10 @@ export class ProfileMenuComponent {
     this.dialog.open(UserSettingsComponent, {
       width: "600px"
     });
+  }
+
+  logout() {
+    console.log(environment.api);
+    window.open(environment.api+'/logout','_self');
   }
 }
