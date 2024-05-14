@@ -15,7 +15,7 @@ export class EinkaufslisteWidgetService {
   constructor(private http: HttpClient) {
   }
 
-  addEntry(eventId: string, widgetId: string, formData: FormGroup): Observable<ShoppingWidget> {
-    return this.http.post<ShoppingWidget>(`${environment.api}/event/${eventId}/widgets/shopping-list/${widgetId}/entries`, formData, {withCredentials: true});
+  addEntry(eventId: string, widgetId: string, entryAddCommand: EntryAddCommand): Observable<ShoppingWidget> {
+    return this.http.post<ShoppingWidget>(`${environment.api}/event/${eventId}/widgets/shopping-list/${widgetId}/entries`, entryAddCommand, {withCredentials: true});
   }
 }

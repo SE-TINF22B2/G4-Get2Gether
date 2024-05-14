@@ -1,16 +1,12 @@
-import {Component, ElementRef, Input, input, NgZone, OnInit, ViewChild} from '@angular/core';
-import {MatDialogRef} from "@angular/material/dialog";
-import {LocationAddCommand} from "../../../../model/map-widget";
+import {Component, Inject, OnInit} from '@angular/core';
+import {MatDialogRef, MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {EntryAddCommand} from "../../../../model/shoppinglist-widget";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {HttpClient} from "@angular/common/http";
 import {EinkaufslisteWidgetService} from "../../../../services/widgets/einkaufsliste-widget.service";
 import {Router} from "@angular/router";
 import {UserService} from "../../../../services/user.service";
 import {User} from "../../../../model/user";
-import {ReplaySubject} from "rxjs";
-
 
 @Component({
   selector: 'app-add-eintrag-dialog',
@@ -19,15 +15,17 @@ import {ReplaySubject} from "rxjs";
 })
 export class AddEintragDialogComponent implements OnInit{
   form!: FormGroup;
-  @Input() eventId!: string;
-  @Input() widgetId!: string;
+  eventId: string;
+  widgetId: string;
   constructor(
     public userService: UserService,
     private fb: FormBuilder,
     private service: EinkaufslisteWidgetService,
-    private router: Router,
     private dialogRef: MatDialogRef<AddEintragDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: {eventId: string, widgetId: string},
     private _snackbar:MatSnackBar) {
+      this.eventId = data.eventId
+      this.widgetId = data.widgetId
   }
 
   ngOnInit(): void {
@@ -35,6 +33,7 @@ export class AddEintragDialogComponent implements OnInit{
       description: ['', Validators.required],
       amount: [null]
     });
+
   }
   getUsername(user:User): string {
     return [user.firstName, user.lastName].filter(x => x).join(" ");
@@ -42,12 +41,12 @@ export class AddEintragDialogComponent implements OnInit{
 
   closeDialog() {
     if(this.form.valid) {
-      this.service.addEntry(this.eventId, this.widgetId, this.form).subscribe({
+      const entryAddCommand: EntryAddCommand = {
+        description: this.form.get('descrption')?.value,
+        amount: this.form.get('amount')?.value || "",
+      }
+      this.service.addEntry(this.eventId, this.widgetId, entryAddCommand).subscribe({
         next: response => {
-          //TODO: Routing zurück zur Widgetübersicht der Einkaufsliste + Snackbar anzeigen
-          /*this.router.navigate()
-          response.entrys;
-          this.dialogRef.close(response.entrys);*/
           this.showMessage("Eintrag angelegt")
           this.dialogRef.close();
         },
@@ -57,10 +56,11 @@ export class AddEintragDialogComponent implements OnInit{
         }
       });
     }
+    this.showMessage("Bitte gib eine Beschreibung an", "error")
     //was passiert, wenn keine Eingabe
   }
   showMessage(messageToshow:string, snackBarClass:string="successfull"){
-    this._snackbar.open(messageToshow, 'close!',{
+    this._snackbar.open(messageToshow, 'schließen',{
       duration: 5000,
       panelClass:snackBarClass
     })

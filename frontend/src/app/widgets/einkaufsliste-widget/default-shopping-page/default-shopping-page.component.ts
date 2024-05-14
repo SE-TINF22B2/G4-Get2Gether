@@ -20,7 +20,8 @@ export class DefaultShoppingPageComponent {
   constructor(private dialog: MatDialog, private root:EinkaufslisteWidgetComponent) {
   }
   openAddShoppingDialog() {
-    const dialogRef = this.dialog.open(AddEintragDialogComponent, {width: "400px"});
+    const dialogRef = this.dialog.open(AddEintragDialogComponent, {data: { eventId: this.eventId, widgetId: this.widget.id },
+      width: "400px"});
     dialogRef.afterClosed().subscribe(entries => {
       if (entries) {
         //load entries
