@@ -70,6 +70,7 @@ export class EventCreationComponent implements OnInit{
       this.form.patchValue({
         date: date
       });
+      return;
     }
 
     this.form.patchValue({
