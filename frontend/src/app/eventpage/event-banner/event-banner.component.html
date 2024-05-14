@@ -28,15 +28,13 @@
         <mat-icon inline>edit_calendar</mat-icon>
         <p class="datetime">
           <span class="datetime-span">
-            {{ eventData.date | date:"dd.MM.yy" }},
-            {{ eventData.date | date:"hh:mm 'Uhr'" }}
+            {{ eventData.date | date: "short" }}
           </span>
           @if (eventData.endDate) {
-            <span class="date-separator">-</span>
-            <span class="end-date">
-              {{ eventData.endDate | date:"dd.MM.yy" }},
-              {{ eventData.endDate | date:"hh:mm 'Uhr'" }}
-            </span>
+          <span class="date-separator">-</span>
+          <span class="end-date">
+          {{ eventData.endDate | date: "short" }}
+          </span>
           }
         </p>
       </div>
