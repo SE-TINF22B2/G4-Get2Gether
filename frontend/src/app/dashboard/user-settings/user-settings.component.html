@@ -8,35 +8,30 @@
   <p>Wähle ein Farbschema aus</p>
 
   @if (userService.user | async; as user) {
-    <h4 class="section-title">Day Theme</h4>
+    <h4 class="section-title">Helle Themen</h4>
     <ul class="color-list">
       @for (color of lightColors; track color) {
         <li>
           <app-user-settings-item
             [colorMode]="color"
-            [isSelected]="user.settings.colorMode === color"
+            [isSelected]="user.settings && user.settings.colorMode === color"
             (onSelect)="selectColorMode(color)"
           ></app-user-settings-item>
         </li>
       }
     </ul>
 
-    <h4 class="section-title">Night Theme</h4>
+    <h4 class="section-title">Dunkle Themen</h4>
     <ul class="color-list">
       @for (color of darkColors; track color) {
         <li>
           <app-user-settings-item
             [colorMode]="color"
-            [isSelected]="user.settings.colorMode === color"
+            [isSelected]="user.settings && user.settings.colorMode === color"
             (onSelect)="selectColorMode(color)"
           ></app-user-settings-item>
         </li>
       }
     </ul>
-  } @else {
-    <div class="loading-container">
-      <mat-spinner></mat-spinner>
-      <p>Profil wird geladen...</p>
-    </div>
   }
 </mat-dialog-content>

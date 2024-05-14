@@ -2,8 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {environment} from "../environment/environment";
-import {EventOverview, Event} from "../model/event";
-import {FormGroup} from "@angular/forms";
+import {EventOverview, Event, CreateEventCommand} from "../model/event";
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +20,8 @@ export class EventService {
     return this.http.get<Event>(`${environment.api}/event/${id}`, {withCredentials: true});
   }
 
-  createEvent(formData: FormGroup):Observable<Event> {
-    return this.http.post<any>(`${environment.api}/event/`, formData.value, {withCredentials: true});
+  createEvent(eventData: CreateEventCommand):Observable<Event> {
+    return this.http.post<any>(`${environment.api}/event/`, eventData, {withCredentials: true});
   }
 
 }

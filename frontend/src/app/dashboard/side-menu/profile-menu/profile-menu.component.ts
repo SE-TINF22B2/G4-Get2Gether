@@ -1,9 +1,10 @@
 import {Component} from '@angular/core';
 import {UserService} from "../../../../services/user.service";
 import {User} from "../../../../model/user";
-import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {MatDialog} from "@angular/material/dialog";
 import {EventCreationComponent} from "../../../eventcreation/event-creation.component";
 import {UserSettingsComponent} from "../../user-settings/user-settings.component";
+import {environment} from "../../../../environment/environment";
 
 @Component({
   selector: 'app-profile-menu',
@@ -23,15 +24,17 @@ export class ProfileMenuComponent {
     return [user.firstName, user.lastName].filter(x => x).join(" ");
   }
 
-  openDialog() {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.panelClass = 'create-event-component';
-    this.dialog.open(EventCreationComponent, dialogConfig);
+  openCreateEventDialog() {
+    this.dialog.open(EventCreationComponent, {maxWidth: "800px"});
   }
 
   openUserSettings(){
     this.dialog.open(UserSettingsComponent, {
       width: "600px"
     });
+  }
+
+  logout() {
+    window.open(environment.api+'/logout','_self');
   }
 }

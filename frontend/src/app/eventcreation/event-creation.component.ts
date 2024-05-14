@@ -33,7 +33,14 @@ export class EventCreationComponent implements OnInit{
     if (this.form.valid) {
       this.updateAddress();
       this.updateStartDate();
-      this.service.createEvent(this.form).subscribe({
+      this.updateEndDate();
+      this.service.createEvent({
+        name: this.form.value.name,
+        date: this.form.value.date,
+        endDate: this.form.value.endDate,
+        location: this.form.value.location,
+        description: this.form.value.description
+      }).subscribe({
         next: response => {
           this.router.navigate(['/dashboard', response.id]);
         },
@@ -45,25 +52,49 @@ export class EventCreationComponent implements OnInit{
   }
 
   updateAddress() {
-    const street = this.form.get('street')?.value;
-    const plz = this.form.get('plz')?.value;
-    const city = this.form.get('stadt')?.value;
-    const fullAddress = `${street} ${plz} ${city}`;
+    const street = this.form.get('street')?.value || '';
+    const plz = this.form.get('plz')?.value || '';
+    const city = this.form.get('stadt')?.value || '';
 
+    if (!street && !plz && !city) {
+      return;
+    }
+
+    const fullAddress = `${street} ${plz} ${city}`;
     this.form.patchValue({
       location: fullAddress
     });
   }
 
-  updateStartDate() {
-    const date: Date = this.form.get('date')?.value;
+  private updateStartDate() {
+    const dateValue = this.form.get('date')?.value;
     const time = this.form.get('time')?.value;
-    const [hours, minutes] = time.split(":");
-    date.setUTCHours(parseInt(hours, 10), parseInt(minutes, 10), 0, 0);
+    if (dateValue) {
+      let date = new Date();
+      date.setUTCDate(new Date(dateValue).getDate());
+      if(time) {
+        const [hours, minutes] = time.split(":");
+        date.setUTCHours(parseInt(hours, 10), parseInt(minutes, 10), 0, 0);
+      } else {
+        date.setUTCHours(0,0, 0, 0);
+      }
+      console.log(date)
+      this.form.patchValue({
+        date: date
+      });
+    }
+  }
 
-    this.form.patchValue({
-      date: date
-    })
+  private updateEndDate() {
+    const dateValue = this.form.get('endDate')?.value;
+    if(dateValue) {
+      let date = new Date();
+      date.setUTCDate(new Date(dateValue).getDate());
+      date.setUTCHours(23,59, 0, 0);
+      this.form.patchValue({
+        endDate: date
+      });
+    }
   }
 
 }
