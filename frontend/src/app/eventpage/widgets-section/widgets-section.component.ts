@@ -103,6 +103,9 @@ export class WidgetsSectionComponent implements OnInit, OnDestroy {
   }
 
   openDialog() {
-    this.dialog.open(AddWidgetDialogComponent);
+    this.dialog.open(AddWidgetDialogComponent, {
+      data: { eventData: this.eventData},
+      width: '800px'
+    });
   }
 }

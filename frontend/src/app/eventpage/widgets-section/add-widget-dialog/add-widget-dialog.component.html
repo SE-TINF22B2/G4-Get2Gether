@@ -1,7 +1,7 @@
-<h1 mat-dialog-title>Widget hinzufügen</h1>
+<h1 mat-dialog-title xmlns:disabled="http://www.w3.org/1999/xhtml" class="mat-dialog-title">Widget hinzufügen</h1>
 <mat-dialog-content>
   <div class="widget-div">
-    <button mat-button class="widget-card" id="shopping-list-card" (click)="openShoppingListWidget()" disabled="true">
+    <button mat-button class="widget-card" id="shopping-list-card" (click)="openShoppingListWidget()" [disabled]="isShoppingListPresent">
       <mat-icon class="material-icons-outlined">
         shopping_cart
       </mat-icon>
@@ -10,25 +10,27 @@
         <p>Erstellt eure Einkaufsliste zusammen</p>
       </div>
     </button>
-    <button mat-button class="widget-card" id="expenses-card" (click)="openExpensesWidget()">
+    <button mat-button class="widget-card" id="expenses-list-card" (click)="openExpensesWidget()" [disabled]="isExpensesListPresent">
       <mat-icon class="material-icons-outlined">
         paid
       </mat-icon>
         <h3>Ausgaben</h3>
         <p>Habt eure Ausgaben auf einem Blick</p>
     </button>
-    <div class="widget-card" id="carpool-card" (click)="openCarpoolWidget()">
+    <button mat-button class="widget-card" id="carpool-card" (click)="openCarpoolWidget()" [disabled]="isCarpoolPresent">
       <mat-icon class="material-icons-outlined">
         time_to_leave
       </mat-icon>
+      <div>
       <h3>Fahrgemeinschaft</h3>
       <p>Plant eure Fahrgemeinschaften zusammen</p>
-    </div>
-    <div class="widget-card" id="map-card" (click)="openMapWidget()">
+      </div>
+    </button>
+    <button mat-button class="widget-card" id="map-card" (click)="openMapWidget()" [disabled]="isMAPPresent">
       <mat-icon class="material-icons-outlined">location_on</mat-icon>
       <h3>Karte</h3>
       <p>Markiert eure Standorte auf der Karte</p>
-    </div>
+    </button>
   </div>
 </mat-dialog-content>
 <mat-divider></mat-divider>

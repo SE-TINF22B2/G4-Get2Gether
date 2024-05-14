@@ -54,6 +54,15 @@ import {WidgetsBarComponent} from './eventpage/widgets-section/widgets-bar/widge
 import {MatTabsModule} from "@angular/material/tabs";
 import { ParticipantsSidenavComponent } from './eventpage/participants-sidenav/participants-sidenav.component';
 import { ParticipantCardComponent } from './eventpage/participants-sidenav/participant-card/participant-card.component';
+import {RouterOutlet} from "@angular/router";
+import {
+  MatDatepicker, MatDatepickerActions, MatDatepickerApply, MatDatepickerCancel,
+  MatDatepickerToggle,
+  MatDateRangeInput, MatDateRangePicker,
+  MatEndDate,
+  MatStartDate
+} from "@angular/material/datepicker";
+import {AddWidgetDialogComponent} from "./eventpage/widgets-section/add-widget-dialog/add-widget-dialog.component";
 
 registerLocaleData(localeDe);
 
@@ -102,7 +111,7 @@ function loadMapApi(httpClient: HttpClient) {
     WidgetsBarComponent,
     ParticipantsSidenavComponent,
     ParticipantCardComponent,
-    AddWidgetDialogComponent,
+    AddWidgetDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -133,7 +142,19 @@ function loadMapApi(httpClient: HttpClient) {
     MatRippleModule,
     FormsModule,
     ScrollingModule,
-    MatTabsModule
+    MatTabsModule,
+    RouterOutlet,
+    MatDatepicker,
+    MatEndDate,
+    MatStartDate,
+    MatDateRangeInput,
+    MatDatepickerToggle,
+    MatDateRangePicker,
+    MatDatepickerActions,
+    MatDatepickerCancel,
+    MatDatepickerApply,
+    ReactiveFormsModule,
+    MatNativeDateModule
   ],
   providers: [
     {
