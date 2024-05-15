@@ -8,7 +8,7 @@
         <mat-label>Beschreibung</mat-label>
         <input matInput formControlName="description">
       </mat-form-field>
-      <p>Ersteller</p>
+      <!--<p>Ersteller</p>
        <div class="user">
          <img
           width="30"
@@ -18,7 +18,7 @@
           alt="Profilbild"
          >
          <p class="username">{{getUsername(user)}}</p>
-       </div>
+       </div>-->
       <p>Menge</p>
       <mat-form-field >
         <mat-label>Menge</mat-label>
@@ -27,6 +27,8 @@
     </form>
   </mat-dialog-content>
 
+  <mat-divider></mat-divider>
+
   <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Abbrechen</button>
     <button
@@ -34,7 +36,7 @@
       color="primary"
       (click)="closeDialog()"
     >
-      Hinzufügen
+      Speichern
     </button>
   </mat-dialog-actions>
 </div>

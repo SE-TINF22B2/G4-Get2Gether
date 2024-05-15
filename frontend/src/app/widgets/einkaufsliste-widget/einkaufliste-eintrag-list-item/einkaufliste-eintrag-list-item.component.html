@@ -2,16 +2,18 @@
   <mat-card-content>
     <span>{{item.description}}</span>
     <span>{{item.amount}}</span>
-    <span>
-    <mat-icon>person</mat-icon>
-      {{item.buyerId}}
-    </span>
+      @if(item.buyerId) {
+        <span>
+        <mat-icon>person</mat-icon>
+        {{item.buyerId}}
+        </span>
+      }
     <button mat-icon-button [matMenuTriggerFor]="menu">
       <mat-icon class="icon-color">more_vert</mat-icon>
     </button>
 
     <mat-menu #menu="matMenu">
-      <button mat-menu-item>
+      <button mat-menu-item (click)="editEntryDialog()">
         <mat-icon>edit</mat-icon>
         Bearbeiten
       </button>

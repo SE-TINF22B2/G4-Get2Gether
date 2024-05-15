@@ -14,17 +14,12 @@ import {User} from "../../../../model/user";
 })
 export class AddEintragDialogComponent implements OnInit{
   form!: FormGroup;
-  eventId: string;
-  widgetId: string;
+
   constructor(
     public userService: UserService,
     private fb: FormBuilder,
-    private service: EinkaufslisteWidgetService,
     private dialogRef: MatDialogRef<AddEintragDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {eventId: string, widgetId: string},
-    private _snackbar:MatSnackBar) {
-      this.eventId = data.eventId
-      this.widgetId = data.widgetId
+  ) {
   }
 
   ngOnInit(): void {
@@ -34,34 +29,17 @@ export class AddEintragDialogComponent implements OnInit{
     });
 
   }
-  getUsername(user:User): string {
+/*  getUsername(user:User): string {
     return [user.firstName, user.lastName].filter(x => x).join(" ");
-  }
+  }*/
 
   closeDialog() {
     if(this.form.valid) {
-      const entryAddCommand: EntryAddCommand = {
-        description: this.form.get('descrption')?.value,
-        amount: this.form.get('amount')?.value || "",
+      const addCommand: EntryAddCommand = {
+        description: this.form.value.description,
+        amount: this.form.value.amount
       }
-      this.service.addEntry(this.eventId, this.widgetId, entryAddCommand).subscribe({
-        next: response => {
-          this.showMessage("Eintrag angelegt")
-          this.dialogRef.close();
-        },
-        error: error => {
-          console.error('Error:', error);
-          this.showMessage("Fehler beim Anlegen", "error")
-        }
-      });
+      this.dialogRef.close(addCommand);
     }
-    this.showMessage("Bitte gib eine Beschreibung an", "error")
-    //was passiert, wenn keine Eingabe
-  }
-  showMessage(messageToshow:string, snackBarClass:string="successfull"){
-    this._snackbar.open(messageToshow, 'schließen',{
-      duration: 5000,
-      panelClass:snackBarClass
-    })
   }
 }

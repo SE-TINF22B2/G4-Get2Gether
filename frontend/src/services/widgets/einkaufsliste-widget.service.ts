@@ -19,4 +19,9 @@ export class EinkaufslisteWidgetService {
   editEntry(eventId: string, widgetId: string, entry: Entry) {
     return this.http.post<ShoppingWidget>(`${environment.api}/event/${eventId}/widgets/shopping-list/${widgetId}/entries/${entry.id}`, entry, {withCredentials: true});
   }
+
+  setBuyerId(eventId: string, widgetId: string, entry: Entry, value: boolean) {
+    return this.http.put<ShoppingWidget>(`${environment.api}/event/${eventId}/widgets/shopping-list/${widgetId}/entries/${entry.id}`, {checked: value}, {withCredentials: true});
+
+  }
 }

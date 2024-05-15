@@ -12,6 +12,10 @@ p {
   font-weight: var(--font-weight-subtitle);
 }
 
+mat-divider {
+  margin: 0 var(--size-24);
+}
+
 .cdk-overlay-container {
   padding: 25px;
 }
