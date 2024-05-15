@@ -1,20 +1,17 @@
 package com.dhbw.get2gether.backend.widget.model.expensesplit;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 
 @Getter
-@Setter
-@Builder(toBuilder = true)
+@Builder
 @AllArgsConstructor
-public class ExpenseEntry {
-    private String id;
-    private String creatorId;
+public class ExpenseEntryUpdateCommand {
     private String description;
     private double price;
-    private List<UserWithPercentage> involvedUsers;
+    private List<String> involvedUsers;
 }

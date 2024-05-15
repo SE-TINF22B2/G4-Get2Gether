@@ -11,10 +11,10 @@ import java.util.List;
 @Setter
 @Builder(toBuilder = true)
 @AllArgsConstructor
-public class ExpenseEntry {
+public class ExpenseEntryDto {
     private String id;
     private String creatorId;
     private String description;
     private double price;
-    private List<UserWithPercentage> involvedUsers;
+    private List<UserWithPercentageDto> involvedUsers;
 }

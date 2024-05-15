@@ -2,7 +2,6 @@ package com.dhbw.get2gether.backend.widget.model.expensesplit;
 
 import com.dhbw.get2gether.backend.widget.model.Widget;
 import com.dhbw.get2gether.backend.widget.model.WidgetType;
-import com.dhbw.get2gether.backend.widget.model.shoppinglist.Entry;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,6 +30,15 @@ public class ExpenseSplitWidget extends Widget {
 
     public boolean removeEntry(ExpenseEntry entry) {
         return entries.remove(entry);
+    }
+
+    public boolean replaceEntry(ExpenseEntry oldEntry, ExpenseEntry newEntry) {
+        int index = entries.indexOf(oldEntry);
+        if (index == -1) {
+            return false;
+        }
+        entries.set(index, newEntry);
+        return true;
     }
 }
 
