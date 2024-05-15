@@ -65,6 +65,7 @@ import {
   MatStartDate
 } from "@angular/material/datepicker";
 import { EditEintragDialogComponent } from './widgets/einkaufsliste-widget/edit-eintrag-dialog/edit-eintrag-dialog.component';
+import { EinkauflisteEintragListItemComponent } from './widgets/einkaufsliste-widget/einkaufliste-eintrag-list-item/einkaufliste-eintrag-list-item.component';
 
 registerLocaleData(localeDe);
 
@@ -117,6 +118,7 @@ function loadMapApi(httpClient: HttpClient) {
     DefaultShoppingPageComponent,
     AddEintragDialogComponent,
     EditEintragDialogComponent,
+    EinkauflisteEintragListItemComponent,
   ],
   imports: [
     BrowserModule,

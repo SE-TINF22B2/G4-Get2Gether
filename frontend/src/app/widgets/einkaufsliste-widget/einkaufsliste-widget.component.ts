@@ -42,4 +42,9 @@ export class EinkaufslisteWidgetComponent {
   get entries(): number {
     return this.widget.entries.length;
   }
+
+  get eintraege() {
+    console.log(this.widget.entries);
+    return this.widget.entries;
+  }
 }
