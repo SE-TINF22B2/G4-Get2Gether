@@ -2,12 +2,19 @@
 <div *ngIf="entries > 0; else elseBlock">
   <mat-card>
     <button
-
+      mat-button
       (click)="addEintrag()">
       <mat-icon>add</mat-icon>
       <span>Eintrag erstellen</span>
     </button>
   </mat-card>
+  <ul class="einkaufliste-eintrag-liste">
+    @for (item of eintraege; track $index) {
+    <li>
+      <app-einkaufliste-eintrag-list-item [item]="item"></app-einkaufliste-eintrag-list-item>
+    </li>
+    }
+  </ul>
 </div>
 
 <ng-template #elseBlock>

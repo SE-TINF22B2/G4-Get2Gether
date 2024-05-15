@@ -1,0 +1,24 @@
+<mat-card class="eintrag-card">
+  <mat-card-content>
+    <span>{{item.description}}</span>
+    <span>{{item.amount}}</span>
+    <span>
+    <mat-icon>person</mat-icon>
+      {{item.buyerId}}
+    </span>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon class="icon-color">more_vert</mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>edit</mat-icon>
+        Bearbeiten
+      </button>
+      <button mat-menu-item>
+        <mat-icon>delete</mat-icon>
+        Löschen
+      </button>
+    </mat-menu>
+  </mat-card-content>
+</mat-card>
