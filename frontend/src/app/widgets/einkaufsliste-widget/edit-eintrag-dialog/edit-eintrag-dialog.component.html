@@ -9,7 +9,7 @@
         <input matInput formControlName="description">
       </mat-form-field>
       <p>Ersteller</p>
-      <div>
+      <div class="user">
         <img
           width="30"
           height="30"
@@ -17,7 +17,7 @@
           [ngSrc]="user.profilePictureUrl"
           alt="Profilbild"
         >
-        {{getUsername(user)}}
+        <p class="username">{{getUsername(user)}}</p>
       </div>
       <p>Menge</p>
       <mat-form-field >
