@@ -1,36 +1,38 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MatDialogRef, MAT_DIALOG_DATA} from "@angular/material/dialog";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {EntryAddCommand} from "../../../../model/shoppinglist-widget";
+import {Component, Inject} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {EinkaufslisteWidgetService} from "../../../../services/widgets/einkaufsliste-widget.service";
 import {UserService} from "../../../../services/user.service";
+import {EinkaufslisteWidgetService} from "../../../../services/widgets/einkaufsliste-widget.service";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {MatSnackBar} from "@angular/material/snack-bar";
 import {User} from "../../../../model/user";
+import {Entry} from "../../../../model/shoppinglist-widget";
 
 @Component({
-  selector: 'app-add-eintrag-dialog',
-  templateUrl: './add-eintrag-dialog.component.html',
-  styleUrl: './add-eintrag-dialog.component.scss'
+  selector: 'app-edit-eintrag-dialog',
+  templateUrl: './edit-eintrag-dialog.component.html',
+  styleUrl: './edit-eintrag-dialog.component.scss'
 })
-export class AddEintragDialogComponent implements OnInit{
+export class EditEintragDialogComponent {
   form!: FormGroup;
   eventId: string;
   widgetId: string;
+  entry: Entry;
   constructor(
     public userService: UserService,
     private fb: FormBuilder,
     private service: EinkaufslisteWidgetService,
-    private dialogRef: MatDialogRef<AddEintragDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {eventId: string, widgetId: string},
+    private dialogRef: MatDialogRef<EditEintragDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: {eventId: string, widgetId: string, entry:Entry},
     private _snackbar:MatSnackBar) {
-      this.eventId = data.eventId
-      this.widgetId = data.widgetId
+    this.eventId = data.eventId
+    this.widgetId = data.widgetId
+    this.entry = data.entry
   }
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      description: ['', Validators.required],
-      amount: [null]
+      description: [this.entry.description, Validators.required],
+      amount: [this.entry.amount]
     });
 
   }
@@ -40,11 +42,9 @@ export class AddEintragDialogComponent implements OnInit{
 
   closeDialog() {
     if(this.form.valid) {
-      const entryAddCommand: EntryAddCommand = {
-        description: this.form.get('descrption')?.value,
-        amount: this.form.get('amount')?.value || "",
-      }
-      this.service.addEntry(this.eventId, this.widgetId, entryAddCommand).subscribe({
+      this.entry.description = this.form.get('description')?.value
+      this.entry.amount = this.form.get('amount')?.value
+      this.service.editEntry(this.eventId, this.widgetId, this.entry).subscribe({
         next: response => {
           this.showMessage("Eintrag angelegt")
           this.dialogRef.close();
