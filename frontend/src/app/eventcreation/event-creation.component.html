@@ -1,12 +1,15 @@
 <h1 mat-dialog-title>Event erstellen</h1>
+
 <mat-dialog-content>
   <form [formGroup]="form">
     <div class="create-event-container">
+
       <p>Titel<sup>*</sup></p>
       <mat-form-field>
         <mat-label>Titel des Events</mat-label>
         <input matInput formControlName="name">
       </mat-form-field>
+
       <p>Datum und Zeit</p>
       <div>
         <mat-form-field>
@@ -23,6 +26,7 @@
           <input matInput type="time" formControlName="time" placeholder="Startzeiptunkt">
         </mat-form-field>
       </div>
+
       <p>Standort</p>
       <div class="create-event-address-input">
         <mat-form-field>
@@ -40,18 +44,24 @@
           </mat-form-field>
         </div>
       </div>
+
       <p>Beschreibung</p>
       <mat-form-field>
         <mat-label>Schreibe eine Beschreibung...</mat-label>
         <textarea matInput formControlName="description"></textarea>
       </mat-form-field>
-<!--      <p>Hintergrund</p>-->
-<!--      TODO:Dateiupload Komponente-->
+
+      <!--      <p>Hintergrund</p>-->
+      <!--      TODO:Dateiupload Komponente-->
     </div>
   </form>
 </mat-dialog-content>
+
 <mat-divider></mat-divider>
+
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Abbrechen</button>
-  <button mat-button [disabled]="!form.valid" [mat-dialog-close]="true" (click)="createEvent()" cdkFocusInitial>Speichern</button>
+  <button mat-button [disabled]="!form.valid" [mat-dialog-close]="true" (click)="createEvent()" cdkFocusInitial>
+    Speichern
+  </button>
 </mat-dialog-actions>

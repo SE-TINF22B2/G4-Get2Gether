@@ -8,12 +8,17 @@ import {Router} from "@angular/router";
   templateUrl: './event-creation.component.html',
   styleUrl: './event-creation.component.scss'
 })
-export class EventCreationComponent implements OnInit{
-  isEndDateTimeDisabled!:boolean;
+export class EventCreationComponent implements OnInit {
+  isEndDateTimeDisabled!: boolean;
   form!: FormGroup;
 
-  constructor(private router: Router, private service: EventService, private fb: FormBuilder) {
+  constructor(
+    private router: Router,
+    private service: EventService,
+    private fb: FormBuilder
+  ) {
   }
+
   ngOnInit(): void {
     this.form = this.fb.group({
       name: ['', Validators.required],
@@ -29,7 +34,7 @@ export class EventCreationComponent implements OnInit{
     this.isEndDateTimeDisabled = true;
   }
 
-  createEvent():void {
+  createEvent(): void {
     if (this.form.valid) {
       this.updateAddress();
       this.updateStartDate();
@@ -72,11 +77,11 @@ export class EventCreationComponent implements OnInit{
     if (dateValue) {
       let date = new Date();
       date.setUTCDate(new Date(dateValue).getDate());
-      if(time) {
+      if (time) {
         const [hours, minutes] = time.split(":");
         date.setUTCHours(parseInt(hours, 10), parseInt(minutes, 10), 0, 0);
       } else {
-        date.setUTCHours(0,0, 0, 0);
+        date.setUTCHours(0, 0, 0, 0);
       }
       console.log(date)
       this.form.patchValue({
@@ -87,10 +92,10 @@ export class EventCreationComponent implements OnInit{
 
   private updateEndDate() {
     const dateValue = this.form.get('endDate')?.value;
-    if(dateValue) {
+    if (dateValue) {
       let date = new Date();
       date.setUTCDate(new Date(dateValue).getDate());
-      date.setUTCHours(23,59, 0, 0);
+      date.setUTCHours(23, 59, 0, 0);
       this.form.patchValue({
         endDate: date
       });
