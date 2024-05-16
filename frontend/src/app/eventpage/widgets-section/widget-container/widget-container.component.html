@@ -6,6 +6,13 @@
       (onWidgetUpdated)="onWidgetUpdated.emit($event)"
     ></app-maps-widget>
   }
+  @case (WidgetType.EXPENSE_SPLIT) {
+    <app-expense-split-widget
+      [widget]="widget"
+      [eventData]="eventData"
+      (onWidgetUpdated)="onWidgetUpdated.emit($event)"
+    ></app-expense-split-widget>
+  }
 
   <!-- TODO: add other widget components here -->
 

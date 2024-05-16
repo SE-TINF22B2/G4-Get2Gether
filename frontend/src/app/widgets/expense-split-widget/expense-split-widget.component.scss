@@ -1,0 +1,10 @@
+.no-entries-container {
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: var(--size-12);
+
+  img {
+    max-width: 100%;
+  }
+}

@@ -61,6 +61,9 @@ import {
   MatEndDate,
   MatStartDate
 } from "@angular/material/datepicker";
+import { ExpenseSplitWidgetComponent } from './widgets/expense-split-widget/expense-split-widget.component';
+import { CreateEditExpenseEntryDialogComponent } from './widgets/expense-split-widget/create-edit-expense-entry-dialog/create-edit-expense-entry-dialog.component';
+import {MatSelectModule} from "@angular/material/select";
 
 registerLocaleData(localeDe);
 
@@ -109,6 +112,8 @@ function loadMapApi(httpClient: HttpClient) {
     WidgetsBarComponent,
     ParticipantsSidenavComponent,
     ParticipantCardComponent,
+    ExpenseSplitWidgetComponent,
+    CreateEditExpenseEntryDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -150,7 +155,8 @@ function loadMapApi(httpClient: HttpClient) {
     MatDatepickerCancel,
     MatDatepickerApply,
     ReactiveFormsModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSelectModule
   ],
   providers: [
     {

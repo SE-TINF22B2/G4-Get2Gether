@@ -1,0 +1,18 @@
+<div class="container">
+  @if (widget.entries.length > 0) {
+    <button mat-stroked-button (click)="createNewExpenseEntry()">
+      <mat-icon>add</mat-icon>
+      Ausgabe erstellen
+    </button>
+  } @else {
+    <div class="no-entries-container">
+      <img ngSrc="./assets/noExpenseSplits.svg" width="300" height="200" alt="">
+
+      <h4>Keine Ausgabenverteilung angelegt</h4>
+      <button mat-stroked-button (click)="createNewExpenseEntry()">
+        <mat-icon>add</mat-icon>
+        Ausgabe erstellen
+      </button>
+    </div>
+  }
+</div>

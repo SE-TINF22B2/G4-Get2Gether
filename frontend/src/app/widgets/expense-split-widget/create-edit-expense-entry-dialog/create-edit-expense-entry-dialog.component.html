@@ -1,0 +1,47 @@
+<h2 mat-dialog-title>Ausgabe erstellen</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="formGroup">
+    <div class="form-grid">
+      <p class="label">Beschreibung</p>
+      <mat-form-field subscriptSizing="dynamic">
+        <mat-label>Beschreibung</mat-label>
+        <input matInput formControlName="description">
+      </mat-form-field>
+
+      <p class="label">Betrag</p>
+      <mat-form-field subscriptSizing="dynamic">
+        <mat-label>Betrag</mat-label>
+        <input matInput type="number" placeholder="0,00" formControlName="price" class="price-input">
+        <span matTextSuffix>&nbsp;€</span>
+      </mat-form-field>
+
+      @if (userService.user | async; as user) {
+        <p class="label">Zahlungsempfänger</p>
+        <div>
+          <img [ngSrc]="user.profilePictureUrl" width="32" height="32" alt="" class="user-profile-picture">
+          {{ user.firstName }} {{ user.lastName }}
+        </div>
+      }
+
+      <p class="label">Beteiligte</p>
+      <mat-form-field subscriptSizing="dynamic">
+        <mat-select formControlName="involvedUsers" multiple placeholder="Keine Personen ausgewählt">
+          @for (user of users; track user.id) {
+            <mat-option [value]="user.id">
+              <img [ngSrc]="user.profilePictureUrl" width="24" height="24" alt="" class="user-profile-picture">
+              {{ user.firstName }} {{ user.lastName }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Abbrechen</button>
+  <button mat-button [disabled]="!formGroup.valid" (click)="submit()">
+    {{ isCreatingNewEntry ? 'Erstellen' : 'Speichern' }}
+  </button>
+</mat-dialog-actions>
