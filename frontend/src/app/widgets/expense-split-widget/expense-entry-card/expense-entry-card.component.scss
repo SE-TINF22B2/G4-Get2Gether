@@ -1,0 +1,17 @@
+.menu-button {
+  margin-left: auto;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--size-12);
+}
+
+.user-profile-picture {
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 5px;
+}

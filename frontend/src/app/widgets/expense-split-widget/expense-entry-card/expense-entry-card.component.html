@@ -1,0 +1,34 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ entry.description }}</mat-card-title>
+    <button mat-icon-button class="menu-button">
+      <mat-icon>more_horiz</mat-icon>
+    </button>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="content-container">
+      <div class="involved-users">
+        <mat-icon>call_split</mat-icon>
+        @if (isEveryoneInvolved) {
+          jeder
+        } @else {
+          {{ getInvolvedUserNames.join(", ") }}
+        }
+      </div>
+
+      <div class="distribution">
+
+      </div>
+
+      <div class="creator">
+        @if (creator) {
+          <img [ngSrc]="creator.profilePictureUrl" width="32" height="32" alt="" class="user-profile-picture">
+          {{ creator.firstName }} {{ creator.lastName }}
+        } @else {
+          <p>Zahlungsempfänger konnte nicht ermittelt werden.</p>
+        }
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

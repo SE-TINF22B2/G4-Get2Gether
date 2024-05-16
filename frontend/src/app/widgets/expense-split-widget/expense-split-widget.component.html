@@ -4,6 +4,17 @@
       <mat-icon>add</mat-icon>
       Ausgabe erstellen
     </button>
+
+    <ul class="expense-entry-list">
+      @for (entry of widget.entries; track entry.id) {
+        <li>
+          <app-expense-entry-card
+            [entry]="entry"
+            [eventData]="eventData"
+          ></app-expense-entry-card>
+        </li>
+      }
+    </ul>
   } @else {
     <div class="no-entries-container">
       <img ngSrc="./assets/noExpenseSplits.svg" width="300" height="200" alt="">
