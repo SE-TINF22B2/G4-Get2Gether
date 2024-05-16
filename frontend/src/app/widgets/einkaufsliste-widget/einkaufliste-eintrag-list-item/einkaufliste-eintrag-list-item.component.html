@@ -1,12 +1,12 @@
-<mat-card class="eintrag-card">
-  <mat-card-content>
-    <span>{{item.description}}</span>
-    <span>{{item.amount}}</span>
+<mat-card class="einkaufliste-eintrag-card">
+  <mat-card-content class="einkaufliste-eintrag-card-content">
+    <p class="einkaufliste-eintrag-card-content-description">{{item.description}}</p>
+    <p>{{item.amount}}</p>
       @if(item.buyerId) {
-        <span>
+        <p>
         <mat-icon>person</mat-icon>
-        {{item.buyerId}}
-        </span>
+        {{loadUsername()}}
+        </p>
       }
     <button mat-icon-button [matMenuTriggerFor]="menu">
       <mat-icon class="icon-color">more_vert</mat-icon>

@@ -1,5 +1,5 @@
-import {Component, Input} from '@angular/core';
-import {Entry} from "../../../../model/shoppinglist-widget";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Entry, ShoppingWidget} from "../../../../model/shoppinglist-widget";
 import {EditEintragDialogComponent} from "../edit-eintrag-dialog/edit-eintrag-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {UserService} from "../../../../services/user.service";
@@ -15,6 +15,7 @@ export class EinkauflisteEintragListItemComponent {
   @Input() item!: Entry;
   @Input() eventId!: string;
   @Input() widgetId!: string;
+  @Output() onWidgetUpdated = new EventEmitter<ShoppingWidget>();
 
   constructor(
     private dialog: MatDialog,
@@ -45,9 +46,13 @@ export class EinkauflisteEintragListItemComponent {
   }
 
   loadUsername() {
-    this.userService.fetchUserById(this.item.buyerId).subscribe({
-
-    });
+    this.userService.fetchUserById(this.item.buyerId).subscribe(
+      {
+        next: user => {
+          return [user.firstName, user.lastName].filter(x => x).join(" ");
+        },
+        error: error => console.error(error)
+      });
   }
 
   showMessage(messageToshow:string, snackBarClass:string="successfull"){

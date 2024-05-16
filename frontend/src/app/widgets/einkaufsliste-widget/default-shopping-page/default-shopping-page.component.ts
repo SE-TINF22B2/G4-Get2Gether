@@ -19,7 +19,6 @@ export class DefaultShoppingPageComponent {
 
   @Output()
   onWidgetUpdated = new EventEmitter<ShoppingWidget>();
-  //TODO: Output funktioniert noch nicht ganz
 
   constructor(
     private dialog: MatDialog,

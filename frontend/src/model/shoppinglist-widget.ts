@@ -17,3 +17,7 @@ export type EntryAddCommand = {
   description: string;
   amount: string;
 }
+
+export type EntryCheckCommand = {
+  checked: boolean;
+}

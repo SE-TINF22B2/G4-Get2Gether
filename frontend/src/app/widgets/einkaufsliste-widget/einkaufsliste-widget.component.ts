@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {BaseWidget} from "../../../model/common-widget";
-import {Entry, EntryAddCommand, ShoppingWidget} from "../../../model/shoppinglist-widget";
+import {Entry, EntryAddCommand, EntryCheckCommand, ShoppingWidget} from "../../../model/shoppinglist-widget";
 import {AddEintragDialogComponent} from "./add-eintrag-dialog/add-eintrag-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {EinkaufslisteWidgetService} from "../../../services/widgets/einkaufsliste-widget.service";
@@ -58,7 +58,6 @@ export class EinkaufslisteWidgetComponent {
   }
 
   get eintraege() {
-    console.log(this.widget.entries);
     return this.widget.entries;
   }
 
@@ -70,8 +69,12 @@ export class EinkaufslisteWidgetComponent {
   }
 
   onCheckboxChange(item: Entry, event: MatCheckboxChange) {
-    this.service.setBuyerId(this.eventId,this.widget.id, item, event.checked).subscribe({
+    const checkCommand: EntryCheckCommand = {
+      checked: event.checked
+    }
+    this.service.setBuyerId(this.eventId, this.widget.id, item, checkCommand).subscribe({
       next: response => {
+        console.log(response);
         this.onWidgetUpdated.emit(response);
       },
       error: error => {

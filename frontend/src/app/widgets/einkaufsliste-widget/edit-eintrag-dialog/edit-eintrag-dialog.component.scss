@@ -1,22 +1,20 @@
-.profile-icon {
-  border-radius: var(--size-24);
-}
-
 .create-eintrag-container {
   display: grid;
   grid: auto / 1fr 2fr;
   gap: 12px;
 }
+
+@media (max-width: 600px) {
+  .create-eintrag-container {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
 mat-form-field {
   width: 100%;
 }
-.user{
-  display: flex;
-  align-items: center;
-}
-.username{
-  margin-left: 10px;
-}
+
 mat-divider {
   margin: 0 var(--size-24);
 }

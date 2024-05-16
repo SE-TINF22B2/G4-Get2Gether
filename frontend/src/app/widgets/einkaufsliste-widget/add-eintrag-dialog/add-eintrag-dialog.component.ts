@@ -1,11 +1,7 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MatDialogRef, MAT_DIALOG_DATA} from "@angular/material/dialog";
-import {MatSnackBar} from "@angular/material/snack-bar";
+import {Component, OnInit} from '@angular/core';
+import {MatDialogRef} from "@angular/material/dialog";
 import {EntryAddCommand} from "../../../../model/shoppinglist-widget";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {EinkaufslisteWidgetService} from "../../../../services/widgets/einkaufsliste-widget.service";
-import {UserService} from "../../../../services/user.service";
-import {User} from "../../../../model/user";
 
 @Component({
   selector: 'app-add-eintrag-dialog',
@@ -16,7 +12,6 @@ export class AddEintragDialogComponent implements OnInit{
   form!: FormGroup;
 
   constructor(
-    public userService: UserService,
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<AddEintragDialogComponent>,
   ) {
@@ -29,9 +24,6 @@ export class AddEintragDialogComponent implements OnInit{
     });
 
   }
-/*  getUsername(user:User): string {
-    return [user.firstName, user.lastName].filter(x => x).join(" ");
-  }*/
 
   closeDialog() {
     if(this.form.valid) {

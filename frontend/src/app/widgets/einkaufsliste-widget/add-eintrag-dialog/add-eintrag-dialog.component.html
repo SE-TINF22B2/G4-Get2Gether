@@ -1,42 +1,25 @@
-<div *ngIf="userService.user | async; let user" class="profile-container">
-  <h2 mat-dialog-title>Einkaufsauftrag hinzufügen</h2>
+<h2 mat-dialog-title>Einkaufseintrag hinzufügen</h2>
+<mat-dialog-content>
+  <form [formGroup]="form" class="create-eintrag-container">
+    <p>Beschreibung<sup>*</sup></p>
+    <mat-form-field>
+      <input matInput formControlName="description" placeholder="Was soll besorgt werden?"/>
+    </mat-form-field>
+    <p>Menge</p>
+    <mat-form-field >
+      <input matInput formControlName="amount" placeholder="Welche Menge?"/>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-divider></mat-divider>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Abbrechen</button>
+   <button
+     mat-flat-button
+     color="primary"
+     (click)="closeDialog()"
+   >
+     Speichern
+   </button>
+</mat-dialog-actions>
 
-  <mat-dialog-content>
-    <form [formGroup]="form" class="create-eintrag-container">
-      <p>Beschreibung<sup>*</sup></p>
-      <mat-form-field>
-        <mat-label>Beschreibung</mat-label>
-        <input matInput formControlName="description">
-      </mat-form-field>
-      <!--<p>Ersteller</p>
-       <div class="user">
-         <img
-          width="30"
-          height="30"
-          class="profile-icon"
-          [ngSrc]="user.profilePictureUrl"
-          alt="Profilbild"
-         >
-         <p class="username">{{getUsername(user)}}</p>
-       </div>-->
-      <p>Menge</p>
-      <mat-form-field >
-        <mat-label>Menge</mat-label>
-        <input matInput formControlName="amount"/>
-      </mat-form-field>
-    </form>
-  </mat-dialog-content>
-
-  <mat-divider></mat-divider>
-
-  <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Abbrechen</button>
-    <button
-      mat-flat-button
-      color="primary"
-      (click)="closeDialog()"
-    >
-      Speichern
-    </button>
-  </mat-dialog-actions>
-</div>

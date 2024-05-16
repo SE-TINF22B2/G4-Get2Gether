@@ -13,7 +13,6 @@ export class EditEintragDialogComponent implements OnInit{
   form!: FormGroup;
   entry: Entry;
   constructor(
-    public userService: UserService,
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<EditEintragDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {eventId: string, widgetId: string, entry:Entry}
@@ -28,9 +27,6 @@ export class EditEintragDialogComponent implements OnInit{
     });
 
   }
-  /*getUsername(user:User): string {
-    return [user.firstName, user.lastName].filter(x => x).join(" ");
-  }*/
 
   closeDialog() {
     if(this.form.valid) {

@@ -10,6 +10,7 @@
     <app-einkaufsliste-widget
       [widget]="widget"
       [eventId]="eventData.id"
+      (onWidgetUpdated)="onWidgetUpdated.emit($event)"
     ></app-einkaufsliste-widget>
   }
 
