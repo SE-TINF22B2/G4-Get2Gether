@@ -143,6 +143,8 @@ class ExpenseSplitWidgetServiceTest extends AbstractIntegrationTest {
                 .price(10)
                 .creatorId("test")
                 .involvedUsers(List.of(user))
+                .pricePerPerson(10)
+                .percentagePerPerson(1)
                 .build();
 
         when(eventService.getSingleEvent(any(), eq(event.getId()))).thenReturn(event);
@@ -156,6 +158,7 @@ class ExpenseSplitWidgetServiceTest extends AbstractIntegrationTest {
         when(userService.getUserByPrincipal(principal)).thenReturn(User.builder()
                 .id("test")
                 .email("test@example.com").build());
+        when(userService.getSimpleUsersById(any())).thenReturn(List.of(simpleUser));
         when(userService.getUserById("test")).thenReturn(User.builder()
                 .id("test")
                 .firstName("firstName")
