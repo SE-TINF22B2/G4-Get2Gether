@@ -12,6 +12,8 @@ export type ExpenseEntry = {
   description: string;
   price: number;
   involvedUsers: UsersWithPercentage[];
+  percentagePerPerson: number;
+  pricePerPerson: number;
 }
 
 export type UsersWithPercentage = {

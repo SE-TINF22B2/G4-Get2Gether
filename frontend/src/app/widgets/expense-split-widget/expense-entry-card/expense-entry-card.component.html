@@ -29,9 +29,15 @@
       </div>
 
       <div class="distribution">
-        <mat-icon>payments</mat-icon>
-        <!-- TODO: nicht Gesamtbetrag, sondern pro Person anzeigen -->
-        {{ entry.price | currency: "EUR" }}
+        <span>
+          á
+          {{ entry.percentagePerPerson | percent }}
+        </span>
+
+        <span>
+          <mat-icon>payments</mat-icon>
+          {{ entry.pricePerPerson | currency: "EUR" }}
+        </span>
       </div>
 
       <div class="creator">

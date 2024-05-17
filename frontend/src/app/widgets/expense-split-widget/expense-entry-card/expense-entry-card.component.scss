@@ -14,9 +14,15 @@ mat-card {
   gap: var(--size-12);
   margin-top: var(--size-12);
 
-  mat-icon {
+  .involved-users mat-icon {
     margin-bottom: -11%;
     margin-right: 5px;
+  }
+
+  .distribution mat-icon {
+    margin-bottom: -5.5%;
+    margin-right: 5px;
+    margin-left: 10px;
   }
 }
 
