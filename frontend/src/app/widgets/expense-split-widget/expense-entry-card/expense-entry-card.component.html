@@ -1,0 +1,53 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ entry.description }}</mat-card-title>
+    <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button">
+      <mat-icon>more_horiz</mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="onEdit.emit()">
+        <mat-icon>edit</mat-icon>
+        Bearbeiten
+      </button>
+      <button mat-menu-item (click)="onDelete.emit()">
+        <mat-icon>delete</mat-icon>
+        Löschen
+      </button>
+    </mat-menu>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="content-container">
+      <div class="involved-users" matTooltip="Beteiligte">
+        <mat-icon>call_split</mat-icon>
+        @if (isEveryoneInvolved) {
+          jeder
+        } @else {
+          {{ getInvolvedUserNames.join(", ") }}
+        }
+      </div>
+
+      <div class="distribution" matTooltip="Aufteilung">
+        <span>
+          á
+          {{ entry.percentagePerPerson | percent }}
+        </span>
+
+        <span>
+          <mat-icon inline>payments</mat-icon>
+          {{ entry.pricePerPerson | currency: "EUR" }}
+        </span>
+      </div>
+
+      <div class="creator" matTooltip="Zahlungsempfänger">
+        @if (creator) {
+          <img [ngSrc]="creator.profilePictureUrl" width="24" height="24" alt="" class="user-profile-picture">
+          {{ creator.firstName }} {{ creator.lastName }}
+        } @else {
+          <p>Zahlungsempfänger konnte nicht ermittelt werden.</p>
+        }
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,6 +1,7 @@
-import {BaseWidget} from "./common-widget";
+import {BaseWidget, WidgetType} from "./common-widget";
 
 export type MapWidget = BaseWidget & {
+  widgetType: WidgetType.MAP;
   locations: Location[];
 }
 

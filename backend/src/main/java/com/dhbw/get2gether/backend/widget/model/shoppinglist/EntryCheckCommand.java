@@ -1,12 +1,12 @@
 package com.dhbw.get2gether.backend.widget.model.shoppinglist;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 @Builder(toBuilder = true)
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
+@Setter
 public class EntryCheckCommand {
-    private boolean isChecked;
+    private boolean checked;
 }
