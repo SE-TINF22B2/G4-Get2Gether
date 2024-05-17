@@ -22,7 +22,7 @@ public abstract class WidgetMapper {
         return widget;
     }
 
-    abstract ExpenseSplitWidgetDto expenseSplitWidgetToExpenseSplitWidgetDto(ExpenseSplitWidget widget, @Context List<SimpleUserDto> participants);
+    public abstract ExpenseSplitWidgetDto expenseSplitWidgetToExpenseSplitWidgetDto(ExpenseSplitWidget widget, @Context List<SimpleUserDto> participants);
 
     // Find the userWithPercentage in the list of participants. Return null if the user is not found.
     UserWithPercentageDto userWithPercentageToUserWithPercentageDto(UserWithPercentage userWithPercentage, @Context List<SimpleUserDto> participants) {

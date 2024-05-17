@@ -5,13 +5,17 @@ import com.dhbw.get2gether.backend.event.model.Event;
 import com.dhbw.get2gether.backend.exceptions.EntityNotFoundException;
 import com.dhbw.get2gether.backend.user.application.UserService;
 import com.dhbw.get2gether.backend.user.application.mapper.UserMapper;
+import com.dhbw.get2gether.backend.user.model.SimpleUserDto;
+import com.dhbw.get2gether.backend.user.model.User;
 import com.dhbw.get2gether.backend.widget.application.mapper.ExpenseSplitMapper;
+import com.dhbw.get2gether.backend.widget.application.mapper.WidgetMapper;
 import com.dhbw.get2gether.backend.widget.model.expensesplit.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.AuthenticatedPrincipal;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -19,13 +23,13 @@ import java.util.UUID;
 public class ExpenseSplitWidgetService extends AbstractWidgetService {
 
     private final ExpenseSplitMapper mapper;
-    private final UserMapper userMapper;
+    private final WidgetMapper widgetMapper;
     private final UserService userService;
 
-    ExpenseSplitWidgetService(EventService eventService, UserMapper userMapper, ExpenseSplitMapper mapper, UserService userService) {
+    ExpenseSplitWidgetService(EventService eventService, WidgetMapper widgetMapper, ExpenseSplitMapper mapper, UserService userService) {
         super(eventService);
         this.mapper = mapper;
-        this.userMapper = userMapper;
+        this.widgetMapper = widgetMapper;
         this.userService = userService;
     }
 
@@ -58,7 +62,7 @@ public class ExpenseSplitWidgetService extends AbstractWidgetService {
                                 .build()).toList())
                 .build();
         widget.addEntry(entry);
-        return mapToDto(updateAndGetWidget(principal, event, widget));
+        return mapToDto(updateAndGetWidget(principal, event, widget), event.getParticipantIds());
     }
 
     @PreAuthorize("hasRole('USER')")
@@ -71,7 +75,7 @@ public class ExpenseSplitWidgetService extends AbstractWidgetService {
         if (!widget.removeEntry(entry)) {
             throw new IllegalStateException("Failed to remove entry from shopping list widget");
         }
-        return mapToDto(updateAndGetWidget(principal, event, widget));
+        return mapToDto(updateAndGetWidget(principal, event, widget), event.getParticipantIds());
     }
 
     @PreAuthorize("hasRole('USER')")
@@ -97,25 +101,11 @@ public class ExpenseSplitWidgetService extends AbstractWidgetService {
                 .build();
 
         widget.replaceEntry(original_entry, updatedEntry);
-
-
-        return mapToDto(updateAndGetWidget(principal, event, widget));
+        return mapToDto(updateAndGetWidget(principal, event, widget), event.getParticipantIds());
     }
 
-    private ExpenseSplitWidgetDto mapToDto(ExpenseSplitWidget widget) {
-        return ExpenseSplitWidgetDto.builder()
-                .id(widget.getId())
-                .creationDate(widget.getCreationDate())
-                .entries(widget.getEntries().stream().map(entry -> ExpenseEntryDto.builder()
-                        .id(entry.getId())
-                        .creatorId(entry.getCreatorId())
-                        .description(entry.getDescription())
-                        .price(entry.getPrice())
-                        .involvedUsers(entry.getInvolvedUsers().stream().map(user -> UserWithPercentageDto.builder()
-                                .user(userMapper.mapToSimpleUserDto(userService.getUserById(user.getUserId())))
-                                .percentage(user.getPercentage())
-                                .build()).toList())
-                        .build()).toList())
-                .build();
+    private ExpenseSplitWidgetDto mapToDto(ExpenseSplitWidget widget, List<String> participantIds) {
+        List<SimpleUserDto> simpleUserDtos = userService.getSimpleUsersById(participantIds);
+        return widgetMapper.expenseSplitWidgetToExpenseSplitWidgetDto(widget, simpleUserDtos);
     }
 }
