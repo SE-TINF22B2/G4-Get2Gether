@@ -13,7 +13,7 @@ export type Entry = {
   buyerId: string;
 }
 
-export type EntryAddCommand = {
+export type EntryCommand = {
   description: string;
   amount: string;
 }
