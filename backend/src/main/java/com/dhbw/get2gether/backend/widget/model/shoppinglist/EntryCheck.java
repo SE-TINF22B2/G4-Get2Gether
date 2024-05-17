@@ -10,5 +10,5 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class EntryCheck {
-    private boolean isChecked;
+    private boolean checked;
 }

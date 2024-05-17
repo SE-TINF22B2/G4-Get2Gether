@@ -244,7 +244,7 @@ class ShoppingListWidgetServiceTest extends AbstractIntegrationTest {
                 .widgets(new ArrayList<>(List.of(widget)))
                 .build();
         EntryCheckCommand checkCommand = EntryCheckCommand.builder()
-                .isChecked(true)
+                .checked(true)
                 .build();
         Entry entryAfterCheck = Entry.builder()
                 .description("Test")
@@ -302,7 +302,7 @@ class ShoppingListWidgetServiceTest extends AbstractIntegrationTest {
                 .widgets(new ArrayList<>(List.of(widget)))
                 .build();
         EntryCheckCommand checkCommand = EntryCheckCommand.builder()
-                .isChecked(false)
+                .checked(false)
                 .build();
         Entry entryAfterCheck = Entry.builder()
                 .description("Test")

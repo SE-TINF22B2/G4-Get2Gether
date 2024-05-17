@@ -20,7 +20,7 @@ public interface ShoppingListMapper {
     Entry mapToEntry(EntryAddCommand command);
 
     // Verstehe nicht, warum hier source checked ist unt nicht isChecked
-    @Mapping(target = "isChecked", source = "checked")
+    @Mapping(target = "checked", source = "checked")
     EntryCheck mapEntryCheckCommandToEntryCheck(EntryCheckCommand command);
 
 }
