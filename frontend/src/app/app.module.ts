@@ -65,6 +65,7 @@ import { ExpenseSplitWidgetComponent } from './widgets/expense-split-widget/expe
 import { CreateEditExpenseEntryDialogComponent } from './widgets/expense-split-widget/create-edit-expense-entry-dialog/create-edit-expense-entry-dialog.component';
 import {MatSelectModule} from "@angular/material/select";
 import { ExpenseEntryCardComponent } from './widgets/expense-split-widget/expense-entry-card/expense-entry-card.component';
+import { DeleteEntryConfirmationDialogComponent } from './widgets/expense-split-widget/delete-entry-confirmation-dialog/delete-entry-confirmation-dialog.component';
 
 registerLocaleData(localeDe);
 
@@ -116,6 +117,7 @@ function loadMapApi(httpClient: HttpClient) {
     ExpenseSplitWidgetComponent,
     CreateEditExpenseEntryDialogComponent,
     ExpenseEntryCardComponent,
+    DeleteEntryConfirmationDialogComponent,
   ],
   imports: [
     BrowserModule,

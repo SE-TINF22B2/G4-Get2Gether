@@ -7,6 +7,9 @@ import {
   CreateEditExpenseEntryDialogComponent
 } from "./create-edit-expense-entry-dialog/create-edit-expense-entry-dialog.component";
 import {ExpenseSplitWidgetService} from "../../../services/widgets/expense-split-widget.service";
+import {
+  DeleteEntryConfirmationDialogComponent
+} from "./delete-entry-confirmation-dialog/delete-entry-confirmation-dialog.component";
 
 @Component({
   selector: 'app-expense-split-widget',
@@ -62,8 +65,14 @@ export class ExpenseSplitWidgetComponent {
   }
 
   deleteExpenseEntry(entry: ExpenseEntry) {
-    this.service.deleteExpenseEntry(this.eventData.id, this.widget.id, entry.id)
-      .subscribe(widget => this.onWidgetUpdated.emit(widget));
+    const dialogRef = this.dialog.open(DeleteEntryConfirmationDialogComponent);
+
+    dialogRef.afterClosed().subscribe(deleteExpenseEntry => {
+      if (!deleteExpenseEntry) return;
+
+      this.service.deleteExpenseEntry(this.eventData.id, this.widget.id, entry.id)
+        .subscribe(widget => this.onWidgetUpdated.emit(widget));
+    })
   }
 
 }

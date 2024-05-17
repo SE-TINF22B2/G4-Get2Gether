@@ -19,7 +19,7 @@
 
   <mat-card-content>
     <div class="content-container">
-      <div class="involved-users">
+      <div class="involved-users" matTooltip="Beteiligte">
         <mat-icon>call_split</mat-icon>
         @if (isEveryoneInvolved) {
           jeder
@@ -28,21 +28,21 @@
         }
       </div>
 
-      <div class="distribution">
+      <div class="distribution" matTooltip="Aufteilung">
         <span>
           á
           {{ entry.percentagePerPerson | percent }}
         </span>
 
         <span>
-          <mat-icon>payments</mat-icon>
+          <mat-icon inline>payments</mat-icon>
           {{ entry.pricePerPerson | currency: "EUR" }}
         </span>
       </div>
 
-      <div class="creator">
+      <div class="creator" matTooltip="Zahlungsempfänger">
         @if (creator) {
-          <img [ngSrc]="creator.profilePictureUrl" width="32" height="32" alt="" class="user-profile-picture">
+          <img [ngSrc]="creator.profilePictureUrl" width="24" height="24" alt="" class="user-profile-picture">
           {{ creator.firstName }} {{ creator.lastName }}
         } @else {
           <p>Zahlungsempfänger konnte nicht ermittelt werden.</p>
