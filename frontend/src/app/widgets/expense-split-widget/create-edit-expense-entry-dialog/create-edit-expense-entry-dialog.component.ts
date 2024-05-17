@@ -36,7 +36,8 @@ export class CreateEditExpenseEntryDialogComponent {
         [Validators.required, Validators.min(0)]
       ),
       involvedUsers: new FormControl(
-        this.entry?.involvedUsers?.map(u => u.user.id) ?? []
+        this.entry?.involvedUsers?.map(u => u.user.id) ?? [],
+        Validators.required
       )
     });
   }

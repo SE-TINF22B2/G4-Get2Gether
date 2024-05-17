@@ -1,3 +1,7 @@
+mat-card {
+  --mdc-elevated-card-container-color: var(--background-container-color);
+}
+
 .menu-button {
   margin-left: auto;
 }
@@ -8,6 +12,12 @@
   flex-wrap: wrap;
   justify-content: space-between;
   gap: var(--size-12);
+  margin-top: var(--size-12);
+
+  mat-icon {
+    margin-bottom: -11%;
+    margin-right: 5px;
+  }
 }
 
 .user-profile-picture {

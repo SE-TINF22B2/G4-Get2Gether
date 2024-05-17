@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ExpenseEntry} from "../../../../model/expense-split-widget";
 import {SimpleUser} from "../../../../model/user";
 import {Event} from "../../../../model/event";
@@ -15,6 +15,12 @@ export class ExpenseEntryCardComponent {
 
   @Input()
   eventData!: Event;
+
+  @Output()
+  onDelete = new EventEmitter();
+
+  @Output()
+  onEdit = new EventEmitter();
 
   get getInvolvedUserNames(): string[] {
     return this.entry.involvedUsers.map(u => [u.user.firstName, u.user.firstName].join(" "));

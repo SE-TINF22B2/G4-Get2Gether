@@ -28,4 +28,12 @@ export class ExpenseSplitWidgetService {
   ): Observable<ExpenseSplitWidget> {
     return this.http.patch<ExpenseSplitWidget>(`${environment.api}/event/${eventId}/widgets/expense-split/${widgetId}/entries/${entryId}`, updateCommand, {withCredentials: true});
   }
+
+  deleteExpenseEntry(
+    eventId: string,
+    widgetId: string,
+    entryId: string
+  ): Observable<ExpenseSplitWidget> {
+    return this.http.delete<ExpenseSplitWidget>(`${environment.api}/event/${eventId}/widgets/expense-split/${widgetId}/entries/${entryId}`, {withCredentials: true});
+  }
 }

@@ -1,6 +1,6 @@
 <div class="container">
   @if (widget.entries.length > 0) {
-    <button mat-stroked-button (click)="createNewExpenseEntry()">
+    <button mat-raised-button (click)="createNewExpenseEntry()" class="create-new-button">
       <mat-icon>add</mat-icon>
       Ausgabe erstellen
     </button>
@@ -11,6 +11,8 @@
           <app-expense-entry-card
             [entry]="entry"
             [eventData]="eventData"
+            (onEdit)="editExpenseEntry(entry)"
+            (onDelete)="deleteExpenseEntry(entry)"
           ></app-expense-entry-card>
         </li>
       }

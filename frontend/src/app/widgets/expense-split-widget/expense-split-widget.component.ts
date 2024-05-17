@@ -61,4 +61,9 @@ export class ExpenseSplitWidgetComponent {
     })
   }
 
+  deleteExpenseEntry(entry: ExpenseEntry) {
+    this.service.deleteExpenseEntry(this.eventData.id, this.widget.id, entry.id)
+      .subscribe(widget => this.onWidgetUpdated.emit(widget));
+  }
+
 }
