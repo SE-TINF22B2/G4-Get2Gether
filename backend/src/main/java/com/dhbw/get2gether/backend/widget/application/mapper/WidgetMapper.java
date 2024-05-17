@@ -3,10 +3,7 @@ package com.dhbw.get2gether.backend.widget.application.mapper;
 import com.dhbw.get2gether.backend.user.model.SimpleUserDto;
 import com.dhbw.get2gether.backend.widget.model.IWidget;
 import com.dhbw.get2gether.backend.widget.model.Widget;
-import com.dhbw.get2gether.backend.widget.model.expensesplit.ExpenseSplitWidget;
-import com.dhbw.get2gether.backend.widget.model.expensesplit.ExpenseSplitWidgetDto;
-import com.dhbw.get2gether.backend.widget.model.expensesplit.UserWithPercentage;
-import com.dhbw.get2gether.backend.widget.model.expensesplit.UserWithPercentageDto;
+import com.dhbw.get2gether.backend.widget.model.expensesplit.*;
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.SubclassExhaustiveStrategy;
@@ -33,6 +30,21 @@ public abstract class WidgetMapper {
                 .findFirst()
                 .map(user -> userWithPercentageToUserWithPercentageDto(userWithPercentage, user))
                 .orElse(null);
+    }
+
+    ExpenseEntryDto expenseEntryToExpenseEntryDto(ExpenseEntry expenseEntry, @Context List<SimpleUserDto> participants){
+        if(expenseEntry.getInvolvedUsers().isEmpty()) {
+            throw new IllegalArgumentException("At least one user must be involved in the expense entry");
+        }
+        return ExpenseEntryDto.builder()
+                .id(expenseEntry.getId())
+                .description(expenseEntry.getDescription())
+                .creatorId(expenseEntry.getCreatorId())
+                .price(expenseEntry.getPrice())
+                .involvedUsers(expenseEntry.getInvolvedUsers().stream().map(user -> userWithPercentageToUserWithPercentageDto(user, participants)).toList())
+                .percentagePerPerson(1.0 /expenseEntry.getInvolvedUsers().size())
+                .pricePerPerson(expenseEntry.getPrice()/expenseEntry.getInvolvedUsers().size())
+                .build();
     }
 
     abstract UserWithPercentageDto userWithPercentageToUserWithPercentageDto(UserWithPercentage userWithPercentage, SimpleUserDto user);

@@ -17,4 +17,6 @@ public class ExpenseEntryDto {
     private String description;
     private double price;
     private List<UserWithPercentageDto> involvedUsers;
+    private double percentagePerPerson;
+    private double pricePerPerson;
 }
