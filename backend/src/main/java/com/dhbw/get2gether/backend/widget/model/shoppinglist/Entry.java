@@ -24,4 +24,9 @@ public class Entry {
             // BuyerID soll nicht gelöscht werden, wenn der Eintrag nicht mehr gecheckt ist, aber überschrieben werden können
         }
     }
+
+    public void update(EntryUpdateCommand updateEntry) {
+        this.description = updateEntry.getDescription();
+        this.amount = updateEntry.getAmount();
+    }
 }

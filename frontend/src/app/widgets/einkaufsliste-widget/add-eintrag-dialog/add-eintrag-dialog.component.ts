@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialogRef} from "@angular/material/dialog";
-import {EntryAddCommand} from "../../../../model/shoppinglist-widget";
+import {EntryCommand} from "../../../../model/shoppinglist-widget";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
@@ -27,7 +27,7 @@ export class AddEintragDialogComponent implements OnInit{
 
   closeDialog() {
     if(this.form.valid) {
-      const addCommand: EntryAddCommand = {
+      const addCommand: EntryCommand = {
         description: this.form.value.description,
         amount: this.form.value.amount
       }

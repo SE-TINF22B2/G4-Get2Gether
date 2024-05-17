@@ -26,21 +26,20 @@ export class EinkauflisteEintragListItemComponent {
   }
 
   editEntryDialog(){
-    const dialogRef = this.dialog.open(EditEintragDialogComponent, {width: "400px"});
-    dialogRef.afterClosed().subscribe(addCommand => {
-      if (addCommand) {
-        //TODO: Logik zum speichern von bearbeiteten Einträgen fehlt evtl noch im Backend
-        //load entries
-        /*this.service.editEntry(this.eventId, this.widgetId, this.entry).subscribe({
+    const dialogRef = this.dialog.open(EditEintragDialogComponent, { data: { entry: this.item},width: "400px"});
+    dialogRef.afterClosed().subscribe(updateCommand => {
+      if (updateCommand) {
+        console.log(this.eventId);
+        this.service.editEntry(this.eventId, this.widgetId, this.item.id, updateCommand).subscribe({
           next: response => {
-            this.showMessage("Eintrag angelegt")
-            this.dialogRef.close();
+            this.onWidgetUpdated.emit(response);
+            this.showMessage("Eintrag bearbeitet")
           },
           error: error => {
             console.error('Error:', error);
-            this.showMessage("Fehler beim Anlegen", "error")
+            this.showMessage("Fehler beim Bearbeiten", "error")
           }
-        });*/
+        });
       }
     });
   }
@@ -62,4 +61,16 @@ export class EinkauflisteEintragListItemComponent {
     })
   }
 
+  deleteEntry() {
+    this.service.deleteEntry(this.eventId,this.widgetId,this.item.id).subscribe({
+      next: response => {
+        this.onWidgetUpdated.emit(response);
+        this.showMessage("Eintrag gelöscht")
+      },
+      error: error => {
+        console.error('Error:', error);
+        this.showMessage("Fehler beim Löschen", "error")
+      }
+    });
+  }
 }

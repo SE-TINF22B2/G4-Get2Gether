@@ -10,7 +10,7 @@
     @for (item of eintraege; track item.id) {
       <li class="einkaufliste-eintrag-item">
         <mat-checkbox class="entry-check" (change)="onCheckboxChange(item, $event)" [checked]="item.checked"></mat-checkbox>
-        <app-einkaufliste-eintrag-list-item class="entry-item" [item]="item" (onWidgetUpdated)="onWidgetUpdated.emit($event)"></app-einkaufliste-eintrag-list-item>
+        <app-einkaufliste-eintrag-list-item class="entry-item" [item]="item" [eventId]="eventId" [widgetId]="widget.id" (onWidgetUpdated)="onWidgetUpdated.emit($event)"></app-einkaufliste-eintrag-list-item>
       </li>
     }
   </ul>

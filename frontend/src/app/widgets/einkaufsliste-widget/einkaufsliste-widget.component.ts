@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {BaseWidget} from "../../../model/common-widget";
-import {Entry, EntryAddCommand, EntryCheckCommand, ShoppingWidget} from "../../../model/shoppinglist-widget";
+import {Entry, EntryCommand, EntryCheckCommand, ShoppingWidget} from "../../../model/shoppinglist-widget";
 import {AddEintragDialogComponent} from "./add-eintrag-dialog/add-eintrag-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {EinkaufslisteWidgetService} from "../../../services/widgets/einkaufsliste-widget.service";
@@ -38,7 +38,7 @@ export class EinkaufslisteWidgetComponent {
     });
   }
 
-  addEntry(addCommand: EntryAddCommand) {
+  addEntry(addCommand: EntryCommand) {
     if(addCommand) {
       this.service.addEntry(this.eventId, this.widget.id, addCommand).subscribe({
         next: response => {
