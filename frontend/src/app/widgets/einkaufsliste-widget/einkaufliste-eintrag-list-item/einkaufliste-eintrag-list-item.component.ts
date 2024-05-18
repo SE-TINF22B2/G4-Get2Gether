@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Entry, ShoppingWidget} from "../../../../model/shoppinglist-widget";
 import {EditEintragDialogComponent} from "../edit-eintrag-dialog/edit-eintrag-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
@@ -11,11 +11,13 @@ import {MatSnackBar} from "@angular/material/snack-bar";
   templateUrl: './einkaufliste-eintrag-list-item.component.html',
   styleUrl: './einkaufliste-eintrag-list-item.component.scss'
 })
-export class EinkauflisteEintragListItemComponent {
+export class EinkauflisteEintragListItemComponent implements OnInit, OnChanges{
   @Input() item!: Entry;
   @Input() eventId!: string;
   @Input() widgetId!: string;
   @Output() onWidgetUpdated = new EventEmitter<ShoppingWidget>();
+
+  username: string | null = null;
 
   constructor(
     private dialog: MatDialog,
@@ -23,6 +25,30 @@ export class EinkauflisteEintragListItemComponent {
     private service: EinkaufslisteWidgetService,
     private _snackbar: MatSnackBar
   ) {
+  }
+
+  ngOnInit() {
+    this.loadUsername();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['item'] && !changes['item'].firstChange) {
+      this.loadUsername();
+    }
+  }
+
+  loadUsername() {
+    if (!this.item.buyerId) {
+      this.username = null;  // Falls kein buyerId vorhanden ist, Username zurücksetzen
+      return;
+    }
+
+    this.userService.fetchUserById(this.item.buyerId).subscribe({
+      next: user => {
+        this.username = [user.firstName, user.lastName].filter(x => x).join(" ");
+      },
+      error: error => console.error(error)
+    });
   }
 
   editEntryDialog(){
@@ -42,16 +68,6 @@ export class EinkauflisteEintragListItemComponent {
         });
       }
     });
-  }
-
-  loadUsername() {
-    this.userService.fetchUserById(this.item.buyerId).subscribe(
-      {
-        next: user => {
-          return [user.firstName, user.lastName].filter(x => x).join(" ");
-        },
-        error: error => console.error(error)
-      });
   }
 
   showMessage(messageToshow:string, snackBarClass:string="successfull"){

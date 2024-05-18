@@ -362,7 +362,7 @@ class ShoppingListWidgetServiceTest extends AbstractIntegrationTest {
                 .description("Edited")
                 .amount("2")
                 .build();
-        Entry entryAfterCheck = Entry.builder()
+        Entry entryAfterUpdate = Entry.builder()
                 .description("Edited")
                 .amount("2")
                 .checked(false)
@@ -390,7 +390,7 @@ class ShoppingListWidgetServiceTest extends AbstractIntegrationTest {
         assertThat(returnedWidget.getEntries()).hasSize(1);
         assertThat(returnedWidget.getEntries().get(0)).usingRecursiveComparison()
                 .ignoringFields("id")
-                .isEqualTo(entryAfterCheck);
+                .isEqualTo(entryAfterUpdate);
         assertThat(returnedWidget.getEntries().get(0).getId()).isNotBlank();
     }
 }

@@ -1,11 +1,11 @@
 <mat-card class="einkaufliste-eintrag-card">
   <mat-card-content class="einkaufliste-eintrag-card-content">
-    <p class="einkaufliste-eintrag-card-content-description">{{item.description}}</p>
+    <p>{{item.description}}</p>
     <p>{{item.amount}}</p>
       @if(item.buyerId) {
-        <p>
+        <p class="einkaufliste-eintrag-card-content-buyerProfile">
         <mat-icon>person</mat-icon>
-        {{loadUsername()}}
+        {{username}}
         </p>
       }
     <button mat-icon-button [matMenuTriggerFor]="menu">

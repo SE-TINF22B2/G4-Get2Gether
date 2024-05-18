@@ -7,21 +7,28 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    flex-grow: 1;
     text-align: center;
     align-items: center;
     gap: var(--size-10);
     width: 100%;
-    padding: 0;
-    margin: 0;
+    padding: 0 0 0 var(--size-12);
 
-    > *:first-child {
-      padding-left: var(--size-10);
+    p {
+      margin: 0;
+      flex: 1;
+      text-align: left;
     }
 
-    button {
-      margin-right: var(--size-10);
+    &-buyerProfile {
+      display: flex;
+      align-items: center;
     }
   }
+}
+
+einkaufliste-eintrag-card-content-buyerProfile {
+
 }
 
 @media (max-width: 600px) {
