@@ -1,7 +1,7 @@
 .einkaufliste-eintrag-addButton {
-  width: 100%;
+  width: calc(100% - 20px);
+  box-sizing: border-box;
   margin: var(--size-10);
-  margin-bottom: 0;
   font-size: var(--font-size-standard);
 }
 
@@ -25,7 +25,7 @@ button {
 }
 
 .entry-item {
-  width: 100%;
+  width: calc(100% - 20px);
 }
 
 .entry-check {
