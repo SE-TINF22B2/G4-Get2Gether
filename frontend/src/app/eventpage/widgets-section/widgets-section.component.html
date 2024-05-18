@@ -12,11 +12,13 @@
 
 <div class="widgets">
   @for (widget of eventData.widgets; track widget.id) {
-    <app-widget-container
-      [widget]="widget"
-      [eventData]="eventData"
-      (onWidgetUpdated)="onWidgetUpdated.emit($event)"
-    ></app-widget-container>
+    <mat-card appearance="outlined" class="widget-card">
+      <app-widget-container
+        [widget]="widget"
+        [eventData]="eventData"
+        (onWidgetUpdated)="onWidgetUpdated.emit($event)"
+      ></app-widget-container>
+    </mat-card>
     <br>
   } @empty {
     <div class="no-widgets-container">

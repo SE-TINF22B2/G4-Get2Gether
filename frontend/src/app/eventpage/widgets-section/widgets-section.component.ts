@@ -81,7 +81,8 @@ export class WidgetsSectionComponent implements OnInit, OnDestroy {
 
     this.widgetContainers.forEach(widgetContainer => {
       const widgetElement = widgetContainer.elementRef.nativeElement as HTMLElement;
-      const widgetOffset = widgetElement.offsetTop;
+      if (widgetElement.parentElement === null) return;
+      const widgetOffset = widgetElement.parentElement.offsetTop;
 
       if ((widgetOffset - topOffset) < scrollTop) {
         scrolledWidgetId = widgetContainer.widget.id;
