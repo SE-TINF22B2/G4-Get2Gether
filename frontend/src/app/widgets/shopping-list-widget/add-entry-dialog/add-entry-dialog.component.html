@@ -6,7 +6,7 @@
       <input matInput formControlName="description" placeholder="Was soll besorgt werden?"/>
     </mat-form-field>
     <p>Menge</p>
-    <mat-form-field >
+    <mat-form-field>
       <input matInput formControlName="amount" placeholder="Welche Menge?"/>
     </mat-form-field>
   </form>
@@ -14,12 +14,13 @@
 <mat-divider></mat-divider>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Abbrechen</button>
-   <button
-     mat-flat-button
-     color="primary"
-     (click)="closeDialog()"
-   >
-     Speichern
-   </button>
+  <button
+    mat-flat-button
+    color="primary"
+    [disabled]="!form.valid"
+    (click)="closeDialog()"
+  >
+    Hinzufügen
+  </button>
 </mat-dialog-actions>
 

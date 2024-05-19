@@ -5,15 +5,15 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-add-eintrag-dialog',
-  templateUrl: './add-eintrag-dialog.component.html',
-  styleUrl: './add-eintrag-dialog.component.scss'
+  templateUrl: './add-entry-dialog.component.html',
+  styleUrl: './add-entry-dialog.component.scss'
 })
-export class AddEintragDialogComponent implements OnInit{
+export class AddEntryDialogComponent implements OnInit {
   form!: FormGroup;
 
   constructor(
     private fb: FormBuilder,
-    private dialogRef: MatDialogRef<AddEintragDialogComponent>,
+    private dialogRef: MatDialogRef<AddEntryDialogComponent>,
   ) {
   }
 
@@ -22,11 +22,10 @@ export class AddEintragDialogComponent implements OnInit{
       description: ['', Validators.required],
       amount: [null]
     });
-
   }
 
   closeDialog() {
-    if(this.form.valid) {
+    if (this.form.valid) {
       const addCommand: EntryCommand = {
         description: this.form.value.description,
         amount: this.form.value.amount

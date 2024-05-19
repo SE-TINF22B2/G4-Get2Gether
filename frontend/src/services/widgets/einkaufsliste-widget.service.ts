@@ -20,7 +20,7 @@ export class EinkaufslisteWidgetService {
     return this.http.put<ShoppingWidget>(`${environment.api}/event/${eventId}/widgets/shopping-list/${widgetId}/entries/update/${entryId}`, entry, {withCredentials: true});
   }
 
-  setBuyerId(eventId: string, widgetId: string, entry: Entry, value: EntryCheckCommand) {
+  checkEntry(eventId: string, widgetId: string, entry: Entry, value: EntryCheckCommand) {
     return this.http.put<ShoppingWidget>(`${environment.api}/event/${eventId}/widgets/shopping-list/${widgetId}/entries/${entry.id}`, value, {withCredentials: true});
   }
 

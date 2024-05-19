@@ -9,7 +9,7 @@
   @case (WidgetType.SHOPPING_LIST) {
     <app-einkaufsliste-widget
       [widget]="widget"
-      [eventId]="eventData.id"
+      [eventData]="eventData"
       (onWidgetUpdated)="onWidgetUpdated.emit($event)"
     ></app-einkaufsliste-widget>
   }

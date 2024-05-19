@@ -51,8 +51,4 @@ export class UserService {
     document.documentElement.setAttribute("theme", colorMode.toLowerCase());
   }
 
-  fetchUserById(id: string):Observable<User> {
-    return this.http.get<User>(`${environment.api}/user/${id}`,{withCredentials: true});
-  }
-
 }
