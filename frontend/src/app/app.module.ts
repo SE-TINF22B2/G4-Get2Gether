@@ -54,6 +54,9 @@ import {WidgetsBarComponent} from './eventpage/widgets-section/widgets-bar/widge
 import {MatTabsModule} from "@angular/material/tabs";
 import { ParticipantsSidenavComponent } from './eventpage/participants-sidenav/participants-sidenav.component';
 import { ParticipantCardComponent } from './eventpage/participants-sidenav/participant-card/participant-card.component';
+import { ShoppingListWidgetComponent } from './widgets/shopping-list-widget/shopping-list-widget.component';
+import { DefaultShoppingPageComponent } from './widgets/shopping-list-widget/default-shopping-page/default-shopping-page.component';
+import { AddEntryDialogComponent } from './widgets/shopping-list-widget/add-entry-dialog/add-entry-dialog.component';
 import {
   MatDatepicker, MatDatepickerActions, MatDatepickerApply, MatDatepickerCancel,
   MatDatepickerToggle,
@@ -66,6 +69,9 @@ import { CreateEditExpenseEntryDialogComponent } from './widgets/expense-split-w
 import {MatSelectModule} from "@angular/material/select";
 import { ExpenseEntryCardComponent } from './widgets/expense-split-widget/expense-entry-card/expense-entry-card.component';
 import { DeleteEntryConfirmationDialogComponent } from './widgets/expense-split-widget/delete-entry-confirmation-dialog/delete-entry-confirmation-dialog.component';
+import { EditEntryDialogComponent } from './widgets/shopping-list-widget/edit-entry-dialog/edit-entry-dialog.component';
+import { ShoppingListEntryListItemComponent } from './widgets/shopping-list-widget/shopping-list-entry-list-item/shopping-list-entry-list-item.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 registerLocaleData(localeDe);
 
@@ -118,6 +124,11 @@ function loadMapApi(httpClient: HttpClient) {
     CreateEditExpenseEntryDialogComponent,
     ExpenseEntryCardComponent,
     DeleteEntryConfirmationDialogComponent,
+    ShoppingListWidgetComponent,
+    DefaultShoppingPageComponent,
+    AddEntryDialogComponent,
+    EditEntryDialogComponent,
+    ShoppingListEntryListItemComponent,
   ],
   imports: [
     BrowserModule,
@@ -160,7 +171,8 @@ function loadMapApi(httpClient: HttpClient) {
     MatDatepickerApply,
     ReactiveFormsModule,
     MatNativeDateModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCheckboxModule
   ],
   providers: [
     {
