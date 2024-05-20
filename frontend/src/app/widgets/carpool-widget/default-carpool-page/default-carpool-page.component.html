@@ -1,1 +1,16 @@
-<p>default-carpool-page works!</p>
+<div class="page-container">
+  <img ngSrc="assets/noCarpool.svg" width="300" height="200" alt="no carpool Bild">
+  <h4>Keine Fahrgemeinschaft angelegt</h4>
+  <p>
+    Lege eine Fahrgemeinschaft über dieses
+    <button
+      mat-icon-button
+      color="accent"
+      matTooltip="Fahrgemeinschaft erstellen"
+      (click)="onCreateCarpoolClicked.emit()"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+    an
+  </p>
+</div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 
 @Component({
   selector: 'app-default-carpool-page',
@@ -6,5 +6,7 @@ import { Component } from '@angular/core';
   styleUrl: './default-carpool-page.component.scss'
 })
 export class DefaultCarpoolPageComponent {
+  @Output()
+  onCreateCarpoolClicked = new EventEmitter();
 
 }
