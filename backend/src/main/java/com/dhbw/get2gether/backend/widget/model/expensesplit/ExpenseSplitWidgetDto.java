@@ -18,6 +18,8 @@ public class ExpenseSplitWidgetDto implements IWidget {
     private final LocalDateTime creationDate;
     @Builder.Default
     private List<ExpenseEntryDto> entries = new ArrayList<>();
+    @Builder.Default
+    private List<DeptDto> depts = new ArrayList<>();
 
 
     @Override

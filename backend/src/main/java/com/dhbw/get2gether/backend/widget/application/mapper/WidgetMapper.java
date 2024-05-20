@@ -1,5 +1,6 @@
 package com.dhbw.get2gether.backend.widget.application.mapper;
 
+import com.dhbw.get2gether.backend.exceptions.EntityNotFoundException;
 import com.dhbw.get2gether.backend.user.model.SimpleUserDto;
 import com.dhbw.get2gether.backend.widget.model.IWidget;
 import com.dhbw.get2gether.backend.widget.model.Widget;
@@ -45,6 +46,14 @@ public abstract class WidgetMapper {
                 .percentagePerPerson(1.0 /expenseEntry.getInvolvedUsers().size())
                 .pricePerPerson(expenseEntry.getPrice()/expenseEntry.getInvolvedUsers().size())
                 .build();
+    }
+
+    DeptDto deptToDeptDto(Dept dept, @Context List<SimpleUserDto> participants){
+        return DeptDto.builder()
+                .deptAmount(dept.getDeptAmount())
+                .user(participants.stream().filter(user -> user.getId().equals(dept.getUserId())).findFirst().orElseThrow(
+                        () -> new EntityNotFoundException("User not in participants")
+                )).build();
     }
 
     abstract UserWithPercentageDto userWithPercentageToUserWithPercentageDto(UserWithPercentage userWithPercentage, SimpleUserDto user);
