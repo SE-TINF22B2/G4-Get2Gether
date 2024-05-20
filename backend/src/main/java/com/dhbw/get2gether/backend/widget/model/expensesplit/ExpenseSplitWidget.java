@@ -55,7 +55,7 @@ public class ExpenseSplitWidget extends Widget {
                 }
             } else {
                 Optional<UserWithPercentage> userWithPercentage = expenseEntry.getInvolvedUsers().stream()
-                        .findFirst().filter(user -> user.getUserId().equals(userId));
+                        .filter(user -> user.getUserId().equals(userId)).findFirst();
                 if(userWithPercentage.isPresent()){
                     // Add the Dept of the user to the Dept List
                     // In this case the user for whom we calculate all depts is a involved user and not the payer
@@ -68,9 +68,8 @@ public class ExpenseSplitWidget extends Widget {
 
     // This method extracts the logic if the deptor is already in the list or not
     private List<Dept> addDept(List<Dept> depts, String debtorId, double deptAmount){
-        Optional<Dept> optionalDept = depts.stream().findFirst()
-                .filter(dept -> dept.getUserId().equals(debtorId));
-        // todo somehow in second entry with second user this optional is empty but should not be
+        Optional<Dept> optionalDept = depts.stream()
+                .filter(dept -> dept.getUserId().equals(debtorId)).findFirst();
 
         if(optionalDept.isPresent()){
             // Calculate new deptAmount if already exists
