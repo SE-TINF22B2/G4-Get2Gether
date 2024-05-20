@@ -5,7 +5,8 @@
 .create-new-button {
   margin-bottom: var(--size-12);
   width: 100%;
-  --mdc-protected-button-container-color: var(--background-container-color);
+  --mdc-protected-button-container-color: var(--background-container-low-color);
+  --mdc-protected-button-container-elevation-shadow: none;
 }
 
 .expense-entry-list {
