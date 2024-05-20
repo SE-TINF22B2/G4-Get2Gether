@@ -1,0 +1,26 @@
+<mat-card class="einkaufliste-eintrag-card">
+  <mat-card-content class="einkaufliste-eintrag-card-content">
+    <p matTooltip="Beschreibung">{{ item.description }}</p>
+    <p matTooltip="Menge">{{ item.amount }}</p>
+    @if (item.buyerId) {
+      <p class="einkaufliste-eintrag-card-content-buyerProfile" matTooltip="Käufer">
+        <mat-icon>person</mat-icon>
+        {{ buyer?.firstName }} {{ buyer?.lastName }}
+      </p>
+    }
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon class="icon-color">more_vert</mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="onEdit.emit()">
+        <mat-icon>edit</mat-icon>
+        Bearbeiten
+      </button>
+      <button mat-menu-item (click)="onDelete.emit()">
+        <mat-icon>delete</mat-icon>
+        Löschen
+      </button>
+    </mat-menu>
+  </mat-card-content>
+</mat-card>

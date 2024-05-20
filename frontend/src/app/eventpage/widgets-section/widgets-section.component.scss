@@ -6,13 +6,25 @@
   flex-direction: row;
   align-items: center;
   gap: var(--size-12);
-  list-style: none;
+  overflow: auto;
   background-color: var(--background-color);
+  padding-left: 16px;
+  padding-right: 16px;
   padding-top: 5px;
 }
 
-app-widget-container {
-  scroll-margin-top: 50px;
+.widgets {
+  height: 100%;
+  padding: 16px;
+  //background-color: var(--background-container-low-color);
+
+  .widget-card {
+    overflow: clip;
+  }
+
+  app-widget-container {
+    scroll-margin-top: 50px;
+  }
 }
 
 ::ng-deep .is-mobile {

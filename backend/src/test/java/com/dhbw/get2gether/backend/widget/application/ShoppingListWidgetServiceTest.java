@@ -244,7 +244,7 @@ class ShoppingListWidgetServiceTest extends AbstractIntegrationTest {
                 .widgets(new ArrayList<>(List.of(widget)))
                 .build();
         EntryCheckCommand checkCommand = EntryCheckCommand.builder()
-                .isChecked(true)
+                .checked(true)
                 .build();
         Entry entryAfterCheck = Entry.builder()
                 .description("Test")
@@ -302,7 +302,7 @@ class ShoppingListWidgetServiceTest extends AbstractIntegrationTest {
                 .widgets(new ArrayList<>(List.of(widget)))
                 .build();
         EntryCheckCommand checkCommand = EntryCheckCommand.builder()
-                .isChecked(false)
+                .checked(false)
                 .build();
         Entry entryAfterCheck = Entry.builder()
                 .description("Test")
@@ -334,6 +334,63 @@ class ShoppingListWidgetServiceTest extends AbstractIntegrationTest {
         assertThat(returnedWidget.getEntries().get(0)).usingRecursiveComparison()
                 .ignoringFields("id")
                 .isEqualTo(entryAfterCheck);
+        assertThat(returnedWidget.getEntries().get(0).getId()).isNotBlank();
+    }
+
+    @Test
+    @WithMockOAuth2User
+    void shouldUpdateEntry() {
+        // given
+        AuthenticatedPrincipal principal = (AuthenticatedPrincipal)
+                SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Entry entry = Entry.builder()
+                .description("Test")
+                .amount("1")
+                .checked(false)
+                .creatorId("creator-id")
+                .id("123")
+                .build();
+        ShoppingListWidget widget = ShoppingListWidget.builder()
+                .id("wi-123")
+                .entries(new ArrayList<>(List.of(entry)))
+                .build();
+        Event event = Event.builder()
+                .id("ev-123")
+                .widgets(new ArrayList<>(List.of(widget)))
+                .build();
+        EntryUpdateCommand updateCommand = EntryUpdateCommand.builder()
+                .description("Edited")
+                .amount("2")
+                .build();
+        Entry entryAfterUpdate = Entry.builder()
+                .description("Edited")
+                .amount("2")
+                .checked(false)
+                .creatorId("creator-id")
+                .id("123")
+                .build();
+
+        when(eventService.getSingleEvent(any(), eq(event.getId()))).thenReturn(event);
+        when(eventService.updateEventWidgets(any(), eq(event.getId()), any()))
+                .thenAnswer(i -> event.toBuilder()
+                        .widgets(
+                                i.getArgument(2, EventWidgetUpdateCommand.class).getWidgets()
+                        )
+                        .build()
+                );
+        when(userService.getUserByPrincipal(principal)).thenReturn(User.builder()
+                .id("test")
+                .email("test@example.com").build());
+
+        // when
+        ShoppingListWidget returnedWidget = shoppingListWidgetService.updateEntry(principal, event.getId(), widget.getId(), entry.getId(), updateCommand);
+
+        // then
+        assertThat(returnedWidget).isNotNull();
+        assertThat(returnedWidget.getEntries()).hasSize(1);
+        assertThat(returnedWidget.getEntries().get(0)).usingRecursiveComparison()
+                .ignoringFields("id")
+                .isEqualTo(entryAfterUpdate);
         assertThat(returnedWidget.getEntries().get(0).getId()).isNotBlank();
     }
 }

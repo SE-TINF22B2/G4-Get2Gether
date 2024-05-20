@@ -1,0 +1,59 @@
+.einkaufliste-eintrag-card {
+  display: flex;
+  padding: 0;
+  margin-right: var(--size-10);
+
+  &-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-grow: 1;
+    text-align: center;
+    align-items: center;
+    gap: var(--size-10);
+    width: 100%;
+    padding: 0 0 0 var(--size-12);
+
+    p {
+      margin: 0;
+      text-align: left;
+    }
+
+    &-buyerProfile {
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
+einkaufliste-eintrag-card-content-buyerProfile {
+
+}
+
+@media (max-width: 600px) {
+  .einkaufliste-eintrag-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    p {
+      width: 100%;
+    }
+
+    &-buyerProfile {
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+  }
+
+  .einkaufliste-eintrag-card {
+    padding: var(--size-10) 0;
+
+    button {
+      position: absolute;
+      top: var(--size-10);
+      right: var(--size-10);
+    }
+  }
+}

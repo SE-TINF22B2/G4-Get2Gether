@@ -68,11 +68,25 @@ public class ShoppingListWidgetService extends AbstractWidgetService {
     public ShoppingListWidget checkEntry(AuthenticatedPrincipal principal, String eventId, String widgetId, String entryId, EntryCheckCommand checkCommand) {
         Event event = getEventById(principal, eventId);
         ShoppingListWidget widget = getWidgetFromEvent(event, widgetId);
-        Entry entry = widget.getEntries().stream()
-                .filter(l -> Objects.equals(l.getId(), entryId)).findFirst()
-                .orElseThrow(() -> new EntityNotFoundException("Entry not found"));
+        Entry entry = getEntry(widget, entryId);
         entry.check(userService.getUserByPrincipal(principal).getId(), mapper.mapEntryCheckCommandToEntryCheck(checkCommand));
         return updateAndGetWidget(principal, event, widget);
     }
+
+    @PreAuthorize("hasRole('USER')")
+    public ShoppingListWidget updateEntry(AuthenticatedPrincipal principal, String eventId, String widgetId, String entryId, EntryUpdateCommand updateCommand) {
+        Event event = getEventById(principal, eventId);
+        ShoppingListWidget widget = getWidgetFromEvent(event, widgetId);
+        Entry entry = getEntry(widget, entryId);
+        entry.update(updateCommand);
+        return updateAndGetWidget(principal, event, widget);
+    }
+
+    private Entry getEntry(ShoppingListWidget widget, String entryId) {
+        return widget.getEntries().stream()
+                .filter(l -> Objects.equals(l.getId(), entryId)).findFirst()
+                .orElseThrow(() -> new EntityNotFoundException("Entry not found"));
+    }
+
 
 }

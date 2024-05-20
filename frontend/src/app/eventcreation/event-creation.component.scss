@@ -12,6 +12,10 @@ p {
   font-weight: var(--font-weight-subtitle);
 }
 
+mat-divider {
+  margin: 0 var(--size-24);
+}
+
 .cdk-overlay-container {
   padding: 25px;
 }
@@ -21,12 +25,13 @@ p {
   grid: auto / 1fr 2fr;
   gap: 12px;
 }
- @media (max-width: 600px) {
-   .create-event-container {
-     display: flex;
-     flex-direction: column;
-   }
- }
+
+@media (max-width: 600px) {
+  .create-event-container {
+    display: flex;
+    flex-direction: column;
+  }
+}
 
 
 .create-event-address-input {
