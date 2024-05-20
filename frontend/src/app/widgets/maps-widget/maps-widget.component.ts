@@ -9,6 +9,7 @@ import {AddLocationDialogComponent} from "./add-location-dialog/add-location-dia
 import {MatDialog} from "@angular/material/dialog";
 import {MatDrawer} from "@angular/material/sidenav";
 import {BaseWidget} from "../../../model/common-widget";
+import {GoogleMap} from "@angular/google-maps";
 
 @Component({
   selector: 'app-maps-widget',
@@ -28,8 +29,7 @@ export class MapsWidgetComponent implements OnInit {
   @Input()
   eventId!: string;
 
-  @Input({transform: (value: BaseWidget): MapWidget => value as MapWidget})
-  widget!: MapWidget;
+  private _widget!: MapWidget;
 
   @Output()
   onWidgetUpdated = new EventEmitter<MapWidget>();
@@ -37,9 +37,13 @@ export class MapsWidgetComponent implements OnInit {
   @ViewChild("drawer")
   private drawer!: MatDrawer;
 
+  @ViewChild("googleMap")
+  private googleMap!: GoogleMap;
+
   mapOptions: google.maps.MapOptions = {
     fullscreenControl: false,
     streetViewControl: false,
+    mapTypeId: "roadmap",
     zoom: 12,
     center: {
       lat: 49.02632,
@@ -61,6 +65,19 @@ export class MapsWidgetComponent implements OnInit {
     this.breakpointObserver.observe([Breakpoints.XSmall, Breakpoints.Small, Breakpoints.Medium]).subscribe(result => {
       this.isSmallLayout = result.matches;
     });
+  }
+
+  @Input({transform: (value: BaseWidget): MapWidget => value as MapWidget})
+  set widget(value: MapWidget) {
+    const hasChanged = value !== this._widget;
+    this._widget = value;
+    if (hasChanged && value.locations.length > 0) {
+      this.focusLocation(value.locations[0]);
+    }
+  }
+
+  get widget(): MapWidget {
+    return this._widget;
   }
 
   openAddLocationDialog() {
@@ -87,7 +104,8 @@ export class MapsWidgetComponent implements OnInit {
     this.mapOptions = {
       ...this.mapOptions,
       zoom: 17,
-      center: this.locationToLatLngLiteral(location)
+      center: this.locationToLatLngLiteral(location),
+      mapTypeId: this.googleMap ? this.googleMap.getMapTypeId() : this.mapOptions.mapTypeId
     };
 
     if (this.isSmallLayout) {
