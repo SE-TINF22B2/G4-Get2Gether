@@ -46,10 +46,14 @@ export class AddWidgetDialogComponent implements OnInit {
 
   openExpensesWidget() {
     console.log('open Expenses widget');
+    //TODO: url anpassen
+    //return this.http.post<MapWidget>(`${environment.api}/event/${this.eventId}/widgets/`, {withCredentials: true});
   }
 
   openCarpoolWidget() {
     console.log('open carpool widget');
+    //TODO: url anpassen
+    //return this.http.post<MapWidget>(`${environment.api}/event/${this.eventId}/widgets/`, {withCredentials: true});
   }
 
   openMapWidget() {
