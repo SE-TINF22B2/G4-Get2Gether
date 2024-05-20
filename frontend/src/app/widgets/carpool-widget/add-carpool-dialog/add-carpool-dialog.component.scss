@@ -1,0 +1,46 @@
+h1 {
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-title);
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+p {
+  font-size: var(--font-size-subtitle);
+  font-weight: var(--font-weight-subtitle);
+}
+
+mat-divider {
+  margin: 0 var(--size-24);
+}
+
+.cdk-overlay-container {
+  padding: 25px;
+}
+
+.create-event-container {
+  display: grid;
+  grid: auto / 1fr 2fr;
+  gap: 12px;
+}
+
+@media (max-width: 600px) {
+  .create-event-container {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+
+.create-event-address-input {
+  display: flex;
+  flex-direction: column;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 12px;
+}
