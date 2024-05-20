@@ -178,6 +178,60 @@ class ExpenseSplitWidgetServiceTest extends AbstractIntegrationTest {
         assertThat(returnedWidget.getEntries().get(0).getId()).isNotBlank();
     }
 
+    @Test
+    @WithMockOAuth2User
+    void shouldCalculateDeptsCorrectly(){
+        // given
+        UserWithPercentage mainUser = UserWithPercentage.builder()
+                .userId("test")
+                .percentage(0.25)
+                .build();
+        UserWithPercentage user2 = UserWithPercentage.builder()
+                .userId("user2")
+                .percentage(0.25)
+                .build();
+        UserWithPercentage user3 = UserWithPercentage.builder()
+                .userId("user3")
+                .percentage(0.25)
+                .build();
+        UserWithPercentage user4 = UserWithPercentage.builder()
+                .userId("user4")
+                .percentage(0.25)
+                .build();
+        ExpenseEntry entry1 = ExpenseEntry.builder()
+                .id("1")
+                .price(10)
+                .description("Bier")
+                .creatorId("test")
+                .involvedUsers(List.of(mainUser, user2, user3, user4))
+                .build();
+        ExpenseEntry entry2 = ExpenseEntry.builder()
+                .id("2")
+                .price(20)
+                .description("Bier2")
+                .creatorId("test")
+                .involvedUsers(List.of(mainUser, user2, user3, user4))
+                .build();
+
+        ExpenseSplitWidget widget = ExpenseSplitWidget.builder()
+                .id("wi-123")
+                .entries(List.of(entry1, entry2))
+                .build();
+
+        // when
+        List<Dept> depts = widget.calculateDeptsForUserId(mainUser.getUserId());
+
+        // then
+        assertThat(depts.get(0).getUserId()).isEqualTo(user2.getUserId());
+        assertThat(depts.get(0).getDeptAmount()).isEqualTo(user2.getPercentage()*entry1.getPrice()+user2.getPercentage()*entry2.getPrice());
+        assertThat(depts.get(1).getUserId()).isEqualTo(user3.getUserId());
+        assertThat(depts.get(1).getDeptAmount()).isEqualTo(user3.getPercentage()*entry1.getPrice()+user3.getPercentage()*entry2.getPrice());
+        assertThat(depts.get(2).getUserId()).isEqualTo(user4.getUserId());
+        assertThat(depts.get(2).getDeptAmount()).isEqualTo(user4.getPercentage()*entry1.getPrice()+user4.getPercentage()*entry2.getPrice());
+        assertThat(depts.size()==3).isTrue();
+    }
+
+
 //    @Test
 //    @WithMockGuestUser
 //    void shouldNotAddEntryIfUserIsGuest() {
