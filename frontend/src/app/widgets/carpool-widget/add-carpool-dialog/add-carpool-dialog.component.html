@@ -2,31 +2,19 @@
 
 <mat-dialog-content>
   <form [formGroup]="form">
-    <div class="create-event-container">
+    <div class="add-carpool-container">
 
       <p>Fahrer</p>
       <mat-form-field>
-        <mat-label>Name des Fahrers</mat-label>
-        <input matInput formControlName="driver">
+          <mat-label>Name des Fahrers</mat-label>
+          <input matInput formControlName="driver">
       </mat-form-field>
 
-      <p>Standort</p>
-      <div class="create-event-address-input">
+      <p>Startadresse</p>
         <mat-form-field>
-          <mat-label>Straße und Hausnummer</mat-label>
-          <input matInput formControlName="street">
+          <mat-label>Adresse</mat-label>
+          <input matInput formControlName="adress">
         </mat-form-field>
-        <div class="grid-container">
-          <mat-form-field>
-            <mat-label>PLZ</mat-label>
-            <input matInput formControlName="plz">
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>Stadt</mat-label>
-            <input matInput formControlName="stadt">
-          </mat-form-field>
-        </div>
-      </div>
 
       <p>Sitzplätze<sup>*</sup></p>
       <mat-form-field>
@@ -41,7 +29,7 @@
 
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Abbrechen</button>
-  <button mat-button [disabled]="!form.valid" [mat-dialog-close]="true"  cdkFocusInitial>
+  <button mat-button [disabled]="!form.valid" [mat-dialog-close]="true" (click)="addCarpool()"  cdkFocusInitial>
     Speichern
   </button>
 </mat-dialog-actions>

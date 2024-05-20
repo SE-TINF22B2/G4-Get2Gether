@@ -20,7 +20,7 @@ mat-divider {
   padding: 25px;
 }
 
-.create-event-container {
+.add-carpool-container {
   display: grid;
   grid: auto / 1fr 2fr;
   gap: 12px;
@@ -34,13 +34,3 @@ mat-divider {
 }
 
 
-.create-event-address-input {
-  display: flex;
-  flex-direction: column;
-}
-
-.grid-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-column-gap: 12px;
-}

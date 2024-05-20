@@ -1,5 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {SimpleUser} from "../../../../model/user";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {ExpenseEntry} from "../../../../model/expense-split-widget";
+import {UserService} from "../../../../services/user.service";
 
 @Component({
   selector: 'app-add-carpool-dialog',
@@ -17,11 +21,15 @@ export class AddCarpoolDialogComponent implements OnInit{
   ngOnInit() {
     this.form = this.fb.group({
       driver: ['', Validators.required],
-      street: [null],
-      plz: [null],
-      stadt: [null],
+      adress: [null],
       seats: ['', Validators.required]
     });
+  }
+  addCarpool(){
+    console.log('addCarpool');
+    //TODO: POST mit driver, adress und seats an /event/{eventId}/widgets/carpool/
+
+    //TODO: Snackbar auslösen
   }
 
 }
