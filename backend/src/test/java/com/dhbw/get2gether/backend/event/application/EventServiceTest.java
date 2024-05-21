@@ -7,6 +7,7 @@ import com.dhbw.get2gether.backend.event.model.Event;
 import com.dhbw.get2gether.backend.event.model.EventCreateCommand;
 import com.dhbw.get2gether.backend.event.model.EventOverviewDto;
 import com.dhbw.get2gether.backend.event.model.EventUpdateCommand;
+import com.dhbw.get2gether.backend.exceptions.EntityNotFoundException;
 import com.dhbw.get2gether.backend.user.application.UserService;
 import com.dhbw.get2gether.backend.user.model.User;
 import com.dhbw.get2gether.backend.utils.WithMockGuestUser;
@@ -49,7 +50,7 @@ class EventServiceTest extends AbstractIntegrationTest {
                 SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         EventCreateCommand command = EventCreateCommand.builder().build();
 
-        when(userService.findUserFromPrincipal(any())).thenReturn(Optional.empty());
+        when(userService.getUserByPrincipal(any())).thenThrow(EntityNotFoundException.class);
         when(eventRepository.insert((Event) any())).thenAnswer(args -> args.getArgument(0));
 
         // when
@@ -67,7 +68,7 @@ class EventServiceTest extends AbstractIntegrationTest {
         EventCreateCommand command = EventCreateCommand.builder().name("Test").build();
         User user = User.builder().id("test").build();
 
-        when(userService.findUserFromPrincipal(any())).thenReturn(Optional.of(user));
+        when(userService.getUserByPrincipal(any())).thenReturn(user);
         when(eventRepository.insert((Event) any())).thenAnswer(args -> args.getArgument(0));
 
         // when
@@ -81,32 +82,6 @@ class EventServiceTest extends AbstractIntegrationTest {
 
     @Test
     @WithMockOAuth2User
-    void shouldNotGetAllEventsIfNotAdmin() {
-        // given
-        when(eventRepository.findAll()).thenReturn(Collections.emptyList());
-
-        // when
-        // then
-        assertThatThrownBy(() -> eventService.getAllEvents()).isInstanceOf(AccessDeniedException.class);
-    }
-
-    @Test
-    @WithMockOAuth2User(authorities = {"ROLE_ADMIN"})
-    void shouldGetAllEventsIfAdmin() {
-        // given
-        Event event = Event.builder().build();
-        when(eventRepository.findAll()).thenReturn(Collections.singletonList(event));
-
-        // when
-        List<Event> events = eventService.getAllEvents();
-
-        // then
-        verify(eventRepository).findAll();
-        assertThat(events).hasSize(1);
-    }
-
-    @Test
-    @WithMockOAuth2User
     void shouldGetEventsFromUser() {
         // given
         AuthenticatedPrincipal principal = (AuthenticatedPrincipal)
@@ -115,14 +90,14 @@ class EventServiceTest extends AbstractIntegrationTest {
         Event event = Event.builder().id("test").build();
 
         when(userService.findUserFromPrincipal(any())).thenReturn(Optional.of(user));
-        when(eventRepository.findEventsByParticipantIdsContainsOrderByDate(eq(user.getId())))
+        when(eventRepository.findEventsByParticipantIdsContainsOrderByDateDesc(eq(user.getId())))
                 .thenReturn(Collections.singletonList(event));
 
         // when
         List<EventOverviewDto> events = eventService.getAllEventsFromUser(principal);
 
         // then
-        verify(eventRepository).findEventsByParticipantIdsContainsOrderByDate(eq(user.getId()));
+        verify(eventRepository).findEventsByParticipantIdsContainsOrderByDateDesc(eq(user.getId()));
         assertThat(events).hasSize(1);
     }
 

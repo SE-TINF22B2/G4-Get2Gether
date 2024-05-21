@@ -1,6 +1,7 @@
 package com.dhbw.get2gether.backend.widget.adapter.in;
 
 import com.dhbw.get2gether.backend.event.model.Event;
+import com.dhbw.get2gether.backend.event.model.EventDetailDto;
 import com.dhbw.get2gether.backend.widget.application.ShoppingListWidgetService;
 import com.dhbw.get2gether.backend.widget.model.shoppinglist.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,12 +19,13 @@ public class ShoppingListWidgetController {
     }
 
     @PostMapping("/")
-    public Event createShoppingListWidget(
+    public EventDetailDto createShoppingListWidget(
             @AuthenticationPrincipal OAuth2User principal,
             @PathVariable String eventId,
             @RequestBody ShoppingListCreateCommand createCommand
     ) {
-        return service.createShoppingListWidget(principal, eventId, createCommand);
+        Event event = service.createShoppingListWidget(principal, eventId, createCommand);
+        return service.mapEventToEventDetailDto(principal, event);
     }
 
     @PostMapping("/{widgetId}/entries")

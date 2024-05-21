@@ -1,10 +1,12 @@
-import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {Event} from "../../../../model/event";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {MapWidgetService} from "../../../../services/widgets/map-widget.service";
 import {EinkaufslisteWidgetService} from "../../../../services/widgets/einkaufsliste-widget.service";
 import {ExpenseSplitWidgetService} from "../../../../services/widgets/expense-split-widget.service";
+import {WidgetType} from "../../../../model/common-widget";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-add-widget-dialog',
@@ -12,24 +14,20 @@ import {ExpenseSplitWidgetService} from "../../../../services/widgets/expense-sp
   styleUrl: './add-widget-dialog.component.scss'
 })
 export class AddWidgetDialogComponent implements OnInit {
-  @Input()
-  eventData!: Event;
+
+  private eventData: Event;
 
   isPhonePortrait = false;
 
-  isShoppingListPresent: boolean = false;
-  isExpensesListPresent: boolean = false;
-  isCarpoolPresent: boolean = false;
-  isMAPPresent: boolean = false;
-  eventId = this.data.eventData.id;
-
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { eventData: Event },
+    @Inject(MAT_DIALOG_DATA) data: { eventData: Event },
     private breakpointObserver: BreakpointObserver,
     private dialogRef: MatDialogRef<AddWidgetDialogComponent>,
     private mapService: MapWidgetService,
-    private shoppingService: EinkaufslisteWidgetService,
-    private expenseService: ExpenseSplitWidgetService) {
+    private shoppingListService: EinkaufslisteWidgetService,
+    private expenseSplitService: ExpenseSplitWidgetService
+  ) {
+    this.eventData = data.eventData;
   }
 
   ngOnInit() {
@@ -37,16 +35,29 @@ export class AddWidgetDialogComponent implements OnInit {
       .subscribe(result => {
         this.isPhonePortrait = result.matches;
       });
-    this.disableShoppingList();
-    this.disableExpensesList();
-    this.disableCarpool();
-    this.disableMap();
   }
 
-  openShoppingListWidget() {
-    this.shoppingService.addShoppingWidget(this.eventId).subscribe({
-      next: response => {
-        this.dialogRef.close(this.eventId);
+  createShoppingListWidget() {
+    this.createWidget(this.shoppingListService.createShoppingWidget(this.eventId));
+  }
+
+  createExpenseSplitWidget() {
+    this.createWidget(this.expenseSplitService.createExpenseWidget(this.eventId));
+  }
+
+  createCarpoolWidget() {
+    // TODO: create carpool widget
+    // this.createWidget(this.carpoolService.createCarpoolWidget(this.eventId));
+  }
+
+  createMapWidget() {
+    this.createWidget(this.mapService.createMapWidget(this.eventId));
+  }
+
+  private createWidget(requestObservable: Observable<Event>) {
+    requestObservable.subscribe({
+      next: event => {
+        this.dialogRef.close(event);
       },
       error: error => {
         console.error('Error:', error);
@@ -54,57 +65,28 @@ export class AddWidgetDialogComponent implements OnInit {
     });
   }
 
-  openExpensesWidget() {
-    this.expenseService.createExpenseWidget(this.eventId).subscribe({
-      next: response => {
-        this.dialogRef.close(this.eventId);
-      },
-      error: error => {
-        console.error('Error:', error);
-      }
-    });
+  get isShoppingListPresent(): boolean {
+    return this.isWidgetTypePresent(WidgetType.SHOPPING_LIST);
   }
 
-  openCarpoolWidget() {
-    console.log('open carpool widget');
-    //TODO: url anpassen
-    //return this.http.post<MapWidget>(`${environment.api}/event/${this.eventId}/widgets/`, {withCredentials: true});
+  get isExpenseSplitPresent(): boolean {
+    return this.isWidgetTypePresent(WidgetType.EXPENSE_SPLIT);
   }
 
-  openMapWidget() {
-    this.mapService.addMapWidget(this.eventId).subscribe({
-      next: response => {
-        this.dialogRef.close(this.eventId);
-      },
-      error: error => {
-        console.error('Error:', error);
-      }
-    });
+  get isCarpoolPresent(): boolean {
+    return this.isWidgetTypePresent(WidgetType.CARPOOL);
   }
 
-  isWidgetTypePresent({widgetType}: { widgetType: any }): boolean {
-    return this.data.eventData.widgets.some(widget => widget.widgetType === widgetType);
+  get isMapPresent(): boolean {
+    return this.isWidgetTypePresent(WidgetType.MAP);
   }
 
-  disableShoppingList(){
-    if(this.isWidgetTypePresent({widgetType: 'SHOPPING_LIST'})){
-      this.isShoppingListPresent = true;
-    }
+  private isWidgetTypePresent(widgetType: WidgetType): boolean {
+    return this.eventData.widgets.some(widget => widget.widgetType === widgetType);
   }
-  disableExpensesList(){
-    if(this.isWidgetTypePresent({widgetType: 'EXPENSE_SPLIT'})){
-      this.isExpensesListPresent = true;
-    }
-  }
-  disableCarpool(){
-    if(this.isWidgetTypePresent({widgetType: 'CARPOOL'})){
-      this.isCarpoolPresent = true;
-    }
-  }
-  disableMap(){
-    if(this.isWidgetTypePresent({widgetType: 'MAP'})){
-      this.isMAPPresent = true;
-    }
+
+  private get eventId(): string {
+    return this.eventData.id;
   }
 }
 

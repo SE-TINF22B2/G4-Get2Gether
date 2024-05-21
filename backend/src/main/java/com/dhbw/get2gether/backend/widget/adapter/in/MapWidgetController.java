@@ -1,6 +1,7 @@
 package com.dhbw.get2gether.backend.widget.adapter.in;
 
 import com.dhbw.get2gether.backend.event.model.Event;
+import com.dhbw.get2gether.backend.event.model.EventDetailDto;
 import com.dhbw.get2gether.backend.widget.application.MapWidgetService;
 import com.dhbw.get2gether.backend.widget.model.map.LocationAddCommand;
 import com.dhbw.get2gether.backend.widget.model.map.MapWidget;
@@ -20,12 +21,13 @@ public class MapWidgetController {
     }
 
     @PostMapping("/")
-    public Event createMapWidget(
+    public EventDetailDto createMapWidget(
             @AuthenticationPrincipal OAuth2User principal,
             @PathVariable String eventId,
             @RequestBody MapWidgetCreateCommand createCommand
     ) {
-        return service.createMapWidget(principal, eventId, createCommand);
+        Event event = service.createMapWidget(principal, eventId, createCommand);
+        return service.mapEventToEventDetailDto(principal, event);
     }
 
     @PostMapping("/{widgetId}/locations")

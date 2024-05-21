@@ -20,14 +20,10 @@ public class EventController {
     }
 
     @PostMapping("/")
-    public Event createEvent(
+    public EventDetailDto createEvent(
             @AuthenticationPrincipal OAuth2User principal, @RequestBody EventCreateCommand eventCreateCommand) {
-        return eventService.createEvent(principal, eventCreateCommand);
-    }
-
-    @GetMapping("/all")
-    public List<Event> getAllEvents() {
-        return eventService.getAllEvents();
+        Event event = eventService.createEvent(principal, eventCreateCommand);
+        return eventService.mapEventToEventDetailDto(principal, event);
     }
 
     @GetMapping("/own")
@@ -38,12 +34,14 @@ public class EventController {
     @GetMapping("/{eventId}")
     public EventDetailDto getSingleEvent(
             @AuthenticationPrincipal AuthenticatedPrincipal principal, @PathVariable String eventId) {
-        return eventService.getSingleEventDto(principal, eventId);
+        Event event = eventService.getSingleEvent(principal, eventId);
+        return eventService.mapEventToEventDetailDto(principal, event);
     }
 
     @GetMapping("/{eventId}/generateInvitationLink")
-    public Event generateInvitationLink(@AuthenticationPrincipal OAuth2User principal, @PathVariable String eventId) {
-        return eventService.generateInvitationLink(principal, eventId);
+    public EventDetailDto generateInvitationLink(@AuthenticationPrincipal OAuth2User principal, @PathVariable String eventId) {
+        Event event = eventService.generateInvitationLink(principal, eventId);
+        return eventService.mapEventToEventDetailDto(principal, event);
     }
 
     @DeleteMapping("/{eventId}")
@@ -52,10 +50,11 @@ public class EventController {
     }
 
     @PutMapping("/{eventId}")
-    public Event updateEvent(
+    public EventDetailDto updateEvent(
             @AuthenticationPrincipal OAuth2User principal,
             @PathVariable String eventId,
             @RequestBody EventUpdateCommand eventUpdateCommand) {
-        return eventService.updateEvent(principal, eventId, eventUpdateCommand);
+        Event event = eventService.updateEvent(principal, eventId, eventUpdateCommand);
+        return eventService.mapEventToEventDetailDto(principal, event);
     }
 }

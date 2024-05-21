@@ -5,7 +5,7 @@
     (onClick)="scrollToWidget($event)"
   ></app-widgets-bar>
 
-  <button mat-icon-button matTooltip="Widget hinzufügen" (click)="openDialog()">
+  <button mat-icon-button matTooltip="Widget hinzufügen" (click)="openAddWidgetDialog()">
     <mat-icon>widgets</mat-icon>
   </button>
 </div>
@@ -24,7 +24,7 @@
     <div class="no-widgets-container">
       <img class="no-widgets-picture" width="300" height="250" ngSrc="./assets/noWidgets.svg" alt="">
       <h4>Keine Widgets vorhanden</h4>
-      <button mat-stroked-button (click)="openDialog()">
+      <button mat-stroked-button (click)="openAddWidgetDialog()">
         <mat-icon>widgets</mat-icon>
         Widget hinzufügen
       </button>
