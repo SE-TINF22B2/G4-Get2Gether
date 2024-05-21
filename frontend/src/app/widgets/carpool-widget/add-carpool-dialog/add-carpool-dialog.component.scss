@@ -26,6 +26,12 @@ mat-divider {
   gap: 12px;
 }
 
+.user-profile-picture {
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
 @media (max-width: 600px) {
   .create-event-container {
     display: flex;
