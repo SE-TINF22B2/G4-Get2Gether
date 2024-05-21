@@ -43,45 +43,45 @@ public class ExpenseSplitWidget extends Widget {
         return true;
     }
 
-    public List<Dept> calculateDeptsForUserId(String userId){
-        List<Dept> depts = new ArrayList<>();
+    public List<Debt> calculateDebtsForUserId(String userId){
+        List<Debt> debts = new ArrayList<>();
         for(ExpenseEntry expenseEntry : entries){
             if(expenseEntry.getCreatorId().equals(userId)){
-                // Add every involved user except the buyer to List of dept
+                // Add every involved user except the buyer to List of debt
                 for(UserWithPercentage userWithPercentage: expenseEntry.getInvolvedUsers()){
                     if(!Objects.equals(userWithPercentage.getUserId(), userId)){
-                        depts = addDept(depts, userWithPercentage.getUserId(), expenseEntry.getPrice()*userWithPercentage.getPercentage());
+                        debts = addDebt(debts, userWithPercentage.getUserId(), expenseEntry.getPrice()*userWithPercentage.getPercentage());
                     }
                 }
             } else {
                 Optional<UserWithPercentage> userWithPercentage = expenseEntry.getInvolvedUsers().stream()
                         .filter(user -> user.getUserId().equals(userId)).findFirst();
                 if(userWithPercentage.isPresent()){
-                    // Add the Dept of the user to the Dept List
-                    // In this case the user for whom we calculate all depts is a involved user and not the payer
-                    depts = addDept(depts, expenseEntry.getCreatorId(), expenseEntry.getPrice()*userWithPercentage.get().getPercentage()*-1.0);
+                    // Add the Debt of the user to the Debt List
+                    // In this case the user for whom we calculate all debts is a involved user and not the payer
+                    debts = addDebt(debts, expenseEntry.getCreatorId(), expenseEntry.getPrice()*userWithPercentage.get().getPercentage()*-1.0);
                 }
             }
         }
-        return depts;
+        return debts;
     }
 
-    // This method extracts the logic if the deptor is already in the list or not
-    private List<Dept> addDept(List<Dept> depts, String debtorId, double deptAmount){
-        Optional<Dept> optionalDept = depts.stream()
-                .filter(dept -> dept.getUserId().equals(debtorId)).findFirst();
+    // This method extracts the logic if the debtor is already in the list or not
+    private List<Debt> addDebt(List<Debt> debts, String debtorId, double debtAmount){
+        Optional<Debt> optionalDebt = debts.stream()
+                .filter(debt -> debt.getUserId().equals(debtorId)).findFirst();
 
-        if(optionalDept.isPresent()){
-            // Calculate new deptAmount if already exists
-            Dept newDept = new Dept(debtorId, optionalDept.get().getDeptAmount()+deptAmount);
-            int index = depts.indexOf(optionalDept.get());
-            depts.set(index, newDept);
+        if(optionalDebt.isPresent()){
+            // Calculate new debtAmount if already exists
+            Debt newDebt = new Debt(debtorId, optionalDebt.get().getDebtAmount()+debtAmount);
+            int index = debts.indexOf(optionalDebt.get());
+            debts.set(index, newDebt);
 
         } else {
-            // Add new dept if not exists already
-            depts.add(new Dept(debtorId, deptAmount));
+            // Add new debt if not exists already
+            debts.add(new Debt(debtorId, debtAmount));
         }
-        return depts;
+        return debts;
     }
 }
 

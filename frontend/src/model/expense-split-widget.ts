@@ -4,6 +4,7 @@ import {SimpleUser} from "./user";
 export type ExpenseSplitWidget = BaseWidget & {
   widgetType: WidgetType.EXPENSE_SPLIT;
   entries: ExpenseEntry[];
+  debts: Debt[];
 }
 
 export type ExpenseEntry = {
@@ -19,6 +20,11 @@ export type ExpenseEntry = {
 export type UsersWithPercentage = {
   user: SimpleUser;
   percentage: number;
+}
+
+export type Debt = {
+  user: SimpleUser;
+  debtAmount: number;
 }
 
 export type ExpenseEntryAddCommand = {

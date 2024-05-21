@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Dept {
+public class Debt {
     private String userId;
-    private double deptAmount;
+    private double debtAmount;
 }

@@ -81,7 +81,8 @@ public class EventService {
     @PreAuthorize("hasRole('GUEST')")
     public EventDetailDto getSingleEventDto(AuthenticatedPrincipal principal, String eventId) {
         Event event = getSingleEvent(principal, eventId);
-        return eventMapper.toEventDetailDto(event, userService.getSimpleUsersById(event.getParticipantIds()));
+        User user = userService.getUserByPrincipal(principal);
+        return eventMapper.toEventDetailDto(event, userService.getSimpleUsersById(event.getParticipantIds()), user.getId());
     }
 
     @PreAuthorize("hasRole('USER')")
