@@ -28,7 +28,7 @@ export class AddCarpoolDialogComponent implements OnInit{
   }
   addCarpool(){
     console.log('addCarpool');
-    //TODO: POST mit driver, adress und seats an /event/{eventId}/widgets/carpool/
+    //TODO: Service
 
     //TODO: Snackbar auslösen
   }

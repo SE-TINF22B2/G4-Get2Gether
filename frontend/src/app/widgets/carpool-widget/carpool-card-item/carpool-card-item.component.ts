@@ -17,7 +17,7 @@ import {MatCheckboxChange} from "@angular/material/checkbox";
 export class CarpoolCardItemComponent {
 
   @Input()
-  eventData!: Event; b
+  eventData!: Event;
 
   @Input({transform: (value: BaseWidget): ShoppingWidget => value as ShoppingWidget})
   widget!: ShoppingWidget;
