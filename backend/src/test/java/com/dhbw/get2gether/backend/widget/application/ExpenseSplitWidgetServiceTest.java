@@ -239,6 +239,9 @@ class ExpenseSplitWidgetServiceTest extends AbstractIntegrationTest {
                         )
                         .build()
                 );
+        when(userService.getUserByPrincipal(principal)).thenReturn(User.builder()
+                .id("test")
+                .email("test@example.com").build());
 
         // when
         ExpenseSplitWidgetDto returnedWidget = expenseSplitWidgetService.removeEntry(principal, event.getId(), widget.getId(), entry.getId());
