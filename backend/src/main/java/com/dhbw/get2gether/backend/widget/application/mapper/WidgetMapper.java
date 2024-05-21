@@ -18,13 +18,13 @@ public abstract class WidgetMapper {
     // @SubclassMapping(source = ExpenseSplitWidget.class, target = ExpenseSplitWidgetDto.class)
     public IWidget widgetToIWidget(Widget widget, @Context List<SimpleUserDto> participants, @Context String userId) {
         if (widget instanceof ExpenseSplitWidget) {
-            List<Dept> depts = ((ExpenseSplitWidget) widget).calculateDeptsForUserId(userId);
-            return expenseSplitWidgetToExpenseSplitWidgetDto((ExpenseSplitWidget) widget, depts, participants);
+            List<Debt> debts = ((ExpenseSplitWidget) widget).calculateDebtsForUserId(userId);
+            return expenseSplitWidgetToExpenseSplitWidgetDto((ExpenseSplitWidget) widget, debts, participants);
         }
         return widget;
     }
 
-    public abstract ExpenseSplitWidgetDto expenseSplitWidgetToExpenseSplitWidgetDto(ExpenseSplitWidget widget, List<Dept> depts, @Context List<SimpleUserDto> participants);
+    public abstract ExpenseSplitWidgetDto expenseSplitWidgetToExpenseSplitWidgetDto(ExpenseSplitWidget widget, List<Debt> debts, @Context List<SimpleUserDto> participants);
 
     // Find the userWithPercentage in the list of participants. Return null if the user is not found.
     UserWithPercentageDto userWithPercentageToUserWithPercentageDto(UserWithPercentage userWithPercentage, @Context List<SimpleUserDto> participants) {
@@ -49,10 +49,10 @@ public abstract class WidgetMapper {
                 .build();
     }
 
-    DeptDto deptToDeptDto(Dept dept, @Context List<SimpleUserDto> participants){
-        return DeptDto.builder()
-                .deptAmount(dept.getDeptAmount())
-                .user(participants.stream().filter(user -> user.getId().equals(dept.getUserId())).findFirst().orElseThrow(
+    DebtDto debtToDebtDto(Debt debt, @Context List<SimpleUserDto> participants){
+        return DebtDto.builder()
+                .debtAmount(debt.getDebtAmount())
+                .user(participants.stream().filter(user -> user.getId().equals(debt.getUserId())).findFirst().orElseThrow(
                         () -> new EntityNotFoundException("User not in participants")
                 )).build();
     }

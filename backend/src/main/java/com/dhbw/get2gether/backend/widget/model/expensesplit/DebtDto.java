@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DeptDto {
+public class DebtDto {
     private SimpleUserDto user;
-    private double deptAmount;
+    private double debtAmount;
 }

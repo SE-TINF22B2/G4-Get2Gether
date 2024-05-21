@@ -255,7 +255,7 @@ class ExpenseSplitWidgetServiceTest extends AbstractIntegrationTest {
     class Calculation{
         @Test
         @WithMockOAuth2User
-        void shouldCalculateDeptsAsOnlyBuyer(){
+        void shouldCalculateDebtsAsOnlyBuyer(){
             // given
             UserWithPercentage mainUser = UserWithPercentage.builder()
                     .userId("test")
@@ -294,21 +294,21 @@ class ExpenseSplitWidgetServiceTest extends AbstractIntegrationTest {
                     .build();
 
             // when
-            List<Dept> depts = widget.calculateDeptsForUserId(mainUser.getUserId());
+            List<Debt> debts = widget.calculateDebtsForUserId(mainUser.getUserId());
 
             // then
-            assertThat(depts.get(0).getUserId()).isEqualTo(user2.getUserId());
-            assertThat(depts.get(0).getDeptAmount()).isEqualTo(user2.getPercentage()*entry1.getPrice()+user2.getPercentage()*entry2.getPrice());
-            assertThat(depts.get(1).getUserId()).isEqualTo(user3.getUserId());
-            assertThat(depts.get(1).getDeptAmount()).isEqualTo(user3.getPercentage()*entry1.getPrice()+user3.getPercentage()*entry2.getPrice());
-            assertThat(depts.get(2).getUserId()).isEqualTo(user4.getUserId());
-            assertThat(depts.get(2).getDeptAmount()).isEqualTo(user4.getPercentage()*entry1.getPrice()+user4.getPercentage()*entry2.getPrice());
-            assertThat(depts).hasSize(3);
+            assertThat(debts.get(0).getUserId()).isEqualTo(user2.getUserId());
+            assertThat(debts.get(0).getDebtAmount()).isEqualTo(user2.getPercentage()*entry1.getPrice()+user2.getPercentage()*entry2.getPrice());
+            assertThat(debts.get(1).getUserId()).isEqualTo(user3.getUserId());
+            assertThat(debts.get(1).getDebtAmount()).isEqualTo(user3.getPercentage()*entry1.getPrice()+user3.getPercentage()*entry2.getPrice());
+            assertThat(debts.get(2).getUserId()).isEqualTo(user4.getUserId());
+            assertThat(debts.get(2).getDebtAmount()).isEqualTo(user4.getPercentage()*entry1.getPrice()+user4.getPercentage()*entry2.getPrice());
+            assertThat(debts).hasSize(3);
         }
 
         @Test
         @WithMockOAuth2User
-        void shouldCalculateDeptsAsOnlyReceiver(){
+        void shouldCalculateDebtsAsOnlyReceiver(){
             // given
             UserWithPercentage mainUser = UserWithPercentage.builder()
                     .userId("test")
@@ -347,19 +347,19 @@ class ExpenseSplitWidgetServiceTest extends AbstractIntegrationTest {
                     .build();
 
             // when
-            List<Dept> depts = widget.calculateDeptsForUserId(mainUser.getUserId());
+            List<Debt> debts = widget.calculateDebtsForUserId(mainUser.getUserId());
 
             // then
-            assertThat(depts.get(0).getUserId()).isEqualTo(user2.getUserId());
-            assertThat(depts.get(0).getDeptAmount()).isEqualTo(mainUser.getPercentage()*entry1.getPrice()*-1);
-            assertThat(depts.get(1).getUserId()).isEqualTo(user3.getUserId());
-            assertThat(depts.get(1).getDeptAmount()).isEqualTo(mainUser.getPercentage()*entry2.getPrice()*-1);
-            assertThat(depts).hasSize(2);
+            assertThat(debts.get(0).getUserId()).isEqualTo(user2.getUserId());
+            assertThat(debts.get(0).getDebtAmount()).isEqualTo(mainUser.getPercentage()*entry1.getPrice()*-1);
+            assertThat(debts.get(1).getUserId()).isEqualTo(user3.getUserId());
+            assertThat(debts.get(1).getDebtAmount()).isEqualTo(mainUser.getPercentage()*entry2.getPrice()*-1);
+            assertThat(debts).hasSize(2);
         }
 
         @Test
         @WithMockOAuth2User
-        void shouldCalculateDeptsAsOnlyReceiverFromOneOtherUser(){
+        void shouldCalculateDebtsAsOnlyReceiverFromOneOtherUser(){
             // given
             UserWithPercentage mainUser = UserWithPercentage.builder()
                     .userId("test")
@@ -398,17 +398,17 @@ class ExpenseSplitWidgetServiceTest extends AbstractIntegrationTest {
                     .build();
 
             // when
-            List<Dept> depts = widget.calculateDeptsForUserId(mainUser.getUserId());
+            List<Debt> debts = widget.calculateDebtsForUserId(mainUser.getUserId());
 
             // then
-            assertThat(depts.get(0).getUserId()).isEqualTo(user2.getUserId());
-            assertThat(depts.get(0).getDeptAmount()).isEqualTo(mainUser.getPercentage()*entry1.getPrice()*-1+mainUser.getPercentage()*entry2.getPrice()*-1);
-            assertThat(depts).hasSize(1);
+            assertThat(debts.get(0).getUserId()).isEqualTo(user2.getUserId());
+            assertThat(debts.get(0).getDebtAmount()).isEqualTo(mainUser.getPercentage()*entry1.getPrice()*-1+mainUser.getPercentage()*entry2.getPrice()*-1);
+            assertThat(debts).hasSize(1);
         }
 
         @Test
         @WithMockOAuth2User
-        void shouldCalculateDeptsAsBuyerAndReceiver(){
+        void shouldCalculateDebtsAsBuyerAndReceiver(){
             // given
             UserWithPercentage mainUser = UserWithPercentage.builder()
                     .userId("test")
@@ -447,16 +447,16 @@ class ExpenseSplitWidgetServiceTest extends AbstractIntegrationTest {
                     .build();
 
             // when
-            List<Dept> depts = widget.calculateDeptsForUserId(mainUser.getUserId());
+            List<Debt> debts = widget.calculateDebtsForUserId(mainUser.getUserId());
 
             // then
-            assertThat(depts.get(0).getUserId()).isEqualTo(user2.getUserId());
-            assertThat(depts.get(0).getDeptAmount()).isEqualTo(user2.getPercentage()*entry1.getPrice()+mainUser.getPercentage()*entry2.getPrice()*-1);
-            assertThat(depts.get(1).getUserId()).isEqualTo(user3.getUserId());
-            assertThat(depts.get(1).getDeptAmount()).isEqualTo(user3.getPercentage()*entry1.getPrice());
-            assertThat(depts.get(2).getUserId()).isEqualTo(user4.getUserId());
-            assertThat(depts.get(2).getDeptAmount()).isEqualTo(user4.getPercentage()*entry1.getPrice());
-            assertThat(depts).hasSize(3);
+            assertThat(debts.get(0).getUserId()).isEqualTo(user2.getUserId());
+            assertThat(debts.get(0).getDebtAmount()).isEqualTo(user2.getPercentage()*entry1.getPrice()+mainUser.getPercentage()*entry2.getPrice()*-1);
+            assertThat(debts.get(1).getUserId()).isEqualTo(user3.getUserId());
+            assertThat(debts.get(1).getDebtAmount()).isEqualTo(user3.getPercentage()*entry1.getPrice());
+            assertThat(debts.get(2).getUserId()).isEqualTo(user4.getUserId());
+            assertThat(debts.get(2).getDebtAmount()).isEqualTo(user4.getPercentage()*entry1.getPrice());
+            assertThat(debts).hasSize(3);
         }
 
 
