@@ -1,8 +1,12 @@
 package com.dhbw.get2gether.backend.widget.adapter.in;
 
 import com.dhbw.get2gether.backend.event.model.Event;
+import com.dhbw.get2gether.backend.event.model.EventDetailDto;
 import com.dhbw.get2gether.backend.widget.application.ExpenseSplitWidgetService;
-import com.dhbw.get2gether.backend.widget.model.expensesplit.*;
+import com.dhbw.get2gether.backend.widget.model.expensesplit.ExpenseEntryAddCommand;
+import com.dhbw.get2gether.backend.widget.model.expensesplit.ExpenseEntryUpdateCommand;
+import com.dhbw.get2gether.backend.widget.model.expensesplit.ExpenseSplitWidgetCreateCommand;
+import com.dhbw.get2gether.backend.widget.model.expensesplit.ExpenseSplitWidgetDto;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
@@ -18,12 +22,13 @@ public class ExpenseSplitWidgetController {
     }
 
     @PostMapping("/")
-    public Event createExpenseSplitWidget(
+    public EventDetailDto createExpenseSplitWidget(
             @AuthenticationPrincipal OAuth2User principal,
             @PathVariable String eventId,
             @RequestBody ExpenseSplitWidgetCreateCommand createCommand
     ) {
-        return service.createExpenseSplitWidget(principal, eventId, createCommand);
+        Event event = service.createExpenseSplitWidget(principal, eventId, createCommand);
+        return service.mapEventToEventDetailDto(principal, event);
     }
 
     @PostMapping("/{widgetId}/entries")

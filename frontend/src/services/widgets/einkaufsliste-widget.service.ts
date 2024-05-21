@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {environment} from "../../environment/environment";
 import {Entry, EntryCheckCommand, EntryCommand, ShoppingWidget} from "../../model/shoppinglist-widget";
+import {Event} from "../../model/event";
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,10 @@ import {Entry, EntryCheckCommand, EntryCommand, ShoppingWidget} from "../../mode
 export class EinkaufslisteWidgetService {
 
   constructor(private http: HttpClient) {
+  }
+
+  createShoppingWidget(eventId: string): Observable<Event> {
+    return this.http.post<Event>(`${environment.api}/event/${eventId}/widgets/shopping-list/`, {},{withCredentials: true});
   }
 
   addEntry(eventId: string, widgetId: string, entryCommand: EntryCommand): Observable<ShoppingWidget> {

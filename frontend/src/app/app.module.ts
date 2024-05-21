@@ -57,6 +57,7 @@ import { ParticipantCardComponent } from './eventpage/participants-sidenav/parti
 import { ShoppingListWidgetComponent } from './widgets/shopping-list-widget/shopping-list-widget.component';
 import { DefaultShoppingPageComponent } from './widgets/shopping-list-widget/default-shopping-page/default-shopping-page.component';
 import { AddEntryDialogComponent } from './widgets/shopping-list-widget/add-entry-dialog/add-entry-dialog.component';
+import {RouterOutlet} from "@angular/router";
 import {
   MatDatepicker, MatDatepickerActions, MatDatepickerApply, MatDatepickerCancel,
   MatDatepickerToggle,
@@ -72,6 +73,7 @@ import { DeleteEntryConfirmationDialogComponent } from './widgets/expense-split-
 import { EditEntryDialogComponent } from './widgets/shopping-list-widget/edit-entry-dialog/edit-entry-dialog.component';
 import { ShoppingListEntryListItemComponent } from './widgets/shopping-list-widget/shopping-list-entry-list-item/shopping-list-entry-list-item.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {AddWidgetDialogComponent} from "./eventpage/widgets-section/add-widget-dialog/add-widget-dialog.component";
 import { ExpenseDebtOverviewComponent } from './widgets/expense-split-widget/expense-debt-overview/expense-debt-overview.component';
 
 registerLocaleData(localeDe);
@@ -131,6 +133,7 @@ function loadMapApi(httpClient: HttpClient) {
     EditEntryDialogComponent,
     ShoppingListEntryListItemComponent,
     ExpenseDebtOverviewComponent,
+    AddWidgetDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -162,6 +165,7 @@ function loadMapApi(httpClient: HttpClient) {
     FormsModule,
     ScrollingModule,
     MatTabsModule,
+    RouterOutlet,
     MatDatepicker,
     MatEndDate,
     MatStartDate,

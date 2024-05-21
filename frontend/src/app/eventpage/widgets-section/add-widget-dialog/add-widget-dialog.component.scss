@@ -1,0 +1,40 @@
+.mat-dialog-container {
+  height: 100%;
+  width: 100%
+}
+
+.widget-div {
+  display: grid;
+  grid: auto / 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 600px) {
+  .widget-div {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.widget-card {
+  display: flex;
+  border-radius: 12px;
+  height: 100%;
+  width: 100%;
+  justify-content: start;
+  align-items: center;
+  gap: var(--size-12);
+  text-align: left;
+}
+
+.material-icons-outlined {
+  font-size: 80px;
+  min-width: 80px;
+  height: 100%;
+  line-height: 2em;
+}
+
+.mat-dialog-title {
+  text-align: center;
+  color: var(--secondary-color);
+}
