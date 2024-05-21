@@ -46,7 +46,7 @@ export class AddWidgetDialogComponent implements OnInit {
   openShoppingListWidget() {
     this.shoppingService.addShoppingWidget(this.eventId).subscribe({
       next: response => {
-        this.dialogRef.close(response);
+        this.dialogRef.close(this.eventId);
       },
       error: error => {
         console.error('Error:', error);
@@ -57,7 +57,7 @@ export class AddWidgetDialogComponent implements OnInit {
   openExpensesWidget() {
     this.expenseService.createExpenseWidget(this.eventId).subscribe({
       next: response => {
-        this.dialogRef.close(response);
+        this.dialogRef.close(this.eventId);
       },
       error: error => {
         console.error('Error:', error);
@@ -74,7 +74,7 @@ export class AddWidgetDialogComponent implements OnInit {
   openMapWidget() {
     this.mapService.addMapWidget(this.eventId).subscribe({
       next: response => {
-        this.dialogRef.close(response);
+        this.dialogRef.close(this.eventId);
       },
       error: error => {
         console.error('Error:', error);
@@ -92,7 +92,7 @@ export class AddWidgetDialogComponent implements OnInit {
     }
   }
   disableExpensesList(){
-    if(this.isWidgetTypePresent({widgetType: 'EXPENSES_SPLIT'})){
+    if(this.isWidgetTypePresent({widgetType: 'EXPENSE_SPLIT'})){
       this.isExpensesListPresent = true;
     }
   }

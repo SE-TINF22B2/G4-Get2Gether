@@ -30,7 +30,7 @@ export class WidgetsSectionComponent implements OnInit, OnDestroy {
   onWidgetUpdated = new EventEmitter<BaseWidget>();
 
   @Output()
-  onEventUpdated = new EventEmitter<Event>();
+  onEventUpdated = new EventEmitter<string>();
 
   @ViewChildren(WidgetContainerComponent)
   widgetContainers!: QueryList<WidgetContainerComponent>;
@@ -111,9 +111,8 @@ export class WidgetsSectionComponent implements OnInit, OnDestroy {
       data: { eventData: this.eventData},
       width: '800px'
     });
-    dialogRef.afterClosed().subscribe(widget => {
-      console.log("Vor emit: ", widget);
-      this.onEventUpdated.emit(widget)
+    dialogRef.afterClosed().subscribe(eventId => {
+      this.onEventUpdated.emit(eventId)
     });
   }
 }

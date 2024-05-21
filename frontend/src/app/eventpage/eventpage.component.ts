@@ -49,8 +49,8 @@ export class EventpageComponent implements OnInit, OnDestroy {
     this.eventData.widgets[index] = widget;
   }
 
-  onEventUpdated(event: Event) {
-
+  onEventUpdated(eventId: string) {
+    this.loadEventData(eventId);
   }
 
   private loadEventData(eventId: string) {
