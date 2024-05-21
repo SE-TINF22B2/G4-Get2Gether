@@ -16,14 +16,15 @@ public abstract class WidgetMapper {
 
     // Manual implementation of @SubclassMapping which returns the widget object if no custom mapping is needed.
     // @SubclassMapping(source = ExpenseSplitWidget.class, target = ExpenseSplitWidgetDto.class)
-    public IWidget widgetToIWidget(Widget widget, @Context List<SimpleUserDto> participants) {
+    public IWidget widgetToIWidget(Widget widget, @Context List<SimpleUserDto> participants, @Context String userId) {
         if (widget instanceof ExpenseSplitWidget) {
-            return expenseSplitWidgetToExpenseSplitWidgetDto((ExpenseSplitWidget) widget, participants);
+            List<Dept> depts = ((ExpenseSplitWidget) widget).calculateDeptsForUserId(userId);
+            return expenseSplitWidgetToExpenseSplitWidgetDto((ExpenseSplitWidget) widget, depts, participants);
         }
         return widget;
     }
 
-    public abstract ExpenseSplitWidgetDto expenseSplitWidgetToExpenseSplitWidgetDto(ExpenseSplitWidget widget, @Context List<SimpleUserDto> participants);
+    public abstract ExpenseSplitWidgetDto expenseSplitWidgetToExpenseSplitWidgetDto(ExpenseSplitWidget widget, List<Dept> depts, @Context List<SimpleUserDto> participants);
 
     // Find the userWithPercentage in the list of participants. Return null if the user is not found.
     UserWithPercentageDto userWithPercentageToUserWithPercentageDto(UserWithPercentage userWithPercentage, @Context List<SimpleUserDto> participants) {
