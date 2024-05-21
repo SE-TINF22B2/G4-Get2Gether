@@ -12,6 +12,10 @@ export class MapWidgetService {
   constructor(private http: HttpClient) {
   }
 
+  addMapWidget(eventId: string): Observable<MapWidget> {
+    return this.http.post<MapWidget>(`${environment.api}/event/${eventId}/widgets/map/`, {},{withCredentials: true});
+  }
+
   addLocation(eventId: string, widgetId: string, addCommand: LocationAddCommand): Observable<MapWidget> {
     return this.http.post<MapWidget>(`${environment.api}/event/${eventId}/widgets/map/${widgetId}/locations`, addCommand, {withCredentials: true});
   }

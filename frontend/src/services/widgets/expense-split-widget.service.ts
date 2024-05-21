@@ -12,6 +12,11 @@ export class ExpenseSplitWidgetService {
   constructor(private http: HttpClient) {
   }
 
+  createExpenseWidget(eventId: string): Observable<ExpenseSplitWidget> {
+    return this.http.post<ExpenseSplitWidget>(`${environment.api}/event/${eventId}/widgets/expense-split/`, {},{withCredentials: true});
+  }
+
+
   createExpenseEntry(
     eventId: string,
     widgetId: string,

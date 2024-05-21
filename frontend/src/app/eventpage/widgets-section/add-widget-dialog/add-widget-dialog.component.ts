@@ -1,10 +1,10 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {Event} from "../../../../model/event";
-import {MAT_DIALOG_DATA} from "@angular/material/dialog";
-import {MapWidget} from "../../../../model/map-widget";
-import {environment} from "../../../../environment/environment";
-import {HttpClient} from "@angular/common/http";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {MapWidgetService} from "../../../../services/widgets/map-widget.service";
+import {EinkaufslisteWidgetService} from "../../../../services/widgets/einkaufsliste-widget.service";
+import {ExpenseSplitWidgetService} from "../../../../services/widgets/expense-split-widget.service";
 
 @Component({
   selector: 'app-add-widget-dialog',
@@ -17,13 +17,19 @@ export class AddWidgetDialogComponent implements OnInit {
 
   isPhonePortrait = false;
 
-
   isShoppingListPresent: boolean = false;
   isExpensesListPresent: boolean = false;
   isCarpoolPresent: boolean = false;
   isMAPPresent: boolean = false;
+  eventId = this.data.eventData.id;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { eventData: Event }, private breakpointObserver: BreakpointObserver, private http: HttpClient) {
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: { eventData: Event },
+    private breakpointObserver: BreakpointObserver,
+    private dialogRef: MatDialogRef<AddWidgetDialogComponent>,
+    private mapService: MapWidgetService,
+    private shoppingService: EinkaufslisteWidgetService,
+    private expenseService: ExpenseSplitWidgetService) {
   }
 
   ngOnInit() {
@@ -37,17 +43,26 @@ export class AddWidgetDialogComponent implements OnInit {
     this.disableMap();
   }
 
-  eventId = this.data.eventData.id;
   openShoppingListWidget() {
-    console.log('open Shopping List widget');
-    return this.http.post<MapWidget>(`${environment.api}/event/${this.eventId}/widgets/shopping-list/`, {withCredentials: true});
-
+    this.shoppingService.addShoppingWidget(this.eventId).subscribe({
+      next: response => {
+        this.dialogRef.close(response);
+      },
+      error: error => {
+        console.error('Error:', error);
+      }
+    });
   }
 
   openExpensesWidget() {
-    console.log('open Expenses widget');
-    //TODO: url anpassen
-    //return this.http.post<MapWidget>(`${environment.api}/event/${this.eventId}/widgets/`, {withCredentials: true});
+    this.expenseService.createExpenseWidget(this.eventId).subscribe({
+      next: response => {
+        this.dialogRef.close(response);
+      },
+      error: error => {
+        console.error('Error:', error);
+      }
+    });
   }
 
   openCarpoolWidget() {
@@ -57,9 +72,14 @@ export class AddWidgetDialogComponent implements OnInit {
   }
 
   openMapWidget() {
-    console.log('open Map widget');
-    return this.http.post<MapWidget>(`${environment.api}/event/${this.eventId}/widgets/map/`, {withCredentials: true});
-
+    this.mapService.addMapWidget(this.eventId).subscribe({
+      next: response => {
+        this.dialogRef.close(response);
+      },
+      error: error => {
+        console.error('Error:', error);
+      }
+    });
   }
 
   isWidgetTypePresent({widgetType}: { widgetType: any }): boolean {

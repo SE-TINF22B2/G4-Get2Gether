@@ -29,6 +29,9 @@ export class WidgetsSectionComponent implements OnInit, OnDestroy {
   @Output()
   onWidgetUpdated = new EventEmitter<BaseWidget>();
 
+  @Output()
+  onEventUpdated = new EventEmitter<Event>();
+
   @ViewChildren(WidgetContainerComponent)
   widgetContainers!: QueryList<WidgetContainerComponent>;
 
@@ -104,9 +107,13 @@ export class WidgetsSectionComponent implements OnInit, OnDestroy {
   }
 
   openDialog() {
-    this.dialog.open(AddWidgetDialogComponent, {
+    const dialogRef = this.dialog.open(AddWidgetDialogComponent, {
       data: { eventData: this.eventData},
       width: '800px'
+    });
+    dialogRef.afterClosed().subscribe(widget => {
+      console.log("Vor emit: ", widget);
+      this.onEventUpdated.emit(widget)
     });
   }
 }
