@@ -72,6 +72,10 @@ import { DeleteEntryConfirmationDialogComponent } from './widgets/expense-split-
 import { EditEntryDialogComponent } from './widgets/shopping-list-widget/edit-entry-dialog/edit-entry-dialog.component';
 import { ShoppingListEntryListItemComponent } from './widgets/shopping-list-widget/shopping-list-entry-list-item/shopping-list-entry-list-item.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { ExpenseDebtOverviewComponent } from './widgets/expense-split-widget/expense-debt-overview/expense-debt-overview.component';
+import { CarpoolWidgetComponent } from './widgets/carpool-widget/carpool-widget.component';
+import { DefaultCarpoolPageComponent } from './widgets/carpool-widget/default-carpool-page/default-carpool-page.component';
+import { AddCarpoolDialogComponent } from './widgets/carpool-widget/add-carpool-dialog/add-carpool-dialog.component';
 import { CarpoolCardItemComponent } from './widgets/carpool-widget/carpool-card-item/carpool-card-item.component';
 
 registerLocaleData(localeDe);
@@ -130,6 +134,10 @@ function loadMapApi(httpClient: HttpClient) {
     AddEntryDialogComponent,
     EditEntryDialogComponent,
     ShoppingListEntryListItemComponent,
+    CarpoolWidgetComponent,
+    DefaultCarpoolPageComponent,
+    AddCarpoolDialogComponent,
+    ExpenseDebtOverviewComponent,
     CarpoolCardItemComponent,
   ],
   imports: [

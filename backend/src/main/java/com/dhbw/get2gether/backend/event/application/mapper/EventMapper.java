@@ -38,8 +38,8 @@ public interface EventMapper {
     @Mapping(target = "participantIds", ignore = true)
     Event updateEvent(@MappingTarget Event event, EventWidgetUpdateCommand eventWidgetUpdateCommand);
 
-    default EventDetailDto toEventDetailDto(Event event, @Context List<SimpleUserDto> participants) {
-        return _toEventDetailDto(event, participants, participants);
+    default EventDetailDto toEventDetailDto(Event event, @Context List<SimpleUserDto> participants, @Context String userId) {
+        return _toEventDetailDto(event, participants, participants, userId);
     }
 
     /**
@@ -48,5 +48,5 @@ public interface EventMapper {
      * This is a helper method to map an Event to an EventDro with a list of participants while also providing the participants list as mapping context.
      * Mapstruct will use the {@code WidgetMapper} to map Widgets to IWidgets.
      */
-    EventDetailDto _toEventDetailDto(Event event, List<SimpleUserDto> participants, @Context List<SimpleUserDto> participantsContext);
+    EventDetailDto _toEventDetailDto(Event event, List<SimpleUserDto> participants, @Context List<SimpleUserDto> participantsContext, @Context String userId);
 }

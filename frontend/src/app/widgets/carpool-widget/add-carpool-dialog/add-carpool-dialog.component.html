@@ -1,1 +1,35 @@
-<p>add-carpool-dialog works!</p>
+<h1 mat-dialog-title>Fahrgemeinschaft hinzufügen</h1>
+
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <div class="add-carpool-container">
+
+      <p>Fahrer</p>
+      <mat-form-field>
+          <mat-label>Name des Fahrers</mat-label>
+          <input matInput formControlName="driver">
+      </mat-form-field>
+
+      <p>Startadresse</p>
+        <mat-form-field>
+          <mat-label>Adresse</mat-label>
+          <input matInput formControlName="adress">
+        </mat-form-field>
+
+      <p>Sitzplätze<sup>*</sup></p>
+      <mat-form-field>
+        <mat-label>Anzahl der Sitzplätze</mat-label>
+        <input matInput formControlName="seats">
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-divider></mat-divider>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Abbrechen</button>
+  <button mat-button [disabled]="!form.valid" [mat-dialog-close]="true" (click)="addCarpool()"  cdkFocusInitial>
+    Speichern
+  </button>
+</mat-dialog-actions>

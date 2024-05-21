@@ -1,5 +1,6 @@
 mat-card {
-  --mdc-elevated-card-container-color: var(--background-container-color);
+  --mdc-elevated-card-container-color: var(--background-container-low-color);
+  --mdc-elevated-card-container-elevation: none;
 }
 
 .menu-button {

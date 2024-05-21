@@ -1,0 +1,36 @@
+h1 {
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-title);
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+p {
+  font-size: var(--font-size-subtitle);
+  font-weight: var(--font-weight-subtitle);
+}
+
+mat-divider {
+  margin: 0 var(--size-24);
+}
+
+.cdk-overlay-container {
+  padding: 25px;
+}
+
+.add-carpool-container {
+  display: grid;
+  grid: auto / 1fr 2fr;
+  gap: 12px;
+}
+
+@media (max-width: 600px) {
+  .create-event-container {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+
