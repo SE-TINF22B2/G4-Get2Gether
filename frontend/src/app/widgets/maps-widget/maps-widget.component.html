@@ -45,6 +45,7 @@
 
   <mat-drawer-content>
     <google-map
+      #googleMap
       [options]="mapOptions"
       width="100%">
       @for (position of mapsMarkerPositions; track position.lng + "," + position.lat) {

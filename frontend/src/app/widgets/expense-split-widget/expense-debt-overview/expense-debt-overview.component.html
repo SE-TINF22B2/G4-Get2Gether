@@ -1,0 +1,31 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Übersicht</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <ul class="debt-list">
+      @for (debt of debts; track debt) {
+        <li>
+          <span>
+            Ich
+          </span>
+          <span>
+            @if (isOweingMe(debt)) {
+              <mat-icon matTooltip="schuldet dir">west</mat-icon>
+            } @else {
+              <mat-icon matTooltip="du schuldest">east</mat-icon>
+            }
+          </span>
+          <span>
+            <img [ngSrc]="debt.user.profilePictureUrl" width="24" height="24" alt="" class="user-profile-picture">
+            {{ debt.user.firstName }} {{ debt.user.lastName }}
+          </span>
+          <span class="debt-amount" [class.negative]="debt.debtAmount < 0">
+            <strong>{{ Math.abs(debt.debtAmount) | currency: "EUR" }}</strong>
+          </span>
+        </li>
+      }
+    </ul>
+  </mat-card-content>
+</mat-card>

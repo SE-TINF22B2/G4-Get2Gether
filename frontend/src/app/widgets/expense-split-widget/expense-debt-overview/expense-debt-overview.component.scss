@@ -1,0 +1,36 @@
+mat-card {
+  --mdc-elevated-card-container-color: var(--background-container-low-color);
+}
+
+.debt-list {
+  list-style: none;
+  margin: var(--size-12) 0 0;
+  padding: 0;
+
+  li {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 5px;
+    margin-bottom: var(--size-12);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .debt-amount {
+      color: var(--success-color);
+
+      &.negative {
+        color: var(--error-color);
+      }
+    }
+  }
+}
+
+.user-profile-picture {
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 5px;
+}
