@@ -1,0 +1,33 @@
+<div *ngIf="entriesCount > 0; else elseBlock">
+  <button
+    mat-stroked-button
+    class="carpool-card-item-addButton"
+    (click)="openAddEntryDialog()"
+  >
+    <mat-icon>add</mat-icon>
+    <span>Eintrag erstellen</span>
+  </button>
+  <ul class="einkaufliste-eintrag-liste">
+    @for (item of entries; track item.id) {
+      <li class="einkaufliste-eintrag-item">
+        <mat-checkbox
+          class="entry-check"
+          (change)="onCheckboxChange(item, $event)"
+          [checked]="item.checked"
+        ></mat-checkbox>
+        <app-einkaufliste-eintrag-list-item
+          class="entry-item"
+          [item]="item"
+          [eventData]="eventData"
+          (onEdit)="openEditEntryDialog(item)"
+          (onDelete)="deleteEntry(item)"
+        ></app-einkaufliste-eintrag-list-item>
+      </li>
+    }
+  </ul>
+</div>
+
+<ng-template #elseBlock>
+  <app-default-shopping-page (onCreateEntryClicked)="openAddEntryDialog()"></app-default-shopping-page>
+</ng-template>
+
