@@ -13,11 +13,19 @@ export class EventListComponent {
 
   get activeEvents() {
     const now = Date.now();
-    return this.events.filter(event => new Date(event.date).getTime() >= now ? true : event.endDate ? new Date(event.endDate).getTime() >= now : false);
+    return this.events.filter(event => {
+      if (new Date(event.date).getTime() >= now)
+        return true;
+      return event.endDate && new Date(event.endDate).getTime() >= now;
+    });
   }
 
   get archivedEvents() {
     const now = Date.now();
-    return this.events.filter(event => event.endDate ? new Date(event.endDate).getTime() < now : new Date(event.date).getTime() < now);
+    return this.events.filter(event => {
+      if (event.endDate && new Date(event.endDate).getTime() < now)
+        return true;
+      return new Date(event.date).getTime() < now;
+    });
   }
 }

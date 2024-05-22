@@ -3,14 +3,8 @@
     <mat-expansion-panel-header>
       <mat-panel-title>Beschreibung</mat-panel-title>
     </mat-expansion-panel-header>
-    @if (eventData.description) {
-      <div class="description">
-        <p>{{ eventData.description }}</p>
-      </div>
-    } @else {
-      <div class="description">
-        <p>Keine Beschreibung angegeben.</p>
-      </div>
-    }
+    <div class="description">
+      <p>{{ eventData.description ? eventData.description : 'Keine Beschreibung angegeben.' }}</p>
+    </div>
   </mat-expansion-panel>
 </div>
