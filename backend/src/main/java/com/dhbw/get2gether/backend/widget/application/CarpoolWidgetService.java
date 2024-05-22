@@ -5,10 +5,7 @@ import com.dhbw.get2gether.backend.event.model.Event;
 import com.dhbw.get2gether.backend.exceptions.EntityNotFoundException;
 import com.dhbw.get2gether.backend.user.application.UserService;
 import com.dhbw.get2gether.backend.widget.application.mapper.CarpoolWidgetMapper;
-import com.dhbw.get2gether.backend.widget.model.carpool.CarpoolCreateCommand;
-import com.dhbw.get2gether.backend.widget.model.carpool.CarpoolWidget;
-import com.dhbw.get2gether.backend.widget.model.carpool.Rider;
-import com.dhbw.get2gether.backend.widget.model.carpool.RiderAddCommand;
+import com.dhbw.get2gether.backend.widget.model.carpool.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.AuthenticatedPrincipal;
 import org.springframework.stereotype.Service;
@@ -35,33 +32,61 @@ public class CarpoolWidgetService extends AbstractWidgetService{
         CarpoolWidget widget = mapper.mapToCarpoolWidget(createCommand).toBuilder()
                 .id(UUID.randomUUID().toString())
                 .creationDate(LocalDateTime.now())
-                .driverAdress(mapper.mapToLocation(createCommand.getDriverAdress()))
                 .build();
         return addWidget(principal, event, widget);
     }
 
     @PreAuthorize("hasRole('USER')")
-    public CarpoolWidget addRider(AuthenticatedPrincipal principal, String eventId, String widgetId, RiderAddCommand addCommand) {
+    public CarpoolWidget addCar(AuthenticatedPrincipal principal, String eventId, String widgetId, CarAddCommand addCommand) {
         Event event = getEventById(principal, eventId);
         CarpoolWidget widget = getWidgetFromEvent(event, widgetId);
-        Rider rider = mapper.mapToRider(addCommand).toBuilder()
+        Car car = mapper.mapToCar(addCommand).toBuilder()
                 .id(UUID.randomUUID().toString())
-                .userId(userService.getUserByPrincipal(principal).getId())
-                .pickupPlace(mapper.mapToLocation(addCommand.getPickupPlace()))
+                .driverId(userService.getUserByPrincipal(principal).getId())
                 .build();
 
-        widget.addRider(rider);
+        widget.addCar(car);
         return updateAndGetWidget(principal, event, widget);
     }
     @PreAuthorize("hasRole('USER')")
-    public CarpoolWidget removeRider(AuthenticatedPrincipal principal, String eventId, String widgetId, String riderId) {
+    public CarpoolWidget removeCar(AuthenticatedPrincipal principal, String eventId, String widgetId, String carId) {
         Event event = getEventById(principal, eventId);
         CarpoolWidget widget = getWidgetFromEvent(event, widgetId);
-        Rider rider = widget.getRiders().stream()
+        Car car = widget.getCars().stream()
+                .filter(c -> Objects.equals(c.getId(), carId)).findFirst()
+                .orElseThrow(() -> new EntityNotFoundException("Car not found"));
+        if (!widget.removeCar(car)) {
+            throw new IllegalStateException("Failed to remove Car from Carpool widget");
+        }
+        return updateAndGetWidget(principal, event, widget);
+    }
+    @PreAuthorize("hasRole('USER')")
+    public CarpoolWidget addRider(AuthenticatedPrincipal principal, String eventId, String widgetId, String carId, RiderAddCommand addCommand) {
+        Event event = getEventById(principal, eventId);
+        CarpoolWidget widget = getWidgetFromEvent(event, widgetId);
+        Car car = widget.getCars().stream()
+                .filter(c -> Objects.equals(c.getId(), carId)).findFirst()
+                .orElseThrow(() -> new EntityNotFoundException("Car not found"));
+        Rider rider = mapper.mapToRider(addCommand).toBuilder()
+                .id(UUID.randomUUID().toString())
+                .userId(userService.getUserByPrincipal(principal).getId())
+                .build();
+        car.addRider(rider);
+        widget.addCar(car);
+        return updateAndGetWidget(principal, event, widget);
+    }
+    @PreAuthorize("hasRole('USER')")
+    public CarpoolWidget removeRider(AuthenticatedPrincipal principal, String eventId, String widgetId, String carId, String riderId) {
+        Event event = getEventById(principal, eventId);
+        CarpoolWidget widget = getWidgetFromEvent(event, widgetId);
+        Car car = widget.getCars().stream()
+                .filter(c -> Objects.equals(c.getId(), carId)).findFirst()
+                .orElseThrow(() -> new EntityNotFoundException("Car not found"));
+        Rider rider = car.getRiders().stream()
                 .filter(r -> Objects.equals(r.getId(), riderId)).findFirst()
                 .orElseThrow(() -> new EntityNotFoundException("Rider not found"));
-        if (!widget.removeRider(rider)) {
-            throw new IllegalStateException("Failed to remove rider from shopping list widget");
+        if (!car.removeRider(rider)) {
+            throw new IllegalStateException("Failed to remove rider from car");
         }
         return updateAndGetWidget(principal, event, widget);
     }

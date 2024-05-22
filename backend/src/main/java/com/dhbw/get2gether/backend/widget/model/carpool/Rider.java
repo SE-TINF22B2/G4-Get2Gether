@@ -11,5 +11,5 @@ import lombok.Getter;
 public class Rider {
     private final String id;
     private final String userId;
-    private final Location pickupPlace;
+    private final String pickupPlace;
 }

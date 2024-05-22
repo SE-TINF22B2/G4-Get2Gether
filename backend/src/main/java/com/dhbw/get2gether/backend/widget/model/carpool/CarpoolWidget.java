@@ -2,8 +2,6 @@ package com.dhbw.get2gether.backend.widget.model.carpool;
 
 import com.dhbw.get2gether.backend.widget.model.Widget;
 import com.dhbw.get2gether.backend.widget.model.WidgetType;
-import com.dhbw.get2gether.backend.widget.model.map.Location;
-import com.dhbw.get2gether.backend.widget.model.shoppinglist.Entry;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,11 +16,8 @@ import java.util.List;
 public class CarpoolWidget extends Widget {
     private String id;
     private final LocalDateTime creationDate;
-    private String driverId;
-    private Location driverAdress;
-    private int anzahlPlaetze;
     @Builder.Default
-    private List<Rider> riders = new ArrayList<>();
+    private List<Car> cars = new ArrayList<>();
 
     @Override
     public LocalDateTime getCreationDate() {
@@ -33,11 +28,11 @@ public class CarpoolWidget extends Widget {
     public WidgetType getWidgetType() {
         return WidgetType.CARPOOL;
     }
-    public void addRider(Rider rider) {
-        riders.add(rider);
+    public void addCar(Car car) {
+        cars.add(car);
     }
 
-    public boolean removeRider(Rider rider) {
-        return riders.remove(rider);
+    public boolean removeCar(Car car) {
+        return cars.remove(car);
     }
 }

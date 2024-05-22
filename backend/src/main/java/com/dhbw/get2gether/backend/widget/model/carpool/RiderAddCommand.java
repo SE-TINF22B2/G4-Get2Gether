@@ -10,5 +10,5 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class RiderAddCommand {
-    private final LocationAddCommand pickupPlace;
+    private final String pickupPlace;
 }
