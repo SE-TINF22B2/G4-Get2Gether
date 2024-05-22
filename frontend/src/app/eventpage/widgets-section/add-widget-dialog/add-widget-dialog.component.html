@@ -1,0 +1,56 @@
+<h1 mat-dialog-title class="mat-dialog-title">Widget hinzufügen</h1>
+<mat-dialog-content>
+  <div class="widget-div">
+    <button
+      mat-button
+      class="widget-card"
+      (click)="createShoppingListWidget()"
+      [disabled]="isShoppingListPresent"
+    >
+      <mat-icon class="material-icons-outlined">shopping_cart</mat-icon>
+      <div class="widget-description">
+        <h3>Einkaufsliste</h3>
+        <p>Erstellt eure Einkaufsliste zusammen</p>
+      </div>
+    </button>
+
+    <button
+      mat-button
+      class="widget-card"
+      (click)="createExpenseSplitWidget()"
+      [disabled]="isExpenseSplitPresent"
+    >
+      <mat-icon class="material-icons-outlined">paid</mat-icon>
+      <h3>Ausgaben</h3>
+      <p>Habt eure Ausgaben auf einem Blick</p>
+    </button>
+
+    <button
+      mat-button
+      class="widget-card"
+      (click)="createCarpoolWidget()"
+      [disabled]="isCarpoolPresent"
+    >
+      <mat-icon class="material-icons-outlined">time_to_leave</mat-icon>
+      <div>
+        <h3>Fahrgemeinschaft</h3>
+        <p>Plant eure Fahrgemeinschaften zusammen</p>
+      </div>
+    </button>
+
+    <button
+      mat-button
+      class="widget-card"
+      (click)="createMapWidget()"
+      [disabled]="isMapPresent"
+    >
+      <mat-icon class="material-icons-outlined">location_on</mat-icon>
+      <h3>Karte</h3>
+      <p>Markiert eure Standorte auf der Karte</p>
+    </button>
+  </div>
+</mat-dialog-content>
+<mat-divider></mat-divider>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Abbrechen</button>
+</mat-dialog-actions>

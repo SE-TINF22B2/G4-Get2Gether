@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {environment} from "../../environment/environment";
 import {ExpenseEntryAddCommand, ExpenseEntryUpdateCommand, ExpenseSplitWidget} from "../../model/expense-split-widget";
+import {Event} from "../../model/event";
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,10 @@ import {ExpenseEntryAddCommand, ExpenseEntryUpdateCommand, ExpenseSplitWidget} f
 export class ExpenseSplitWidgetService {
 
   constructor(private http: HttpClient) {
+  }
+
+  createExpenseWidget(eventId: string): Observable<Event> {
+    return this.http.post<Event>(`${environment.api}/event/${eventId}/widgets/expense-split/`, {},{withCredentials: true});
   }
 
   createExpenseEntry(
