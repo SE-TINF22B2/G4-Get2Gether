@@ -2,6 +2,7 @@ package com.dhbw.get2gether.backend.widget.application;
 
 import com.dhbw.get2gether.backend.event.application.EventService;
 import com.dhbw.get2gether.backend.event.model.Event;
+import com.dhbw.get2gether.backend.event.model.EventDetailDto;
 import com.dhbw.get2gether.backend.event.model.EventWidgetUpdateCommand;
 import com.dhbw.get2gether.backend.exceptions.EntityNotFoundException;
 import com.dhbw.get2gether.backend.exceptions.OperationNotAllowedException;
@@ -86,4 +87,7 @@ public abstract class AbstractWidgetService {
                 .orElseThrow(() -> new EntityNotFoundException("Widget with id " + widgetId + " not found"));
     }
 
+    public EventDetailDto mapEventToEventDetailDto(AuthenticatedPrincipal principal, Event event) {
+        return eventService.mapEventToEventDetailDto(principal, event);
+    }
 }

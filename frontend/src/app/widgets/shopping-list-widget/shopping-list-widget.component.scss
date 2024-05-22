@@ -1,0 +1,33 @@
+.einkaufliste-eintrag-addButton {
+  width: calc(100% - 20px);
+  box-sizing: border-box;
+  margin: var(--size-10);
+  font-size: var(--font-size-standard);
+}
+
+button {
+  border-radius: 12px;
+}
+
+.einkaufliste-eintrag-liste {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-10);
+  list-style: none;
+  padding: 0;
+  margin-left: var(--size-10);
+}
+
+.einkaufliste-eintrag-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.entry-item {
+  width: calc(100% - 20px);
+}
+
+.entry-check {
+  margin-right: 5px;
+}

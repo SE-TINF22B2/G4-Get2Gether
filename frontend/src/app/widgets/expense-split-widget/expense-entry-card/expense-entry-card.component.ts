@@ -23,7 +23,7 @@ export class ExpenseEntryCardComponent {
   onEdit = new EventEmitter();
 
   get getInvolvedUserNames(): string[] {
-    return this.entry.involvedUsers.map(u => [u.user.firstName, u.user.firstName].join(" "));
+    return this.entry.involvedUsers.map(u => [u.user.firstName, u.user.lastName].join(" "));
   }
 
   get isEveryoneInvolved(): boolean {

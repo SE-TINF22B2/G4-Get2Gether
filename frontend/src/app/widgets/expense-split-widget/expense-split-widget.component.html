@@ -17,6 +17,13 @@
         </li>
       }
     </ul>
+
+    @if (widget.debts.length > 0) {
+      <br>
+      <app-expense-debt-overview
+        [debts]="widget.debts"
+      ></app-expense-debt-overview>
+    }
   } @else {
     <div class="no-entries-container">
       <img ngSrc="./assets/noExpenseSplits.svg" width="300" height="200" alt="">

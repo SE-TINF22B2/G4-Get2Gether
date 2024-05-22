@@ -4,7 +4,6 @@ import com.dhbw.get2gether.backend.event.application.EventService;
 import com.dhbw.get2gether.backend.event.model.Event;
 import com.dhbw.get2gether.backend.exceptions.EntityNotFoundException;
 import com.dhbw.get2gether.backend.user.application.UserService;
-import com.dhbw.get2gether.backend.user.application.mapper.UserMapper;
 import com.dhbw.get2gether.backend.user.model.SimpleUserDto;
 import com.dhbw.get2gether.backend.user.model.User;
 import com.dhbw.get2gether.backend.widget.application.mapper.ExpenseSplitMapper;
@@ -45,7 +44,7 @@ public class ExpenseSplitWidgetService extends AbstractWidgetService {
 
     @PreAuthorize("hasRole('USER')")
     public ExpenseSplitWidgetDto addEntry(AuthenticatedPrincipal principal, String eventId, String widgetId, ExpenseEntryAddCommand addCommand) {
-        if(addCommand.getInvolvedUsers().isEmpty()) {
+        if (addCommand.getInvolvedUsers().isEmpty()) {
             throw new IllegalArgumentException("At least one user must be involved in the expense entry");
         }
 
@@ -58,11 +57,11 @@ public class ExpenseSplitWidgetService extends AbstractWidgetService {
                 .involvedUsers(addCommand.getInvolvedUsers().stream().map(user ->
                         UserWithPercentage.builder()
                                 .userId(user)
-                                .percentage((double) 1 /addCommand.getInvolvedUsers().size())
+                                .percentage(1.0 / addCommand.getInvolvedUsers().size())
                                 .build()).toList())
                 .build();
         widget.addEntry(entry);
-        return mapToDto(updateAndGetWidget(principal, event, widget), event.getParticipantIds());
+        return mapToDto(updateAndGetWidget(principal, event, widget), event.getParticipantIds(), principal);
     }
 
     @PreAuthorize("hasRole('USER')")
@@ -75,37 +74,41 @@ public class ExpenseSplitWidgetService extends AbstractWidgetService {
         if (!widget.removeEntry(entry)) {
             throw new IllegalStateException("Failed to remove entry from shopping list widget");
         }
-        return mapToDto(updateAndGetWidget(principal, event, widget), event.getParticipantIds());
+        return mapToDto(updateAndGetWidget(principal, event, widget), event.getParticipantIds(), principal);
     }
 
     @PreAuthorize("hasRole('USER')")
     public ExpenseSplitWidgetDto updateEntry(AuthenticatedPrincipal principal, String eventId, String widgetId, String entryId, ExpenseEntryUpdateCommand updateCommand) {
-        if(updateCommand.getInvolvedUsers().isEmpty()) {
+        if (updateCommand.getInvolvedUsers().isEmpty()) {
             throw new IllegalArgumentException("At least one user must be involved in the expense entry");
         }
 
         Event event = getEventById(principal, eventId);
         ExpenseSplitWidget widget = getWidgetFromEvent(event, widgetId);
-        ExpenseEntry original_entry = widget.getEntries().stream()
+        ExpenseEntry originalEntry = widget.getEntries().stream()
                 .filter(l -> Objects.equals(l.getId(), entryId)).findFirst()
                 .orElseThrow(() -> new EntityNotFoundException("Entry not found"));
 
         ExpenseEntry updatedEntry = mapper.mapToEntry(updateCommand).toBuilder()
-                .id(original_entry.getId())
-                .creatorId(original_entry.getCreatorId())
+                .id(originalEntry.getId())
+                .creatorId(originalEntry.getCreatorId())
                 .involvedUsers(updateCommand.getInvolvedUsers().stream().map(user ->
                         UserWithPercentage.builder()
                                 .userId(user)
-                                .percentage((double) 1 /updateCommand.getInvolvedUsers().size())
+                                .percentage(1.0 / updateCommand.getInvolvedUsers().size())
                                 .build()).toList())
                 .build();
 
-        widget.replaceEntry(original_entry, updatedEntry);
-        return mapToDto(updateAndGetWidget(principal, event, widget), event.getParticipantIds());
+        if (!widget.replaceEntry(originalEntry, updatedEntry)) {
+            throw new IllegalStateException("Failed to replace entry from expense split widget");
+        }
+        return mapToDto(updateAndGetWidget(principal, event, widget), event.getParticipantIds(), principal);
     }
 
-    private ExpenseSplitWidgetDto mapToDto(ExpenseSplitWidget widget, List<String> participantIds) {
+    private ExpenseSplitWidgetDto mapToDto(ExpenseSplitWidget widget, List<String> participantIds, AuthenticatedPrincipal principal) {
         List<SimpleUserDto> simpleUserDtos = userService.getSimpleUsersById(participantIds);
-        return widgetMapper.expenseSplitWidgetToExpenseSplitWidgetDto(widget, simpleUserDtos);
+        User user = userService.getUserByPrincipal(principal);
+        List<Debt> debts = widget.calculateDebtsForUserId(user.getId());
+        return widgetMapper.expenseSplitWidgetToExpenseSplitWidgetDto(widget, debts, simpleUserDtos);
     }
 }

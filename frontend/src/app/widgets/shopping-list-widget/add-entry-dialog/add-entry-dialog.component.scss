@@ -1,0 +1,21 @@
+.create-eintrag-container {
+  display: grid;
+  grid: auto / 1fr 2fr;
+  gap: 12px;
+}
+
+@media (max-width: 600px) {
+  .create-eintrag-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-divider {
+  margin: 0 var(--size-24);
+}

@@ -6,6 +6,13 @@
       (onWidgetUpdated)="onWidgetUpdated.emit($event)"
     ></app-maps-widget>
   }
+  @case (WidgetType.SHOPPING_LIST) {
+    <app-einkaufsliste-widget
+      [widget]="widget"
+      [eventData]="eventData"
+      (onWidgetUpdated)="onWidgetUpdated.emit($event)"
+    ></app-einkaufsliste-widget>
+  }
   @case (WidgetType.EXPENSE_SPLIT) {
     <app-expense-split-widget
       [widget]="widget"

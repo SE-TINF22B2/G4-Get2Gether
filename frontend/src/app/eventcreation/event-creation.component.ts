@@ -83,7 +83,6 @@ export class EventCreationComponent implements OnInit {
       } else {
         date.setUTCHours(0, 0, 0, 0);
       }
-      console.log(date)
       this.form.patchValue({
         date: date
       });

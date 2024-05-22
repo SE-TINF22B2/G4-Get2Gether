@@ -1,11 +1,9 @@
 package com.dhbw.get2gether.backend.widget.adapter.in;
 
 import com.dhbw.get2gether.backend.event.model.Event;
+import com.dhbw.get2gether.backend.event.model.EventDetailDto;
 import com.dhbw.get2gether.backend.widget.application.ShoppingListWidgetService;
-import com.dhbw.get2gether.backend.widget.model.shoppinglist.EntryAddCommand;
-import com.dhbw.get2gether.backend.widget.model.shoppinglist.EntryCheckCommand;
-import com.dhbw.get2gether.backend.widget.model.shoppinglist.ShoppingListCreateCommand;
-import com.dhbw.get2gether.backend.widget.model.shoppinglist.ShoppingListWidget;
+import com.dhbw.get2gether.backend.widget.model.shoppinglist.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
@@ -21,12 +19,13 @@ public class ShoppingListWidgetController {
     }
 
     @PostMapping("/")
-    public Event createShoppingListWidget(
+    public EventDetailDto createShoppingListWidget(
             @AuthenticationPrincipal OAuth2User principal,
             @PathVariable String eventId,
             @RequestBody ShoppingListCreateCommand createCommand
     ) {
-        return service.createShoppingListWidget(principal, eventId, createCommand);
+        Event event = service.createShoppingListWidget(principal, eventId, createCommand);
+        return service.mapEventToEventDetailDto(principal, event);
     }
 
     @PostMapping("/{widgetId}/entries")
@@ -58,6 +57,17 @@ public class ShoppingListWidgetController {
             @RequestBody EntryCheckCommand checkCommand
             ) {
         return service.checkEntry(principal, eventId, widgetId, entryId, checkCommand);
+    }
+
+    @PutMapping("/{widgetId}/entries/update/{entryId}")
+    public ShoppingListWidget updateEntry(
+            @AuthenticationPrincipal OAuth2User principal,
+            @PathVariable String eventId,
+            @PathVariable String widgetId,
+            @PathVariable String entryId,
+            @RequestBody EntryUpdateCommand updateCommand
+    ) {
+        return service.updateEntry(principal, eventId, widgetId, entryId, updateCommand);
     }
 
 }

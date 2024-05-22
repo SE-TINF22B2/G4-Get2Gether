@@ -11,6 +11,7 @@ import com.dhbw.get2gether.backend.user.model.User;
 import com.dhbw.get2gether.backend.utils.WithMockGuestUser;
 import com.dhbw.get2gether.backend.utils.WithMockOAuth2User;
 import com.dhbw.get2gether.backend.widget.model.expensesplit.*;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -178,184 +179,286 @@ class ExpenseSplitWidgetServiceTest extends AbstractIntegrationTest {
         assertThat(returnedWidget.getEntries().get(0).getId()).isNotBlank();
     }
 
-//    @Test
-//    @WithMockGuestUser
-//    void shouldNotAddEntryIfUserIsGuest() {
-//        // given
-//        AuthenticatedPrincipal principal = (AuthenticatedPrincipal)
-//                SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        ShoppingListWidget widget = ShoppingListWidget.builder()
-//                .id("wi-123")
-//                .entries(new ArrayList<>())
-//                .build();
-//        Event event = Event.builder()
-//                .id("ev-123")
-//                .widgets(new ArrayList<>(List.of(widget)))
-//                .build();
-//        EntryAddCommand addCommand = EntryAddCommand.builder()
-//                .description("Test")
-//                .amount("1")
-//                .build();
-//
-//        when(eventService.getSingleEvent(any(), eq(event.getId()))).thenReturn(event);
-//
-//        // when
-//        // then
-//        assertThatThrownBy(() -> shoppingListWidgetService.addEntry(principal, event.getId(), widget.getId(), addCommand))
-//                .isInstanceOf(AccessDeniedException.class);
-//    }
-//
-//    @Test
-//    @WithMockOAuth2User
-//    void shouldRemoveEntry() {
-//        // given
-//        AuthenticatedPrincipal principal = (AuthenticatedPrincipal)
-//                SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        Entry entry = Entry.builder()
-//                .description("Test")
-//                .amount("1")
-//                .checked(false)
-//                .creatorId("creator-id")
-//                .id("123")
-//                .build();
-//        ShoppingListWidget widget = ShoppingListWidget.builder()
-//                .id("wi-123")
-//                .entries(new ArrayList<>(List.of(entry)))
-//                .build();
-//        Event event = Event.builder()
-//                .id("ev-123")
-//                .widgets(new ArrayList<>(List.of(widget)))
-//                .build();
-//
-//        when(eventService.getSingleEvent(any(), eq(event.getId()))).thenReturn(event);
-//        when(eventService.updateEventWidgets(any(), eq(event.getId()), any()))
-//                .thenAnswer(i -> event.toBuilder()
-//                        .widgets(
-//                                i.getArgument(2, EventWidgetUpdateCommand.class).getWidgets()
-//                        )
-//                        .build()
-//                );
-//
-//        // when
-//        ShoppingListWidget returnedWidget = shoppingListWidgetService.removeEntry(principal, event.getId(), widget.getId(), entry.getId());
-//
-//        // then
-//        assertThat(returnedWidget).isNotNull();
-//        assertThat(returnedWidget.getEntries()).isEmpty();
-//    }
-//
-//    @Test
-//    @WithMockOAuth2User
-//    void shouldCheckEntry() {
-//        // given
-//        AuthenticatedPrincipal principal = (AuthenticatedPrincipal)
-//                SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        Entry entry = Entry.builder()
-//                .description("Test")
-//                .amount("1")
-//                .checked(false)
-//                .creatorId("creator-id")
-//                .id("123")
-//                .build();
-//        ShoppingListWidget widget = ShoppingListWidget.builder()
-//                .id("wi-123")
-//                .entries(new ArrayList<>(List.of(entry)))
-//                .build();
-//        Event event = Event.builder()
-//                .id("ev-123")
-//                .widgets(new ArrayList<>(List.of(widget)))
-//                .build();
-//        EntryCheckCommand checkCommand = EntryCheckCommand.builder()
-//                .isChecked(true)
-//                .build();
-//        Entry entryAfterCheck = Entry.builder()
-//                .description("Test")
-//                .amount("1")
-//                .checked(true)
-//                .creatorId("creator-id")
-//                .buyerId("test")
-//                .id("123")
-//                .build();
-//
-//        when(eventService.getSingleEvent(any(), eq(event.getId()))).thenReturn(event);
-//        when(eventService.updateEventWidgets(any(), eq(event.getId()), any()))
-//                .thenAnswer(i -> event.toBuilder()
-//                        .widgets(
-//                                i.getArgument(2, EventWidgetUpdateCommand.class).getWidgets()
-//                        )
-//                        .build()
-//                );
-//        when(userService.getUserByPrincipal(principal)).thenReturn(User.builder()
-//                .id("test")
-//                .email("test@example.com").build());
-//
-//        // when
-//        ShoppingListWidget returnedWidget = shoppingListWidgetService.checkEntry(principal, event.getId(), widget.getId(), entry.getId(), checkCommand);
-//
-//        // then
-//        assertThat(returnedWidget).isNotNull();
-//        assertThat(returnedWidget.getEntries()).hasSize(1);
-//        assertThat(returnedWidget.getEntries().get(0)).usingRecursiveComparison()
-//                .ignoringFields("id")
-//                .isEqualTo(entryAfterCheck);
-//        assertThat(returnedWidget.getEntries().get(0).getId()).isNotBlank();
-//    }
-//
-//    @Test
-//    @WithMockOAuth2User
-//    void shouldUnCheckEntry() {
-//        // given
-//        AuthenticatedPrincipal principal = (AuthenticatedPrincipal)
-//                SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        Entry entry = Entry.builder()
-//                .description("Test")
-//                .amount("1")
-//                .checked(true)
-//                .creatorId("creator-id")
-//                .buyerId("test")
-//                .id("123")
-//                .build();
-//        ShoppingListWidget widget = ShoppingListWidget.builder()
-//                .id("wi-123")
-//                .entries(new ArrayList<>(List.of(entry)))
-//                .build();
-//        Event event = Event.builder()
-//                .id("ev-123")
-//                .widgets(new ArrayList<>(List.of(widget)))
-//                .build();
-//        EntryCheckCommand checkCommand = EntryCheckCommand.builder()
-//                .isChecked(false)
-//                .build();
-//        Entry entryAfterCheck = Entry.builder()
-//                .description("Test")
-//                .amount("1")
-//                .checked(false)
-//                .creatorId("creator-id")
-//                .buyerId("test")
-//                .id("123")
-//                .build();
-//
-//        when(eventService.getSingleEvent(any(), eq(event.getId()))).thenReturn(event);
-//        when(eventService.updateEventWidgets(any(), eq(event.getId()), any()))
-//                .thenAnswer(i -> event.toBuilder()
-//                        .widgets(
-//                                i.getArgument(2, EventWidgetUpdateCommand.class).getWidgets()
-//                        )
-//                        .build()
-//                );
-//        when(userService.getUserByPrincipal(principal)).thenReturn(User.builder()
-//                .id("test")
-//                .email("test@example.com").build());
-//
-//        // when
-//        ShoppingListWidget returnedWidget = shoppingListWidgetService.checkEntry(principal, event.getId(), widget.getId(), entry.getId(), checkCommand);
-//
-//        // then
-//        assertThat(returnedWidget).isNotNull();
-//        assertThat(returnedWidget.getEntries()).hasSize(1);
-//        assertThat(returnedWidget.getEntries().get(0)).usingRecursiveComparison()
-//                .ignoringFields("id")
-//                .isEqualTo(entryAfterCheck);
-//        assertThat(returnedWidget.getEntries().get(0).getId()).isNotBlank();
-//    }
+
+    @Test
+    @WithMockGuestUser
+    void shouldNotAddEntryIfUserIsGuest() {
+        // given
+        AuthenticatedPrincipal principal = (AuthenticatedPrincipal)
+                SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        ExpenseSplitWidget widget = ExpenseSplitWidget.builder()
+                .id("wi-123")
+                .entries(new ArrayList<>())
+                .build();
+        Event event = Event.builder()
+                .id("ev-123")
+                .widgets(new ArrayList<>(List.of(widget)))
+                .build();
+        ExpenseEntryAddCommand addCommand = ExpenseEntryAddCommand.builder()
+                .description("Test")
+                .price(10)
+                .involvedUsers(List.of("test"))
+                .build();
+
+        when(eventService.getSingleEvent(any(), eq(event.getId()))).thenReturn(event);
+
+        // when
+        // then
+        assertThatThrownBy(() -> expenseSplitWidgetService.addEntry(principal, event.getId(), widget.getId(), addCommand))
+                .isInstanceOf(AccessDeniedException.class);
+    }
+
+    @Test
+    @WithMockOAuth2User
+    void shouldRemoveEntry() {
+        // given
+        AuthenticatedPrincipal principal = (AuthenticatedPrincipal)
+                SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        ExpenseEntry entry = ExpenseEntry.builder()
+                .description("Test")
+                .price(10)
+                .creatorId("creator-id")
+                .id("123")
+                .involvedUsers(List.of(UserWithPercentage.builder().userId("test").percentage(1).build()))
+                .build();
+
+        ExpenseSplitWidget widget = ExpenseSplitWidget.builder()
+                .id("wi-123")
+                .entries(new ArrayList<>(List.of(entry)))
+                .build();
+        Event event = Event.builder()
+                .id("ev-123")
+                .widgets(new ArrayList<>(List.of(widget)))
+                .build();
+
+        when(eventService.getSingleEvent(any(), eq(event.getId()))).thenReturn(event);
+        when(eventService.updateEventWidgets(any(), eq(event.getId()), any()))
+                .thenAnswer(i -> event.toBuilder()
+                        .widgets(
+                                i.getArgument(2, EventWidgetUpdateCommand.class).getWidgets()
+                        )
+                        .build()
+                );
+        when(userService.getUserByPrincipal(principal)).thenReturn(User.builder()
+                .id("test")
+                .email("test@example.com").build());
+
+        // when
+        ExpenseSplitWidgetDto returnedWidget = expenseSplitWidgetService.removeEntry(principal, event.getId(), widget.getId(), entry.getId());
+
+        // then
+        assertThat(returnedWidget).isNotNull();
+        assertThat(returnedWidget.getEntries()).isEmpty();
+    }
+
+    @Nested
+    class Calculation{
+        @Test
+        @WithMockOAuth2User
+        void shouldCalculateDebtsAsOnlyBuyer(){
+            // given
+            UserWithPercentage mainUser = UserWithPercentage.builder()
+                    .userId("test")
+                    .percentage(0.25)
+                    .build();
+            UserWithPercentage user2 = UserWithPercentage.builder()
+                    .userId("user2")
+                    .percentage(0.25)
+                    .build();
+            UserWithPercentage user3 = UserWithPercentage.builder()
+                    .userId("user3")
+                    .percentage(0.25)
+                    .build();
+            UserWithPercentage user4 = UserWithPercentage.builder()
+                    .userId("user4")
+                    .percentage(0.25)
+                    .build();
+            ExpenseEntry entry1 = ExpenseEntry.builder()
+                    .id("1")
+                    .price(10)
+                    .description("Bier")
+                    .creatorId("test")
+                    .involvedUsers(List.of(mainUser, user2, user3, user4))
+                    .build();
+            ExpenseEntry entry2 = ExpenseEntry.builder()
+                    .id("2")
+                    .price(20)
+                    .description("Bier2")
+                    .creatorId("test")
+                    .involvedUsers(List.of(mainUser, user2, user3, user4))
+                    .build();
+
+            ExpenseSplitWidget widget = ExpenseSplitWidget.builder()
+                    .id("wi-123")
+                    .entries(List.of(entry1, entry2))
+                    .build();
+
+            // when
+            List<Debt> debts = widget.calculateDebtsForUserId(mainUser.getUserId());
+
+            // then
+            assertThat(debts.get(0).getUserId()).isEqualTo(user2.getUserId());
+            assertThat(debts.get(0).getDebtAmount()).isEqualTo(user2.getPercentage()*entry1.getPrice()+user2.getPercentage()*entry2.getPrice());
+            assertThat(debts.get(1).getUserId()).isEqualTo(user3.getUserId());
+            assertThat(debts.get(1).getDebtAmount()).isEqualTo(user3.getPercentage()*entry1.getPrice()+user3.getPercentage()*entry2.getPrice());
+            assertThat(debts.get(2).getUserId()).isEqualTo(user4.getUserId());
+            assertThat(debts.get(2).getDebtAmount()).isEqualTo(user4.getPercentage()*entry1.getPrice()+user4.getPercentage()*entry2.getPrice());
+            assertThat(debts).hasSize(3);
+        }
+
+        @Test
+        @WithMockOAuth2User
+        void shouldCalculateDebtsAsOnlyReceiver(){
+            // given
+            UserWithPercentage mainUser = UserWithPercentage.builder()
+                    .userId("test")
+                    .percentage(0.25)
+                    .build();
+            UserWithPercentage user2 = UserWithPercentage.builder()
+                    .userId("user2")
+                    .percentage(0.25)
+                    .build();
+            UserWithPercentage user3 = UserWithPercentage.builder()
+                    .userId("user3")
+                    .percentage(0.25)
+                    .build();
+            UserWithPercentage user4 = UserWithPercentage.builder()
+                    .userId("user4")
+                    .percentage(0.25)
+                    .build();
+            ExpenseEntry entry1 = ExpenseEntry.builder()
+                    .id("1")
+                    .price(10)
+                    .description("Bier")
+                    .creatorId("user2")
+                    .involvedUsers(List.of(mainUser, user2, user3, user4))
+                    .build();
+            ExpenseEntry entry2 = ExpenseEntry.builder()
+                    .id("2")
+                    .price(20)
+                    .description("Bier2")
+                    .creatorId("user3")
+                    .involvedUsers(List.of(mainUser, user2, user3, user4))
+                    .build();
+
+            ExpenseSplitWidget widget = ExpenseSplitWidget.builder()
+                    .id("wi-123")
+                    .entries(List.of(entry1, entry2))
+                    .build();
+
+            // when
+            List<Debt> debts = widget.calculateDebtsForUserId(mainUser.getUserId());
+
+            // then
+            assertThat(debts.get(0).getUserId()).isEqualTo(user2.getUserId());
+            assertThat(debts.get(0).getDebtAmount()).isEqualTo(mainUser.getPercentage()*entry1.getPrice()*-1);
+            assertThat(debts.get(1).getUserId()).isEqualTo(user3.getUserId());
+            assertThat(debts.get(1).getDebtAmount()).isEqualTo(mainUser.getPercentage()*entry2.getPrice()*-1);
+            assertThat(debts).hasSize(2);
+        }
+
+        @Test
+        @WithMockOAuth2User
+        void shouldCalculateDebtsAsOnlyReceiverFromOneOtherUser(){
+            // given
+            UserWithPercentage mainUser = UserWithPercentage.builder()
+                    .userId("test")
+                    .percentage(0.25)
+                    .build();
+            UserWithPercentage user2 = UserWithPercentage.builder()
+                    .userId("user2")
+                    .percentage(0.25)
+                    .build();
+            UserWithPercentage user3 = UserWithPercentage.builder()
+                    .userId("user3")
+                    .percentage(0.25)
+                    .build();
+            UserWithPercentage user4 = UserWithPercentage.builder()
+                    .userId("user4")
+                    .percentage(0.25)
+                    .build();
+            ExpenseEntry entry1 = ExpenseEntry.builder()
+                    .id("1")
+                    .price(10)
+                    .description("Bier")
+                    .creatorId("user2")
+                    .involvedUsers(List.of(mainUser, user2, user3, user4))
+                    .build();
+            ExpenseEntry entry2 = ExpenseEntry.builder()
+                    .id("2")
+                    .price(20)
+                    .description("Bier2")
+                    .creatorId("user2")
+                    .involvedUsers(List.of(mainUser, user2, user3, user4))
+                    .build();
+
+            ExpenseSplitWidget widget = ExpenseSplitWidget.builder()
+                    .id("wi-123")
+                    .entries(List.of(entry1, entry2))
+                    .build();
+
+            // when
+            List<Debt> debts = widget.calculateDebtsForUserId(mainUser.getUserId());
+
+            // then
+            assertThat(debts.get(0).getUserId()).isEqualTo(user2.getUserId());
+            assertThat(debts.get(0).getDebtAmount()).isEqualTo(mainUser.getPercentage()*entry1.getPrice()*-1+mainUser.getPercentage()*entry2.getPrice()*-1);
+            assertThat(debts).hasSize(1);
+        }
+
+        @Test
+        @WithMockOAuth2User
+        void shouldCalculateDebtsAsBuyerAndReceiver(){
+            // given
+            UserWithPercentage mainUser = UserWithPercentage.builder()
+                    .userId("test")
+                    .percentage(0.25)
+                    .build();
+            UserWithPercentage user2 = UserWithPercentage.builder()
+                    .userId("user2")
+                    .percentage(0.25)
+                    .build();
+            UserWithPercentage user3 = UserWithPercentage.builder()
+                    .userId("user3")
+                    .percentage(0.25)
+                    .build();
+            UserWithPercentage user4 = UserWithPercentage.builder()
+                    .userId("user4")
+                    .percentage(0.25)
+                    .build();
+            ExpenseEntry entry1 = ExpenseEntry.builder()
+                    .id("1")
+                    .price(10)
+                    .description("Bier")
+                    .creatorId("test")
+                    .involvedUsers(List.of(mainUser, user2, user3, user4))
+                    .build();
+            ExpenseEntry entry2 = ExpenseEntry.builder()
+                    .id("2")
+                    .price(20)
+                    .description("Bier2")
+                    .creatorId("user2")
+                    .involvedUsers(List.of(mainUser, user2, user3, user4))
+                    .build();
+
+            ExpenseSplitWidget widget = ExpenseSplitWidget.builder()
+                    .id("wi-123")
+                    .entries(List.of(entry1, entry2))
+                    .build();
+
+            // when
+            List<Debt> debts = widget.calculateDebtsForUserId(mainUser.getUserId());
+
+            // then
+            assertThat(debts.get(0).getUserId()).isEqualTo(user2.getUserId());
+            assertThat(debts.get(0).getDebtAmount()).isEqualTo(user2.getPercentage()*entry1.getPrice()+mainUser.getPercentage()*entry2.getPrice()*-1);
+            assertThat(debts.get(1).getUserId()).isEqualTo(user3.getUserId());
+            assertThat(debts.get(1).getDebtAmount()).isEqualTo(user3.getPercentage()*entry1.getPrice());
+            assertThat(debts.get(2).getUserId()).isEqualTo(user4.getUserId());
+            assertThat(debts.get(2).getDebtAmount()).isEqualTo(user4.getPercentage()*entry1.getPrice());
+            assertThat(debts).hasSize(3);
+        }
+
+
+    }
 }
