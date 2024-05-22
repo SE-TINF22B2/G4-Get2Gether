@@ -21,7 +21,11 @@ export class EventService {
   }
 
   createEvent(eventData: CreateEventCommand):Observable<Event> {
-    return this.http.post<any>(`${environment.api}/event/`, eventData, {withCredentials: true});
+    return this.http.post<Event>(`${environment.api}/event/`, eventData, {withCredentials: true});
+  }
+
+  updateEvent(eventId: string,eventData: CreateEventCommand): Observable<Event> {
+    return this.http.put<Event>(`${environment.api}/event/${eventId}`, eventData, {withCredentials: true})
   }
 
 }

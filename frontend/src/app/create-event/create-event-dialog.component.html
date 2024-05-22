@@ -1,11 +1,11 @@
-<h1 mat-dialog-title>Event erstellen</h1>
+<h1 mat-dialog-title>Event {{ isCreatingNewEvent ? 'erstellen' : 'bearbeiten'}}</h1>
 
 <mat-dialog-content>
   <form [formGroup]="form">
     <div class="create-event-container">
 
       <p>Titel<sup>*</sup></p>
-      <mat-form-field>
+      <mat-form-field subscriptSizing="dynamic">
         <mat-label>Titel des Events</mat-label>
         <input matInput formControlName="name">
       </mat-form-field>
@@ -61,7 +61,7 @@
 
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Abbrechen</button>
-  <button mat-button [disabled]="!form.valid" [mat-dialog-close]="true" (click)="createEvent()" cdkFocusInitial>
-    Speichern
+  <button mat-button [disabled]="!form.valid" [mat-dialog-close]="true" (click)="submit()">
+    {{ isCreatingNewEvent ? 'Erstellen' : 'Speichern'}}
   </button>
 </mat-dialog-actions>

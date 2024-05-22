@@ -38,7 +38,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {EventListItemComponent} from './dashboard/side-menu/event-list/event-list-item/event-list-item.component';
 import {MatCardModule} from "@angular/material/card";
 import {MatExpansionModule} from "@angular/material/expansion";
-import {EventCreationComponent} from './eventcreation/event-creation.component';
+import {CreateEventDialogComponent} from './create-event/create-event-dialog.component';
 import {EventpageComponent} from "./eventpage/eventpage.component";
 import {MatNativeDateModule, MatRippleModule, NativeDateAdapter, DateAdapter} from "@angular/material/core";
 import {EventSearchComponent} from './dashboard/side-menu/event-search/event-search.component';
@@ -112,7 +112,7 @@ function loadMapApi(httpClient: HttpClient) {
     DefaultEventPageComponent,
     EventListComponent,
     EventListItemComponent,
-    EventCreationComponent,
+    CreateEventDialogComponent,
     EventSearchComponent,
     UserSettingsComponent,
     UserSettingsItemComponent,
