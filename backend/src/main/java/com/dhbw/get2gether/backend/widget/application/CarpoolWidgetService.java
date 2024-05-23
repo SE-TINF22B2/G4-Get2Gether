@@ -72,7 +72,6 @@ public class CarpoolWidgetService extends AbstractWidgetService{
                 .userId(userService.getUserByPrincipal(principal).getId())
                 .build();
         car.addRider(rider);
-        widget.addCar(car);
         return updateAndGetWidget(principal, event, widget);
     }
     @PreAuthorize("hasRole('USER')")
