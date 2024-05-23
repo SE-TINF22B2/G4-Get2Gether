@@ -75,6 +75,8 @@ import { ShoppingListEntryListItemComponent } from './widgets/shopping-list-widg
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {AddWidgetDialogComponent} from "./eventpage/widgets-section/add-widget-dialog/add-widget-dialog.component";
 import { ExpenseDebtOverviewComponent } from './widgets/expense-split-widget/expense-debt-overview/expense-debt-overview.component';
+import { InvitationDialogComponent } from './eventpage/invitation-dialog/invitation-dialog.component';
+import {CdkCopyToClipboard} from "@angular/cdk/clipboard";
 
 registerLocaleData(localeDe);
 
@@ -133,7 +135,8 @@ function loadMapApi(httpClient: HttpClient) {
     EditEntryDialogComponent,
     ShoppingListEntryListItemComponent,
     ExpenseDebtOverviewComponent,
-    AddWidgetDialogComponent
+    AddWidgetDialogComponent,
+    InvitationDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -178,7 +181,8 @@ function loadMapApi(httpClient: HttpClient) {
     ReactiveFormsModule,
     MatNativeDateModule,
     MatSelectModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    CdkCopyToClipboard
   ],
   providers: [
     {

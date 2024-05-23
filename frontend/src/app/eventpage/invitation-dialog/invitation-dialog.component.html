@@ -1,0 +1,44 @@
+<h2 mat-dialog-title>Freunde einladen</h2>
+
+<mat-dialog-content>
+  <div class="invitation-container">
+    <p class="info-text">
+      Teile den Einladungslink mit anderen Leuten, um sie zum Event hinzuzufügen.
+    </p>
+
+    <div>
+      <mat-form-field class="invitation-field" subscriptSizing="dynamic">
+        <mat-label>Einladungslink</mat-label>
+        <input matInput readonly [value]="invitationLink" [disabled]="!hasInvitationLink" #input>
+        <button
+          mat-icon-button
+          matSuffix
+          matTooltip="Einladunglink kopieren"
+          *ngIf="hasInvitationLink"
+          (click)="input.select()"
+          [cdkCopyToClipboard]="invitationLink"
+        >
+          <mat-icon>content_copy</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+
+    @if (hasInvitationLink) {
+      <button mat-button (click)="generateInvitationLink()" [disabled]="isLoading">
+        <mat-icon>refresh</mat-icon>
+        Einladungslink neu generieren
+      </button>
+    } @else {
+      <button mat-stroked-button (click)="generateInvitationLink()" [disabled]="isLoading">
+        <mat-icon>refresh</mat-icon>
+        Einladungslink generieren
+      </button>
+    }
+  </div>
+</mat-dialog-content>
+
+<mat-divider></mat-divider>
+
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Schließen</button>
+</mat-dialog-actions>

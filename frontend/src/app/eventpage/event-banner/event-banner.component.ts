@@ -4,6 +4,7 @@ import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {MatDialog} from "@angular/material/dialog";
 import {EventService} from "../../../services/event.service";
 import {CreateEventDialogComponent} from "../../create-event/create-event-dialog.component";
+import {InvitationDialogComponent} from "../invitation-dialog/invitation-dialog.component";
 
 
 @Component({
@@ -15,8 +16,11 @@ export class EventBannerComponent implements OnInit {
   @Input()
   eventData!: Event;
 
-  @Output() showParticipantsClicked: EventEmitter<any> = new EventEmitter();
+  @Output()
+  onEventUpdated = new EventEmitter<Event>();
 
+  @Output()
+  showParticipantsClicked = new EventEmitter();
 
   isPhonePortrait = false;
 
@@ -41,11 +45,22 @@ export class EventBannerComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(updateCommand => {
-      if(!updateCommand) return;
+      if (!updateCommand) return;
       this.service.updateEvent(this.eventData.id, updateCommand).subscribe((event) => {
           //TODO: Update Eventpage and navbar
         }
       );
     });
+  }
+
+  openInvitationDialog() {
+    const dialogRef = this.dialog.open(InvitationDialogComponent, {
+      width: "500px",
+      data: {eventData: this.eventData}
+    });
+    const subscription = dialogRef.componentInstance.onEventUpdated.subscribe(event => {
+      this.onEventUpdated.emit(event);
+    });
+    dialogRef.afterClosed().subscribe(() => subscription.unsubscribe());
   }
 }
