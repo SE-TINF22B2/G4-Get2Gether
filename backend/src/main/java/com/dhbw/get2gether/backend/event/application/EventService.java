@@ -119,6 +119,14 @@ public class EventService {
         });
     }
 
+    @PreAuthorize("hasRole('USER')")
+    public boolean leaveEvent(AuthenticatedPrincipal principal, String eventId) {
+        Event event = getEventIfUserIsParticipant(principal, eventId);
+        User user = userService.getUserByPrincipal(principal);
+        event.removeParticipant(user.getId());
+        return !eventRepository.save(event).getParticipantIds().contains(user.getId());
+    }
+
     public EventDetailDto mapEventToEventDetailDto(Optional<String> currentUserId, Event event) {
         List<SimpleUserDto> participantsDtos = userService.getSimpleUsersById(event.getParticipantIds());
         return eventMapper.toEventDetailDto(event, participantsDtos, currentUserId);
