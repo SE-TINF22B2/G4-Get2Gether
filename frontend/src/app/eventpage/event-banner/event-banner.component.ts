@@ -5,6 +5,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {EventService} from "../../../services/event.service";
 import {CreateEventDialogComponent} from "../../create-event/create-event-dialog.component";
 import {InvitationDialogComponent} from "../invitation-dialog/invitation-dialog.component";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -20,6 +21,9 @@ export class EventBannerComponent implements OnInit {
   onEventUpdated = new EventEmitter<Event>();
 
   @Output()
+  onEventLeft = new EventEmitter();
+
+  @Output()
   showParticipantsClicked = new EventEmitter();
 
   isPhonePortrait = false;
@@ -27,7 +31,8 @@ export class EventBannerComponent implements OnInit {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private dialog: MatDialog,
-    private service: EventService
+    private service: EventService,
+    private router: Router
   ) {
   }
 
@@ -47,7 +52,7 @@ export class EventBannerComponent implements OnInit {
     dialogRef.afterClosed().subscribe(updateCommand => {
       if (!updateCommand) return;
       this.service.updateEvent(this.eventData.id, updateCommand).subscribe((event) => {
-          //TODO: Update Eventpage and navbar
+          this.onEventUpdated.emit(event);
         }
       );
     });
@@ -62,5 +67,12 @@ export class EventBannerComponent implements OnInit {
       this.onEventUpdated.emit(event);
     });
     dialogRef.afterClosed().subscribe(() => subscription.unsubscribe());
+  }
+
+  leaveEvent() {
+    this.service.leaveEvent(this.eventData.id).subscribe(() => {
+      this.router.navigateByUrl("/");
+      this.onEventLeft.emit();
+    });
   }
 }

@@ -31,4 +31,8 @@ export class EventService {
   generateInvitationLink(eventId: string): Observable<Event> {
     return this.http.get<Event>(`${environment.api}/event/${eventId}/generateInvitationLink`, {withCredentials: true});
   }
+
+  leaveEvent(eventId: string): Observable<any> {
+    return this.http.get(`${environment.api}/event/${eventId}/leave`, {withCredentials: true});
+  }
 }

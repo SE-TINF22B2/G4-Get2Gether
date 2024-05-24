@@ -5,6 +5,7 @@
         <app-event-banner
           [eventData]="eventData"
           (onEventUpdated)="onEventUpdated($event)"
+          (onEventLeft)="updateEventList()"
           (showParticipantsClicked)="drawer.toggle()"
         ></app-event-banner>
         <br>

@@ -51,6 +51,11 @@ export class EventpageComponent implements OnInit, OnDestroy {
 
   onEventUpdated(event: Event) {
     this.eventData = event;
+    this.updateEventList();
+  }
+
+  updateEventList() {
+    // TODO: trigger an update for the event list in the sidebar
   }
 
   private loadEventData(eventId: string) {
