@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {Event} from "../../model/event";
 import {BaseWidget} from "../../model/common-widget";
+import {AppStateService} from "../../services/app-state.service";
 
 @Component({
   selector: 'app-eventpage',
@@ -18,6 +19,7 @@ export class EventpageComponent implements OnInit, OnDestroy {
 
   constructor(
     private eventService: EventService,
+    private appStateService: AppStateService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -55,7 +57,7 @@ export class EventpageComponent implements OnInit, OnDestroy {
   }
 
   updateEventList() {
-    // TODO: trigger an update for the event list in the sidebar
+    this.appStateService.doUpdateEventList.emit();
   }
 
   private loadEventData(eventId: string) {
