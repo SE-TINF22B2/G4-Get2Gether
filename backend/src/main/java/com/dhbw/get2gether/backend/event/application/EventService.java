@@ -165,6 +165,6 @@ public class EventService {
     }
 
     private static String generateInvitationLink() {
-        return RandomStringUtils.randomAlphanumeric(24, 33);
+        return UUID.randomUUID().toString();
     }
 }
