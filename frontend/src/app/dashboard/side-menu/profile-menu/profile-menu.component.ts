@@ -7,6 +7,7 @@ import {UserSettingsComponent} from "../../user-settings/user-settings.component
 import {environment} from "../../../../environment/environment";
 import {EventService} from "../../../../services/event.service";
 import {Router} from "@angular/router";
+import {AppStateService} from "../../../../services/app-state.service";
 
 @Component({
   selector: 'app-profile-menu',
@@ -19,6 +20,7 @@ export class ProfileMenuComponent {
     public userService: UserService,
     public dialog: MatDialog,
     private service: EventService,
+    private appStateService: AppStateService,
     private router: Router
   ) {}
 
@@ -30,13 +32,14 @@ export class ProfileMenuComponent {
 
   openCreateEventDialog() {
     const dialogRef = this.dialog.open(CreateEventDialogComponent, {
-      maxWidth: "800px"
+      maxWidth: "800px",
+      data: {}
     });
     dialogRef.afterClosed().subscribe(addCommand => {
       if(!addCommand) return;
       this.service.createEvent(addCommand).subscribe(event => {
+        this.appStateService.doUpdateEventList.emit();
         this.router.navigate(['/dashboard', event.id]);
-        //TODO: update Navbar
       })
     })
   }

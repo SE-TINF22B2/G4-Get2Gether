@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {CreateEventCommand, Event} from "../../model/event";
 
@@ -11,7 +11,7 @@ import {CreateEventCommand, Event} from "../../model/event";
 export class CreateEventDialogComponent {
   isEndDateTimeDisabled!: boolean;
   event: Event | undefined;
-  form!: FormGroup;
+  form: FormGroup;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) data: {event: Event | undefined},
@@ -22,15 +22,34 @@ export class CreateEventDialogComponent {
     const location = this.extractAddress(this.event?.location);
     const time = this.extractDateAndTime(this.event?.date);
     this.form = this.fb.group({
-      name: [this.event?.name ?? "", Validators.required],
-      date: [this.event?.date ?? null],
-      endDate: [this.event?.endDate ?? null],
-      time: [time ?? null],
-      street: [location?.street ?? null],
-      plz: [location?.postalCode ?? null],
-      stadt: [location?.city ?? null],
-      location: [this.event?.location ?? null],
-      description: [this.event?.description ?? ""]
+      name: new FormControl(
+        this.event?.name ?? "",
+        Validators.required
+      ),
+      date: new FormControl(
+        this.event?.date ?? null
+      ),
+      endDate: new FormControl(
+        this.event?.endDate ?? null
+      ),
+      time: new FormControl(
+        time ?? null
+      ),
+      street: new FormControl(
+        location?.street ?? null
+      ),
+      plz: new FormControl(
+        location?.postalCode ?? null
+      ),
+      stadt: new FormControl(
+        location?.city ?? null
+      ),
+      location: new FormControl(
+        this.event?.location ?? null
+      ),
+      description: new FormControl(
+        this.event?.description ?? ""
+      )
     });
     this.isEndDateTimeDisabled = true;
   }
@@ -97,7 +116,8 @@ export class CreateEventDialogComponent {
     const time = this.form.get('time')?.value;
     if (dateValue) {
       let date = new Date();
-      date.setUTCDate(new Date(dateValue).getDate());
+      const formDate = new Date(dateValue);
+      date.setUTCFullYear(formDate.getFullYear(), formDate.getMonth(), formDate.getDate());
       if (time) {
         const [hours, minutes] = time.split(":");
         date.setUTCHours(parseInt(hours, 10), parseInt(minutes, 10), 0, 0);
@@ -114,7 +134,8 @@ export class CreateEventDialogComponent {
     const dateValue = this.form.get('endDate')?.value;
     if (dateValue) {
       let date = new Date();
-      date.setUTCDate(new Date(dateValue).getDate());
+      const formDate = new Date(dateValue);
+      date.setUTCFullYear(formDate.getFullYear(), formDate.getMonth(), formDate.getDate());
       date.setUTCHours(23, 59, 0, 0);
       this.form.patchValue({
         endDate: date
