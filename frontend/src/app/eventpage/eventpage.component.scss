@@ -1,6 +1,7 @@
 .container {
   min-height: 100%;
   display: grid;
+  grid-template-columns: 100%;
 }
 
 .participants-sidenav {
