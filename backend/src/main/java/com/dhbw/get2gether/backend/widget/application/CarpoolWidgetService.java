@@ -8,6 +8,7 @@ import com.dhbw.get2gether.backend.widget.application.mapper.CarpoolWidgetMapper
 import com.dhbw.get2gether.backend.widget.model.carpool.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.AuthenticatedPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -48,6 +49,25 @@ public class CarpoolWidgetService extends AbstractWidgetService{
         widget.addCar(car);
         return updateAndGetWidget(principal, event, widget);
     }
+
+    @PreAuthorize("hasRole('USER')")
+    public CarpoolWidget updateCar(OAuth2User principal, String eventId, String widgetId, String carId, CarUpdateCommand updateCommand) {
+        Event event = getEventById(principal, eventId);
+        CarpoolWidget widget = getWidgetFromEvent(event, widgetId);
+        Car originalCar = widget.getCars().stream()
+                .filter(l -> Objects.equals(l.getId(), carId)).findFirst()
+                .orElseThrow(() -> new EntityNotFoundException("Entry not found"));
+        Car updatedCar = mapper.mapToCar(updateCommand).toBuilder()
+                .id(originalCar.getId())
+                .driverId(originalCar.getDriverId())
+                .riders(originalCar.getRiders())
+                .build();
+        if(!widget.replaceCar(originalCar, updatedCar)) {
+            throw new IllegalStateException("Failed to replace car from carpool widget");
+        }
+        return updateAndGetWidget(principal, event, widget);
+    }
+
     @PreAuthorize("hasRole('USER')")
     public CarpoolWidget removeCar(AuthenticatedPrincipal principal, String eventId, String widgetId, String carId) {
         Event event = getEventById(principal, eventId);
@@ -60,6 +80,7 @@ public class CarpoolWidgetService extends AbstractWidgetService{
         }
         return updateAndGetWidget(principal, event, widget);
     }
+
     @PreAuthorize("hasRole('USER')")
     public CarpoolWidget addRider(AuthenticatedPrincipal principal, String eventId, String widgetId, String carId, RiderAddCommand addCommand) {
         Event event = getEventById(principal, eventId);
@@ -74,6 +95,7 @@ public class CarpoolWidgetService extends AbstractWidgetService{
         car.addRider(rider);
         return updateAndGetWidget(principal, event, widget);
     }
+
     @PreAuthorize("hasRole('USER')")
     public CarpoolWidget removeRider(AuthenticatedPrincipal principal, String eventId, String widgetId, String carId, String riderId) {
         Event event = getEventById(principal, eventId);
@@ -89,5 +111,4 @@ public class CarpoolWidgetService extends AbstractWidgetService{
         }
         return updateAndGetWidget(principal, event, widget);
     }
-
 }

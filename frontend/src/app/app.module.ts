@@ -76,7 +76,6 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {AddWidgetDialogComponent} from "./eventpage/widgets-section/add-widget-dialog/add-widget-dialog.component";
 import { ExpenseDebtOverviewComponent } from './widgets/expense-split-widget/expense-debt-overview/expense-debt-overview.component';
 import { CarpoolWidgetComponent } from './widgets/carpool-widget/carpool-widget.component';
-import { DefaultCarpoolPageComponent } from './widgets/carpool-widget/default-carpool-page/default-carpool-page.component';
 import { AddCarpoolDialogComponent } from './widgets/carpool-widget/add-carpool-dialog/add-carpool-dialog.component';
 import { CarpoolCardItemComponent } from './widgets/carpool-widget/carpool-card-item/carpool-card-item.component';
 import { InvitationDialogComponent } from './eventpage/invitation-dialog/invitation-dialog.component';
@@ -140,7 +139,6 @@ function loadMapApi(httpClient: HttpClient) {
     EditEntryDialogComponent,
     ShoppingListEntryListItemComponent,
     CarpoolWidgetComponent,
-    DefaultCarpoolPageComponent,
     AddCarpoolDialogComponent,
     ExpenseDebtOverviewComponent,
     CarpoolCardItemComponent,

@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {environment} from "../../environment/environment";
 import {Event} from "../../model/event";
-import {Car, CarAddCommand, CarpoolWidget, RiderAddCommand} from "../../model/carpool-widget";
+import {Car, CarAddCommand, CarpoolWidget, CarUpdateCommand, RiderAddCommand} from "../../model/carpool-widget";
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +21,8 @@ export class CarpoolWidgetService {
     return this.http.post<CarpoolWidget>(`${environment.api}/event/${eventId}/widgets/carpool/${widgetId}/cars`, addCommand, {withCredentials: true});
   }
 
-  editCar() {
-    //TODO: noch nicht im Backend implementiert
+  editCar(eventId: string, widgetId: string,carId: string, carUpdateCommand: CarUpdateCommand): Observable<CarpoolWidget> {
+    return this.http.patch<CarpoolWidget>(`${environment.api}/event/${eventId}/widgets/carpool/${widgetId}/cars/${carId}`, carUpdateCommand, {withCredentials: true});
   }
 
   addRider(eventId: string, widgetId: string,carId: string, riderAddCommand: RiderAddCommand): Observable<CarpoolWidget> {

@@ -23,8 +23,7 @@ export class AddCarpoolDialogComponent {
 
     this.form = fb.group({
       driver: new FormControl(
-        this.car?.driverId ?? "",
-        Validators.required
+        this.car?.driverId ?? ""
       ),
       adress: new FormControl(
         this.car?.driverAdress ?? ""
