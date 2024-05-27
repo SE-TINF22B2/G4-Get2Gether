@@ -2,9 +2,14 @@ import {Component} from '@angular/core';
 import {UserService} from "../../../../services/user.service";
 import {User} from "../../../../model/user";
 import {MatDialog} from "@angular/material/dialog";
-import {EventCreationComponent} from "../../../eventcreation/event-creation.component";
+import {CreateEventDialogComponent} from "../../../create-event/create-event-dialog.component";
 import {UserSettingsComponent} from "../../user-settings/user-settings.component";
 import {environment} from "../../../../environment/environment";
+import {EventService} from "../../../../services/event.service";
+import {Router} from "@angular/router";
+import {AppStateService} from "../../../../services/app-state.service";
+import {error} from "@angular/compiler-cli/src/transformers/util";
+import {FehlerhandlingComponent} from "../../../fehlerhandling/fehlerhandling.component";
 
 @Component({
   selector: 'app-profile-menu',
@@ -15,7 +20,10 @@ export class ProfileMenuComponent {
 
   constructor(
     public userService: UserService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private service: EventService,
+    private appStateService: AppStateService,
+    private router: Router
   ) {}
 
   getUsername(user: User): string {
@@ -25,7 +33,22 @@ export class ProfileMenuComponent {
   }
 
   openCreateEventDialog() {
-    this.dialog.open(EventCreationComponent, {maxWidth: "800px"});
+    const dialogRef = this.dialog.open(CreateEventDialogComponent, {
+      maxWidth: "800px",
+      data: {}
+    });
+    dialogRef.afterClosed().subscribe(addCommand => {
+      if(!addCommand) return;
+      this.service.createEvent(addCommand).subscribe({
+          next: event => {
+            this.appStateService.doUpdateEventList.emit();
+            this.router.navigate(['/dashboard', event.id]);
+          },
+          error: error => {
+            this.dialog.open(FehlerhandlingComponent, {data: {error: error}});
+          }
+      });
+    })
   }
 
   openUserSettings(){

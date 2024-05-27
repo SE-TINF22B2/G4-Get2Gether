@@ -44,7 +44,7 @@ public class ExpenseSplitWidgetService extends AbstractWidgetService {
 
     @PreAuthorize("hasRole('USER')")
     public ExpenseSplitWidgetDto addEntry(AuthenticatedPrincipal principal, String eventId, String widgetId, ExpenseEntryAddCommand addCommand) {
-        if(addCommand.getInvolvedUsers().isEmpty()) {
+        if (addCommand.getInvolvedUsers().isEmpty()) {
             throw new IllegalArgumentException("At least one user must be involved in the expense entry");
         }
 
@@ -57,7 +57,7 @@ public class ExpenseSplitWidgetService extends AbstractWidgetService {
                 .involvedUsers(addCommand.getInvolvedUsers().stream().map(user ->
                         UserWithPercentage.builder()
                                 .userId(user)
-                                .percentage((double) 1 /addCommand.getInvolvedUsers().size())
+                                .percentage(1.0 / addCommand.getInvolvedUsers().size())
                                 .build()).toList())
                 .build();
         widget.addEntry(entry);
@@ -79,27 +79,29 @@ public class ExpenseSplitWidgetService extends AbstractWidgetService {
 
     @PreAuthorize("hasRole('USER')")
     public ExpenseSplitWidgetDto updateEntry(AuthenticatedPrincipal principal, String eventId, String widgetId, String entryId, ExpenseEntryUpdateCommand updateCommand) {
-        if(updateCommand.getInvolvedUsers().isEmpty()) {
+        if (updateCommand.getInvolvedUsers().isEmpty()) {
             throw new IllegalArgumentException("At least one user must be involved in the expense entry");
         }
 
         Event event = getEventById(principal, eventId);
         ExpenseSplitWidget widget = getWidgetFromEvent(event, widgetId);
-        ExpenseEntry original_entry = widget.getEntries().stream()
+        ExpenseEntry originalEntry = widget.getEntries().stream()
                 .filter(l -> Objects.equals(l.getId(), entryId)).findFirst()
                 .orElseThrow(() -> new EntityNotFoundException("Entry not found"));
 
         ExpenseEntry updatedEntry = mapper.mapToEntry(updateCommand).toBuilder()
-                .id(original_entry.getId())
-                .creatorId(original_entry.getCreatorId())
+                .id(originalEntry.getId())
+                .creatorId(originalEntry.getCreatorId())
                 .involvedUsers(updateCommand.getInvolvedUsers().stream().map(user ->
                         UserWithPercentage.builder()
                                 .userId(user)
-                                .percentage((double) 1 /updateCommand.getInvolvedUsers().size())
+                                .percentage(1.0 / updateCommand.getInvolvedUsers().size())
                                 .build()).toList())
                 .build();
 
-        widget.replaceEntry(original_entry, updatedEntry);
+        if (!widget.replaceEntry(originalEntry, updatedEntry)) {
+            throw new IllegalStateException("Failed to replace entry from expense split widget");
+        }
         return mapToDto(updateAndGetWidget(principal, event, widget), event.getParticipantIds(), principal);
     }
 

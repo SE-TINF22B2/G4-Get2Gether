@@ -9,16 +9,19 @@ import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.SubclassExhaustiveStrategy;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Mapper(componentModel = "spring", subclassExhaustiveStrategy = SubclassExhaustiveStrategy.COMPILE_ERROR)
 public abstract class WidgetMapper {
 
     // Manual implementation of @SubclassMapping which returns the widget object if no custom mapping is needed.
     // @SubclassMapping(source = ExpenseSplitWidget.class, target = ExpenseSplitWidgetDto.class)
-    public IWidget widgetToIWidget(Widget widget, @Context List<SimpleUserDto> participants, @Context String userId) {
+    public IWidget widgetToIWidget(Widget widget, @Context List<SimpleUserDto> participants, @Context Optional<String> userId) {
         if (widget instanceof ExpenseSplitWidget) {
-            List<Debt> debts = ((ExpenseSplitWidget) widget).calculateDebtsForUserId(userId);
+            List<Debt> debts = userId.map(id -> ((ExpenseSplitWidget) widget).calculateDebtsForUserId(id))
+                    .orElse(new ArrayList<>());
             return expenseSplitWidgetToExpenseSplitWidgetDto((ExpenseSplitWidget) widget, debts, participants);
         }
         return widget;

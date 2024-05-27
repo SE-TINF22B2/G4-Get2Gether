@@ -38,7 +38,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {EventListItemComponent} from './dashboard/side-menu/event-list/event-list-item/event-list-item.component';
 import {MatCardModule} from "@angular/material/card";
 import {MatExpansionModule} from "@angular/material/expansion";
-import {EventCreationComponent} from './eventcreation/event-creation.component';
+import {CreateEventDialogComponent} from './create-event/create-event-dialog.component';
 import {EventpageComponent} from "./eventpage/eventpage.component";
 import {MatNativeDateModule, MatRippleModule, NativeDateAdapter, DateAdapter} from "@angular/material/core";
 import {EventSearchComponent} from './dashboard/side-menu/event-search/event-search.component';
@@ -57,6 +57,7 @@ import { ParticipantCardComponent } from './eventpage/participants-sidenav/parti
 import { ShoppingListWidgetComponent } from './widgets/shopping-list-widget/shopping-list-widget.component';
 import { DefaultShoppingPageComponent } from './widgets/shopping-list-widget/default-shopping-page/default-shopping-page.component';
 import { AddEntryDialogComponent } from './widgets/shopping-list-widget/add-entry-dialog/add-entry-dialog.component';
+import {RouterOutlet} from "@angular/router";
 import {
   MatDatepicker, MatDatepickerActions, MatDatepickerApply, MatDatepickerCancel,
   MatDatepickerToggle,
@@ -72,11 +73,15 @@ import { DeleteEntryConfirmationDialogComponent } from './widgets/expense-split-
 import { EditEntryDialogComponent } from './widgets/shopping-list-widget/edit-entry-dialog/edit-entry-dialog.component';
 import { ShoppingListEntryListItemComponent } from './widgets/shopping-list-widget/shopping-list-entry-list-item/shopping-list-entry-list-item.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {AddWidgetDialogComponent} from "./eventpage/widgets-section/add-widget-dialog/add-widget-dialog.component";
 import { ExpenseDebtOverviewComponent } from './widgets/expense-split-widget/expense-debt-overview/expense-debt-overview.component';
 import { CarpoolWidgetComponent } from './widgets/carpool-widget/carpool-widget.component';
 import { DefaultCarpoolPageComponent } from './widgets/carpool-widget/default-carpool-page/default-carpool-page.component';
 import { AddCarpoolDialogComponent } from './widgets/carpool-widget/add-carpool-dialog/add-carpool-dialog.component';
 import { CarpoolCardItemComponent } from './widgets/carpool-widget/carpool-card-item/carpool-card-item.component';
+import { InvitationDialogComponent } from './eventpage/invitation-dialog/invitation-dialog.component';
+import {CdkCopyToClipboard} from "@angular/cdk/clipboard";
+import { FehlerhandlingComponent } from './fehlerhandling/fehlerhandling.component';
 
 registerLocaleData(localeDe);
 
@@ -114,7 +119,7 @@ function loadMapApi(httpClient: HttpClient) {
     DefaultEventPageComponent,
     EventListComponent,
     EventListItemComponent,
-    EventCreationComponent,
+    CreateEventDialogComponent,
     EventSearchComponent,
     UserSettingsComponent,
     UserSettingsItemComponent,
@@ -139,6 +144,9 @@ function loadMapApi(httpClient: HttpClient) {
     AddCarpoolDialogComponent,
     ExpenseDebtOverviewComponent,
     CarpoolCardItemComponent,
+    AddWidgetDialogComponent,
+    InvitationDialogComponent,
+    FehlerhandlingComponent
   ],
   imports: [
     BrowserModule,
@@ -170,6 +178,7 @@ function loadMapApi(httpClient: HttpClient) {
     FormsModule,
     ScrollingModule,
     MatTabsModule,
+    RouterOutlet,
     MatDatepicker,
     MatEndDate,
     MatStartDate,
@@ -182,7 +191,8 @@ function loadMapApi(httpClient: HttpClient) {
     ReactiveFormsModule,
     MatNativeDateModule,
     MatSelectModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    CdkCopyToClipboard
   ],
   providers: [
     {

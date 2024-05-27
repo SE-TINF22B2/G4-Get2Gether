@@ -43,23 +43,23 @@ public class ExpenseSplitWidget extends Widget {
         return true;
     }
 
-    public List<Debt> calculateDebtsForUserId(String userId){
+    public List<Debt> calculateDebtsForUserId(String userId) {
         List<Debt> debts = new ArrayList<>();
-        for(ExpenseEntry expenseEntry : entries){
-            if(expenseEntry.getCreatorId().equals(userId)){
+        for (ExpenseEntry expenseEntry : entries) {
+            if (expenseEntry.getCreatorId().equals(userId)) {
                 // Add every involved user except the buyer to List of debt
-                for(UserWithPercentage userWithPercentage: expenseEntry.getInvolvedUsers()){
-                    if(!Objects.equals(userWithPercentage.getUserId(), userId)){
-                        debts = addDebt(debts, userWithPercentage.getUserId(), expenseEntry.getPrice()*userWithPercentage.getPercentage());
+                for (UserWithPercentage userWithPercentage : expenseEntry.getInvolvedUsers()) {
+                    if (!Objects.equals(userWithPercentage.getUserId(), userId)) {
+                        debts = addDebt(debts, userWithPercentage.getUserId(), expenseEntry.getPrice() * userWithPercentage.getPercentage());
                     }
                 }
             } else {
                 Optional<UserWithPercentage> userWithPercentage = expenseEntry.getInvolvedUsers().stream()
                         .filter(user -> user.getUserId().equals(userId)).findFirst();
-                if(userWithPercentage.isPresent()){
+                if (userWithPercentage.isPresent()) {
                     // Add the Debt of the user to the Debt List
-                    // In this case the user for whom we calculate all debts is a involved user and not the payer
-                    debts = addDebt(debts, expenseEntry.getCreatorId(), expenseEntry.getPrice()*userWithPercentage.get().getPercentage()*-1.0);
+                    // In this case the user for whom we calculate all debts is an involved user and not the payer
+                    debts = addDebt(debts, expenseEntry.getCreatorId(), expenseEntry.getPrice() * userWithPercentage.get().getPercentage() * -1.0);
                 }
             }
         }
@@ -67,18 +67,17 @@ public class ExpenseSplitWidget extends Widget {
     }
 
     // This method extracts the logic if the debtor is already in the list or not
-    private List<Debt> addDebt(List<Debt> debts, String debtorId, double debtAmount){
+    private List<Debt> addDebt(List<Debt> debts, String debtorId, double debtAmount) {
         Optional<Debt> optionalDebt = debts.stream()
                 .filter(debt -> debt.getUserId().equals(debtorId)).findFirst();
 
-        if(optionalDebt.isPresent()){
+        if (optionalDebt.isPresent()) {
             // Calculate new debtAmount if already exists
-            Debt newDebt = new Debt(debtorId, optionalDebt.get().getDebtAmount()+debtAmount);
+            Debt newDebt = new Debt(debtorId, optionalDebt.get().getDebtAmount() + debtAmount);
             int index = debts.indexOf(optionalDebt.get());
             debts.set(index, newDebt);
-
         } else {
-            // Add new debt if not exists already
+            // Add new debt if not already exists
             debts.add(new Debt(debtorId, debtAmount));
         }
         return debts;

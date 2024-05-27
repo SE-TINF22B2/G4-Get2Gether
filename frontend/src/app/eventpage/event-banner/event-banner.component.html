@@ -8,11 +8,11 @@
       </button>
 
       <mat-menu #menu="matMenu">
-        <button mat-menu-item>
+        <button mat-menu-item (click)="openEditEventDialog()">
           <mat-icon>edit</mat-icon>
           Bearbeiten
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="leaveEvent()">
           <mat-icon>logout</mat-icon>
           Verlassen
         </button>
@@ -20,9 +20,12 @@
     </mat-card-header>
 
     <mat-card-content class="details">
+
       <div class="details-div">
-        <mat-icon inline>location_on</mat-icon>
-        <p class="location">{{ eventData.location }}</p>
+        @if (eventData.location) {
+          <mat-icon inline>location_on</mat-icon>
+          <p class="location">{{ eventData.location }}</p>
+        }
       </div>
       <div class="datetime-container">
         <mat-icon inline>edit_calendar</mat-icon>
@@ -31,10 +34,10 @@
             {{ eventData.date | date: "short" }}
           </span>
           @if (eventData.endDate) {
-          <span class="date-separator">-</span>
-          <span class="end-date">
-          {{ eventData.endDate | date: "short" }}
-          </span>
+            <span class="date-separator">-</span>
+            <span class="end-date">
+            {{ eventData.endDate | date: "shortDate" }}
+            </span>
           }
         </p>
       </div>
@@ -45,7 +48,7 @@
         <mat-icon>person</mat-icon>
         Teilnehmer anzeigen
       </button>
-      <button mat-button>
+      <button mat-button (click)="openInvitationDialog()">
         <mat-icon>link</mat-icon>
         Freunde einladen
       </button>

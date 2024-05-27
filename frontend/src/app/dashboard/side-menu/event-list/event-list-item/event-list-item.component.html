@@ -14,7 +14,7 @@
       <p>
         {{ event.date | date: "short" }}
         <ng-container *ngIf="event.endDate">
-          - {{ event.endDate | date: "short" }}
+          - {{ event.endDate | date: "shortDate" }}
         </ng-container>
       </p>
     </mat-card-content>

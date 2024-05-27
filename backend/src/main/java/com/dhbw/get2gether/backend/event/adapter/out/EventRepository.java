@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface EventRepository extends MongoRepository<Event, String> {
 
-    List<Event> findEventsByParticipantIdsContainsOrderByDate(String participantId);
+    List<Event> findEventsByParticipantIdsContainsOrderByDateDesc(String participantId);
 
     Optional<Event> findByInvitationLink(String invitationLink);
 }

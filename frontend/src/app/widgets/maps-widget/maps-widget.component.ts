@@ -10,6 +10,8 @@ import {MatDialog} from "@angular/material/dialog";
 import {MatDrawer} from "@angular/material/sidenav";
 import {BaseWidget} from "../../../model/common-widget";
 import {GoogleMap} from "@angular/google-maps";
+import {error} from "@angular/compiler-cli/src/transformers/util";
+import {FehlerhandlingComponent} from "../../fehlerhandling/fehlerhandling.component";
 
 @Component({
   selector: 'app-maps-widget',
@@ -96,7 +98,14 @@ export class MapsWidgetComponent implements OnInit {
 
     if (!existingLocation) {
       this.service.addLocation(this.eventId, this.widget.id, addCommand)
-        .subscribe(updatedWidget => this.onWidgetUpdated.emit(updatedWidget));
+        .subscribe({
+          next: updatedWidget => {
+            this.onWidgetUpdated.emit(updatedWidget);
+          },
+          error: err => {
+            this.dialog.open(FehlerhandlingComponent, {data: {error: err}});
+          }
+        });
     }
   }
 
@@ -116,7 +125,14 @@ export class MapsWidgetComponent implements OnInit {
   onDeleteClicked(event: Event, location: Location) {
     event.stopPropagation();
     this.service.deleteLocation(this.eventId, this.widget.id, location.id)
-      .subscribe(updatedWidget => this.onWidgetUpdated.emit(updatedWidget));
+      .subscribe({
+        next: updatedWidget => {
+          this.onWidgetUpdated.emit(updatedWidget);
+        },
+        error: err => {
+          this.dialog.open(FehlerhandlingComponent, {data: {error: err}});
+        }
+      });
   }
 
   get locations(): Location[] {

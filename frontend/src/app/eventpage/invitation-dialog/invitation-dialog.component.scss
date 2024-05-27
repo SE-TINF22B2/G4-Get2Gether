@@ -1,0 +1,31 @@
+.invitation-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  gap: var(--size-12);
+  margin-bottom: var(--size-24);
+}
+
+.invitation-field {
+  width: 100%;
+}
+
+.info-text {
+  margin: 0 0 var(--size-12);
+}
+
+.warning-text {
+  color: var(--error-color);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  mat-icon {
+    font-size: 1.4em;
+    width: 50px;
+  }
+}
+
+mat-divider {
+  margin: 0 var(--size-24);
+}

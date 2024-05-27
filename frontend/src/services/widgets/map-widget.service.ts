@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {LocationAddCommand, MapWidget} from "../../model/map-widget";
 import {Observable} from "rxjs";
 import {environment} from "../../environment/environment";
+import {Event} from "../../model/event";
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,10 @@ import {environment} from "../../environment/environment";
 export class MapWidgetService {
 
   constructor(private http: HttpClient) {
+  }
+
+  createMapWidget(eventId: string): Observable<Event> {
+    return this.http.post<Event>(`${environment.api}/event/${eventId}/widgets/map/`, {},{withCredentials: true});
   }
 
   addLocation(eventId: string, widgetId: string, addCommand: LocationAddCommand): Observable<MapWidget> {
