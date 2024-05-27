@@ -8,6 +8,8 @@ import {environment} from "../../../../environment/environment";
 import {EventService} from "../../../../services/event.service";
 import {Router} from "@angular/router";
 import {AppStateService} from "../../../../services/app-state.service";
+import {error} from "@angular/compiler-cli/src/transformers/util";
+import {FehlerhandlingComponent} from "../../../fehlerhandling/fehlerhandling.component";
 
 @Component({
   selector: 'app-profile-menu',
@@ -37,10 +39,15 @@ export class ProfileMenuComponent {
     });
     dialogRef.afterClosed().subscribe(addCommand => {
       if(!addCommand) return;
-      this.service.createEvent(addCommand).subscribe(event => {
-        this.appStateService.doUpdateEventList.emit();
-        this.router.navigate(['/dashboard', event.id]);
-      })
+      this.service.createEvent(addCommand).subscribe({
+          next: event => {
+            this.appStateService.doUpdateEventList.emit();
+            this.router.navigate(['/dashboard', event.id]);
+          },
+          error: error => {
+            this.dialog.open(FehlerhandlingComponent, {data: {error: error}});
+          }
+      });
     })
   }
 

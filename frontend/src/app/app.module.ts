@@ -77,6 +77,7 @@ import {AddWidgetDialogComponent} from "./eventpage/widgets-section/add-widget-d
 import { ExpenseDebtOverviewComponent } from './widgets/expense-split-widget/expense-debt-overview/expense-debt-overview.component';
 import { InvitationDialogComponent } from './eventpage/invitation-dialog/invitation-dialog.component';
 import {CdkCopyToClipboard} from "@angular/cdk/clipboard";
+import { FehlerhandlingComponent } from './fehlerhandling/fehlerhandling.component';
 
 registerLocaleData(localeDe);
 
@@ -136,7 +137,8 @@ function loadMapApi(httpClient: HttpClient) {
     ShoppingListEntryListItemComponent,
     ExpenseDebtOverviewComponent,
     AddWidgetDialogComponent,
-    InvitationDialogComponent
+    InvitationDialogComponent,
+    FehlerhandlingComponent
   ],
   imports: [
     BrowserModule,

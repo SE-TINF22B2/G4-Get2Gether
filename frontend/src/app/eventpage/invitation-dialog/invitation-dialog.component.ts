@@ -1,9 +1,10 @@
 import {Component, EventEmitter, Inject, Output} from '@angular/core';
-import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {Event} from "../../../model/event";
 import {environment} from "../../../environment/environment";
 import {EventService} from "../../../services/event.service";
 import {tap} from "rxjs";
+import {FehlerhandlingComponent} from "../../fehlerhandling/fehlerhandling.component";
 
 @Component({
   selector: 'app-invitation-dialog',
@@ -18,7 +19,10 @@ export class InvitationDialogComponent {
   @Output()
   onEventUpdated = new EventEmitter<Event>();
 
-  constructor(@Inject(MAT_DIALOG_DATA) data: { eventData: Event }, private eventService: EventService) {
+  constructor(
+    @Inject(MAT_DIALOG_DATA) data: { eventData: Event },
+    private eventService: EventService,
+    public dialog: MatDialog) {
     this.eventData = data.eventData;
   }
 
@@ -26,9 +30,14 @@ export class InvitationDialogComponent {
     if (this.isLoading) return;
     this.eventService.generateInvitationLink(this.eventData.id).pipe(
       tap(() => this.isLoading = false),
-    ).subscribe(event => {
+    ).subscribe({
+      next: event => {
       this.eventData = event;
       this.onEventUpdated.emit(event);
+    },
+      error: err => {
+        this.dialog.open(FehlerhandlingComponent, {data: {error: err}});
+      }
     });
   }
 

@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import {UserService} from "../../../services/user.service";
 import {ColorMode} from "../../../model/user";
+import {MatDialog} from "@angular/material/dialog";
+import {FehlerhandlingComponent} from "../../fehlerhandling/fehlerhandling.component";
 
 @Component({
   selector: 'app-user-settings',
@@ -13,14 +15,19 @@ export class UserSettingsComponent {
 
   isLoading = false;
 
-  constructor(public userService: UserService) {
+  constructor(public userService: UserService, public dialog: MatDialog) {
   }
 
   selectColorMode(colorMode: ColorMode) {
     this.isLoading = true;
     this.userService.applyThemeAttribute(colorMode);
-    this.userService.updateTheme(colorMode).subscribe(() => {
-      this.isLoading = false;
+    this.userService.updateTheme(colorMode).subscribe({
+      next: response => {
+        this.isLoading = false;
+      },
+      error: err => {
+        this.dialog.open(FehlerhandlingComponent, {data: {error: err}});
+      }
     });
   }
 }

@@ -10,6 +10,7 @@ import {ExpenseSplitWidgetService} from "../../../services/widgets/expense-split
 import {
   DeleteEntryConfirmationDialogComponent
 } from "./delete-entry-confirmation-dialog/delete-entry-confirmation-dialog.component";
+import {FehlerhandlingComponent} from "../../fehlerhandling/fehlerhandling.component";
 
 @Component({
   selector: 'app-expense-split-widget',
@@ -43,7 +44,14 @@ export class ExpenseSplitWidgetComponent {
       if (!addCommand) return;
 
       this.service.createExpenseEntry(this.eventData.id, this.widget.id, addCommand)
-        .subscribe(widget => this.onWidgetUpdated.emit(widget));
+        .subscribe({
+          next: widget => {
+            this.onWidgetUpdated.emit(widget);
+          },
+          error: err => {
+            this.dialog.open(FehlerhandlingComponent, {data: {error: err}});
+          }
+        });
     })
   }
 
@@ -60,7 +68,14 @@ export class ExpenseSplitWidgetComponent {
       if (!updateCommand) return;
 
       this.service.updateExpenseEntry(this.eventData.id, this.widget.id, entry.id, updateCommand)
-        .subscribe(widget => this.onWidgetUpdated.emit(widget));
+        .subscribe({
+          next: widget => {
+            this.onWidgetUpdated.emit(widget)
+          },
+          error: err => {
+            this.dialog.open(FehlerhandlingComponent, {data: {error: err}});
+          }
+        });
     })
   }
 
@@ -71,7 +86,14 @@ export class ExpenseSplitWidgetComponent {
       if (!deleteExpenseEntry) return;
 
       this.service.deleteExpenseEntry(this.eventData.id, this.widget.id, entry.id)
-        .subscribe(widget => this.onWidgetUpdated.emit(widget));
+        .subscribe({
+          next: widget => {
+            this.onWidgetUpdated.emit(widget);
+          },
+          error: err => {
+            this.dialog.open(FehlerhandlingComponent, {data: {error: err}});
+          }
+        });
     })
   }
 

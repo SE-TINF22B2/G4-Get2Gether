@@ -6,6 +6,7 @@ import {EventService} from "../../../services/event.service";
 import {CreateEventDialogComponent} from "../../create-event/create-event-dialog.component";
 import {InvitationDialogComponent} from "../invitation-dialog/invitation-dialog.component";
 import {Router} from "@angular/router";
+import {FehlerhandlingComponent} from "../../fehlerhandling/fehlerhandling.component";
 
 
 @Component({
@@ -51,10 +52,14 @@ export class EventBannerComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(updateCommand => {
       if (!updateCommand) return;
-      this.service.updateEvent(this.eventData.id, updateCommand).subscribe((event) => {
-          this.onEventUpdated.emit(event);
-        }
-      );
+      this.service.updateEvent(this.eventData.id, updateCommand).subscribe({
+          next: event => {
+            this.onEventUpdated.emit(event);
+          },
+          error: err => {
+            this.dialog.open(FehlerhandlingComponent, {data: {error: err}});
+          }
+        });
     });
   }
 
@@ -70,9 +75,14 @@ export class EventBannerComponent implements OnInit {
   }
 
   leaveEvent() {
-    this.service.leaveEvent(this.eventData.id).subscribe(() => {
+    this.service.leaveEvent(this.eventData.id).subscribe({
+      next: response => {
       this.router.navigateByUrl("/");
       this.onEventLeft.emit();
+      },
+      error: err => {
+        this.dialog.open(FehlerhandlingComponent, {data: {error: err}});
+      }
     });
   }
 }

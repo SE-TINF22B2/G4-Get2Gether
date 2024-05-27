@@ -3,6 +3,8 @@ import {EventOverview} from "../../../model/event";
 import {EventService} from "../../../services/event.service";
 import {AppStateService} from "../../../services/app-state.service";
 import {Subscription} from "rxjs";
+import {MatDialog} from "@angular/material/dialog";
+import {FehlerhandlingComponent} from "../../fehlerhandling/fehlerhandling.component";
 
 @Component({
   selector: 'app-side-menu',
@@ -16,7 +18,7 @@ export class SideMenuComponent implements OnInit, OnDestroy {
   private searchQuery = "";
   private updateEventListSubscription?: Subscription;
 
-  constructor(private eventService: EventService, private appState: AppStateService) {
+  constructor(private eventService: EventService, private appState: AppStateService, public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -42,7 +44,10 @@ export class SideMenuComponent implements OnInit, OnDestroy {
 
   private fetchOwnEvents() {
     this.eventService.getOwnEvents().subscribe({
-      next: event => this.events = event
+      next: event => this.events = event,
+      error: error => {
+        this.dialog.open(FehlerhandlingComponent, { data: {error: error}});
+      }
     });
   }
 }
