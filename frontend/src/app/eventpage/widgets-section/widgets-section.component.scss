@@ -26,7 +26,7 @@
   }
 
   app-widget-container {
-    scroll-margin-top: 50px;
+    scroll-margin-top: 70px;
   }
 }
 
@@ -36,7 +36,7 @@
   }
 
   app-widget-container {
-    scroll-margin-top: calc(var(--mat-toolbar-mobile-height) + 50px);
+    scroll-margin-top: calc(var(--mat-toolbar-mobile-height) + 70px) !important;
   }
 }
 

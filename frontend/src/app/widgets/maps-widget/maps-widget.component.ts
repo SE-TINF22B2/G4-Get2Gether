@@ -71,7 +71,7 @@ export class MapsWidgetComponent implements OnInit {
 
   @Input({transform: (value: BaseWidget): MapWidget => value as MapWidget})
   set widget(value: MapWidget) {
-    const hasChanged = value !== this._widget;
+    const hasChanged = value?.id !== this._widget?.id;
     this._widget = value;
     if (hasChanged && value.locations.length > 0) {
       this.focusLocation(value.locations[0]);
