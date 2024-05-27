@@ -1,36 +1,51 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {SimpleUser} from "../../../../model/user";
+import {Component, Inject} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {ExpenseEntry} from "../../../../model/expense-split-widget";
 import {UserService} from "../../../../services/user.service";
+import {Car, CarAddCommand, CarUpdateCommand} from "../../../../model/carpool-widget";
 
 @Component({
   selector: 'app-add-carpool-dialog',
   templateUrl: './add-carpool-dialog.component.html',
   styleUrl: './add-carpool-dialog.component.scss'
 })
-export class AddCarpoolDialogComponent implements OnInit{
-  form!: FormGroup;
+export class AddCarpoolDialogComponent {
+  form: FormGroup;
+  car: Car | undefined;
 
   constructor(
     private fb: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) data: { car: Car | undefined},
     public userService: UserService,
+    private dialogRef: MatDialogRef<AddCarpoolDialogComponent>,
   ) {
-  }
+    this.car = data.car;
 
-  ngOnInit() {
-    this.form = this.fb.group({
-      driver: ['', Validators.required],
-      adress: [null],
-      seats: ['', Validators.required]
+    this.form = fb.group({
+      driver: new FormControl(
+        this.car?.driverId ?? "",
+        Validators.required
+      ),
+      adress: new FormControl(
+        this.car?.driverAdress ?? ""
+      ),
+      seats: new FormControl(
+        this.car?.anzahlPlaetze ?? null,
+        Validators.required
+      )
     });
   }
-  addCarpool(){
-    console.log('addCarpool');
-    //TODO: Service
 
-    //TODO: Snackbar auslösen
+  submit() {
+    let data: CarAddCommand| CarUpdateCommand = {
+      driverAdress: this.form.value.adress,
+      anzahlPlaetze: this.form.value.seats
+    };
+    this.dialogRef.close(data);
+  }
+
+  get isCreatingNewCar(): boolean {
+    return !this.car;
   }
 
 }

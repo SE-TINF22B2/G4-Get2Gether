@@ -116,10 +116,10 @@ export class ShoppingListWidgetComponent {
     return this.widget.entries;
   }
 
-  private showMessage(messageToShow: string, snackBarClass: string = "successfull") {
+  private showMessage(messageToShow: string) {
     this._snackbar.open(messageToShow, 'schließen', {
       duration: 5000,
-      panelClass: snackBarClass
+      panelClass: "successfull"
     });
   }
 }

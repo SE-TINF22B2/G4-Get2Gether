@@ -8,6 +8,7 @@ import {ExpenseSplitWidgetService} from "../../../../services/widgets/expense-sp
 import {WidgetType} from "../../../../model/common-widget";
 import {Observable} from "rxjs";
 import {FehlerhandlingComponent} from "../../../fehlerhandling/fehlerhandling.component";
+import {CarpoolWidgetService} from "../../../../services/widgets/carpool-widget.service";
 
 @Component({
   selector: 'app-add-widget-dialog',
@@ -27,7 +28,8 @@ export class AddWidgetDialogComponent implements OnInit {
     public dialog: MatDialog,
     private mapService: MapWidgetService,
     private shoppingListService: EinkaufslisteWidgetService,
-    private expenseSplitService: ExpenseSplitWidgetService
+    private expenseSplitService: ExpenseSplitWidgetService,
+    private carpoolService: CarpoolWidgetService
   ) {
     this.eventData = data.eventData;
   }
@@ -48,8 +50,7 @@ export class AddWidgetDialogComponent implements OnInit {
   }
 
   createCarpoolWidget() {
-    // TODO: create carpool widget
-    // this.createWidget(this.carpoolService.createCarpoolWidget(this.eventId));
+    this.createWidget(this.carpoolService.createCarPoolWidget(this.eventId));
   }
 
   createMapWidget() {

@@ -1,1 +1,19 @@
-<p>carpool-widget works!</p>
+<div class="container">
+  @if (widget.cars.length > 0) {
+    <button mat-raised-button (click)="createNewCar()" class="create-new-button">
+      <mat-icon>add</mat-icon>
+      Ausgabe erstellen
+    </button>
+<!--   TODO: Liste der Cars hier einfügen-->
+
+  } @else {
+    <div class="no-entries-container">
+      <img ngSrc="assets/noCarpool.svg" width="300" height="200" alt="no carpool Bild">
+      <h4>Keine Fahrgemeinschaft angelegt</h4>
+      <button mat-stroked-button (click)="createNewCar()">
+        <mat-icon>add</mat-icon>
+        Fahrgemeinschaft erstellen
+      </button>
+    </div>
+  }
+</div>
