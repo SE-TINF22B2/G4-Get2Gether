@@ -22,9 +22,9 @@
     <mat-card-content class="details">
 
       <div class="details-div">
-        @if (eventData.location) {
+        @if (hasValidLocation()) {
           <mat-icon inline>location_on</mat-icon>
-          <p class="location">{{ eventData.location }}</p>
+          <p class="location">{{ formattedLocation }}</p>
         }
       </div>
       <div class="datetime-container">

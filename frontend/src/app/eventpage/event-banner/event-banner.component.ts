@@ -85,4 +85,15 @@ export class EventBannerComponent implements OnInit {
       }
     });
   }
+
+  hasValidLocation(): boolean {
+    const location = this.eventData.location;
+    return !!location && (!!location.street || !!location.postalCode || !!location.city);
+  }
+
+  get formattedLocation(): string {
+    const location = this.eventData.location;
+    if (!location) return "";
+    return [location.street, location.postalCode, location.city].join(" ");
+  }
 }
