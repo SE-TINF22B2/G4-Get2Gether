@@ -3,10 +3,10 @@ import {MatDialog} from "@angular/material/dialog";
 import {AddCarpoolDialogComponent} from "./add-carpool-dialog/add-carpool-dialog.component";
 import {Event} from "../../../model/event";
 import {BaseWidget} from "../../../model/common-widget";
-import {ExpenseSplitWidget} from "../../../model/expense-split-widget";
-import {Car, CarpoolWidget} from "../../../model/carpool-widget";
+import {CarpoolWidget} from "../../../model/carpool-widget";
 import {CarpoolWidgetService} from "../../../services/widgets/carpool-widget.service";
 import {FehlerhandlingComponent} from "../../fehlerhandling/fehlerhandling.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-carpool-widget',
@@ -23,7 +23,10 @@ export class CarpoolWidgetComponent {
   @Output()
   onWidgetUpdated = new EventEmitter<CarpoolWidget>();
 
-  constructor(private dialog: MatDialog, private service: CarpoolWidgetService) {
+  constructor(
+    private dialog: MatDialog,
+    private service: CarpoolWidgetService,
+    private _snackbar: MatSnackBar) {
   }
 
   createNewCar() {
@@ -37,13 +40,21 @@ export class CarpoolWidgetComponent {
 
       this.service.addCar(this.eventData.id, this.widget.id, addCommand).subscribe({
         next: widget => {
-          this.onWidgetUpdated.emit(widget)
+          this.onWidgetUpdated.emit(widget);
+          this.showMessage("Fahrgemeinschaft erstellt");
         },
         error: err => {
           this.dialog.open(FehlerhandlingComponent, {data: {error: err}})
         }
       });
     })
+  }
+
+  private showMessage(messageToShow: string) {
+    this._snackbar.open(messageToShow, 'schließen', {
+      duration: 5000,
+      panelClass: "successfull"
+    });
   }
 
 }
