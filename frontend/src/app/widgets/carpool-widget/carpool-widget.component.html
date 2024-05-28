@@ -5,7 +5,16 @@
       Ausgabe erstellen
     </button>
 <!--   TODO: Liste der Cars hier einfügen-->
-
+    <ul class="carpool-car-list">
+      @for (car of widget.cars; track car.id) {
+        <li>
+          <app-carpool-card-item
+            [car]="car"
+            (onEdit)="editCar(car)"
+            (onDelete)="deleteCar(car)"></app-carpool-card-item>
+        </li>
+      }
+    </ul>
   } @else {
     <div class="no-entries-container">
       <img ngSrc="assets/noCarpool.svg" width="300" height="200" alt="no carpool Bild">

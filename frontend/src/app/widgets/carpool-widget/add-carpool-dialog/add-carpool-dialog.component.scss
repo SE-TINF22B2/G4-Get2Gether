@@ -27,6 +27,8 @@ mat-divider {
 }
 
 .user-profile-picture {
+  display: flex;
+  align-items: center;
   border-radius: 50%;
   vertical-align: middle;
   margin-right: 5px;

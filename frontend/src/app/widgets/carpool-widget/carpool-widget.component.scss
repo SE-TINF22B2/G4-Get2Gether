@@ -9,6 +9,16 @@
   --mdc-protected-button-container-elevation-shadow: none;
 }
 
+.carpool-car-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li:not(:last-child) {
+    margin-bottom: var(--size-12);
+  }
+}
+
 .no-entries-container {
   display: grid;
   place-items: center;
