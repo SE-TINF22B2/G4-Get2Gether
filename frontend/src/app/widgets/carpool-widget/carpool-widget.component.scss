@@ -1,0 +1,21 @@
+.container {
+  padding: 16px;
+}
+
+.create-new-button {
+  margin-bottom: var(--size-12);
+  width: 100%;
+  --mdc-protected-button-container-color: var(--background-container-low-color);
+  --mdc-protected-button-container-elevation-shadow: none;
+}
+
+.no-entries-container {
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: var(--size-12);
+
+  img {
+    max-width: 100%;
+  }
+}

@@ -26,7 +26,7 @@ public abstract class AbstractWidgetService {
         if (containsWidgetType) {
             throw new OperationNotAllowedException("Event already contains a widget of type " + widget.getWidgetType());
         }
-        event.getWidgets().add(widget);
+        event.getWidgets().add(0, widget);
         return eventService.updateEventWidgets(
                 principal,
                 event.getId(),

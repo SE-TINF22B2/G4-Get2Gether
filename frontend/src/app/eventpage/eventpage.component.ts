@@ -4,6 +4,9 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {Event} from "../../model/event";
 import {BaseWidget} from "../../model/common-widget";
+import {AppStateService} from "../../services/app-state.service";
+import {FehlerhandlingComponent} from "../fehlerhandling/fehlerhandling.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-eventpage',
@@ -18,8 +21,10 @@ export class EventpageComponent implements OnInit, OnDestroy {
 
   constructor(
     private eventService: EventService,
+    private appStateService: AppStateService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
   ) {
   }
 
@@ -51,14 +56,19 @@ export class EventpageComponent implements OnInit, OnDestroy {
 
   onEventUpdated(event: Event) {
     this.eventData = event;
+    this.updateEventList();
+  }
+
+  updateEventList() {
+    this.appStateService.doUpdateEventList.emit();
   }
 
   private loadEventData(eventId: string) {
     this.eventService.getSingleEvent(eventId).subscribe({
       next: data => this.eventData = data,
       error: error => {
-        console.log("Failed to load event data.", error);
         this.router.navigate([".."]);
+        this.dialog.open(FehlerhandlingComponent, { data: {error: error}});
       }
     });
   }

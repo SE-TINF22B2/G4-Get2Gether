@@ -2,6 +2,9 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.0.
 
+> [!TIP]
+> 📖 [Hier geht's zur technischen Dokumentation des Frontends.](https://github.com/SE-TINF22B2/G4-Get2Gether/wiki/Frontend-Dokumentation)
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.

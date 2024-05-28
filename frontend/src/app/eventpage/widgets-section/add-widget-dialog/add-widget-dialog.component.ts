@@ -1,12 +1,14 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {Event} from "../../../../model/event";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {MapWidgetService} from "../../../../services/widgets/map-widget.service";
 import {EinkaufslisteWidgetService} from "../../../../services/widgets/einkaufsliste-widget.service";
 import {ExpenseSplitWidgetService} from "../../../../services/widgets/expense-split-widget.service";
 import {WidgetType} from "../../../../model/common-widget";
 import {Observable} from "rxjs";
+import {FehlerhandlingComponent} from "../../../fehlerhandling/fehlerhandling.component";
+import {CarpoolWidgetService} from "../../../../services/widgets/carpool-widget.service";
 
 @Component({
   selector: 'app-add-widget-dialog',
@@ -23,9 +25,11 @@ export class AddWidgetDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) data: { eventData: Event },
     private breakpointObserver: BreakpointObserver,
     private dialogRef: MatDialogRef<AddWidgetDialogComponent>,
+    public dialog: MatDialog,
     private mapService: MapWidgetService,
     private shoppingListService: EinkaufslisteWidgetService,
-    private expenseSplitService: ExpenseSplitWidgetService
+    private expenseSplitService: ExpenseSplitWidgetService,
+    private carpoolService: CarpoolWidgetService
   ) {
     this.eventData = data.eventData;
   }
@@ -46,8 +50,7 @@ export class AddWidgetDialogComponent implements OnInit {
   }
 
   createCarpoolWidget() {
-    // TODO: create carpool widget
-    // this.createWidget(this.carpoolService.createCarpoolWidget(this.eventId));
+    this.createWidget(this.carpoolService.createCarPoolWidget(this.eventId));
   }
 
   createMapWidget() {
@@ -60,7 +63,7 @@ export class AddWidgetDialogComponent implements OnInit {
         this.dialogRef.close(event);
       },
       error: error => {
-        console.error('Error:', error);
+        this.dialog.open(FehlerhandlingComponent, {data: {error: error}});
       }
     });
   }

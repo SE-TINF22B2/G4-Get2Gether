@@ -20,8 +20,19 @@ export class EventService {
     return this.http.get<Event>(`${environment.api}/event/${id}`, {withCredentials: true});
   }
 
-  createEvent(eventData: CreateEventCommand):Observable<Event> {
-    return this.http.post<any>(`${environment.api}/event/`, eventData, {withCredentials: true});
+  createEvent(eventData: CreateEventCommand): Observable<Event> {
+    return this.http.post<Event>(`${environment.api}/event/`, eventData, {withCredentials: true});
   }
 
+  updateEvent(eventId: string, eventData: CreateEventCommand): Observable<Event> {
+    return this.http.put<Event>(`${environment.api}/event/${eventId}`, eventData, {withCredentials: true});
+  }
+
+  generateInvitationLink(eventId: string): Observable<Event> {
+    return this.http.get<Event>(`${environment.api}/event/${eventId}/generateInvitationLink`, {withCredentials: true});
+  }
+
+  leaveEvent(eventId: string): Observable<any> {
+    return this.http.get(`${environment.api}/event/${eventId}/leave`, {withCredentials: true});
+  }
 }

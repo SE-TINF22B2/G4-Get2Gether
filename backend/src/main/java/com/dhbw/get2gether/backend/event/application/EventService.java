@@ -8,6 +8,7 @@ import com.dhbw.get2gether.backend.exceptions.EntityNotFoundException;
 import com.dhbw.get2gether.backend.user.application.UserService;
 import com.dhbw.get2gether.backend.user.model.SimpleUserDto;
 import com.dhbw.get2gether.backend.user.model.User;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.core.env.Environment;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -100,7 +101,7 @@ public class EventService {
     @PreAuthorize("hasRole('USER')")
     public Event generateInvitationLink(AuthenticatedPrincipal principal, String eventId) {
         Event event = getEventIfUserIsParticipant(principal, eventId);
-        event.setInvitationLink("invitation-" + UUID.randomUUID());
+        event.setInvitationLink(generateInvitationLink());
         return eventRepository.save(event);
     }
 
@@ -114,8 +115,16 @@ public class EventService {
                 // add user as participant
                 addUserToParticipantsIfNotParticipating(principal, presentEvent);
             }
-            return env.getProperty("frontend.url") + "/event/" + presentEvent.getId();
+            return env.getProperty("frontend.url") + "/dashboard/" + presentEvent.getId();
         });
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    public boolean leaveEvent(AuthenticatedPrincipal principal, String eventId) {
+        Event event = getEventIfUserIsParticipant(principal, eventId);
+        User user = userService.getUserByPrincipal(principal);
+        event.removeParticipant(user.getId());
+        return !eventRepository.save(event).getParticipantIds().contains(user.getId());
     }
 
     public EventDetailDto mapEventToEventDetailDto(Optional<String> currentUserId, Event event) {
@@ -153,5 +162,9 @@ public class EventService {
         if (event.getParticipantIds().contains(user.getId())) return event;
         event.addParticipant(user.getId());
         return eventRepository.save(event);
+    }
+
+    private static String generateInvitationLink() {
+        return UUID.randomUUID().toString();
     }
 }

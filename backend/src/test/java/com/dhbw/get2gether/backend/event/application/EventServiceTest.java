@@ -382,4 +382,30 @@ class EventServiceTest extends AbstractIntegrationTest {
         assertThat(route).isPresent().asString().isNotBlank();
         assertThat(eventCaptor.getValue().getParticipantIds()).contains(user.getId());
     }
+
+    @Test
+    @WithMockOAuth2User
+    void shouldLeaveEventIfIsUser() {
+        // given
+        AuthenticatedPrincipal principal = (AuthenticatedPrincipal)
+                SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = User.builder().id("test").build();
+        Event event = Event.builder()
+                .id("1")
+                .participantIds(new ArrayList<>(List.of(user.getId())))
+                .build();
+
+        ArgumentCaptor<Event> eventCaptor = ArgumentCaptor.forClass(Event.class);
+        when(userService.getUserByPrincipal(any())).thenReturn(user);
+        when(userService.findUserFromPrincipal(any())).thenReturn(Optional.of(user));
+        when(eventRepository.findById(eq(event.getId()))).thenReturn(Optional.of(event));
+        when(eventRepository.save(eventCaptor.capture())).thenAnswer(args -> args.getArgument(0));
+
+        // when
+        boolean isLeaved = eventService.leaveEvent(principal, event.getId());
+
+        // then
+        assertThat(isLeaved).isTrue();
+        assertThat(eventCaptor.getValue().getParticipantIds()).doesNotContain(user.getId());
+    }
 }

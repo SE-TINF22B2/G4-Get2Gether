@@ -12,8 +12,8 @@
 
     <mat-menu #menu="matMenu">
       @if (user.guest) {
-        <button mat-menu-item>
-          <mat-icon>login</mat-icon>
+        <button mat-menu-item routerLink="/login">
+          <mat-icon>account_circle</mat-icon>
           Anmelden
         </button>
       } @else {

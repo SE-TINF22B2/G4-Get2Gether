@@ -5,12 +5,15 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: var(--size-12);
-  overflow: auto;
+  gap: 5px;
   background-color: var(--background-color);
   padding-left: 16px;
   padding-right: 16px;
   padding-top: 5px;
+
+  app-widgets-bar {
+    min-width: 0;
+  }
 }
 
 .widgets {
@@ -23,7 +26,7 @@
   }
 
   app-widget-container {
-    scroll-margin-top: 50px;
+    scroll-margin-top: 70px;
   }
 }
 
@@ -33,7 +36,7 @@
   }
 
   app-widget-container {
-    scroll-margin-top: calc(var(--mat-toolbar-mobile-height) + 50px);
+    scroll-margin-top: calc(var(--mat-toolbar-mobile-height) + 70px) !important;
   }
 }
 

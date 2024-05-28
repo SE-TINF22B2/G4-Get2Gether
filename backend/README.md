@@ -1,6 +1,9 @@
 # 🍃 Get2Gether Backend
 In diesem Verzeichnis befindet sich das Spring Boot Backend von Get2Gether.
 
+> [!TIP]
+> 📖 [Hier geht's zur technischen Dokumentation des Backends.](https://github.com/SE-TINF22B2/G4-Get2Gether/wiki/Backend-Dokumentation)
+
 ## Getting Started
 _Empfehlung des Hauses:_ Das Projekt kann direkt als Monorepo in Intellij importiert werden.
 Intellij sollte dann alle gradle Module und Run Configurations automatisch importieren.

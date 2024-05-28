@@ -11,7 +11,7 @@ export type EventOverview = {
 export type Event = EventOverview & {
   creationDate: string;
   description: string;
-  location: string;
+  location: EventLocation;
   invitationLink: string | undefined;
   creatorId: string;
   participants: SimpleUser[];
@@ -21,7 +21,13 @@ export type Event = EventOverview & {
 export type CreateEventCommand = {
   name: string;
   description: string | undefined;
-  location: string | undefined;
+  location: EventLocation | undefined;
   date: string | undefined;
   endDate: string | undefined;
+}
+
+export type EventLocation = {
+  street: string;
+  postalCode: string;
+  city: string;
 }

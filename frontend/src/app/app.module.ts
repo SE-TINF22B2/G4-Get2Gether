@@ -38,7 +38,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {EventListItemComponent} from './dashboard/side-menu/event-list/event-list-item/event-list-item.component';
 import {MatCardModule} from "@angular/material/card";
 import {MatExpansionModule} from "@angular/material/expansion";
-import {EventCreationComponent} from './eventcreation/event-creation.component';
+import {CreateEventDialogComponent} from './create-event/create-event-dialog.component';
 import {EventpageComponent} from "./eventpage/eventpage.component";
 import {MatNativeDateModule, MatRippleModule, NativeDateAdapter, DateAdapter} from "@angular/material/core";
 import {EventSearchComponent} from './dashboard/side-menu/event-search/event-search.component';
@@ -79,6 +79,12 @@ import { CarpoolWidgetComponent } from './widgets/carpool-widget/carpool-widget.
 import { DefaultCarpoolPageComponent } from './widgets/carpool-widget/default-carpool-page/default-carpool-page.component';
 import { AddCarpoolDialogComponent } from './widgets/carpool-widget/add-carpool-dialog/add-carpool-dialog.component';
 import { CarpoolCardItemComponent } from './widgets/carpool-widget/carpool-card-item/carpool-card-item.component';
+import { CarpoolWidgetComponent } from './widgets/carpool-widget/carpool-widget.component';
+import { AddCarpoolDialogComponent } from './widgets/carpool-widget/add-carpool-dialog/add-carpool-dialog.component';
+import { CarpoolCardItemComponent } from './widgets/carpool-widget/carpool-card-item/carpool-card-item.component';
+import { InvitationDialogComponent } from './eventpage/invitation-dialog/invitation-dialog.component';
+import {CdkCopyToClipboard} from "@angular/cdk/clipboard";
+import { FehlerhandlingComponent } from './fehlerhandling/fehlerhandling.component';
 
 registerLocaleData(localeDe);
 
@@ -116,7 +122,7 @@ function loadMapApi(httpClient: HttpClient) {
     DefaultEventPageComponent,
     EventListComponent,
     EventListItemComponent,
-    EventCreationComponent,
+    CreateEventDialogComponent,
     EventSearchComponent,
     UserSettingsComponent,
     UserSettingsItemComponent,
@@ -137,9 +143,15 @@ function loadMapApi(httpClient: HttpClient) {
     EditEntryDialogComponent,
     ShoppingListEntryListItemComponent,
     CarpoolWidgetComponent,
+    AddCarpoolDialogComponent,
+    CarpoolWidgetComponent,
     DefaultCarpoolPageComponent,
     AddCarpoolDialogComponent,
     ExpenseDebtOverviewComponent,
+    CarpoolCardItemComponent,
+    AddWidgetDialogComponent,
+    InvitationDialogComponent,
+    FehlerhandlingComponent
     CarpoolCardItemComponent,
     AddWidgetDialogComponent
   ],
@@ -186,7 +198,8 @@ function loadMapApi(httpClient: HttpClient) {
     ReactiveFormsModule,
     MatNativeDateModule,
     MatSelectModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    CdkCopyToClipboard
   ],
   providers: [
     {

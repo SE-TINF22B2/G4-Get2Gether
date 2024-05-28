@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class EventCreateCommand {
     private String name;
     private String description;
-    private String location;
+    private EventLocation location;
     private LocalDateTime date;
     private LocalDateTime endDate;
 }

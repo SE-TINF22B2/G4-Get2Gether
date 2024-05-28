@@ -8,6 +8,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatCheckboxChange} from "@angular/material/checkbox";
 import {Event} from "../../../model/event";
 import {EditEntryDialogComponent} from "./edit-entry-dialog/edit-entry-dialog.component";
+import {FehlerhandlingComponent} from "../../fehlerhandling/fehlerhandling.component";
 
 @Component({
   selector: 'app-einkaufsliste-widget',
@@ -48,8 +49,9 @@ export class ShoppingListWidgetComponent {
           this.showMessage("Eintrag angelegt")
         },
         error: error => {
-          console.error('Error:', error);
-          this.showMessage("Fehler beim Anlegen", "error")
+          this.dialog.open(FehlerhandlingComponent, {data: {error: error}});
+          //TODO: maybe delete?
+          //this.showMessage("Fehler beim Anlegen", "error")
         }
       });
     }
@@ -68,8 +70,9 @@ export class ShoppingListWidgetComponent {
             this.showMessage("Eintrag bearbeitet")
           },
           error: error => {
-            console.error('Error:', error);
-            this.showMessage("Fehler beim Bearbeiten", "error")
+            this.dialog.open(FehlerhandlingComponent, {data: {error: error}});
+            //TODO: maybe delete?
+            //this.showMessage("Fehler beim Bearbeiten", "error")
           }
         });
       }
@@ -85,7 +88,7 @@ export class ShoppingListWidgetComponent {
         this.onWidgetUpdated.emit(response);
       },
       error: error => {
-        console.error('Error:', error);
+        this.dialog.open(FehlerhandlingComponent, {data: {error: error}});
       }
     });
   }
@@ -98,7 +101,9 @@ export class ShoppingListWidgetComponent {
       },
       error: error => {
         console.error('Error:', error);
-        this.showMessage("Fehler beim Löschen", "error")
+        this.dialog.open(FehlerhandlingComponent, {data: {error: error}});
+        //TODO: maybe delete?
+        //this.showMessage("Fehler beim Löschen", "error")
       }
     });
   }
@@ -111,10 +116,10 @@ export class ShoppingListWidgetComponent {
     return this.widget.entries;
   }
 
-  private showMessage(messageToShow: string, snackBarClass: string = "successfull") {
+  private showMessage(messageToShow: string) {
     this._snackbar.open(messageToShow, 'schließen', {
       duration: 5000,
-      panelClass: snackBarClass
+      panelClass: "successfull"
     });
   }
 }
