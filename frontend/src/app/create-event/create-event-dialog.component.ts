@@ -19,7 +19,6 @@ export class CreateEventDialogComponent {
     private dialogRef: MatDialogRef<CreateEventDialogComponent>,
   ) {
     this.event = data.event;
-    const location = this.extractAddress(this.event?.location);
     const time = this.extractDateAndTime(this.event?.date);
     this.form = this.fb.group({
       name: new FormControl(
@@ -36,13 +35,13 @@ export class CreateEventDialogComponent {
         time ?? null
       ),
       street: new FormControl(
-        location?.street ?? null
+        this.event?.location?.street ?? null
       ),
-      plz: new FormControl(
-        location?.postalCode ?? null
+      postalCode: new FormControl(
+        this.event?.location?.postalCode ?? null
       ),
-      stadt: new FormControl(
-        location?.city ?? null
+      city: new FormControl(
+        this.event?.location?.city ?? null
       ),
       location: new FormControl(
         this.event?.location ?? null
@@ -65,50 +64,23 @@ export class CreateEventDialogComponent {
     return null;
   }
 
-  private extractAddress(location: string | undefined) {
-    if(location) {
-      const addressRegex = /^(?<street>[\w\säöüÄÖÜß]+ \d+) (?<postalCode>\d{5}) (?<city>[\w\säöüÄÖÜß]+)$/;
-      const match = location.match(addressRegex);
-      if (match && match.groups) {
-        return {
-          street: match.groups['street'],
-          postalCode: match.groups['postalCode'],
-          city: match.groups['city']
-        };
-      }
-    }
-    return null;
-  }
-
   submit(): void {
     if (this.form.valid) {
-      this.updateAddress();
       this.updateStartDate();
       this.updateEndDate();
       let data: CreateEventCommand = {
         name: this.form.value.name,
         date: this.form.value.date,
         endDate: this.form.value.endDate,
-        location: this.form.value.location,
+        location: {
+          street: this.form.value.street,
+          postalCode: this.form.value.postalCode,
+          city: this.form.value.city
+        },
         description: this.form.value.description
       }
       this.dialogRef.close(data);
     }
-  }
-
-  private updateAddress() {
-    const street = this.form.get('street')?.value || '';
-    const plz = this.form.get('plz')?.value || '';
-    const city = this.form.get('stadt')?.value || '';
-
-    if (!street && !plz && !city) {
-      return;
-    }
-
-    const fullAddress = `${street} ${plz} ${city}`;
-    this.form.patchValue({
-      location: fullAddress
-    });
   }
 
   private updateStartDate() {

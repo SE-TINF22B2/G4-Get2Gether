@@ -21,7 +21,7 @@ public class Event {
     private final LocalDateTime creationDate;
     private String name;
     private String description;
-    private String location;
+    private EventLocation location;
     private LocalDateTime date;
     private LocalDateTime endDate;
     private String invitationLink;
