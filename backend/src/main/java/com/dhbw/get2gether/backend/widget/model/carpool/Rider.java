@@ -4,12 +4,13 @@ import com.dhbw.get2gether.backend.widget.model.map.Location;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 @Builder(toBuilder = true)
 @Getter
+@Setter
 @AllArgsConstructor
 public class Rider {
-    private final String id;
-    private final String userId;
-    private final String pickupPlace;
+    private String userId;
+    private String pickupPlace;
 }
