@@ -15,10 +15,6 @@ Die folgenden Widgets stehen derzeit zur Verfügung:
 - Ausgabenverteilung
 - Karte
 - Fahrgemeinschaft
-- Bildergalerie
-- Abstimmungen
-- Kommentare
-- Wetter
 
 ## Weitere Informationen
 - ➥ [📔 Wiki](https://github.com/SE-TINF22B2/G4-Get2Gether/wiki) (Genauere Informationen zum Projekt sind hier dokumentiert)
