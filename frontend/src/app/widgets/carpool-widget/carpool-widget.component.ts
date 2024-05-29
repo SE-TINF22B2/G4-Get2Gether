@@ -13,6 +13,7 @@ import {
 import {
   DeleteCarConfirmationDialogComponent
 } from "./delete-car-confirmation-dialog/delete-car-confirmation-dialog.component";
+import {AddRiderDialogComponent} from "./add-rider-dialog/add-rider-dialog.component";
 
 @Component({
   selector: 'app-carpool-widget',
@@ -97,6 +98,24 @@ export class CarpoolWidgetComponent {
           }
         });
     })
+  }
+
+  addRider(car: Car) {
+    const dialogRef = this.dialog.open(AddRiderDialogComponent);
+
+    dialogRef.afterClosed().subscribe(addRiderCommand => {
+      if(!addRiderCommand) return;
+
+      this.service.addRider(this.eventData.id, this.widget.id, car.id, addRiderCommand)
+        .subscribe({
+
+        })
+
+    })
+  }
+
+  deleteRider(car: Car) {
+
   }
 
   private showMessage(messageToShow: string) {

@@ -12,15 +12,11 @@ p {
   font-weight: var(--font-weight-subtitle);
 }
 
-mat-divider {
-  margin: 0 var(--size-24);
-}
-
 .cdk-overlay-container {
   padding: 25px;
 }
 
-.add-carpool-container {
+.add-rider-container {
   display: grid;
   grid: auto / 1fr 2fr;
   gap: 12px;
@@ -34,11 +30,13 @@ mat-divider {
   margin-right: 5px;
 }
 
+mat-divider {
+  margin: 0 var(--size-24);
+}
+
 @media (max-width: 600px) {
-  .add-carpool-container {
+  .add-rider-container {
     display: flex;
     flex-direction: column;
   }
 }
-
-

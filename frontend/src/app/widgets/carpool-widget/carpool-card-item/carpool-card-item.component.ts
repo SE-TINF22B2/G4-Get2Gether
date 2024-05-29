@@ -31,6 +31,12 @@ export class CarpoolCardItemComponent implements OnInit{
   @Output()
   onEdit = new EventEmitter();
 
+  @Output()
+  onEditRider = new EventEmitter();
+
+  @Output()
+  onRiderDelete = new EventEmitter();
+
   currentUser: User | undefined;
 
   constructor(private userService: UserService) {
@@ -43,5 +49,7 @@ export class CarpoolCardItemComponent implements OnInit{
     return !this.currentUser || this.car.driverId != this.currentUser?.id;
   }
 
-
+  isGuest() {
+      return !this.currentUser;
+  }
 }

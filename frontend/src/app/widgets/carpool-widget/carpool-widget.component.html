@@ -2,16 +2,17 @@
   @if (widget.cars.length > 0) {
     <button mat-raised-button (click)="createNewCar()" class="create-new-button">
       <mat-icon>add</mat-icon>
-      Ausgabe erstellen
+      Fahrgemeinschaft erstellen
     </button>
-<!--   TODO: Liste der Cars hier einfügen-->
     <ul class="carpool-car-list">
       @for (car of widget.cars; track car.id) {
         <li>
           <app-carpool-card-item
             [car]="car"
             (onEdit)="editCar(car)"
-            (onDelete)="deleteCar(car)"></app-carpool-card-item>
+            (onDelete)="deleteCar(car)"
+            (onEditRider)="addRider(car)"
+            (onRiderDelete)="deleteRider(car)"></app-carpool-card-item>
         </li>
       }
     </ul>
