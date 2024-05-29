@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>Fahrgemeinschaft beitreten</h1>
+
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <div class="add-rider-container">
+      @if (userService.user | async; as user) {
+        <p class="label">Mitfahrer</p>
+        <div class="user-profile-picture">
+          <img [ngSrc]="user.profilePictureUrl" width="32" height="32" alt="" class="user-profile-picture">
+          {{ user.firstName }} {{ user.lastName }}
+        </div>
+      }
+      <p>Abholadresse</p>
+      <mat-form-field>
+        <mat-label>Adresse</mat-label>
+        <input matInput formControlName="pickupAdress">
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-divider></mat-divider>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Abbrechen</button>
+  <button mat-button [disabled]="!form.valid" (click)="submit()">
+    Beitreten
+  </button>
+</mat-dialog-actions>

@@ -82,6 +82,7 @@ import { InvitationDialogComponent } from './eventpage/invitation-dialog/invitat
 import {CdkCopyToClipboard} from "@angular/cdk/clipboard";
 import { FehlerhandlingComponent } from './fehlerhandling/fehlerhandling.component';
 import { DeleteCarConfirmationDialogComponent } from './widgets/carpool-widget/delete-car-confirmation-dialog/delete-car-confirmation-dialog.component';
+import { AddRiderDialogComponent } from './widgets/carpool-widget/add-rider-dialog/add-rider-dialog.component';
 
 registerLocaleData(localeDe);
 
@@ -150,7 +151,8 @@ function loadMapApi(httpClient: HttpClient) {
     FehlerhandlingComponent,
     CarpoolCardItemComponent,
     AddWidgetDialogComponent,
-    DeleteCarConfirmationDialogComponent
+    DeleteCarConfirmationDialogComponent,
+    AddRiderDialogComponent
   ],
   imports: [
     BrowserModule,

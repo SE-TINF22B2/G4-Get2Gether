@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {AddCarpoolDialogComponent} from "./add-carpool-dialog/add-carpool-dialog.component";
 import {Event} from "../../../model/event";
@@ -13,13 +13,16 @@ import {
 import {
   DeleteCarConfirmationDialogComponent
 } from "./delete-car-confirmation-dialog/delete-car-confirmation-dialog.component";
+import {AddRiderDialogComponent} from "./add-rider-dialog/add-rider-dialog.component";
+import {UserService} from "../../../services/user.service";
+import {User} from "../../../model/user";
 
 @Component({
   selector: 'app-carpool-widget',
   templateUrl: './carpool-widget.component.html',
   styleUrl: './carpool-widget.component.scss'
 })
-export class CarpoolWidgetComponent {
+export class CarpoolWidgetComponent implements OnInit{
   @Input()
   eventData!: Event;
 
@@ -29,10 +32,17 @@ export class CarpoolWidgetComponent {
   @Output()
   onWidgetUpdated = new EventEmitter<CarpoolWidget>();
 
+  currentUser: User | undefined;
+
   constructor(
     private dialog: MatDialog,
     private service: CarpoolWidgetService,
-    private _snackbar: MatSnackBar) {
+    private _snackbar: MatSnackBar,
+    private userService: UserService) {
+  }
+
+  ngOnInit(): void {
+    this.userService.fetchUserModel().subscribe(user => this.currentUser = user);
   }
 
   createNewCar() {
@@ -97,6 +107,40 @@ export class CarpoolWidgetComponent {
           }
         });
     })
+  }
+
+  addRider(car: Car) {
+    const dialogRef = this.dialog.open(AddRiderDialogComponent);
+
+    dialogRef.afterClosed().subscribe(addRiderCommand => {
+      if(!addRiderCommand) return;
+
+      this.service.addRider(this.eventData.id, this.widget.id, car.id, addRiderCommand)
+        .subscribe({
+          next: widget => {
+            this.onWidgetUpdated.emit(widget);
+            this.showMessage("Fahrgemeinschaft beigetreten")
+          },
+          error: err => {
+            this.dialog.open(FehlerhandlingComponent, {data: {error: err}});
+          }
+        });
+    });
+  }
+
+  deleteRider(car: Car) {
+    if(!this.currentUser) return;
+    this.service.deleteRider(this.eventData.id, this.widget.id, car.id, this.currentUser.id)
+      .subscribe(
+        {
+          next: widget => {
+            this.onWidgetUpdated.emit(widget);
+            this.showMessage("Fahrgemeinschaft verlassen")
+          },
+          error: err => {
+            this.dialog.open(FehlerhandlingComponent, {data: {error: err}});
+          }
+        });
   }
 
   private showMessage(messageToShow: string) {
