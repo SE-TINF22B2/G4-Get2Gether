@@ -50,8 +50,6 @@ export class ShoppingListWidgetComponent {
         },
         error: error => {
           this.dialog.open(FehlerhandlingComponent, {data: {error: error}});
-          //TODO: maybe delete?
-          //this.showMessage("Fehler beim Anlegen", "error")
         }
       });
     }
@@ -71,8 +69,6 @@ export class ShoppingListWidgetComponent {
           },
           error: error => {
             this.dialog.open(FehlerhandlingComponent, {data: {error: error}});
-            //TODO: maybe delete?
-            //this.showMessage("Fehler beim Bearbeiten", "error")
           }
         });
       }
@@ -102,8 +98,6 @@ export class ShoppingListWidgetComponent {
       error: error => {
         console.error('Error:', error);
         this.dialog.open(FehlerhandlingComponent, {data: {error: error}});
-        //TODO: maybe delete?
-        //this.showMessage("Fehler beim Löschen", "error")
       }
     });
   }
