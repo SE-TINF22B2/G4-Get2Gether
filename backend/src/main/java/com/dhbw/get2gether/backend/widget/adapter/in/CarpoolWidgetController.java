@@ -27,7 +27,7 @@ public class CarpoolWidgetController {
     }
 
     @PostMapping("/{widgetId}/cars")
-    public CarpoolWidget addCar(
+    public CarWidgetDto addCar(
             @AuthenticationPrincipal OAuth2User principal,
             @PathVariable String eventId,
             @PathVariable String widgetId,
@@ -37,7 +37,7 @@ public class CarpoolWidgetController {
     }
 
     @PatchMapping("/{widgetId}/cars/{carId}")
-    public CarpoolWidget updateCar(
+    public CarWidgetDto updateCar(
             @AuthenticationPrincipal OAuth2User principal,
             @PathVariable String eventId,
             @PathVariable String widgetId,
@@ -48,7 +48,7 @@ public class CarpoolWidgetController {
     }
 
     @DeleteMapping("/{widgetId}/cars/{carId}")
-    public CarpoolWidget removeCar(
+    public CarWidgetDto removeCar(
             @AuthenticationPrincipal OAuth2User principal,
             @PathVariable String eventId,
             @PathVariable String widgetId,
@@ -58,7 +58,7 @@ public class CarpoolWidgetController {
     }
 
     @PostMapping("/{widgetId}/cars/{carId}")
-    public CarpoolWidget addRider(
+    public CarWidgetDto addRider(
             @AuthenticationPrincipal OAuth2User principal,
             @PathVariable String eventId,
             @PathVariable String widgetId,
@@ -69,7 +69,7 @@ public class CarpoolWidgetController {
     }
 
     @DeleteMapping("/{widgetId}/cars/{carId}/riders/{riderId}")
-    public CarpoolWidget removeRider(
+    public CarWidgetDto removeRider(
             @AuthenticationPrincipal OAuth2User principal,
             @PathVariable String eventId,
             @PathVariable String widgetId,

@@ -3,25 +3,19 @@ package com.dhbw.get2gether.backend.widget.model.carpool;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
-
-@Builder(toBuilder = true)
 @Getter
+@Setter
+@Builder(toBuilder = true)
 @AllArgsConstructor
-public class Car {
+public class CarDto {
     private String id;
     private String driverId;
     private String driverAdress;
     private int anzahlPlaetze;
-    private List<Rider> riders;
+    private List<RiderDto> riders;
 
-  /*  public void addRider(Rider rider) {
-        riders.add(rider.);
-    }
-
-    public boolean removeRider(Rider rider) {
-        return riders.remove(rider);
-    }
-*/}
+}

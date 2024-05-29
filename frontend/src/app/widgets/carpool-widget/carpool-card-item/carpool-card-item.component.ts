@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angula
 import {Event} from "../../../../model/event";
 import {Car} from "../../../../model/carpool-widget";
 import {UserService} from "../../../../services/user.service";
-import {User} from "../../../../model/user";
+import {SimpleUser, User} from "../../../../model/user";
 
 @Component({
   selector: 'app-carpool-card-item',
@@ -16,6 +16,9 @@ export class CarpoolCardItemComponent implements OnInit{
 
   @Input()
   car!: Car;
+
+  @Input()
+  riders!: SimpleUser[];
 
   @Output()
   onDelete = new EventEmitter();
@@ -33,6 +36,11 @@ export class CarpoolCardItemComponent implements OnInit{
 
   constructor(private userService: UserService) {
   }
+
+  get getRiders(): string[] {
+    return this.riders.map(u => [u.firstName, u.lastName].join(" "));
+  }
+
   ngOnInit(): void {
     this.userService.fetchUserModel().subscribe(user => this.currentUser = user);
   }
