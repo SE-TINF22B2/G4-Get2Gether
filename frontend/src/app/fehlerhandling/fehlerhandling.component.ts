@@ -10,7 +10,7 @@ export class FehlerhandlingComponent {
   errorMessage: string;
 
    constructor(@Inject(MAT_DIALOG_DATA) data: {error: any}) {
-     this.errorMessage = data.error;
+     this.errorMessage = data.error.error.message;
    }
 
 }
