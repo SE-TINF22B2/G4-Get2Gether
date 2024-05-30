@@ -13,7 +13,7 @@ import java.util.List;
 @Builder(toBuilder = true)
 @Getter
 @AllArgsConstructor
-public class CarWidgetDto implements IWidget {
+public class CarpoolWidgetDto implements IWidget {
     private String id;
     private final LocalDateTime creationDate;
     @Builder.Default

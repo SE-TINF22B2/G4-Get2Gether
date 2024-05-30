@@ -118,7 +118,7 @@ public class CarpoolWidetServiceTest extends AbstractIntegrationTest {
                 .driverAdress("some Address")
                 .anzahlPlaetze(3)
                 .build();
-        Car car = Car.builder()
+        CarDto car = CarDto.builder()
                 .driverAdress("some Address")
                 .anzahlPlaetze(3)
                 .driverId("test")
@@ -137,13 +137,13 @@ public class CarpoolWidetServiceTest extends AbstractIntegrationTest {
                 .email("test@example.com").build());
 
         // when
-        CarpoolWidget returnedWidget = carpoolWidgetService.addCar(principal, event.getId(), widget.getId(), addCommand);
+        CarpoolWidgetDto returnedWidget = carpoolWidgetService.addCar(principal, event.getId(), widget.getId(), addCommand);
 
         // then
         assertThat(returnedWidget).isNotNull();
         assertThat(returnedWidget.getCars()).hasSize(1);
         assertThat(returnedWidget.getCars().get(0)).usingRecursiveComparison()
-                .ignoringFields("id")
+                .ignoringFields("id", "riders")
                 .isEqualTo(car);
         assertThat(returnedWidget.getCars().get(0).getId()).isNotBlank();
     }
@@ -201,7 +201,7 @@ public class CarpoolWidetServiceTest extends AbstractIntegrationTest {
                 );
 
         // when
-        CarpoolWidget returnedWidget = carpoolWidgetService.removeCar(principal, event.getId(), widget.getId(), car.getId());
+        CarpoolWidgetDto returnedWidget = carpoolWidgetService.removeCar(principal, event.getId(), widget.getId(), car.getId());
 
         // then
         assertThat(returnedWidget).isNotNull();
@@ -227,9 +227,8 @@ public class CarpoolWidetServiceTest extends AbstractIntegrationTest {
         RiderAddCommand addCommand = RiderAddCommand.builder()
                 .pickupPlace("Testpickup")
                 .build();
-        Rider rider = Rider.builder()
+        RiderDto rider = RiderDto.builder()
                 .pickupPlace("Testpickup")
-                .userId("test")
                 .build();
 
         when(eventService.getSingleEvent(any(), eq(event.getId()))).thenReturn(event);
@@ -245,15 +244,15 @@ public class CarpoolWidetServiceTest extends AbstractIntegrationTest {
                 .email("test@example.com").build());
 
         // when
-        CarpoolWidget returnedWidget = carpoolWidgetService.addRider(principal, event.getId(), widget.getId(), car.getId(), addCommand);
+        CarpoolWidgetDto returnedWidget = carpoolWidgetService.addRider(principal, event.getId(), widget.getId(), car.getId(), addCommand);
 
         // then
         assertThat(returnedWidget).isNotNull();
         assertThat(returnedWidget.getCars().get(0).getRiders()).hasSize(1);
         assertThat(returnedWidget.getCars().get(0).getRiders().get(0)).usingRecursiveComparison()
-                .ignoringFields("id")
+                .ignoringFields("id", "user")
                 .isEqualTo(rider);
-        assertThat(returnedWidget.getCars().get(0).getRiders().get(0).getId()).isNotBlank();
+        assertThat(returnedWidget.getCars().get(0).getRiders().get(0).getPickupPlace()).isNotNull();
     }
     @Test
     @WithMockGuestUser
@@ -317,7 +316,7 @@ public class CarpoolWidetServiceTest extends AbstractIntegrationTest {
                 );
 
         // when
-        CarpoolWidget returnedWidget = carpoolWidgetService.removeRider(principal, event.getId(), widget.getId(), car.getId(), rider.getId());
+        CarpoolWidgetDto returnedWidget = carpoolWidgetService.removeRider(principal, event.getId(), widget.getId(), car.getId(), rider.getId());
 
         // then
         assertThat(returnedWidget).isNotNull();

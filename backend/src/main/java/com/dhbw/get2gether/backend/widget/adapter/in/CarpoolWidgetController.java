@@ -1,6 +1,7 @@
 package com.dhbw.get2gether.backend.widget.adapter.in;
 
 import com.dhbw.get2gether.backend.event.model.Event;
+import com.dhbw.get2gether.backend.event.model.EventDetailDto;
 import com.dhbw.get2gether.backend.widget.application.CarpoolWidgetService;
 import com.dhbw.get2gether.backend.widget.model.carpool.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,16 +19,17 @@ public class CarpoolWidgetController {
     }
 
     @PostMapping("/")
-    public Event createCarpoolWidget(
+    public EventDetailDto createCarpoolWidget(
             @AuthenticationPrincipal OAuth2User principal,
             @PathVariable String eventId,
             @RequestBody CarpoolCreateCommand createCommand
     ) {
-        return service.createCarpoolWidget(principal, eventId, createCommand);
+        Event event = service.createCarpoolWidget(principal, eventId, createCommand);
+        return service.mapEventToEventDetailDto(principal, event);
     }
 
     @PostMapping("/{widgetId}/cars")
-    public CarWidgetDto addCar(
+    public CarpoolWidgetDto addCar(
             @AuthenticationPrincipal OAuth2User principal,
             @PathVariable String eventId,
             @PathVariable String widgetId,
@@ -37,7 +39,7 @@ public class CarpoolWidgetController {
     }
 
     @PatchMapping("/{widgetId}/cars/{carId}")
-    public CarWidgetDto updateCar(
+    public CarpoolWidgetDto updateCar(
             @AuthenticationPrincipal OAuth2User principal,
             @PathVariable String eventId,
             @PathVariable String widgetId,
@@ -48,7 +50,7 @@ public class CarpoolWidgetController {
     }
 
     @DeleteMapping("/{widgetId}/cars/{carId}")
-    public CarWidgetDto removeCar(
+    public CarpoolWidgetDto removeCar(
             @AuthenticationPrincipal OAuth2User principal,
             @PathVariable String eventId,
             @PathVariable String widgetId,
@@ -58,7 +60,7 @@ public class CarpoolWidgetController {
     }
 
     @PostMapping("/{widgetId}/cars/{carId}")
-    public CarWidgetDto addRider(
+    public CarpoolWidgetDto addRider(
             @AuthenticationPrincipal OAuth2User principal,
             @PathVariable String eventId,
             @PathVariable String widgetId,
@@ -69,7 +71,7 @@ public class CarpoolWidgetController {
     }
 
     @DeleteMapping("/{widgetId}/cars/{carId}/riders/{riderId}")
-    public CarWidgetDto removeRider(
+    public CarpoolWidgetDto removeRider(
             @AuthenticationPrincipal OAuth2User principal,
             @PathVariable String eventId,
             @PathVariable String widgetId,

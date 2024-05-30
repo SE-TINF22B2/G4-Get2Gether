@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {environment} from "../../environment/environment";
 import {Event} from "../../model/event";
-import {Car, CarAddCommand, CarpoolWidget, CarUpdateCommand, RiderAddCommand} from "../../model/carpool-widget";
+import {CarAddCommand, CarpoolWidget, CarUpdateCommand, RiderAddCommand} from "../../model/carpool-widget";
 
 @Injectable({
   providedIn: 'root'

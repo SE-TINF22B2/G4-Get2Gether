@@ -30,7 +30,6 @@ export type RiderAddCommand = {
 
 
 export type Rider = {
-  id: string;
-  userId: string;
+  user: SimpleUser;
   pickupPlace: string;
 }

@@ -17,9 +17,6 @@ export class CarpoolCardItemComponent implements OnInit{
   @Input()
   car!: Car;
 
-  @Input()
-  riders!: SimpleUser[];
-
   @Output()
   onDelete = new EventEmitter();
 
@@ -34,19 +31,19 @@ export class CarpoolCardItemComponent implements OnInit{
 
   currentUser: User | undefined;
 
-  constructor(private userService: UserService) {
+  constructor(public userService: UserService) {
   }
 
   get getRiders(): string[] {
-    return this.riders.map(u => [u.firstName, u.lastName].join(" "));
+    return this.car.riders.map(u => [u.user.firstName, u.user.lastName].join(" "));
   }
 
   ngOnInit(): void {
     this.userService.fetchUserModel().subscribe(user => this.currentUser = user);
   }
 
-  isUserDriver() {
-    return !this.currentUser || this.car.driverId != this.currentUser?.id;
+  isUserDriver(user: User) {
+    return this.car.driverId == user.id;
   }
 
   isGuest() {

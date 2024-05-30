@@ -11,6 +11,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class Rider {
+    private String id;
     private String userId;
     private String pickupPlace;
 }

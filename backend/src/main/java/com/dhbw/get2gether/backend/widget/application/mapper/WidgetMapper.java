@@ -4,6 +4,7 @@ import com.dhbw.get2gether.backend.exceptions.EntityNotFoundException;
 import com.dhbw.get2gether.backend.user.model.SimpleUserDto;
 import com.dhbw.get2gether.backend.widget.model.IWidget;
 import com.dhbw.get2gether.backend.widget.model.Widget;
+import com.dhbw.get2gether.backend.widget.model.carpool.*;
 import com.dhbw.get2gether.backend.widget.model.expensesplit.*;
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
@@ -23,8 +24,32 @@ public abstract class WidgetMapper {
             List<Debt> debts = userId.map(id -> ((ExpenseSplitWidget) widget).calculateDebtsForUserId(id))
                     .orElse(new ArrayList<>());
             return expenseSplitWidgetToExpenseSplitWidgetDto((ExpenseSplitWidget) widget, debts, participants);
+        } else if (widget instanceof CarpoolWidget) {
+            return carpoolWidgetToCarpoolWidgetDto((CarpoolWidget) widget, participants);
         }
         return widget;
+    }
+
+    public CarpoolWidgetDto carpoolWidgetToCarpoolWidgetDto(CarpoolWidget widget, List<SimpleUserDto> riders) {
+        List<CarDto> cars = widget.getCars().stream()
+                .map(car -> CarDto.builder()
+                        .id(car.getId())
+                        .driverId(car.getDriverId())
+                        .driverAdress(car.getDriverAdress())
+                        .anzahlPlaetze(car.getAnzahlPlaetze())
+                        .riders(car.getRiders().stream().map(rider -> RiderDto.builder()
+                                .user(riders.stream().filter(r -> r.getId().equals(rider.getUserId()))
+                                        .findFirst()
+                                        .orElse(null))
+                                .pickupPlace(rider.getPickupPlace())
+                                .build()).toList())
+                        .build()).toList();
+
+        return CarpoolWidgetDto.builder()
+                .id(widget.getId())
+                .creationDate(widget.getCreationDate())
+                .cars(cars)
+                .build();
     }
 
     public abstract ExpenseSplitWidgetDto expenseSplitWidgetToExpenseSplitWidgetDto(ExpenseSplitWidget widget, List<Debt> debts, @Context List<SimpleUserDto> participants);
@@ -61,5 +86,4 @@ public abstract class WidgetMapper {
     }
 
     abstract UserWithPercentageDto userWithPercentageToUserWithPercentageDto(UserWithPercentage userWithPercentage, SimpleUserDto user);
-
 }

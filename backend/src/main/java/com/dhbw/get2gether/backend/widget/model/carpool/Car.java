@@ -3,7 +3,9 @@ package com.dhbw.get2gether.backend.widget.model.carpool;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -15,13 +17,14 @@ public class Car {
     private String driverId;
     private String driverAdress;
     private int anzahlPlaetze;
-    private List<Rider> riders;
+    @Builder.Default
+    private List<Rider> riders = new ArrayList<>();;
 
-  /*  public void addRider(Rider rider) {
-        riders.add(rider.);
+    public void addRider(Rider rider) {
+        riders.add(rider);
     }
 
     public boolean removeRider(Rider rider) {
         return riders.remove(rider);
     }
-*/}
+}

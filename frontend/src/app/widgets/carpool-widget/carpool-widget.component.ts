@@ -8,9 +8,6 @@ import {CarpoolWidgetService} from "../../../services/widgets/carpool-widget.ser
 import {FehlerhandlingComponent} from "../../fehlerhandling/fehlerhandling.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {
-  CreateEditExpenseEntryDialogComponent
-} from "../expense-split-widget/create-edit-expense-entry-dialog/create-edit-expense-entry-dialog.component";
-import {
   DeleteCarConfirmationDialogComponent
 } from "./delete-car-confirmation-dialog/delete-car-confirmation-dialog.component";
 import {AddRiderDialogComponent} from "./add-rider-dialog/add-rider-dialog.component";

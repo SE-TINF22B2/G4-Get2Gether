@@ -6,6 +6,7 @@ import com.dhbw.get2gether.backend.exceptions.EntityNotFoundException;
 import com.dhbw.get2gether.backend.user.application.UserService;
 import com.dhbw.get2gether.backend.user.model.SimpleUserDto;
 import com.dhbw.get2gether.backend.widget.application.mapper.CarpoolWidgetMapper;
+import com.dhbw.get2gether.backend.widget.application.mapper.WidgetMapper;
 import com.dhbw.get2gether.backend.widget.model.carpool.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.AuthenticatedPrincipal;
@@ -16,17 +17,20 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class CarpoolWidgetService extends AbstractWidgetService{
 
     private final CarpoolWidgetMapper mapper;
     private final UserService userService;
+    private final WidgetMapper widgetMapper;
 
-    CarpoolWidgetService(EventService eventService, CarpoolWidgetMapper mapper, UserService userService) {
+    CarpoolWidgetService(EventService eventService, CarpoolWidgetMapper mapper, UserService userService, WidgetMapper widgetMapper) {
         super(eventService);
         this.mapper = mapper;
         this.userService = userService;
+        this.widgetMapper = widgetMapper;
     }
 
     @PreAuthorize("hasRole('USER')")
@@ -40,29 +44,25 @@ public class CarpoolWidgetService extends AbstractWidgetService{
     }
 
     @PreAuthorize("hasRole('USER')")
-    public CarWidgetDto addCar(AuthenticatedPrincipal principal, String eventId, String widgetId, CarAddCommand addCommand) {
+    public CarpoolWidgetDto addCar(AuthenticatedPrincipal principal, String eventId, String widgetId, CarAddCommand addCommand) {
         Event event = getEventById(principal, eventId);
         CarpoolWidget widget = getWidgetFromEvent(event, widgetId);
+
         Car car = mapper.mapToCar(addCommand).toBuilder()
                 .id(UUID.randomUUID().toString())
                 .driverId(userService.getUserByPrincipal(principal).getId())
-                .riders(List.of(Rider.builder()
-                                .userId(userService.getUserByPrincipal(principal).getId())
-                                .pickupPlace(addCommand.getDriverAdress())
-                                .build()))
                 .build();
-
         widget.addCar(car);
-        return updateAndGetWidget(principal, event, widget);
+        return mapToDto(updateAndGetWidget(principal, event, widget));
     }
 
     @PreAuthorize("hasRole('USER')")
-    public CarWidgetDto updateCar(OAuth2User principal, String eventId, String widgetId, String carId, CarUpdateCommand updateCommand) {
+    public CarpoolWidgetDto updateCar(OAuth2User principal, String eventId, String widgetId, String carId, CarUpdateCommand updateCommand) {
         Event event = getEventById(principal, eventId);
         CarpoolWidget widget = getWidgetFromEvent(event, widgetId);
         Car originalCar = widget.getCars().stream()
                 .filter(l -> Objects.equals(l.getId(), carId)).findFirst()
-                .orElseThrow(() -> new EntityNotFoundException("Entry not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Car not found"));
         Car updatedCar = mapper.mapToCar(updateCommand).toBuilder()
                 .id(originalCar.getId())
                 .driverId(originalCar.getDriverId())
@@ -71,11 +71,11 @@ public class CarpoolWidgetService extends AbstractWidgetService{
         if(!widget.replaceCar(originalCar, updatedCar)) {
             throw new IllegalStateException("Failed to replace car from carpool widget");
         }
-        return updateAndGetWidget(principal, event, widget);
+        return mapToDto(updateAndGetWidget(principal, event, widget));
     }
 
     @PreAuthorize("hasRole('USER')")
-    public CarWidgetDto removeCar(AuthenticatedPrincipal principal, String eventId, String widgetId, String carId) {
+    public CarpoolWidgetDto removeCar(AuthenticatedPrincipal principal, String eventId, String widgetId, String carId) {
         Event event = getEventById(principal, eventId);
         CarpoolWidget widget = getWidgetFromEvent(event, widgetId);
         Car car = widget.getCars().stream()
@@ -84,11 +84,11 @@ public class CarpoolWidgetService extends AbstractWidgetService{
         if (!widget.removeCar(car)) {
             throw new IllegalStateException("Failed to remove Car from Carpool widget");
         }
-        return updateAndGetWidget(principal, event, widget);
+        return mapToDto(updateAndGetWidget(principal, event, widget));
     }
 
     @PreAuthorize("hasRole('USER')")
-    public CarWidgetDto addRider(AuthenticatedPrincipal principal, String eventId, String widgetId, String carId, RiderAddCommand addCommand) {
+    public CarpoolWidgetDto addRider(AuthenticatedPrincipal principal, String eventId, String widgetId, String carId, RiderAddCommand addCommand) {
         Event event = getEventById(principal, eventId);
         CarpoolWidget widget = getWidgetFromEvent(event, widgetId);
         Car car = widget.getCars().stream()
@@ -99,11 +99,11 @@ public class CarpoolWidgetService extends AbstractWidgetService{
                 .userId(userService.getUserByPrincipal(principal).getId())
                 .build();
         car.addRider(rider);
-        return updateAndGetWidget(principal, event, widget);
+        return mapToDto(updateAndGetWidget(principal, event, widget));
     }
 
     @PreAuthorize("hasRole('USER')")
-    public CarWidgetDto removeRider(AuthenticatedPrincipal principal, String eventId, String widgetId, String carId, String riderId) {
+    public CarpoolWidgetDto removeRider(AuthenticatedPrincipal principal, String eventId, String widgetId, String carId, String riderId) {
         Event event = getEventById(principal, eventId);
         CarpoolWidget widget = getWidgetFromEvent(event, widgetId);
         Car car = widget.getCars().stream()
@@ -115,11 +115,15 @@ public class CarpoolWidgetService extends AbstractWidgetService{
         if (!car.removeRider(rider)) {
             throw new IllegalStateException("Failed to remove rider from car");
         }
-        return updateAndGetWidget(principal, event, widget);
+        return mapToDto(updateAndGetWidget(principal, event, widget));
     }
 
-    private String mapToDto(CarpoolWidget widget, List<String> riders, AuthenticatedPrincipal principal) {
-        List<SimpleUserDto> simpleUserDtos = userService.getSimpleUsersById(riders);
-
+    private CarpoolWidgetDto mapToDto(CarpoolWidget widget) {
+        List<SimpleUserDto> simpleUserDtos = userService.getSimpleUsersById(
+                widget.getCars().stream()
+                        .flatMap(car -> car.getRiders().stream())
+                        .map(Rider::getUserId)
+                        .collect(Collectors.toList()));
+        return widgetMapper.carpoolWidgetToCarpoolWidgetDto(widget, simpleUserDtos);
     }
 }
