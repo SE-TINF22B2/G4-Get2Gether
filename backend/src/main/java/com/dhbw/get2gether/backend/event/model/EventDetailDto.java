@@ -1,6 +1,5 @@
 package com.dhbw.get2gether.backend.event.model;
 
-import com.dhbw.get2gether.backend.user.model.SimpleUserDto;
 import com.dhbw.get2gether.backend.widget.model.IWidget;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +24,6 @@ public class EventDetailDto {
     private LocalDateTime endDate;
     private String invitationLink;
     private final String creatorId;
-    private final List<SimpleUserDto> participants;
+    private final List<EventParticipantDto> participants;
     private final List<IWidget> widgets;
 }

@@ -1,6 +1,7 @@
 package com.dhbw.get2gether.backend.event.application.mapper;
 
 import com.dhbw.get2gether.backend.event.model.*;
+import com.dhbw.get2gether.backend.event.model.EventParticipantDto;
 import com.dhbw.get2gether.backend.user.model.SimpleUserDto;
 import com.dhbw.get2gether.backend.widget.application.mapper.WidgetMapper;
 import org.mapstruct.Context;
@@ -39,7 +40,9 @@ public interface EventMapper {
     @Mapping(target = "participantIds", ignore = true)
     Event updateEvent(@MappingTarget Event event, EventWidgetUpdateCommand eventWidgetUpdateCommand);
 
-    default EventDetailDto toEventDetailDto(Event event, @Context List<SimpleUserDto> participants, @Context Optional<String> userId) {
+    EventParticipantDto toEventParticipantDto(SimpleUserDto simpleUserDto, boolean hasLeft);
+
+    default EventDetailDto toEventDetailDto(Event event, @Context List<EventParticipantDto> participants, @Context Optional<String> userId) {
         return _toEventDetailDto(event, participants, participants, userId);
     }
 
@@ -49,5 +52,5 @@ public interface EventMapper {
      * This is a helper method to map an Event to an EventDro with a list of participants while also providing the participants list as mapping context.
      * Mapstruct will use the {@code WidgetMapper} to map Widgets to IWidgets.
      */
-    EventDetailDto _toEventDetailDto(Event event, List<SimpleUserDto> participants, @Context List<SimpleUserDto> participantsContext, @Context Optional<String> userId);
+    EventDetailDto _toEventDetailDto(Event event, List<EventParticipantDto> participants, @Context List<EventParticipantDto> participantsContext, @Context Optional<String> userId);
 }

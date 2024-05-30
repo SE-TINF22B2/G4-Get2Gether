@@ -4,7 +4,7 @@ import com.dhbw.get2gether.backend.event.application.EventService;
 import com.dhbw.get2gether.backend.event.model.Event;
 import com.dhbw.get2gether.backend.exceptions.EntityNotFoundException;
 import com.dhbw.get2gether.backend.user.application.UserService;
-import com.dhbw.get2gether.backend.user.model.SimpleUserDto;
+import com.dhbw.get2gether.backend.event.model.EventParticipantDto;
 import com.dhbw.get2gether.backend.user.model.User;
 import com.dhbw.get2gether.backend.widget.application.mapper.ExpenseSplitMapper;
 import com.dhbw.get2gether.backend.widget.application.mapper.WidgetMapper;
@@ -61,7 +61,7 @@ public class ExpenseSplitWidgetService extends AbstractWidgetService {
                                 .build()).toList())
                 .build();
         widget.addEntry(entry);
-        return mapToDto(updateAndGetWidget(principal, event, widget), event.getParticipantIds(), principal);
+        return mapToDto(updateAndGetWidget(principal, event, widget), event, principal);
     }
 
     @PreAuthorize("hasRole('USER')")
@@ -74,7 +74,7 @@ public class ExpenseSplitWidgetService extends AbstractWidgetService {
         if (!widget.removeEntry(entry)) {
             throw new IllegalStateException("Failed to remove entry from shopping list widget");
         }
-        return mapToDto(updateAndGetWidget(principal, event, widget), event.getParticipantIds(), principal);
+        return mapToDto(updateAndGetWidget(principal, event, widget), event, principal);
     }
 
     @PreAuthorize("hasRole('USER')")
@@ -102,13 +102,13 @@ public class ExpenseSplitWidgetService extends AbstractWidgetService {
         if (!widget.replaceEntry(originalEntry, updatedEntry)) {
             throw new IllegalStateException("Failed to replace entry from expense split widget");
         }
-        return mapToDto(updateAndGetWidget(principal, event, widget), event.getParticipantIds(), principal);
+        return mapToDto(updateAndGetWidget(principal, event, widget), event, principal);
     }
 
-    private ExpenseSplitWidgetDto mapToDto(ExpenseSplitWidget widget, List<String> participantIds, AuthenticatedPrincipal principal) {
-        List<SimpleUserDto> simpleUserDtos = userService.getSimpleUsersById(participantIds);
+    private ExpenseSplitWidgetDto mapToDto(ExpenseSplitWidget widget, Event event, AuthenticatedPrincipal principal) {
+        List<EventParticipantDto> eventParticipantDtos = eventService.getAllEventParticipantsById(event);
         User user = userService.getUserByPrincipal(principal);
         List<Debt> debts = widget.calculateDebtsForUserId(user.getId());
-        return widgetMapper.expenseSplitWidgetToExpenseSplitWidgetDto(widget, debts, simpleUserDtos);
+        return widgetMapper.expenseSplitWidgetToExpenseSplitWidgetDto(widget, debts, eventParticipantDtos);
     }
 }

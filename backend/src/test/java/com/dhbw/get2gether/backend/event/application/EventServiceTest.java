@@ -3,12 +3,10 @@ package com.dhbw.get2gether.backend.event.application;
 import com.dhbw.get2gether.backend.AbstractIntegrationTest;
 import com.dhbw.get2gether.backend.authentication.GuestAuthenticationPrincipal;
 import com.dhbw.get2gether.backend.event.adapter.out.EventRepository;
-import com.dhbw.get2gether.backend.event.model.Event;
-import com.dhbw.get2gether.backend.event.model.EventCreateCommand;
-import com.dhbw.get2gether.backend.event.model.EventOverviewDto;
-import com.dhbw.get2gether.backend.event.model.EventUpdateCommand;
+import com.dhbw.get2gether.backend.event.model.*;
 import com.dhbw.get2gether.backend.exceptions.EntityNotFoundException;
 import com.dhbw.get2gether.backend.user.application.UserService;
+import com.dhbw.get2gether.backend.user.model.SimpleUserDto;
 import com.dhbw.get2gether.backend.user.model.User;
 import com.dhbw.get2gether.backend.utils.WithMockGuestUser;
 import com.dhbw.get2gether.backend.utils.WithMockOAuth2User;
@@ -385,7 +383,7 @@ class EventServiceTest extends AbstractIntegrationTest {
 
     @Test
     @WithMockOAuth2User
-    void shouldLeaveEventIfIsUser() {
+    void shouldLeaveEventIfIsParticipant() {
         // given
         AuthenticatedPrincipal principal = (AuthenticatedPrincipal)
                 SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -402,10 +400,62 @@ class EventServiceTest extends AbstractIntegrationTest {
         when(eventRepository.save(eventCaptor.capture())).thenAnswer(args -> args.getArgument(0));
 
         // when
-        boolean isLeaved = eventService.leaveEvent(principal, event.getId());
+        eventService.leaveEvent(principal, event.getId());
 
         // then
-        assertThat(isLeaved).isTrue();
         assertThat(eventCaptor.getValue().getParticipantIds()).doesNotContain(user.getId());
+        assertThat(eventCaptor.getValue().getLeftParticipantIds()).contains(user.getId());
+    }
+
+    @Test
+    @WithMockOAuth2User
+    void shouldLeaveEventThrowErrorIfIsNotParticipant() {
+        // given
+        AuthenticatedPrincipal principal = (AuthenticatedPrincipal)
+                SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = User.builder().id("test").build();
+        Event event = Event.builder()
+                .id("1")
+                .participantIds(new ArrayList<>())
+                .build();
+
+        when(userService.getUserByPrincipal(any())).thenReturn(user);
+        when(userService.findUserFromPrincipal(any())).thenReturn(Optional.of(user));
+        when(eventRepository.findById(eq(event.getId()))).thenReturn(Optional.of(event));
+        when(eventRepository.save(any())).thenAnswer(args -> args.getArgument(0));
+
+        // when
+        // then
+        assertThatThrownBy(() -> eventService.leaveEvent(principal, event.getId()))
+                .isInstanceOf(AccessDeniedException.class);
+    }
+
+    @Test
+    @WithMockGuestUser
+    void shouldGetEventParticipantsIfIsGuest() {
+        // given
+        List<SimpleUserDto> simpleUserDtos = List.of(
+                SimpleUserDto.builder().id("present").build(),
+                SimpleUserDto.builder().id("left").build()
+        );
+        List<EventParticipantDto> participantDtos = List.of(
+                EventParticipantDto.builder().id("present").build(),
+                EventParticipantDto.builder().id("left").hasLeft(true).build()
+        );
+        Event event = Event.builder()
+                .id("1")
+                .participantIds(List.of("present"))
+                .leftParticipantIds(List.of("left"))
+                .build();
+
+        when(userService.getSimpleUsersById(any())).thenReturn(simpleUserDtos);
+
+        // when
+        List<EventParticipantDto> returnedEventParticipants = eventService.getAllEventParticipantsById(event);
+
+        // then
+        assertThat(returnedEventParticipants)
+                .usingRecursiveFieldByFieldElementComparator()
+                .containsExactlyInAnyOrderElementsOf(participantDtos);
     }
 }

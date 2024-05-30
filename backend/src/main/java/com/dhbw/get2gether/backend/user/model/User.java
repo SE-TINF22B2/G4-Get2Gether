@@ -1,11 +1,12 @@
 package com.dhbw.get2gether.backend.user.model;
 
-import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
+
+import java.time.LocalDateTime;
 
 @Builder(toBuilder = true)
 @AllArgsConstructor

@@ -6,7 +6,7 @@ import com.dhbw.get2gether.backend.event.model.Event;
 import com.dhbw.get2gether.backend.event.model.EventWidgetUpdateCommand;
 import com.dhbw.get2gether.backend.exceptions.OperationNotAllowedException;
 import com.dhbw.get2gether.backend.user.application.UserService;
-import com.dhbw.get2gether.backend.user.model.SimpleUserDto;
+import com.dhbw.get2gether.backend.event.model.EventParticipantDto;
 import com.dhbw.get2gether.backend.user.model.User;
 import com.dhbw.get2gether.backend.utils.WithMockGuestUser;
 import com.dhbw.get2gether.backend.utils.WithMockOAuth2User;
@@ -129,14 +129,14 @@ class ExpenseSplitWidgetServiceTest extends AbstractIntegrationTest {
                 .involvedUsers(List.of("test"))
                 .build();
 
-        SimpleUserDto simpleUser = SimpleUserDto.builder()
+        EventParticipantDto eventParticipant = EventParticipantDto.builder()
                 .id("test")
                 .firstName("firstName")
                 .lastName("lastName")
                 .profilePictureUrl("profilePictureUrl")
                 .build();
         UserWithPercentageDto user = UserWithPercentageDto.builder()
-                .user(simpleUser)
+                .user(eventParticipant)
                 .percentage(1)
                 .build();
         ExpenseEntryDto entry = ExpenseEntryDto.builder()
@@ -156,10 +156,10 @@ class ExpenseSplitWidgetServiceTest extends AbstractIntegrationTest {
                         )
                         .build()
                 );
+        when(eventService.getAllEventParticipantsById(any())).thenReturn(List.of(eventParticipant));
         when(userService.getUserByPrincipal(principal)).thenReturn(User.builder()
                 .id("test")
                 .email("test@example.com").build());
-        when(userService.getSimpleUsersById(any())).thenReturn(List.of(simpleUser));
         when(userService.getUserById("test")).thenReturn(User.builder()
                 .id("test")
                 .firstName("firstName")

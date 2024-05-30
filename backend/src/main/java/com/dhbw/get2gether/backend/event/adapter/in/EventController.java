@@ -2,7 +2,6 @@ package com.dhbw.get2gether.backend.event.adapter.in;
 
 import com.dhbw.get2gether.backend.event.application.EventService;
 import com.dhbw.get2gether.backend.event.model.*;
-import com.dhbw.get2gether.backend.exceptions.OperationFailedException;
 import org.springframework.security.core.AuthenticatedPrincipal;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -47,9 +46,7 @@ public class EventController {
 
     @GetMapping("/{eventId}/leave")
     public void leaveEvent(@AuthenticationPrincipal OAuth2User principal, @PathVariable String eventId) {
-        if (!eventService.leaveEvent(principal, eventId)) {
-            throw new OperationFailedException("Failed to leave event.");
-        }
+        eventService.leaveEvent(principal, eventId);
     }
 
     @DeleteMapping("/{eventId}")
