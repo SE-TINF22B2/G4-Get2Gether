@@ -18,10 +18,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticatedPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -92,7 +89,7 @@ class EventServiceTest extends AbstractIntegrationTest {
                 .thenReturn(Collections.singletonList(event));
 
         // when
-        List<EventOverviewDto> events = eventService.getAllEventsFromUser(principal);
+        List<EventOverviewDto> events = eventService.getAllEventsFromPrincipal(principal);
 
         // then
         verify(eventRepository).findEventsByParticipantIdsContainsOrderByDateDesc(eq(user.getId()));
@@ -101,17 +98,22 @@ class EventServiceTest extends AbstractIntegrationTest {
 
     @Test
     @WithMockGuestUser
-    void shouldNotGetEventsFromGuest() {
+    void shouldGetGrantedEventsFromGuest() {
         // given
-        AuthenticatedPrincipal principal = (AuthenticatedPrincipal)
+        GuestAuthenticationPrincipal principal = (GuestAuthenticationPrincipal)
                 SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        principal.grantAccessToEvent("test");
+        Event event = Event.builder().id("test").build();
 
-        when(userService.findUserFromPrincipal(any())).thenReturn(Optional.empty());
+        when(eventRepository.findAllByIdInOrderByDateDesc(eq(principal.getGrantedEventIds())))
+                .thenReturn(Collections.singletonList(event));
 
         // when
+        List<EventOverviewDto> events = eventService.getAllEventsFromPrincipal(principal);
+
         // then
-        assertThatThrownBy(() -> eventService.getAllEventsFromUser(principal))
-                .isInstanceOf(AccessDeniedException.class);
+        verify(eventRepository).findAllByIdInOrderByDateDesc(eq(principal.getGrantedEventIds()));
+        assertThat(events).hasSize(1);
     }
 
     @Test

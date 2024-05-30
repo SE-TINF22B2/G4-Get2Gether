@@ -27,8 +27,8 @@ public class EventController {
     }
 
     @GetMapping("/own")
-    public List<EventOverviewDto> getOwnEvents(@AuthenticationPrincipal OAuth2User principal) {
-        return eventService.getAllEventsFromUser(principal);
+    public List<EventOverviewDto> getOwnEvents(@AuthenticationPrincipal AuthenticatedPrincipal principal) {
+        return eventService.getAllEventsFromPrincipal(principal);
     }
 
     @GetMapping("/{eventId}")

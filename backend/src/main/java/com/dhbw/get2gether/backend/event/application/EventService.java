@@ -51,14 +51,18 @@ public class EventService {
         return eventRepository.insert(event);
     }
 
-    @PreAuthorize("hasRole('USER')")
-    public List<EventOverviewDto> getAllEventsFromUser(AuthenticatedPrincipal principal) {
-        // TODO: check if principal is guest and return granted events
-        List<Event> userEvents = userService
-                .findUserFromPrincipal(principal)
-                .map(user -> eventRepository.findEventsByParticipantIdsContainsOrderByDateDesc(user.getId()))
-                .orElse(List.of());
-        return userEvents.stream().map(eventMapper::toEventOverviewDto).toList();
+    @PreAuthorize("hasRole('GUEST')")
+    public List<EventOverviewDto> getAllEventsFromPrincipal(AuthenticatedPrincipal principal) {
+        List<Event> events;
+        if (principal instanceof GuestAuthenticationPrincipal guestPrincipal) {
+            events = eventRepository.findAllByIdInOrderByDateDesc(guestPrincipal.getGrantedEventIds());
+        } else {
+            events = userService
+                    .findUserFromPrincipal(principal)
+                    .map(user -> eventRepository.findEventsByParticipantIdsContainsOrderByDateDesc(user.getId()))
+                    .orElse(List.of());
+        }
+        return events.stream().map(eventMapper::toEventOverviewDto).toList();
     }
 
     @PreAuthorize("hasRole('GUEST')")
