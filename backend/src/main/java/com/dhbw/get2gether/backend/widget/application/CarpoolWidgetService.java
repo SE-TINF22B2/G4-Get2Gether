@@ -110,7 +110,7 @@ public class CarpoolWidgetService extends AbstractWidgetService{
                 .filter(c -> Objects.equals(c.getId(), carId)).findFirst()
                 .orElseThrow(() -> new EntityNotFoundException("Car not found"));
         Rider rider = car.getRiders().stream()
-                .filter(r -> Objects.equals(r.getId(), riderId)).findFirst()
+                .filter(r -> Objects.equals(r.getUserId(), riderId)).findFirst()
                 .orElseThrow(() -> new EntityNotFoundException("Rider not found"));
         if (!car.removeRider(rider)) {
             throw new IllegalStateException("Failed to remove rider from car");
