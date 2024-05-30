@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {Debt} from "../../../../model/expense-split-widget";
+import {getUserNameForParticipant} from "../../../../utils/user.utils";
 
 @Component({
   selector: 'app-expense-debt-overview',
@@ -16,4 +17,5 @@ export class ExpenseDebtOverviewComponent {
   }
 
   protected readonly Math = Math;
+  protected readonly getUserNameForParticipant = getUserNameForParticipant;
 }

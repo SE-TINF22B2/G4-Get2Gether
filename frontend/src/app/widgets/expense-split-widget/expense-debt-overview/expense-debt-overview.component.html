@@ -18,8 +18,16 @@
             }
           </span>
           <span>
-            <img [ngSrc]="debt.user.profilePictureUrl" width="24" height="24" alt="" class="user-profile-picture">
-            {{ debt.user.firstName }} {{ debt.user.lastName }}
+            <img
+              [ngSrc]="debt.user.profilePictureUrl"
+              [class.left-participant-profile-picture]="debt.user.hasLeft"
+              width="24"
+              height="24"
+              alt=""
+              referrerpolicy="no-referrer"
+              class="user-profile-picture"
+            >
+            {{ getUserNameForParticipant(debt.user)}}
           </span>
           <span class="debt-amount" [class.negative]="debt.debtAmount < 0">
             <strong>{{ Math.abs(debt.debtAmount) | currency: "EUR" }}</strong>

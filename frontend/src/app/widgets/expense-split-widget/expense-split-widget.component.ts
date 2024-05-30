@@ -37,7 +37,7 @@ export class ExpenseSplitWidgetComponent {
   createNewExpenseEntry() {
     const dialogRef = this.dialog.open(CreateEditExpenseEntryDialogComponent, {
       width: "600px",
-      data: {users: this.eventData.participants}
+      data: {users: this.eventData.participants.filter(p => !p.hasLeft)}
     });
 
     dialogRef.afterClosed().subscribe(addCommand => {
