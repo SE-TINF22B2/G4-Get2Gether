@@ -1,13 +1,6 @@
 <mat-card>
   <mat-card-content>
-    <!--    TODO: hier Card content hinzufügen-->
-    <mat-icon inline class="icon-location">location_on</mat-icon>
-    <p class="location"> {{ car.driverAdress }}</p>
-    <p class="driver"> {{ car.driverId }}</p>
-    <p class="anzahlPlaetze"> {{ car.riders }}/{{ car.anzahlPlaetze }}</p>
-    <mat-icon inline class="icon-person">person</mat-icon>
-
-    <p class="riders"> {{ getRiders.join(",") }}</p>
+    <mat-card-header>
     @if (userService.user | async; as user) {
       @if (isUserDriver(user)) {
         <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button">
@@ -23,7 +16,7 @@
             Löschen
           </button>
         </mat-menu>
-      } @else if (!user.guest){
+      } @else if (!user.guest) {
         <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button" [hidden]="isGuest()">
           <mat-icon>more_horiz</mat-icon>
         </button>
@@ -39,6 +32,20 @@
         </mat-menu>
       }
     }
+    </mat-card-header>
+    <!--    TODO: hier Card content hinzufügen-->
+    <div class="content-container">
+      <div class="location-container">
+        <mat-icon inline class="icon-location">location_on</mat-icon>
+        <p class="location"> {{ car.driverAdress }}</p>
+      </div>
+      <p class="driver"> {{ currentUser?.firstName }} {{ currentUser?.lastName }}</p>
+      <p class="anzahlPlaetze"> {{ getRiders.length }}/{{ car.anzahlPlaetze }}</p>
+      <div class="riders-container">
+        <mat-icon inline class="icon-person">person</mat-icon>
+        <p class="riders"> {{ getRiders.join(",") }}</p>
+      </div>
+    </div>
   </mat-card-content>
 </mat-card>
 

@@ -6,3 +6,42 @@ mat-card {
 .menu-button {
   margin-left: auto;
 }
+.content-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--size-12);
+  padding-right: 24px;
+  font-size: var(--font-size-standard);
+  margin-top: 16px;
+  margin-bottom: var(--size-12);
+}
+.location-container{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--size-12);
+  padding-right: 24px;
+  font-size: var(--font-size-standard);
+}
+.riders-container{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--size-12);
+  padding-right: 24px;
+  font-size: var(--font-size-standard);
+}
+p {
+  margin: 0;
+}
+mat-icon {
+  flex-shrink: 0;
+}
+.location {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
