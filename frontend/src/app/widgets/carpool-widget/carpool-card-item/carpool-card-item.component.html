@@ -1,50 +1,67 @@
-<mat-card>
+<mat-card (click)="toogleExpanded()">
   <mat-card-content>
     <mat-card-header>
-    @if (userService.user | async; as user) {
-      @if (isUserDriver(user)) {
-        <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button">
-          <mat-icon>more_horiz</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="onEdit.emit()">
-            <mat-icon>edit</mat-icon>
-            Bearbeiten
+      <mat-card-title>
+        <div class="title-container">
+          <div class="title-container-location">
+            <mat-icon inline>location_on</mat-icon>
+            <p> {{ car.driverAdress }}</p>
+          </div>
+          <p> {{ car.driver.firstName }} {{ car.driver.lastName }}</p>
+          <p> {{ getRiders.length }}/{{ car.anzahlPlaetze }}</p>
+        </div>
+      </mat-card-title>
+      @if (userService.user | async; as user) {
+        @if (isUserDriver(user)) {
+          <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button">
+            <mat-icon>more_horiz</mat-icon>
           </button>
-          <button mat-menu-item (click)="onDelete.emit()">
-            <mat-icon>delete</mat-icon>
-            Löschen
+          <mat-menu #menu="matMenu">
+           <button mat-menu-item (click)="onEdit.emit()">
+             <mat-icon>edit</mat-icon>
+             Bearbeiten
+            </button>
+            <button mat-menu-item (click)="onDelete.emit()">
+             <mat-icon>delete</mat-icon>
+             Löschen
+            </button>
+          </mat-menu>
+        } @else if (!user.guest) {
+          <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button" [hidden]="isGuest()">
+           <mat-icon>more_horiz</mat-icon>
           </button>
-        </mat-menu>
-      } @else if (!user.guest) {
-        <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button" [hidden]="isGuest()">
-          <mat-icon>more_horiz</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="onEditRider.emit()">
-            <mat-icon>edit</mat-icon>
-            Beitreten
-          </button>
-          <button mat-menu-item (click)="onRiderDelete.emit()">
-            <mat-icon>delete</mat-icon>
-            Verlassen
-          </button>
-        </mat-menu>
+          <mat-menu #menu="matMenu">
+           <button mat-menu-item (click)="onEditRider.emit()">
+             <mat-icon>edit</mat-icon>
+             Beitreten
+            </button>
+            <button mat-menu-item (click)="onRiderDelete.emit()">
+              <mat-icon>delete</mat-icon>
+             Verlassen
+            </button>
+          </mat-menu>
+        }
       }
-    }
     </mat-card-header>
-    <!--    TODO: hier Card content hinzufügen-->
     <div class="content-container">
-      <div class="location-container">
-        <mat-icon inline class="icon-location">location_on</mat-icon>
-        <p class="location"> {{ car.driverAdress }}</p>
-      </div>
-      <p class="driver"> {{ currentUser?.firstName }} {{ currentUser?.lastName }}</p>
-      <p class="anzahlPlaetze"> {{ getRiders.length }}/{{ car.anzahlPlaetze }}</p>
-      <div class="riders-container">
-        <mat-icon inline class="icon-person">person</mat-icon>
-        <p class="riders"> {{ getRiders.join(",") }}</p>
-      </div>
+      @if(isCardReduced()) {
+        <div class="riders-container">
+          <mat-icon inline>person</mat-icon>
+          <p> {{ getRiders.join(",") }}</p>
+        </div>
+      }
+      @if (isCardExpanded()) {
+          @for(rider of car.riders; track rider.user.id){
+            <div class="location-container">
+              <p>{{rider.pickupPlace}}</p>
+              <p>{{[rider.user.firstName, rider.user.lastName].join(" ")}}</p>
+            </div>
+          }
+        <div class="location-container-final">
+          <mat-icon>sports_score</mat-icon>
+          <p>{{getLocation()}}</p>
+        </div>
+      }
     </div>
   </mat-card-content>
 </mat-card>

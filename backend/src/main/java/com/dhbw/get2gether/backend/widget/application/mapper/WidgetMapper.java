@@ -1,6 +1,7 @@
 package com.dhbw.get2gether.backend.widget.application.mapper;
 
 import com.dhbw.get2gether.backend.exceptions.EntityNotFoundException;
+import com.dhbw.get2gether.backend.user.application.UserService;
 import com.dhbw.get2gether.backend.user.model.SimpleUserDto;
 import com.dhbw.get2gether.backend.widget.model.IWidget;
 import com.dhbw.get2gether.backend.widget.model.Widget;
@@ -13,6 +14,7 @@ import org.mapstruct.SubclassExhaustiveStrategy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring", subclassExhaustiveStrategy = SubclassExhaustiveStrategy.COMPILE_ERROR)
 public abstract class WidgetMapper {
@@ -30,15 +32,15 @@ public abstract class WidgetMapper {
         return widget;
     }
 
-    public CarpoolWidgetDto carpoolWidgetToCarpoolWidgetDto(CarpoolWidget widget, List<SimpleUserDto> riders) {
+    public CarpoolWidgetDto carpoolWidgetToCarpoolWidgetDto(CarpoolWidget widget, List<SimpleUserDto> users) {
         List<CarDto> cars = widget.getCars().stream()
                 .map(car -> CarDto.builder()
                         .id(car.getId())
-                        .driverId(car.getDriverId())
+                        .driver(users.stream().filter(r -> r.getId().equals(car.getDriverId())).findFirst().orElse(null))
                         .driverAdress(car.getDriverAdress())
                         .anzahlPlaetze(car.getAnzahlPlaetze())
                         .riders(car.getRiders().stream().map(rider -> RiderDto.builder()
-                                .user(riders.stream().filter(r -> r.getId().equals(rider.getUserId()))
+                                .user(users.stream().filter(r -> r.getId().equals(rider.getUserId()))
                                         .findFirst()
                                         .orElse(null))
                                 .pickupPlace(rider.getPickupPlace())

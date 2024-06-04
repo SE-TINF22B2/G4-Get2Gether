@@ -8,7 +8,7 @@ export type CarpoolWidget = BaseWidget & {
 
 export type Car = {
   id: string;
-  driverId: string;
+  driver: SimpleUser;
   driverAdress: string;
   anzahlPlaetze: number;
   riders: Rider[];

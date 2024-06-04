@@ -2,11 +2,16 @@ mat-card {
   --mdc-elevated-card-container-color: var(--background-container-low-color);
   --mdc-elevated-card-container-elevation: none;
 }
+mat-card-header {
+  padding: 0;
+  align-items: center;
+}
 
 .menu-button {
   margin-left: auto;
 }
-.content-container {
+
+.title-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -14,17 +19,15 @@ mat-card {
   gap: var(--size-12);
   padding-right: 24px;
   font-size: var(--font-size-standard);
-  margin-top: 16px;
-  margin-bottom: var(--size-12);
+
+  &-location {
+    display: flex;
+    flex-direction: row;
+    gap: var(--size-12);
+    padding-right: 24px;
+  }
 }
-.location-container{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: var(--size-12);
-  padding-right: 24px;
-  font-size: var(--font-size-standard);
-}
+
 .riders-container{
   display: flex;
   flex-direction: row;
@@ -32,16 +35,25 @@ mat-card {
   gap: var(--size-12);
   padding-right: 24px;
   font-size: var(--font-size-standard);
+  align-items: center;
 }
+
 p {
   margin: 0;
 }
+
 mat-icon {
   flex-shrink: 0;
 }
-.location {
+
+.location-container {
   display: flex;
   flex-direction: row;
-  gap: 10px;
-  align-items: center;
+  gap: var(--size-24);
+  padding-left: var(--size-24);
+  &-final {
+    display: flex;
+    flex-direction: row;
+    padding-top: var(--size-12);
+  }
 }

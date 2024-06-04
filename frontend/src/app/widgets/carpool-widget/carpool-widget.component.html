@@ -8,6 +8,7 @@
       @for (car of widget.cars; track car.id) {
         <li>
           <app-carpool-card-item
+            [eventData]="eventData"
             [car]="car"
             (onEdit)="editCar(car)"
             (onDelete)="deleteCar(car)"

@@ -9,8 +9,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Rider {
-    private String id;
+public class Driver {
     private String userId;
-    private String pickupPlace;
 }

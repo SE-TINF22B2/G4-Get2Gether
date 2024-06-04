@@ -14,6 +14,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -124,6 +125,11 @@ public class CarpoolWidgetService extends AbstractWidgetService{
                         .flatMap(car -> car.getRiders().stream())
                         .map(Rider::getUserId)
                         .collect(Collectors.toList()));
-        return widgetMapper.carpoolWidgetToCarpoolWidgetDto(widget, simpleUserDtos);
+        List<SimpleUserDto> driverDtos = userService.getSimpleUsersById(widget.getCars().stream()
+                .map(Car::getDriverId)
+                .collect(Collectors.toList()));
+        List<SimpleUserDto> combinedList = new ArrayList<>(simpleUserDtos);
+        combinedList.addAll(driverDtos);
+        return widgetMapper.carpoolWidgetToCarpoolWidgetDto(widget, combinedList);
     }
 }

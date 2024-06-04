@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angula
 import {Event} from "../../../../model/event";
 import {Car} from "../../../../model/carpool-widget";
 import {UserService} from "../../../../services/user.service";
-import {SimpleUser, User} from "../../../../model/user";
+import {User} from "../../../../model/user";
 
 @Component({
   selector: 'app-carpool-card-item',
@@ -30,6 +30,7 @@ export class CarpoolCardItemComponent implements OnInit{
   onRiderDelete = new EventEmitter();
 
   currentUser: User | undefined;
+  isExpanded: boolean = false;
 
   constructor(public userService: UserService) {
   }
@@ -43,10 +44,28 @@ export class CarpoolCardItemComponent implements OnInit{
   }
 
   isUserDriver(user: User) {
-    return this.car.driverId == user.id;
+    return this.car.driver.id == user.id;
+  }
+
+  isCardReduced() {
+    return (this.getRiders.length > 0) && !this.isExpanded;
+  }
+
+  isCardExpanded() {
+    return (this.getRiders.length > 0) && this.isExpanded;
+  }
+
+  toogleExpanded() {
+    console.log(this.car);
+    this.isExpanded = !this.isExpanded;
   }
 
   isGuest() {
       return !this.currentUser;
+  }
+
+  getLocation() {
+    const location =  [this.eventData.location.postalCode, this.eventData.location.city].join(" ");
+    return [this.eventData.location.street, location].join(", ");
   }
 }

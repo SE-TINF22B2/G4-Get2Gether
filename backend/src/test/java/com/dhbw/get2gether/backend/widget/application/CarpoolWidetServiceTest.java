@@ -6,6 +6,7 @@ import com.dhbw.get2gether.backend.event.model.Event;
 import com.dhbw.get2gether.backend.event.model.EventWidgetUpdateCommand;
 import com.dhbw.get2gether.backend.exceptions.OperationNotAllowedException;
 import com.dhbw.get2gether.backend.user.application.UserService;
+import com.dhbw.get2gether.backend.user.model.SimpleUserDto;
 import com.dhbw.get2gether.backend.user.model.User;
 import com.dhbw.get2gether.backend.utils.WithMockGuestUser;
 import com.dhbw.get2gether.backend.utils.WithMockOAuth2User;
@@ -118,10 +119,16 @@ public class CarpoolWidetServiceTest extends AbstractIntegrationTest {
                 .driverAdress("some Address")
                 .anzahlPlaetze(3)
                 .build();
+        SimpleUserDto driver = SimpleUserDto.builder()
+                .id("test")
+                .firstName("driver")
+                .lastName("driver")
+                .profilePictureUrl("profilePictureUrl")
+                .build();
         CarDto car = CarDto.builder()
                 .driverAdress("some Address")
                 .anzahlPlaetze(3)
-                .driverId("test")
+                .driver(driver)
                 .build();
 
         when(eventService.getSingleEvent(any(), eq(event.getId()))).thenReturn(event);
@@ -135,6 +142,7 @@ public class CarpoolWidetServiceTest extends AbstractIntegrationTest {
         when(userService.getUserByPrincipal(principal)).thenReturn(User.builder()
                 .id("test")
                 .email("test@example.com").build());
+        when(userService.getSimpleUsersById(any())).thenReturn(List.of(driver));
 
         // when
         CarpoolWidgetDto returnedWidget = carpoolWidgetService.addCar(principal, event.getId(), widget.getId(), addCommand);
@@ -289,6 +297,7 @@ public class CarpoolWidetServiceTest extends AbstractIntegrationTest {
         AuthenticatedPrincipal principal = (AuthenticatedPrincipal)
                 SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Rider rider = Rider.builder()
+                .id("test")
                 .pickupPlace("Testpickup")
                 .userId("test")
                 .build();
