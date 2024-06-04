@@ -1,3 +1,4 @@
+[![codecov](https://codecov.io/gh/SE-TINF22B2/G4-Get2Gether/graph/badge.svg?token=X5FTVHDR5Y)](https://codecov.io/gh/SE-TINF22B2/G4-Get2Gether)
 # Get2Gether
 Der Begleiter für deine Events!
 
