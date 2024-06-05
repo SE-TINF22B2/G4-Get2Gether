@@ -7,7 +7,6 @@ import com.dhbw.get2gether.backend.event.model.EventParticipantDto;
 import com.dhbw.get2gether.backend.event.model.EventWidgetUpdateCommand;
 import com.dhbw.get2gether.backend.exceptions.OperationNotAllowedException;
 import com.dhbw.get2gether.backend.user.application.UserService;
-import com.dhbw.get2gether.backend.user.model.SimpleUserDto;
 import com.dhbw.get2gether.backend.user.model.User;
 import com.dhbw.get2gether.backend.utils.WithMockGuestUser;
 import com.dhbw.get2gether.backend.utils.WithMockOAuth2User;
@@ -29,7 +28,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
-public class CarpoolWidetServiceTest extends AbstractIntegrationTest {
+public class CarpoolWidgetServiceTest extends AbstractIntegrationTest {
     @MockBean
     private EventService eventService;
     @MockBean
@@ -57,7 +56,6 @@ public class CarpoolWidetServiceTest extends AbstractIntegrationTest {
                         )
                         .build()
                 );
-        String eventId = event.getId();
         // when
         Event returnedEvent = carpoolWidgetService.createCarpoolWidget(principal, event.getId(), createCommand);
 
@@ -223,7 +221,8 @@ public class CarpoolWidetServiceTest extends AbstractIntegrationTest {
         AuthenticatedPrincipal principal = (AuthenticatedPrincipal)
                 SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Car car = Car.builder()
-                .driverId("test")
+                .driverId("driver")
+                .anzahlPlaetze(1)
                 .build();
         CarpoolWidget widget = CarpoolWidget.builder()
                 .id("wi-123")
