@@ -106,7 +106,7 @@ public class ExpenseSplitWidgetService extends AbstractWidgetService {
     }
 
     private ExpenseSplitWidgetDto mapToDto(ExpenseSplitWidget widget, Event event, AuthenticatedPrincipal principal) {
-        List<EventParticipantDto> eventParticipantDtos = eventService.getAllEventParticipantsById(event);
+        List<EventParticipantDto> eventParticipantDtos = eventService.getAllEventParticipants(event);
         User user = userService.getUserByPrincipal(principal);
         List<Debt> debts = widget.calculateDebtsForUserId(user.getId());
         return widgetMapper.expenseSplitWidgetToExpenseSplitWidgetDto(widget, debts, eventParticipantDtos);

@@ -1,0 +1,30 @@
+<div class="container">
+  @if (widget.cars.length > 0) {
+    <button mat-raised-button (click)="createNewCar()" class="create-new-button">
+      <mat-icon>add</mat-icon>
+      Fahrgemeinschaft erstellen
+    </button>
+    <ul class="carpool-car-list">
+      @for (car of widget.cars; track car.id) {
+        <li>
+          <app-carpool-card-item
+            [eventData]="eventData"
+            [car]="car"
+            (onEdit)="editCar(car)"
+            (onDelete)="deleteCar(car)"
+            (onEditRider)="addRider(car)"
+            (onRiderDelete)="deleteRider(car)"></app-carpool-card-item>
+        </li>
+      }
+    </ul>
+  } @else {
+    <div class="no-entries-container">
+      <img ngSrc="assets/noCarpool.svg" width="300" height="200" alt="no carpool Bild">
+      <h4>Keine Fahrgemeinschaft angelegt</h4>
+      <button mat-stroked-button (click)="createNewCar()">
+        <mat-icon>add</mat-icon>
+        Fahrgemeinschaft erstellen
+      </button>
+    </div>
+  }
+</div>

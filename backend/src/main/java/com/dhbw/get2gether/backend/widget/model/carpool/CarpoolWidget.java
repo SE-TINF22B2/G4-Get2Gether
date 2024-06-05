@@ -32,6 +32,15 @@ public class CarpoolWidget extends Widget {
         cars.add(car);
     }
 
+    public boolean replaceCar(Car oldCar, Car newCar) {
+        int index = cars.indexOf(oldCar);
+        if (index == -1) {
+            return false;
+        }
+        cars.set(index, newCar);
+        return true;
+    }
+
     public boolean removeCar(Car car) {
         return cars.remove(car);
     }

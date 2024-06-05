@@ -20,6 +20,13 @@
       (onWidgetUpdated)="onWidgetUpdated.emit($event)"
     ></app-expense-split-widget>
   }
+  @case (WidgetType.CARPOOL) {
+    <app-carpool-widget
+      [widget]="widget"
+      [eventData]="eventData"
+      (onWidgetUpdated)="onWidgetUpdated.emit($event)"
+    ></app-carpool-widget>
+  }
 
   <!-- TODO: add other widget components here -->
 

@@ -3,6 +3,7 @@ package com.dhbw.get2gether.backend.widget.application;
 import com.dhbw.get2gether.backend.AbstractIntegrationTest;
 import com.dhbw.get2gether.backend.event.application.EventService;
 import com.dhbw.get2gether.backend.event.model.Event;
+import com.dhbw.get2gether.backend.event.model.EventParticipantDto;
 import com.dhbw.get2gether.backend.event.model.EventWidgetUpdateCommand;
 import com.dhbw.get2gether.backend.exceptions.OperationNotAllowedException;
 import com.dhbw.get2gether.backend.user.application.UserService;
@@ -27,7 +28,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
-public class CarpoolWidetServiceTest extends AbstractIntegrationTest {
+public class CarpoolWidgetServiceTest extends AbstractIntegrationTest {
     @MockBean
     private EventService eventService;
     @MockBean
@@ -55,7 +56,6 @@ public class CarpoolWidetServiceTest extends AbstractIntegrationTest {
                         )
                         .build()
                 );
-        String eventId = event.getId();
         // when
         Event returnedEvent = carpoolWidgetService.createCarpoolWidget(principal, event.getId(), createCommand);
 
@@ -118,10 +118,16 @@ public class CarpoolWidetServiceTest extends AbstractIntegrationTest {
                 .driverAdress("some Address")
                 .anzahlPlaetze(3)
                 .build();
-        Car car = Car.builder()
+        EventParticipantDto driver = EventParticipantDto.builder()
+                .id("test")
+                .firstName("driver")
+                .lastName("driver")
+                .profilePictureUrl("profilePictureUrl")
+                .build();
+        CarDto car = CarDto.builder()
                 .driverAdress("some Address")
                 .anzahlPlaetze(3)
-                .driverId("test")
+                .driver(driver)
                 .build();
 
         when(eventService.getSingleEvent(any(), eq(event.getId()))).thenReturn(event);
@@ -135,15 +141,16 @@ public class CarpoolWidetServiceTest extends AbstractIntegrationTest {
         when(userService.getUserByPrincipal(principal)).thenReturn(User.builder()
                 .id("test")
                 .email("test@example.com").build());
+        when(eventService.getAllEventParticipants(any())).thenReturn(List.of(driver));
 
         // when
-        CarpoolWidget returnedWidget = carpoolWidgetService.addCar(principal, event.getId(), widget.getId(), addCommand);
+        CarpoolWidgetDto returnedWidget = carpoolWidgetService.addCar(principal, event.getId(), widget.getId(), addCommand);
 
         // then
         assertThat(returnedWidget).isNotNull();
         assertThat(returnedWidget.getCars()).hasSize(1);
         assertThat(returnedWidget.getCars().get(0)).usingRecursiveComparison()
-                .ignoringFields("id")
+                .ignoringFields("id", "riders")
                 .isEqualTo(car);
         assertThat(returnedWidget.getCars().get(0).getId()).isNotBlank();
     }
@@ -201,7 +208,7 @@ public class CarpoolWidetServiceTest extends AbstractIntegrationTest {
                 );
 
         // when
-        CarpoolWidget returnedWidget = carpoolWidgetService.removeCar(principal, event.getId(), widget.getId(), car.getId());
+        CarpoolWidgetDto returnedWidget = carpoolWidgetService.removeCar(principal, event.getId(), widget.getId(), car.getId());
 
         // then
         assertThat(returnedWidget).isNotNull();
@@ -214,7 +221,8 @@ public class CarpoolWidetServiceTest extends AbstractIntegrationTest {
         AuthenticatedPrincipal principal = (AuthenticatedPrincipal)
                 SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Car car = Car.builder()
-                .driverId("test")
+                .driverId("driver")
+                .anzahlPlaetze(1)
                 .build();
         CarpoolWidget widget = CarpoolWidget.builder()
                 .id("wi-123")
@@ -227,9 +235,8 @@ public class CarpoolWidetServiceTest extends AbstractIntegrationTest {
         RiderAddCommand addCommand = RiderAddCommand.builder()
                 .pickupPlace("Testpickup")
                 .build();
-        Rider rider = Rider.builder()
+        RiderDto rider = RiderDto.builder()
                 .pickupPlace("Testpickup")
-                .userId("test")
                 .build();
 
         when(eventService.getSingleEvent(any(), eq(event.getId()))).thenReturn(event);
@@ -245,15 +252,15 @@ public class CarpoolWidetServiceTest extends AbstractIntegrationTest {
                 .email("test@example.com").build());
 
         // when
-        CarpoolWidget returnedWidget = carpoolWidgetService.addRider(principal, event.getId(), widget.getId(), car.getId(), addCommand);
+        CarpoolWidgetDto returnedWidget = carpoolWidgetService.addRider(principal, event.getId(), widget.getId(), car.getId(), addCommand);
 
         // then
         assertThat(returnedWidget).isNotNull();
         assertThat(returnedWidget.getCars().get(0).getRiders()).hasSize(1);
         assertThat(returnedWidget.getCars().get(0).getRiders().get(0)).usingRecursiveComparison()
-                .ignoringFields("id")
+                .ignoringFields("id", "user")
                 .isEqualTo(rider);
-        assertThat(returnedWidget.getCars().get(0).getRiders().get(0).getId()).isNotBlank();
+        assertThat(returnedWidget.getCars().get(0).getRiders().get(0).getPickupPlace()).isNotNull();
     }
     @Test
     @WithMockGuestUser
@@ -290,6 +297,7 @@ public class CarpoolWidetServiceTest extends AbstractIntegrationTest {
         AuthenticatedPrincipal principal = (AuthenticatedPrincipal)
                 SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Rider rider = Rider.builder()
+                .id("test")
                 .pickupPlace("Testpickup")
                 .userId("test")
                 .build();
@@ -317,7 +325,7 @@ public class CarpoolWidetServiceTest extends AbstractIntegrationTest {
                 );
 
         // when
-        CarpoolWidget returnedWidget = carpoolWidgetService.removeRider(principal, event.getId(), widget.getId(), car.getId(), rider.getId());
+        CarpoolWidgetDto returnedWidget = carpoolWidgetService.removeRider(principal, event.getId(), widget.getId(), car.getId(), rider.getId());
 
         // then
         assertThat(returnedWidget).isNotNull();

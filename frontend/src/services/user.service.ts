@@ -37,6 +37,10 @@ export class UserService {
     return this.http.get<User>(`${environment.api}/user`, {withCredentials: true});
   }
 
+  fetchUserById(id: string): Observable<User> {
+    return this.http.get<User>(`${environment.api}/user/${id}`, {withCredentials: true});
+  }
+
   updateTheme(colorMode: ColorMode): Observable<User> {
     return this.http.put<User>(`${environment.api}/user/self`, {
       settings: {

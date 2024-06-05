@@ -17,6 +17,11 @@ public interface CarpoolWidgetMapper {
     Car mapToCar(CarAddCommand command);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "driverId", ignore = true)
+    @Mapping(target = "riders", ignore = true)
+    Car mapToCar(CarUpdateCommand command);
+
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "userId", ignore = true)
     Rider mapToRider(RiderAddCommand command);
 }

@@ -453,7 +453,7 @@ class EventServiceTest extends AbstractIntegrationTest {
         when(userService.getSimpleUsersById(any())).thenReturn(simpleUserDtos);
 
         // when
-        List<EventParticipantDto> returnedEventParticipants = eventService.getAllEventParticipantsById(event);
+        List<EventParticipantDto> returnedEventParticipants = eventService.getAllEventParticipants(event);
 
         // then
         assertThat(returnedEventParticipants)
