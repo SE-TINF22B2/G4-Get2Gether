@@ -14,8 +14,8 @@ export class AddCarpoolDialogComponent {
   car: Car | undefined;
 
   constructor(
-    private fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) data: { car: Car | undefined},
+    fb: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) data: { car: Car | undefined },
     public userService: UserService,
     private dialogRef: MatDialogRef<AddCarpoolDialogComponent>,
   ) {
@@ -27,13 +27,13 @@ export class AddCarpoolDialogComponent {
       ),
       seats: new FormControl(
         this.car?.anzahlPlaetze ?? null,
-        Validators.required
+        [Validators.required, Validators.min(1)]
       )
     });
   }
 
   submit() {
-    let data: CarAddCommand| CarUpdateCommand = {
+    let data: CarAddCommand | CarUpdateCommand = {
       driverAdress: this.form.value.adress,
       anzahlPlaetze: this.form.value.seats
     };

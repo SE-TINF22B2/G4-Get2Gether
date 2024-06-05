@@ -6,7 +6,14 @@
       @if (userService.user | async; as user) {
         <p class="label">Mitfahrer</p>
         <div class="user-profile-picture">
-          <img [ngSrc]="user.profilePictureUrl" width="32" height="32" alt="" class="user-profile-picture">
+          <img
+            [ngSrc]="user.profilePictureUrl"
+            width="32"
+            height="32"
+            alt=""
+            referrerpolicy="no-referrer"
+            class="user-profile-picture"
+          >
           {{ user.firstName }} {{ user.lastName }}
         </div>
       }

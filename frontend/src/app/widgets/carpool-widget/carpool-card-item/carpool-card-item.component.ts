@@ -1,15 +1,16 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Event} from "../../../../model/event";
 import {Car} from "../../../../model/carpool-widget";
 import {UserService} from "../../../../services/user.service";
 import {User} from "../../../../model/user";
+import {getUserNameForParticipant} from "../../../../utils/user.utils";
 
 @Component({
   selector: 'app-carpool-card-item',
   templateUrl: './carpool-card-item.component.html',
   styleUrl: './carpool-card-item.component.scss'
 })
-export class CarpoolCardItemComponent implements OnInit{
+export class CarpoolCardItemComponent {
 
   @Input()
   eventData!: Event;
@@ -29,43 +30,31 @@ export class CarpoolCardItemComponent implements OnInit{
   @Output()
   onRiderDelete = new EventEmitter();
 
-  currentUser: User | undefined;
   isExpanded: boolean = false;
 
   constructor(public userService: UserService) {
   }
 
   get getRiders(): string[] {
-    return this.car.riders.map(u => [u.user.firstName, u.user.lastName].join(" "));
+    return this.car.riders.map(u => getUserNameForParticipant(u.user));
   }
 
-  ngOnInit(): void {
-    this.userService.fetchUserModel().subscribe(user => this.currentUser = user);
+  get isCarFull(): boolean {
+    return this.car.riders.length >= this.car.anzahlPlaetze;
   }
 
   isUserDriver(user: User) {
-    return this.car.driver.id == user.id;
+    return this.car.driver.id === user.id;
   }
 
-  isCardReduced() {
-    return (this.getRiders.length > 0) && !this.isExpanded;
-  }
-
-  isCardExpanded() {
-    return (this.getRiders.length > 0) && this.isExpanded;
-  }
-
-  toogleExpanded() {
-    console.log(this.car);
-    this.isExpanded = !this.isExpanded;
-  }
-
-  isGuest() {
-      return !this.currentUser;
+  isUserRider(user: User) {
+    return this.car.riders.some(rider => rider.user.id === user.id);
   }
 
   getLocation() {
-    const location =  [this.eventData.location.postalCode, this.eventData.location.city].join(" ");
+    const location = [this.eventData.location.postalCode, this.eventData.location.city].join(" ");
     return [this.eventData.location.street, location].join(", ");
   }
+
+  protected readonly getUserNameForParticipant = getUserNameForParticipant;
 }

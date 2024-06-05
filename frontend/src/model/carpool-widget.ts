@@ -1,5 +1,5 @@
 import {BaseWidget, WidgetType} from "./common-widget";
-import {SimpleUser} from "./user";
+import {EventParticipant} from "./user";
 
 export type CarpoolWidget = BaseWidget & {
   widgetType: WidgetType.CARPOOL;
@@ -8,7 +8,7 @@ export type CarpoolWidget = BaseWidget & {
 
 export type Car = {
   id: string;
-  driver: SimpleUser;
+  driver: EventParticipant;
   driverAdress: string;
   anzahlPlaetze: number;
   riders: Rider[];
@@ -30,6 +30,6 @@ export type RiderAddCommand = {
 
 
 export type Rider = {
-  user: SimpleUser;
+  user: EventParticipant;
   pickupPlace: string;
 }

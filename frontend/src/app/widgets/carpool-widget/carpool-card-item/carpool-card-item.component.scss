@@ -2,6 +2,7 @@ mat-card {
   --mdc-elevated-card-container-color: var(--background-container-low-color);
   --mdc-elevated-card-container-elevation: none;
 }
+
 mat-card-header {
   padding: 0;
   align-items: center;
@@ -28,7 +29,7 @@ mat-card-header {
   }
 }
 
-.riders-container{
+.riders-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -51,9 +52,23 @@ mat-icon {
   flex-direction: row;
   gap: var(--size-24);
   padding-left: var(--size-24);
+
   &-final {
     display: flex;
     flex-direction: row;
     padding-top: var(--size-12);
+  }
+}
+
+.riders-list-container {
+  border-left: 2px dashed var(--border-color);
+  margin-left: 8px;
+}
+
+mat-expansion-panel {
+  --mat-expansion-container-background-color: var(--background-container-low-color);
+
+  mat-panel-title mat-icon {
+    margin-right: 6px;
   }
 }

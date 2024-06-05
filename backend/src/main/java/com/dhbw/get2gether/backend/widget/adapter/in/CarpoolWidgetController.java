@@ -4,6 +4,7 @@ import com.dhbw.get2gether.backend.event.model.Event;
 import com.dhbw.get2gether.backend.event.model.EventDetailDto;
 import com.dhbw.get2gether.backend.widget.application.CarpoolWidgetService;
 import com.dhbw.get2gether.backend.widget.model.carpool.*;
+import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +34,7 @@ public class CarpoolWidgetController {
             @AuthenticationPrincipal OAuth2User principal,
             @PathVariable String eventId,
             @PathVariable String widgetId,
-            @RequestBody CarAddCommand addCommand
+            @RequestBody @Valid CarAddCommand addCommand
     ) {
         return service.addCar(principal, eventId, widgetId, addCommand);
     }
@@ -44,7 +45,7 @@ public class CarpoolWidgetController {
             @PathVariable String eventId,
             @PathVariable String widgetId,
             @PathVariable String carId,
-            @RequestBody CarUpdateCommand updateCommand
+            @RequestBody @Valid CarUpdateCommand updateCommand
     ) {
         return service.updateCar(principal, eventId, widgetId, carId, updateCommand);
     }

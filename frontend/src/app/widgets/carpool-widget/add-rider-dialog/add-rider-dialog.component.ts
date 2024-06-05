@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../../../services/user.service";
 import {RiderAddCommand} from "../../../../model/carpool-widget";
@@ -14,9 +14,10 @@ export class AddRiderDialogComponent {
   form!: FormGroup;
 
   constructor(
-    private fb: FormBuilder,
+    fb: FormBuilder,
     public userService: UserService,
-    private dialogRef: MatDialogRef<AddRiderDialogComponent>) {
+    private dialogRef: MatDialogRef<AddRiderDialogComponent>
+  ) {
     this.form = fb.group({
       pickupAdress: new FormControl(
         "", Validators.required

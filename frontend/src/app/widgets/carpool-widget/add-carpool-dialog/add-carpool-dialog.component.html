@@ -1,20 +1,27 @@
-<h1 mat-dialog-title>Fahrgemeinschaft {{isCreatingNewCar ? 'erstellen' : 'bearbeiten'}}</h1>
+<h1 mat-dialog-title>Fahrgemeinschaft {{ isCreatingNewCar ? 'erstellen' : 'bearbeiten' }}</h1>
 
 <mat-dialog-content>
   <form [formGroup]="form">
     <div class="add-carpool-container">
       @if (userService.user | async; as user) {
-      <p class="label">Fahrer</p>
-      <div class="user-profile-picture">
-        <img [ngSrc]="user.profilePictureUrl" width="32" height="32" alt="" class="user-profile-picture">
-      {{ user.firstName }} {{ user.lastName }}
-      </div>
+        <p class="label">Fahrer</p>
+        <div class="user-profile-picture">
+          <img
+            [ngSrc]="user.profilePictureUrl"
+            width="32"
+            height="32"
+            alt=""
+            referrerpolicy="no-referrer"
+            class="user-profile-picture"
+          >
+          {{ user.firstName }} {{ user.lastName }}
+        </div>
       }
       <p>Startadresse</p>
-        <mat-form-field>
-          <mat-label>Adresse</mat-label>
-          <input matInput formControlName="adress">
-        </mat-form-field>
+      <mat-form-field>
+        <mat-label>Adresse</mat-label>
+        <input matInput formControlName="adress">
+      </mat-form-field>
 
       <p>Sitzplätze<sup>*</sup></p>
       <mat-form-field>

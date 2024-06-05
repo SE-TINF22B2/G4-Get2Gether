@@ -1,4 +1,4 @@
-<mat-card (click)="toogleExpanded()">
+<mat-card>
   <mat-card-content>
     <mat-card-header>
       <mat-card-title>
@@ -11,57 +11,70 @@
           <p> {{ getRiders.length }}/{{ car.anzahlPlaetze }}</p>
         </div>
       </mat-card-title>
+
       @if (userService.user | async; as user) {
         @if (isUserDriver(user)) {
           <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button">
             <mat-icon>more_horiz</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-           <button mat-menu-item (click)="onEdit.emit()">
-             <mat-icon>edit</mat-icon>
-             Bearbeiten
+            <button mat-menu-item (click)="onEdit.emit()">
+              <mat-icon>edit</mat-icon>
+              Bearbeiten
             </button>
             <button mat-menu-item (click)="onDelete.emit()">
-             <mat-icon>delete</mat-icon>
-             Löschen
+              <mat-icon>delete</mat-icon>
+              Löschen
             </button>
           </mat-menu>
         } @else if (!user.guest) {
-          <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button" [hidden]="isGuest()">
-           <mat-icon>more_horiz</mat-icon>
-          </button>
-          <mat-menu #menu="matMenu">
-           <button mat-menu-item (click)="onEditRider.emit()">
-             <mat-icon>edit</mat-icon>
-             Beitreten
+          @if (isUserRider(user)) {
+            <button mat-button color="warn" class="menu-button" (click)="onRiderDelete.emit()">
+              <mat-icon>block</mat-icon>
+              Verlassen
             </button>
-            <button mat-menu-item (click)="onRiderDelete.emit()">
-              <mat-icon>delete</mat-icon>
-             Verlassen
+          } @else {
+            <button mat-stroked-button class="menu-button" [disabled]="isCarFull" (click)="onEditRider.emit()">
+              <mat-icon>no_crash</mat-icon>
+              Beitreten
             </button>
-          </mat-menu>
+          }
         }
       }
     </mat-card-header>
+
     <div class="content-container">
-      @if(isCardReduced()) {
-        <div class="riders-container">
-          <mat-icon inline>person</mat-icon>
-          <p> {{ getRiders.join(",") }}</p>
-        </div>
-      }
-      @if (isCardExpanded()) {
-          @for(rider of car.riders; track rider.user.id){
+      <mat-expansion-panel
+        [disabled]="getRiders.length === 0"
+        (opened)="isExpanded = true"
+        (closed)="isExpanded = false"
+        class="mat-elevation-z0"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon inline>person</mat-icon>
+            @if (isExpanded) {
+              Mitfahrer
+            } @else {
+              {{ getRiders.length > 0 ? getRiders.join(",") : 'Keine Mitfahrer eingetragen' }}
+            }
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div class="riders-list-container">
+          @for (rider of car.riders; track rider.user.id) {
             <div class="location-container">
-              <p>{{rider.pickupPlace}}</p>
-              <p>{{[rider.user.firstName, rider.user.lastName].join(" ")}}</p>
+              <p matTooltip="Abholort">{{ rider.pickupPlace }}</p>
+              <p>{{ getUserNameForParticipant(rider.user) }}</p>
             </div>
           }
+        </div>
+
         <div class="location-container-final">
           <mat-icon>sports_score</mat-icon>
-          <p>{{getLocation()}}</p>
+          <p>{{ getLocation() }}</p>
         </div>
-      }
+      </mat-expansion-panel>
     </div>
   </mat-card-content>
 </mat-card>
