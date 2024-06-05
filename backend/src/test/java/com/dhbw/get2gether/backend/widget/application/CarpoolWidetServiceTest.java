@@ -3,6 +3,7 @@ package com.dhbw.get2gether.backend.widget.application;
 import com.dhbw.get2gether.backend.AbstractIntegrationTest;
 import com.dhbw.get2gether.backend.event.application.EventService;
 import com.dhbw.get2gether.backend.event.model.Event;
+import com.dhbw.get2gether.backend.event.model.EventParticipantDto;
 import com.dhbw.get2gether.backend.event.model.EventWidgetUpdateCommand;
 import com.dhbw.get2gether.backend.exceptions.OperationNotAllowedException;
 import com.dhbw.get2gether.backend.user.application.UserService;
@@ -119,7 +120,7 @@ public class CarpoolWidetServiceTest extends AbstractIntegrationTest {
                 .driverAdress("some Address")
                 .anzahlPlaetze(3)
                 .build();
-        SimpleUserDto driver = SimpleUserDto.builder()
+        EventParticipantDto driver = EventParticipantDto.builder()
                 .id("test")
                 .firstName("driver")
                 .lastName("driver")
@@ -142,7 +143,7 @@ public class CarpoolWidetServiceTest extends AbstractIntegrationTest {
         when(userService.getUserByPrincipal(principal)).thenReturn(User.builder()
                 .id("test")
                 .email("test@example.com").build());
-        when(userService.getSimpleUsersById(any())).thenReturn(List.of(driver));
+        when(eventService.getAllEventParticipants(any())).thenReturn(List.of(driver));
 
         // when
         CarpoolWidgetDto returnedWidget = carpoolWidgetService.addCar(principal, event.getId(), widget.getId(), addCommand);

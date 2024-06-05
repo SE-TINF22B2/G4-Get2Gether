@@ -13,7 +13,6 @@ import org.mapstruct.SubclassExhaustiveStrategy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring", subclassExhaustiveStrategy = SubclassExhaustiveStrategy.COMPILE_ERROR)
 public abstract class WidgetMapper {
@@ -31,15 +30,15 @@ public abstract class WidgetMapper {
         return widget;
     }
 
-    public CarpoolWidgetDto carpoolWidgetToCarpoolWidgetDto(CarpoolWidget widget, List<SimpleUserDto> users) {
+    public CarpoolWidgetDto carpoolWidgetToCarpoolWidgetDto(CarpoolWidget widget, List<EventParticipantDto> participants) {
         List<CarDto> cars = widget.getCars().stream()
                 .map(car -> CarDto.builder()
                         .id(car.getId())
-                        .driver(users.stream().filter(r -> r.getId().equals(car.getDriverId())).findFirst().orElse(null))
+                        .driver(participants.stream().filter(r -> r.getId().equals(car.getDriverId())).findFirst().orElse(null))
                         .driverAdress(car.getDriverAdress())
                         .anzahlPlaetze(car.getAnzahlPlaetze())
                         .riders(car.getRiders().stream().map(rider -> RiderDto.builder()
-                                .user(users.stream().filter(r -> r.getId().equals(rider.getUserId()))
+                                .user(participants.stream().filter(r -> r.getId().equals(rider.getUserId()))
                                         .findFirst()
                                         .orElse(null))
                                 .pickupPlace(rider.getPickupPlace())
@@ -54,8 +53,6 @@ public abstract class WidgetMapper {
     }
 
     public abstract ExpenseSplitWidgetDto expenseSplitWidgetToExpenseSplitWidgetDto(ExpenseSplitWidget widget, List<Debt> debts, @Context List<EventParticipantDto> participants);
-
-    public abstract ExpenseSplitWidgetDto expenseSplitWidgetToExpenseSplitWidgetDto(ExpenseSplitWidget widget, List<Debt> debts, @Context List<SimpleUserDto> participants);
 
     // Find the userWithPercentage in the list of participants. Return null if the user is not found.
     UserWithPercentageDto userWithPercentageToUserWithPercentageDto(UserWithPercentage userWithPercentage, @Context List<EventParticipantDto> participants) {

@@ -1,6 +1,6 @@
 package com.dhbw.get2gether.backend.widget.model.carpool;
 
-import com.dhbw.get2gether.backend.user.model.SimpleUserDto;
+import com.dhbw.get2gether.backend.event.model.EventParticipantDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CarDto {
     private String id;
-    private SimpleUserDto driver;
+    private EventParticipantDto driver;
     private String driverAdress;
     private int anzahlPlaetze;
     private List<RiderDto> riders;

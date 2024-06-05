@@ -1,13 +1,12 @@
 package com.dhbw.get2gether.backend.widget.model.carpool;
 
-import com.dhbw.get2gether.backend.user.model.SimpleUserDto;
+import com.dhbw.get2gether.backend.event.model.EventParticipantDto;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 @Builder(toBuilder = true)
 public class RiderDto {
-    private SimpleUserDto user;
+    private EventParticipantDto user;
     private String pickupPlace;
 }

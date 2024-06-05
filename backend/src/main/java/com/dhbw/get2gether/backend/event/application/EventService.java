@@ -125,7 +125,7 @@ public class EventService {
     }
 
     @PreAuthorize("hasRole('GUEST')")
-    public List<EventParticipantDto> getAllEventParticipantsById(Event event) {
+    public List<EventParticipantDto> getAllEventParticipants(Event event) {
         return userService.getSimpleUsersById(event.getParticipantsAndLeftParticipants())
                 .stream()
                 .map(user -> eventMapper.toEventParticipantDto(user, event.hasUserLeftEvent(user.getId())))
@@ -134,7 +134,7 @@ public class EventService {
 
     @PreAuthorize("hasRole('GUEST')")
     public EventDetailDto mapEventToEventDetailDto(Optional<String> currentUserId, Event event) {
-        List<EventParticipantDto> participantsDtos = getAllEventParticipantsById(event);
+        List<EventParticipantDto> participantsDtos = getAllEventParticipants(event);
         return eventMapper.toEventDetailDto(event, participantsDtos, currentUserId);
     }
 

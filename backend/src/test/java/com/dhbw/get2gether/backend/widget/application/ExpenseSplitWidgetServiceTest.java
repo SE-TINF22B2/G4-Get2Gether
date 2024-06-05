@@ -156,7 +156,7 @@ class ExpenseSplitWidgetServiceTest extends AbstractIntegrationTest {
                         )
                         .build()
                 );
-        when(eventService.getAllEventParticipantsById(any())).thenReturn(List.of(eventParticipant));
+        when(eventService.getAllEventParticipants(any())).thenReturn(List.of(eventParticipant));
         when(userService.getUserByPrincipal(principal)).thenReturn(User.builder()
                 .id("test")
                 .email("test@example.com").build());
