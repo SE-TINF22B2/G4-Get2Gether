@@ -4,10 +4,12 @@
     width="35"
     height="35"
     [ngSrc]="user.profilePictureUrl"
+    [class.left-participant-profile-picture]="user.hasLeft"
+    referrerpolicy="no-referrer"
     alt="Profilbild">
 
   <span class="participant-name">
-    {{ user.firstName }} {{ user.lastName }}
+    {{ getUserNameForParticipant(user) }}
     @if (isOwner) {
       <br>
       <span class="owner-hint">(Ersteller)</span>

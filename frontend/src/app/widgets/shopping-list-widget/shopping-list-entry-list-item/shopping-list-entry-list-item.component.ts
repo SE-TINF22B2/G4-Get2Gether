@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Entry} from "../../../../model/shoppinglist-widget";
 import {Event} from "../../../../model/event";
-import {SimpleUser} from "../../../../model/user";
+import {EventParticipant} from "../../../../model/user";
+import {getUserNameForParticipant} from "../../../../utils/user.utils";
 
 @Component({
   selector: 'app-einkaufliste-eintrag-list-item',
@@ -14,11 +15,12 @@ export class ShoppingListEntryListItemComponent {
   @Output() onEdit = new EventEmitter();
   @Output() onDelete = new EventEmitter();
 
-  get buyer(): SimpleUser | undefined {
+  get buyer(): EventParticipant | undefined {
     if (!this.item.buyerId) {
       return undefined;
     }
     return this.eventData.participants.find(p => p.id === this.item.buyerId);
   }
 
+  protected readonly getUserName = getUserNameForParticipant;
 }

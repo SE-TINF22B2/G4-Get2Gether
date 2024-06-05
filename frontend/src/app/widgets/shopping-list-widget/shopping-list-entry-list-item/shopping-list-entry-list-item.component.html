@@ -5,7 +5,7 @@
     @if (item.buyerId) {
       <p class="einkaufliste-eintrag-card-content-buyerProfile" matTooltip="Käufer">
         <mat-icon>person</mat-icon>
-        {{ buyer?.firstName }} {{ buyer?.lastName }}
+        {{ buyer ? getUserName(buyer) : '?' }}
       </p>
     }
     <button mat-icon-button [matMenuTriggerFor]="menu">

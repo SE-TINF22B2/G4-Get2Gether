@@ -16,11 +16,19 @@
         <span matTextSuffix>&nbsp;€</span>
       </mat-form-field>
 
-      @if (userService.user | async; as user) {
+      @if (creator | async; as creator) {
         <p class="label">Zahlungsempfänger</p>
         <div>
-          <img [ngSrc]="user.profilePictureUrl" width="32" height="32" alt="" class="user-profile-picture">
-          {{ user.firstName }} {{ user.lastName }}
+          <img
+            [ngSrc]="creator.profilePictureUrl"
+            [class.left-participant-profile-picture]="creator.hasLeft"
+            width="32"
+            height="32"
+            alt=""
+            referrerpolicy="no-referrer"
+            class="user-profile-picture"
+          >
+          {{ getUserNameForParticipant(creator) }}
         </div>
       }
 
@@ -29,8 +37,16 @@
         <mat-select formControlName="involvedUsers" multiple placeholder="Keine Personen ausgewählt">
           @for (user of users; track user.id) {
             <mat-option [value]="user.id">
-              <img [ngSrc]="user.profilePictureUrl" width="24" height="24" alt="" class="user-profile-picture">
-              {{ user.firstName }} {{ user.lastName }}
+              <img
+                [ngSrc]="user.profilePictureUrl"
+                [class.left-participant-profile-picture]="user.hasLeft"
+                width="24"
+                height="24"
+                alt=""
+                referrerpolicy="no-referrer"
+                class="user-profile-picture"
+              >
+              {{ getUserNameForParticipant(user) }}
             </mat-option>
           }
         </mat-select>

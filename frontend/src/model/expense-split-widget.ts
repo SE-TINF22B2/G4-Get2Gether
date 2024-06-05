@@ -1,5 +1,5 @@
 import {BaseWidget, WidgetType} from "./common-widget";
-import {SimpleUser} from "./user";
+import {EventParticipant} from "./user";
 
 export type ExpenseSplitWidget = BaseWidget & {
   widgetType: WidgetType.EXPENSE_SPLIT;
@@ -18,12 +18,12 @@ export type ExpenseEntry = {
 }
 
 export type UsersWithPercentage = {
-  user: SimpleUser;
+  user: EventParticipant;
   percentage: number;
 }
 
 export type Debt = {
-  user: SimpleUser;
+  user: EventParticipant;
   debtAmount: number;
 }
 

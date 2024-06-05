@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {SimpleUser} from "../../../../model/user";
+import {EventParticipant} from "../../../../model/user";
+import {getUserNameForParticipant} from "../../../../utils/user.utils";
 
 @Component({
   selector: 'app-participant-card',
@@ -8,8 +9,9 @@ import {SimpleUser} from "../../../../model/user";
 })
 export class ParticipantCardComponent {
   @Input()
-  user!: SimpleUser
+  user!: EventParticipant
 
   @Input()
   isOwner!: boolean;
+  protected readonly getUserNameForParticipant = getUserNameForParticipant;
 }

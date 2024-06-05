@@ -9,11 +9,12 @@ export type User = {
   guest: true | undefined;
 }
 
-export type SimpleUser = {
+export type EventParticipant = {
   id: string;
   firstName: string;
   lastName: string;
   profilePictureUrl: string;
+  hasLeft: boolean;
 }
 
 export type UserSettings = {

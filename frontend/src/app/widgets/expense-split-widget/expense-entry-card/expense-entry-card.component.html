@@ -42,8 +42,16 @@
 
       <div class="creator" matTooltip="Zahlungsempfänger">
         @if (creator) {
-          <img [ngSrc]="creator.profilePictureUrl" width="24" height="24" alt="" class="user-profile-picture">
-          {{ creator.firstName }} {{ creator.lastName }}
+          <img
+            [ngSrc]="creator.profilePictureUrl"
+            [class.left-participant-profile-picture]="creator.hasLeft"
+            width="24"
+            height="24"
+            alt=""
+            referrerpolicy="no-referrer"
+            class="user-profile-picture"
+          >
+          {{ getUserNameForParticipant(creator) }}
         } @else {
           <p>Zahlungsempfänger konnte nicht ermittelt werden.</p>
         }

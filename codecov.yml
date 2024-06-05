@@ -1,0 +1,25 @@
+coverage:
+  status:
+    project:
+      default:
+        target: auto #patches sollen coverage beibehalten oder verbessern
+        threshold: 5%
+
+component_management:
+  default_rules: # default rules that will be inherited by all components
+    statuses:
+      - type: project # in this case every component that doens't have a status defined will have a project type one
+        target: auto
+  individual_components:
+    - component_id: event
+      name: event  # this is a display name, and can be changed freely
+      paths:
+        - backend/src/main/java/com/dhbw/get2gether/backend/event
+    - component_id: api-smiles  # this is an identifier that should not be changed
+      name: smiles  # this is a display name, and can be changed freely
+      paths:
+        - backend/src/main/java/com/dhbw/get2gether/backend/widget
+
+ignore:
+  - "backend/src/main/java/com/dhbw/get2gether/backend/user"
+  - "backend/src/main/java/com/dhbw/get2gether/backend/authentication"

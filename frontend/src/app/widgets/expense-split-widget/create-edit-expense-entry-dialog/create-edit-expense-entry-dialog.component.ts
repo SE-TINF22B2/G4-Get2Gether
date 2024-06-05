@@ -1,9 +1,11 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {SimpleUser} from "../../../../model/user";
+import {EventParticipant} from "../../../../model/user";
 import {ExpenseEntry, ExpenseEntryAddCommand, ExpenseEntryUpdateCommand} from "../../../../model/expense-split-widget";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../../../services/user.service";
+import {getUserNameForParticipant} from "../../../../utils/user.utils";
+import {filter, map, Observable, of} from "rxjs";
 
 @Component({
   selector: 'app-create-edit-expense-split-dialog',
@@ -12,13 +14,13 @@ import {UserService} from "../../../../services/user.service";
 })
 export class CreateEditExpenseEntryDialogComponent {
 
-  users: SimpleUser[];
+  users: EventParticipant[];
   entry: ExpenseEntry | undefined;
 
   formGroup: FormGroup;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) data: { users: SimpleUser[], entry: ExpenseEntry | undefined },
+    @Inject(MAT_DIALOG_DATA) data: { users: EventParticipant[], entry: ExpenseEntry | undefined },
     private dialogRef: MatDialogRef<CreateEditExpenseEntryDialogComponent>,
     public userService: UserService,
     fb: FormBuilder
@@ -51,8 +53,19 @@ export class CreateEditExpenseEntryDialogComponent {
     this.dialogRef.close(data);
   }
 
+  get creator(): Observable<EventParticipant | undefined> {
+    if (this.isCreatingNewEntry) {
+      return this.userService.user.asObservable().pipe(
+        filter(user => user != null),
+        map(user => this.users.find(p => p.id === user!.id))
+      );
+    }
+    return of(this.users.find(p => p.id === this.entry?.creatorId));
+  }
+
   get isCreatingNewEntry(): boolean {
     return !this.entry;
   }
 
+  protected readonly getUserNameForParticipant = getUserNameForParticipant;
 }

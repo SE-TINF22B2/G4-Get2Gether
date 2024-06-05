@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ExpenseEntry} from "../../../../model/expense-split-widget";
-import {SimpleUser} from "../../../../model/user";
+import {EventParticipant} from "../../../../model/user";
 import {Event} from "../../../../model/event";
+import {getUserNameForParticipant} from "../../../../utils/user.utils";
 
 @Component({
   selector: 'app-expense-entry-card',
@@ -23,7 +24,7 @@ export class ExpenseEntryCardComponent {
   onEdit = new EventEmitter();
 
   get getInvolvedUserNames(): string[] {
-    return this.entry.involvedUsers.map(u => [u.user.firstName, u.user.lastName].join(" "));
+    return this.entry.involvedUsers.map(u => getUserNameForParticipant(u.user));
   }
 
   get isEveryoneInvolved(): boolean {
@@ -33,8 +34,9 @@ export class ExpenseEntryCardComponent {
       eventParticipantIds.every(id => involvedUserIds.includes(id));
   }
 
-  get creator(): SimpleUser | undefined {
+  get creator(): EventParticipant | undefined {
     return this.eventData.participants.find(p => p.id === this.entry.creatorId);
   }
 
+  protected readonly getUserNameForParticipant = getUserNameForParticipant;
 }

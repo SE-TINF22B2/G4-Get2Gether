@@ -6,9 +6,7 @@ import com.dhbw.get2gether.backend.event.application.mapper.EventMapper;
 import com.dhbw.get2gether.backend.event.model.*;
 import com.dhbw.get2gether.backend.exceptions.EntityNotFoundException;
 import com.dhbw.get2gether.backend.user.application.UserService;
-import com.dhbw.get2gether.backend.user.model.SimpleUserDto;
 import com.dhbw.get2gether.backend.user.model.User;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.core.env.Environment;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -53,14 +51,18 @@ public class EventService {
         return eventRepository.insert(event);
     }
 
-    @PreAuthorize("hasRole('USER')")
-    public List<EventOverviewDto> getAllEventsFromUser(AuthenticatedPrincipal principal) {
-        // TODO: check if principal is guest and return granted events
-        List<Event> userEvents = userService
-                .findUserFromPrincipal(principal)
-                .map(user -> eventRepository.findEventsByParticipantIdsContainsOrderByDateDesc(user.getId()))
-                .orElse(List.of());
-        return userEvents.stream().map(eventMapper::toEventOverviewDto).toList();
+    @PreAuthorize("hasRole('GUEST')")
+    public List<EventOverviewDto> getAllEventsFromPrincipal(AuthenticatedPrincipal principal) {
+        List<Event> events;
+        if (principal instanceof GuestAuthenticationPrincipal guestPrincipal) {
+            events = eventRepository.findAllByIdInOrderByDateDesc(guestPrincipal.getGrantedEventIds());
+        } else {
+            events = userService
+                    .findUserFromPrincipal(principal)
+                    .map(user -> eventRepository.findEventsByParticipantIdsContainsOrderByDateDesc(user.getId()))
+                    .orElse(List.of());
+        }
+        return events.stream().map(eventMapper::toEventOverviewDto).toList();
     }
 
     @PreAuthorize("hasRole('GUEST')")
@@ -109,29 +111,34 @@ public class EventService {
     public Optional<String> openEventFromInvitationLink(AuthenticatedPrincipal principal, String invitationLink) {
         Optional<Event> event = findEventByInvitationLink(invitationLink);
         return event.map(presentEvent -> {
-            if (principal instanceof GuestAuthenticationPrincipal guestPrincipal) {
-                guestPrincipal.grantAccessToEvent(presentEvent.getId());
-            } else if (principal instanceof OAuth2User) {
-                // add user as participant
-                addUserToParticipantsIfNotParticipating(principal, presentEvent);
-            }
+            joinEvent(presentEvent, principal);
             return env.getProperty("frontend.url") + "/dashboard/" + presentEvent.getId();
         });
     }
 
     @PreAuthorize("hasRole('USER')")
-    public boolean leaveEvent(AuthenticatedPrincipal principal, String eventId) {
+    public void leaveEvent(AuthenticatedPrincipal principal, String eventId) {
         Event event = getEventIfUserIsParticipant(principal, eventId);
         User user = userService.getUserByPrincipal(principal);
-        event.removeParticipant(user.getId());
-        return !eventRepository.save(event).getParticipantIds().contains(user.getId());
+        event.leaveEvent(user.getId());
+        eventRepository.save(event);
     }
 
+    @PreAuthorize("hasRole('GUEST')")
+    public List<EventParticipantDto> getAllEventParticipantsById(Event event) {
+        return userService.getSimpleUsersById(event.getParticipantsAndLeftParticipants())
+                .stream()
+                .map(user -> eventMapper.toEventParticipantDto(user, event.hasUserLeftEvent(user.getId())))
+                .toList();
+    }
+
+    @PreAuthorize("hasRole('GUEST')")
     public EventDetailDto mapEventToEventDetailDto(Optional<String> currentUserId, Event event) {
-        List<SimpleUserDto> participantsDtos = userService.getSimpleUsersById(event.getParticipantIds());
+        List<EventParticipantDto> participantsDtos = getAllEventParticipantsById(event);
         return eventMapper.toEventDetailDto(event, participantsDtos, currentUserId);
     }
 
+    @PreAuthorize("hasRole('GUEST')")
     public EventDetailDto mapEventToEventDetailDto(AuthenticatedPrincipal principal, Event event) {
         Optional<String> userId = userService.findUserFromPrincipal(principal).map(User::getId);
         return mapEventToEventDetailDto(userId, event);
@@ -155,6 +162,18 @@ public class EventService {
 
     private Optional<Event> findEventByInvitationLink(String invitationLink) {
         return eventRepository.findByInvitationLink(invitationLink);
+    }
+
+    private void joinEvent(Event event, AuthenticatedPrincipal principal) {
+        if (principal instanceof GuestAuthenticationPrincipal guestPrincipal) {
+            // grant guest access to event
+            guestPrincipal.grantAccessToEvent(event.getId());
+        } else if (principal instanceof OAuth2User) {
+            // add user as participant
+            addUserToParticipantsIfNotParticipating(principal, event);
+        } else {
+            throw new IllegalArgumentException("Unknown principal type: " + principal.getClass().getName());
+        }
     }
 
     private Event addUserToParticipantsIfNotParticipating(AuthenticatedPrincipal principal, Event event) {

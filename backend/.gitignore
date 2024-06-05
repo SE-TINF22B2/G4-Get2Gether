@@ -38,3 +38,4 @@ out/
 
 ### secrets ###
 *.env
+!example.env

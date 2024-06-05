@@ -1,5 +1,5 @@
 import {BaseWidget} from "./common-widget";
-import {SimpleUser} from "./user";
+import {EventParticipant} from "./user";
 
 export type EventOverview = {
   id: string;
@@ -14,7 +14,7 @@ export type Event = EventOverview & {
   location: EventLocation;
   invitationLink: string | undefined;
   creatorId: string;
-  participants: SimpleUser[];
+  participants: EventParticipant[];
   widgets: BaseWidget[];
 }
 
